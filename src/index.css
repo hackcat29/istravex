@@ -1,0 +1,115 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0b0b0c;
+  --color-ink-2: #121214;
+  --color-ink-3: #19191c;
+  --color-line: #26262a;
+  --color-line-2: #34343a;
+  --color-fg: #f1efe9;
+  --color-mute: #8d8b85;
+  --color-dim: #5c5b57;
+  --color-lime: #d4ff3f;
+  --color-coral: #ff5c49;
+  --color-amber: #ffb547;
+
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    background: var(--color-ink);
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-lime);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  canvas {
+    display: block;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 640px) {
+    .wrap {
+      padding-inline: 28px;
+    }
+  }
+  .h-display {
+    font-weight: 560;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+  .h-section {
+    font-weight: 540;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-size: clamp(2.25rem, 6vw, 4.75rem);
+  }
+  .card {
+    background: var(--color-ink-2);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+  }
+}
+
+/* Marching dashed outline for "dropped" records */
+@keyframes march {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+.march {
+  animation: march 0.8s linear infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .march,
+  .caret {
+    animation: none;
+  }
+}
