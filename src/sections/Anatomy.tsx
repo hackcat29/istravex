@@ -46,7 +46,9 @@ export function Anatomy() {
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <Title lines={anatomy.title} />
           <Reveal>
-            <p className="font-mono text-[13px] text-mute">{anatomy.fixtureId}</p>
+            <a href={anatomy.href} target="_blank" rel="noreferrer" className="font-mono text-[13px] text-mute transition-colors hover:text-fg">
+              {anatomy.fixtureId} · L{anatomy.ledger.toLocaleString('en-US')} ↗
+            </a>
           </Reveal>
         </div>
 
@@ -102,8 +104,13 @@ export function Anatomy() {
                         </li>
                       ))}
                     </ol>
+                    {node.value && (
+                      <p className="mt-7 break-all rounded-lg border border-line bg-ink px-3 py-2.5 font-mono text-[13px] leading-relaxed text-fg">
+                        {node.value}
+                      </p>
+                    )}
                     {node.expect && (
-                      <p className="mt-8 border-l-2 border-lime pl-4 text-[17px] leading-snug">{node.expect}</p>
+                      <p className="mt-6 border-l-2 border-lime pl-4 text-[17px] leading-snug">{node.expect}</p>
                     )}
                   </motion.div>
                 </AnimatePresence>

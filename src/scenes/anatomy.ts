@@ -111,7 +111,7 @@ export async function createAnatomyScene(
   const maxDepth = Math.max(...depth.values());
   for (const [id, p] of pos) {
     const d = depth.get(id)!;
-    p.x = (d - maxDepth / 2) * 2.15;
+    p.x = (d - maxDepth / 2) * Math.min(2.15, 15 / maxDepth); // keep ~15 units wide
     p.y = -(p.y - (leaf - 1) / 2) * 0.95;
     p.z = Math.sin(d * 1.1 + p.y * 0.6) * 1.1;
   }
