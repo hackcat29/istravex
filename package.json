@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p . && vite build",
+    "build": "tsc -p . && tsc -p tsconfig.server.json && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p .",
+    "typecheck": "tsc -p . && tsc -p tsconfig.server.json",
     "test:e2e": "playwright test",
     "corpus:capture": "node kit/capture/mainnet.mjs && node kit/capture/testnet.mjs && node kit/capture/ledgers.mjs && node kit/capture/canonicalize.mjs",
     "corpus:js": "node kit/runners/js/run.mjs",
@@ -22,28 +22,33 @@
     "rpc": "node kit/rpc/server.mjs",
     "test:kit": "node --test kit/rpc/server.test.mjs && cd kit/go && go test ./... && go vet ./...",
     "corpus:generate": "node kit/capture/generate.mjs",
-    "corpus:goldens": "node kit/goldens/check.mjs && cd kit/go && go run ./cmd/goldens ../../.cache/stellar-core/test-lcm-current ../../corpus && cd ../runners/rust && cargo run --release -q -- goldens ../../../.cache/stellar-core/test-lcm-current ../../../corpus"
+    "corpus:goldens": "node kit/goldens/check.mjs && cd kit/go && go run ./cmd/goldens ../../.cache/stellar-core/test-lcm-current ../../corpus && cd ../runners/rust && cargo run --release -q -- goldens ../../../.cache/stellar-core/test-lcm-current ../../../corpus",
+    "api": "node server/index.ts",
+    "test:api": "node --test server/*.test.ts"
   },
   "dependencies": {
+    "@hono/node-server": "2.1.8",
+    "@stellar/stellar-sdk": "17.4.0",
+    "hono": "4.13.18"
+  },
+  "devDependencies": {
     "@babylonjs/core": "^9.36.0",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
-    "motion": "^14.14.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "three": "^0.187.0",
-    "typegpu": "^0.12.10"
-  },
-  "devDependencies": {
     "@playwright/test": "^1.65.1",
-    "@stellar/stellar-sdk": "^17.4.0",
     "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^6.3.0",
     "@webgpu/types": "^0.1.74",
+    "motion": "^14.14.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "tailwindcss": "^4.3.5",
+    "three": "^0.187.0",
+    "typegpu": "^0.12.10",
     "typescript": "^5.9.3",
     "vite": "^8.3.8"
   }

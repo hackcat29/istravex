@@ -1,0 +1,47 @@
+# TLS certificates are obtained and renewed automatically (Let's Encrypt /
+# ZeroSSL) once DNS for each name points at this server.
+{
+	admin off
+}
+
+(security) {
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+}
+
+# The site: a static build of src/ (npm run build).
+istravex.com {
+	import security
+	root * /srv/site
+	encode zstd gzip
+	@hashed path /assets/*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+	@pages not path /assets/*
+	header @pages Cache-Control "public, max-age=300"
+	try_files {path} /index.html
+	file_server
+}
+
+www.istravex.com {
+	redir https://istravex.com{uri} permanent
+}
+
+# Read API: corpus, ledgers, results (server/openapi.json).
+api.istravex.com {
+	import security
+	encode zstd gzip
+	reverse_proxy api:8080
+}
+
+# Mock Stellar RPC: https://rpc.istravex.com/{pubnet,testnet,local}
+rpc.istravex.com {
+	import security
+	encode zstd gzip
+	rewrite * /rpc{uri}
+	reverse_proxy api:8080
+}

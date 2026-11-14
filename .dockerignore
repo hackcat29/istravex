@@ -1,0 +1,9 @@
+*
+!package.json
+!package-lock.json
+!server/
+!kit/lib/
+!kit/rpc/server.mjs
+!kit/rpc/server.d.mts
+!corpus/
+server/*.test.ts

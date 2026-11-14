@@ -1,0 +1,118 @@
+name: Deploy
+
+# Ships main to the Contabo VPS after CI passes:
+#   1. builds the API image and pushes it to GHCR (tagged with the commit)
+#   2. builds the static site
+#   3. copies deploy/ and the site to /opt/istravex and runs deploy/remote.sh
+#   4. smoke-tests https://istravex.com and https://api.istravex.com
+#
+# Repository configuration (Settings → Secrets and variables → Actions):
+#   secrets   VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_KNOWN_HOSTS
+#   variables DEPLOY_ENABLED=true (deploy step is skipped until set)
+#             CONFIGURE_UFW=true  (optional; see deploy/remote.sh)
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/istravex-api
+  SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+jobs:
+  image:
+    name: Build API image
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SHA }}
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          build-args: GIT_SHA=${{ env.SHA }}
+          tags: |
+            ${{ env.IMAGE }}:${{ env.SHA }}
+            ${{ env.IMAGE }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  site:
+    name: Build site
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SHA }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Contabo
+    needs: [image, site]
+    if: vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    environment:
+      name: production
+      url: https://istravex.com
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SHA }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+      - name: SSH setup
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy && chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf 'Host vps\n  HostName %s\n  User %s\n  IdentityFile ~/.ssh/deploy\n  IdentitiesOnly yes\n  StrictHostKeyChecking yes\n' \
+            "${{ secrets.VPS_HOST }}" "${{ secrets.VPS_USER }}" > ~/.ssh/config
+      - name: Copy stack and site
+        run: |
+          ssh vps 'mkdir -p /opt/istravex/site'
+          rsync -az --delete dist/ vps:/opt/istravex/site/
+          rsync -az deploy/compose.yml deploy/Caddyfile deploy/remote.sh vps:/opt/istravex/
+      - name: Start
+        run: |
+          ssh vps "TAG='${SHA}' GHCR_USER='${{ github.actor }}' GHCR_TOKEN='${{ secrets.GITHUB_TOKEN }}' CONFIGURE_UFW='${{ vars.CONFIGURE_UFW }}' bash /opt/istravex/remote.sh"
+      - name: Smoke test
+        run: |
+          curl -fsS --retry 10 --retry-delay 6 --retry-all-errors https://api.istravex.com/v1/health | tee /dev/stderr | grep -q "\"version\":\"${SHA}\""
+          curl -fsS --retry 5 --retry-delay 6 --retry-all-errors -o /dev/null https://istravex.com
+          curl -fsS --retry 5 --retry-delay 6 --retry-all-errors -X POST https://rpc.istravex.com/pubnet \
+            -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"getHealth"}' | grep -q '"healthy"'
