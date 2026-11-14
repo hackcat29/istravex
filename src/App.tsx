@@ -2,6 +2,7 @@ import { Nav } from './sections/Nav';
 import { Hero } from './sections/Hero';
 import { Problem } from './sections/Problem';
 import { Kit } from './sections/Kit';
+import { Anatomy } from './sections/Anatomy';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Hero />
         <Problem />
         <Kit />
+        <Anatomy />
       </main>
     </>
   );
