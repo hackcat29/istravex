@@ -1,35 +1,42 @@
 ---
-title: IX001 · Memo text without UTF-8 validation
+title: IX001 · Unvalidated fields used as if validated
 sidebarTitle: IX001
-description: stellar-core accepts any 28 bytes as MEMO_TEXT. Your database might not.
+description: stellar-core passes memo text and muxed IDs through without checking them. Your code has to.
 ---
 
-## What it flags
+stellar-core checks signatures, sequence numbers and fees because consensus depends on them. It doesn't check that memo text is UTF-8, and it never interprets a muxed account's ID. [What stellar-core validates](/guide/validated-fields) has the whole list. IX001 flags the two of these that Go code most often treats as safe.
 
-A function that reads a transaction's memo text (`Memo.MustText()`, `Memo.GetText()` or the `Text` field) and never validates UTF-8 anywhere in the same function.
+## Memo text without UTF-8 validation
 
-## Why it matters
+**Flags:** a function that reads memo text (`Memo.MustText()`, `Memo.GetText()` or the `Text` field) and never validates UTF-8 anywhere in the same function.
 
-`MEMO_TEXT` is defined as up to 28 bytes, and stellar-core doesn't check that they're valid UTF-8. Go will happily put invalid bytes in a `string`. Then one of these happens:
+`MEMO_TEXT` is up to 28 bytes, and any 28 bytes are valid. Go will happily put invalid bytes in a `string`. Then one of these happens:
 
 - PostgreSQL rejects the row (`invalid byte sequence for encoding "UTF8"`), and ingestion stalls on that ledger.
 - A JSON encoder replaces the bytes with U+FFFD, and the memo the user sees isn't the memo they sent. For exchanges that route deposits by memo, that's a lost deposit.
 
-Horizon exposes `memo_bytes` alongside `memo` for exactly this reason.
-
-## Fix
-
-Validate, or keep the bytes:
+[`base-memo-non-utf8-local-0001`](/corpus/fixtures) is a real 28-byte memo containing `FF FE`, a lone surrogate in CESU-8 form and a Latin-1 byte. Horizon exposes `memo_bytes` alongside `memo` for exactly this reason.
 
 ```go
 text, ok := memo.GetText()
 if ok && !utf8.ValidString(text) {
-    // store base64(text) in a bytes column, or reject explicitly
+    // store the raw bytes, or reject explicitly
 }
 ```
 
 The rule recognises `utf8.ValidString`, `utf8.Valid`, `strings.ToValidUTF8`, and helpers named `ValidUTF8` or `SanitizeUTF8`.
 
+## Muxed IDs converted to a lossy type
+
+**Flags:** a conversion of a muxed account ID (`MuxedAccount.GetId()`, `MustId()`, the `Med25519.Id` field, or a variable assigned from them) to `float64`, `float32`, `int64`, `int`, `int32` or `uint32`.
+
+A muxed ID is any `uint64`. Converting to `float64` changes every ID above 2⁵³; to `int64`, every ID above 2⁶³ turns negative. The deposit is still credited, to a different sub-account. [`cap27-muxed-max-id-local-0001`](/corpus/fixtures) carries a destination ID of 2⁶⁴ − 1 and a source ID of 2⁵³ + 1, the smallest a double can't hold.
+
+```go
+id, err := muxed.GetId()      // uint64: keep it that way
+store(strconv.FormatUint(id, 10))
+```
+
 ## In the wild
 
-The [wallet-backend pilot](/pilots/wallet-backend) found one instance: `internal/utils/ingestion_utils.go:17`, a helper that returns memo text as a Go string. Nothing outside tests calls it at the pinned commit and no table has a memo column, so it isn't reachable today. It's triaged **latent**: worth a guard before memos are stored. No upstream issue was filed.
+[wallet-backend](/pilots/wallet-backend) at the pinned commit: one memo finding, `internal/utils/ingestion_utils.go:17`, a helper that returns memo text as a Go string. Nothing outside tests calls it and no table has a memo column, so it's triaged **latent**: worth a guard before memos are stored. No muxed-ID findings: wallet-backend keeps IDs as `uint64` and strings.

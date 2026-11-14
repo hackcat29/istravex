@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { test } from 'node:test';
 import { zstdDecompressSync } from 'node:zlib';
@@ -25,9 +25,12 @@ test('health reports version and RPC networks', async () => {
   assert.equal(r.headers.get('cache-control'), 'no-store');
 });
 
+// The committed corpus, counted straight from disk.
+const fixtureDirs = readdirSync(resolve(corpusDir, 'fixtures'), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
+
 test('stats summarise the committed results', async () => {
   const j = await json(app.request('/v1/stats'));
-  assert.equal(j.fixtures, 6);
+  assert.equal(j.fixtures, fixtureDirs.length);
   assert.equal(j.sdk_checks.passed, j.sdk_checks.total);
   assert.equal(j.provenance_checks.passed, j.provenance_checks.total);
   assert.equal(j.golden_frames.exact, j.golden_frames.total);
@@ -35,9 +38,9 @@ test('stats summarise the committed results', async () => {
 
 test('fixtures list and filter by CAP and network', async () => {
   const all = (await json(app.request('/v1/fixtures'))).fixtures;
-  assert.equal(all.length, 6);
+  assert.equal(all.length, fixtureDirs.length);
   const muxed = (await json(app.request('/v1/fixtures?cap=cap-0027'))).fixtures;
-  assert.deepEqual(muxed.map((f: { id: string }) => f.id), ['cap27-muxed-payment-pubnet-0001']);
+  assert.deepEqual(muxed.map((f: { id: string }) => f.id).sort(), fixtureDirs.filter((d) => d.startsWith('cap27-') || d === 'cap46-muxed-soroban-source-local-0001').sort());
   const local = (await json(app.request('/v1/fixtures?network=local'))).fixtures;
   assert.ok(local.every((f: { kind: string }) => f.kind === 'generated'));
 });
@@ -74,6 +77,16 @@ test('results and coverage are served as committed', async () => {
   const committed = JSON.parse(readFileSync(resolve(corpusDir, 'results', 'provenance.json'), 'utf8'));
   assert.deepEqual(await json(app.request('/v1/results/provenance')), committed);
   assert.equal((await json(app.request('/v1/coverage'))).live_caps, 70);
+});
+
+test('findings are served as committed, and synthetic fixtures list without a ledger', async () => {
+  const committed = JSON.parse(readFileSync(resolve(corpusDir, 'findings.json'), 'utf8'));
+  assert.deepEqual(await json(app.request('/v1/findings')), committed);
+  const { fixtures } = await json(app.request('/v1/fixtures'));
+  const synthetic = fixtures.filter((f: { synthetic: boolean }) => f.synthetic);
+  assert.ok(synthetic.length >= 1);
+  for (const f of synthetic) assert.equal(f.ledger, null);
+  assert.ok(fixtures.every((f: { pattern: string }) => f.pattern));
 });
 
 test('RPC replays the corpus over JSON-RPC', async () => {

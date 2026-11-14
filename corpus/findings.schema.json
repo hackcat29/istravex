@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hackcat29/istravex/corpus/findings.schema.json",
+  "title": "Istravex findings report",
+  "type": "object",
+  "required": [
+    "severity_scale",
+    "findings"
+  ],
+  "properties": {
+    "severity_scale": {
+      "type": "object",
+      "required": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "info"
+      ],
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "component",
+          "severity",
+          "status",
+          "issue",
+          "cap_ids",
+          "fixtures",
+          "checks",
+          "reproduced",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ISTRAVEX-F-[0-9]{4}$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "component": {
+            "type": "string",
+            "description": "owner/repo of the affected software"
+          },
+          "affected": {
+            "type": "string",
+            "description": "Versions or commits affected"
+          },
+          "fixed_in": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "status": {
+            "enum": [
+              "fixed-upstream",
+              "open-upstream",
+              "to-file",
+              "latent",
+              "by-design"
+            ]
+          },
+          "issue": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(#[0-9]+|@[0-9a-f]{7,40})$",
+            "description": "Upstream issue, PR or commit (owner/repo#n or owner/repo@sha); null only while status is to-file, latent or by-design"
+          },
+          "cap_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fixtures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Minimal reproducing corpus entries"
+          },
+          "checks": {
+            "type": "array",
+            "description": "The failing checks this finding explains, as runner:fixture:check. Every failing check in the results must be listed by some finding.",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+:[a-z0-9-]+:[A-Za-z0-9_:-]+$"
+            }
+          },
+          "reproduced": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "true when the kit fails on an affected version and passes on a fixed one; null when not applicable"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "draft": {
+            "type": "string",
+            "description": "For status to-file: the issue text, ready to file"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "enum": [
+                    "fixed-upstream",
+                    "open-upstream"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "issue": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "to-file"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "draft"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

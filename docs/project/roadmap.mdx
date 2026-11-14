@@ -9,10 +9,10 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2) as three mil
 
 | Deliverable | Where |
 |---|---|
-| Starter corpus | [6 fixtures, 4 CAPs](/corpus/fixtures), verified against canonical ledgers |
-| Fixture generator | [Pinned stellar-core generator](/corpus/generating), run in CI |
+| Starter corpus | [15 fixtures, 6 CAPs, 13 patterns](/corpus/fixtures): 13 verified against canonical ledgers, 2 synthetic |
+| Fixture generator | [Pinned stellar-core generator](/corpus/generating): byte-reproducible, any passphrase, run in CI on every push |
 | Manifest schema | [`corpus/manifest.schema.json`](/corpus/manifest) |
-| Reference adapter | [Mock RPC](/tools/mock-rpc) and [replay](/tools/replay) |
+| Reference adapter | [Mock RPC](/tools/mock-rpc), [data lake](/tools/data-lake) and [replay](/tools/replay); the wallet-backend adapter |
 
 **Acceptance:** a clean checkout validates provenance and replays the same sequence offline with stable results. CI does exactly this on every push.
 
@@ -30,18 +30,33 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2) as three mil
 
 | Deliverable | Where |
 |---|---|
-| wallet-backend findings | [wallet-backend pilot](/pilots/wallet-backend) |
+| wallet-backend findings | [wallet-backend pilot](/pilots/wallet-backend), [findings report](/project/findings) |
 | Reviewed guide | [Hardening guide](/guide/overview), reviewed by a Stellar Core engineer |
-| Tagged release | `v1.0.0` on GitHub |
+| Tagged release | `v1.0.0`, then `v1.1.0` on GitHub |
 | CI templates | [Reusable workflow and action](/operations/ci#in-your-repository) |
 
 **Acceptance:** findings and upstream links are public, the guide has engineering review, and a tagged release ships.
+
+## Against the RFP's reviewer checks
+
+The SCF RFP lists a check for each deliverable. Each one runs in CI.
+
+| Deliverable | Reviewer check | Where it's checked |
+|---|---|---|
+| Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
+| Replay harness | The reference adapter reproduces wallet-backend #729, #731 and #716 on pre-fix commits and passes on the fixed ones | [Before and after each upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix): all three, plus 9538b3c |
+| Linter | Flags seeded violations; runs clean on current wallet-backend | The [action self-test](/operations/ci) (six seeded findings) and the [pilot](/pilots/wallet-backend#lint) (one triaged latent finding, no live ones) |
+| Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; v1.0 reviewed 14 November 2026, v1.1 pages awaiting review |
+| Conformance runner | Reproduces js-stellar-sdk #1766, #1785 and #1789 on pre-fix tags | [Earlier JavaScript releases](/tools/sdk-runners#earlier-javascript-releases): 17.2.0 and 17.2.1 fail, 17.3.0 and 17.4.0 pass |
+| Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs` |
 
 ## Next
 
 In rough order of value:
 
-- **Coverage.** Fixtures for the 37 uncovered XDR-changing CAPs, starting with Soroban values (CAP-0046-01), live-state and archival changes (CAP-0062, CAP-0066) and liquidity pools (CAP-0038).
-- **More SDKs.** Python (`stellar-sdk`) and Java runners.
+- **Coverage.** 5 of 40 XDR-changing CAPs have fixtures today. Target for the maintenance window: 12, starting with live-state archival and restoration (CAP-0062, CAP-0066), unified events (CAP-0067), claimable balances (CAP-0023) and clawback (CAP-0035).
+- **File the to-file findings.** Three drafts in [findings](/project/findings#not-yet-filed): two for stellar-core, one for js-stellar-sdk.
+- **stellar-etl.** Now that the corpus exports in the [data-lake layout](/tools/data-lake), replay it through stellar-etl, whose open issues (#454 lossy amounts, #460 effects missing since protocol 23) are likely sources of new findings.
+- **More SDKs.** Python (`stellar-sdk`) and Java runners, and release matrices for Go and Rust like JavaScript's.
 - **More pilots.** Horizon's ingestion and at least one third-party explorer.
-- **Protocol upgrades.** Re-pin core, regenerate, and publish results within a week of each protocol release.
+- **Protocol upgrades.** Re-pin core, regenerate, and publish results within two weeks of each protocol release ([how](/project/maintenance#on-a-protocol-upgrade)).

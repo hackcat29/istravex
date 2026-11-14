@@ -13,6 +13,12 @@ You don't need to adopt the whole kit to get value from the corpus. If you're wr
 | Shows what a transaction cost, or who paid | `cap15-fee-bump-pubnet-0001` | A fee-bump on mainnet, with its result and fee metadata | The envelope says `max_fee` 46,341; the ledger charged 40,354, to the fee-bump payer rather than the inner source. |
 | Lists an account's signers | `cap40-signed-payload-signer-*` | An account with a signed-payload (`P…`) signer | The signer carries a payload. Code that expects ed25519 keys only drops it or truncates it. |
 | Tracks trustlines or balances | `cap73-sac-trust-*` | A trustline created by a Stellar Asset Contract `trust()` call | There's no `changeTrust` operation. The trustline only appears in metadata. |
+| Handles muxed IDs from user input or storage | `cap27-muxed-max-id-local-0001` | A payment from muxed ID 2⁵³ + 1 to muxed ID 2⁶⁴ − 1 | Both IDs change through a double; the larger goes negative through `int64`. |
+| Builds participant or account sets | `cap46-muxed-soroban-source-local-0001` | A Soroban operation from an `M…` source | The same account as `G…` and `M…` is two strings; a participant is the `G…` account. |
+| Works with liquidity pools or sorts assets | `cap38-pool-issuer-order-local-0001` | A pool-share trustline whose issuers sort differently as text and as bytes | Sorting strkeys as text gets the pair backwards, and the pool ID wrong. |
+| Converts contract values to native types | `cap46-scmap-host-order-local-0001` | A map whose keys mix types, two of which print the same | A native object keeps one of the two `"1"` keys, silently. |
+| Walks authorization trees | `cap46-nested-auth-local-0001` | A six-level authorization tree | Recursion with no depth limit is one deeper tree from a stack overflow. |
+| Parses untrusted XDR | `cap46-scval-limits-synthetic-0001`, `base-over-max-length-synthetic-0001` | Encodings a decoder must refuse | A length prefix of 2³² − 1 in 12 bytes; 2,000 levels of nesting; 101 operations. Your decoder should fail fast. |
 
 Each fixture's manifest has two sets of answers. `expected_decoded` is what correct *parsing* yields; `expected_indexed` is what a correct *indexer* stores. The values come from Horizon, the ledger, or the transaction as it was built, never from the SDK you're testing.
 

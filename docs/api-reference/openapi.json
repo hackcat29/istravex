@@ -90,33 +90,34 @@
                   "$ref": "#/components/schemas/Stats"
                 },
                 "example": {
-                  "fixtures": 6,
-                  "caps": 4,
+                  "fixtures": 15,
+                  "caps": 6,
                   "networks": [
                     "local",
                     "pubnet",
+                    "synthetic",
                     "testnet"
                   ],
                   "sdk_checks": {
-                    "passed": 54,
-                    "total": 54
+                    "passed": 123,
+                    "total": 123
                   },
                   "provenance_checks": {
-                    "passed": 62,
-                    "total": 62
+                    "passed": 152,
+                    "total": 152
                   },
                   "golden_frames": {
                     "exact": 15306,
                     "total": 15306
                   },
                   "wallet_backend_pilot": {
-                    "correct": 6,
-                    "total": 6
+                    "correct": 8,
+                    "total": 8
                   },
                   "cap_coverage": {
                     "live": 70,
                     "xdr_changing": 40,
-                    "xdr_covered": 3
+                    "xdr_covered": 5
                   }
                 }
               }
@@ -195,7 +196,60 @@
                 "example": {
                   "fixtures": [
                     {
+                      "id": "base-max-length-vectors-local-0001",
+                      "pattern": "max-length-vectors",
+                      "cap_ids": [],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 27,
+                      "tx_hash": "36be436e45fe8825b228e768d9b1e788e92c6336157ce987fccb4d0ab25e36bf",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "26a6b8f85962db66d3284b4a0fba4a6cbb093b5744c9ed5372012312d3772da0",
+                      "files": [
+                        "envelope",
+                        "envelope_signatures",
+                        "ledger_entry"
+                      ]
+                    },
+                    {
+                      "id": "base-memo-non-utf8-local-0001",
+                      "pattern": "memo-non-utf8",
+                      "cap_ids": [],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 23,
+                      "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "a457bfa73fb0c3bd308af2d7f2f69d793e166e9ebdbdddbdfe52bcb29126f439",
+                      "files": [
+                        "envelope",
+                        "result"
+                      ]
+                    },
+                    {
+                      "id": "base-over-max-length-synthetic-0001",
+                      "pattern": "over-max-length",
+                      "cap_ids": [],
+                      "network": "synthetic",
+                      "protocol_version": 30,
+                      "ledger": null,
+                      "tx_hash": null,
+                      "kind": "synthetic",
+                      "synthetic": true,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "288937eec52763976f51a272dfc8ae2e9946a1d7c0924f34cbb97862481d2cf3",
+                      "files": [
+                        "envelope_101_ops",
+                        "envelope_memo_29"
+                      ]
+                    },
+                    {
                       "id": "cap15-fee-bump-pubnet-0001",
+                      "pattern": "fee-bump",
                       "cap_ids": [
                         "CAP-0015"
                       ],
@@ -204,6 +258,7 @@
                       "ledger": 65474309,
                       "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
                       "kind": "captured",
+                      "synthetic": false,
                       "xdr_type": "TransactionEnvelope",
                       "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
                       "files": [
@@ -213,7 +268,27 @@
                       ]
                     },
                     {
+                      "id": "cap27-muxed-max-id-local-0001",
+                      "pattern": "muxed-max-id",
+                      "cap_ids": [
+                        "CAP-0027"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 16,
+                      "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "74d5a96ed71498e414ceb6c0419546fb5ac43f72c75bf8d34e8f7d5f6b93e2c1",
+                      "files": [
+                        "envelope",
+                        "meta"
+                      ]
+                    },
+                    {
                       "id": "cap27-muxed-payment-pubnet-0001",
+                      "pattern": "muxed-payment",
                       "cap_ids": [
                         "CAP-0027"
                       ],
@@ -222,6 +297,7 @@
                       "ledger": 65474279,
                       "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
                       "kind": "captured",
+                      "synthetic": false,
                       "xdr_type": "TransactionEnvelope",
                       "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
                       "files": [
@@ -230,17 +306,39 @@
                       ]
                     },
                     {
+                      "id": "cap38-pool-issuer-order-local-0001",
+                      "pattern": "pool-issuer-order",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 20,
+                      "tx_hash": "4b340837410808773f6e39173c171cac57896b6a828560d37cdca5a0577822cf",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "2e2c4e74632a5e4dda8798c676e0959438406a050b2a9ba5275e38ef4b6df6d7",
+                      "files": [
+                        "envelope",
+                        "ledger_entry",
+                        "meta"
+                      ]
+                    },
+                    {
                       "id": "cap40-signed-payload-signer-local-0001",
+                      "pattern": "signed-payload-signer",
                       "cap_ids": [
                         "CAP-0040"
                       ],
                       "network": "local",
                       "protocol_version": 30,
                       "ledger": 9,
-                      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+                      "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
                       "kind": "generated",
+                      "synthetic": false,
                       "xdr_type": "LedgerEntryData",
-                      "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+                      "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
                       "files": [
                         "ledger_entry",
                         "envelope"
@@ -248,6 +346,7 @@
                     },
                     {
                       "id": "cap40-signed-payload-signer-testnet-0001",
+                      "pattern": "signed-payload-signer",
                       "cap_ids": [
                         "CAP-0040"
                       ],
@@ -256,6 +355,7 @@
                       "ledger": 5727196,
                       "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
                       "kind": "captured",
+                      "synthetic": false,
                       "xdr_type": "LedgerEntryData",
                       "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
                       "files": [
@@ -264,17 +364,98 @@
                       ]
                     },
                     {
+                      "id": "cap46-muxed-soroban-source-local-0001",
+                      "pattern": "muxed-soroban-source",
+                      "cap_ids": [
+                        "CAP-0046",
+                        "CAP-0027"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 32,
+                      "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "92e68dd7ee1283d939ea3fd3615b80b5cd9472f5be79628edad67ecb00059254",
+                      "files": [
+                        "envelope",
+                        "meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-nested-auth-local-0001",
+                      "pattern": "nested-auth",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 43,
+                      "tx_hash": "d88a72034562f8b3ca35ec28dfc0583d50cb07cf96db8ede9cf76f88a44e8e3b",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "6f926d1775aabe3af20185624fde7eb24f3061c234f6e8d06384497e69a5bacf",
+                      "files": [
+                        "envelope",
+                        "meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-scmap-host-order-local-0001",
+                      "pattern": "scmap-host-order",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 42,
+                      "tx_hash": "d6c1eb95d6aba725a0abc6d0d932e59b0589ae86f7af2d6ec341b2fd29702347",
+                      "kind": "generated",
+                      "synthetic": false,
+                      "xdr_type": "LedgerEntryData",
+                      "sha256": "b489ac0b6cf1f098e7ebf5105b438f0e90c4d7ca7d49a3972b68c67964ad104f",
+                      "files": [
+                        "ledger_entry",
+                        "envelope",
+                        "meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-scval-limits-synthetic-0001",
+                      "pattern": "scval-limits",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "network": "synthetic",
+                      "protocol_version": 30,
+                      "ledger": null,
+                      "tx_hash": null,
+                      "kind": "synthetic",
+                      "synthetic": true,
+                      "xdr_type": "ScVal",
+                      "sha256": "f33ffc3b00e60aaec5a9e89d1c0f7dcf3672b426e4e596bed593b25c84e5d6fe",
+                      "files": [
+                        "vec_count_max",
+                        "map_count_max",
+                        "vec_depth_2000"
+                      ]
+                    },
+                    {
                       "id": "cap73-sac-trust-local-0001",
+                      "pattern": "sac-trust",
                       "cap_ids": [
                         "CAP-0073"
                       ],
                       "network": "local",
                       "protocol_version": 30,
                       "ledger": 13,
-                      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+                      "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
                       "kind": "generated",
+                      "synthetic": false,
                       "xdr_type": "TransactionMeta",
-                      "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+                      "sha256": "c422e52fadb266b58562564e55b7e7e70808bea9e10795efa908cfc6a3d635f2",
                       "files": [
                         "meta",
                         "envelope"
@@ -282,6 +463,7 @@
                     },
                     {
                       "id": "cap73-sac-trust-testnet-0001",
+                      "pattern": "sac-trust",
                       "cap_ids": [
                         "CAP-0073"
                       ],
@@ -290,6 +472,7 @@
                       "ledger": 5727199,
                       "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
                       "kind": "captured",
+                      "synthetic": false,
                       "xdr_type": "TransactionMeta",
                       "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
                       "files": [
@@ -350,6 +533,7 @@
                 },
                 "example": {
                   "id": "cap27-muxed-payment-pubnet-0001",
+                  "pattern": "muxed-payment",
                   "cap_ids": [
                     "CAP-0027"
                   ],
@@ -576,9 +760,9 @@
                       "path": "ledgers/local/3.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "d9b6029db087297e6cb6c72a6a5968f2f42b36507fa22b25b54a3ba04eb1e99c",
+                      "sha256": "0e082e43ffcbf25676190ba015ee38305b13c27c69d396a9004c6e20257b3af3",
                       "bytes": 1676,
-                      "compressed_bytes": 683
+                      "compressed_bytes": 684
                     },
                     {
                       "network": "local",
@@ -586,7 +770,7 @@
                       "path": "ledgers/local/4.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "8b79d67a0b738a9db0b2bfbf7e71edaec181352689a6049b68fb96ab99ab4d3b",
+                      "sha256": "1e1336583357fbb4b7ecbcf8581476db6f74eae8968c23523c5bc89977de97ed",
                       "bytes": 2988,
                       "compressed_bytes": 1161
                     },
@@ -596,9 +780,9 @@
                       "path": "ledgers/local/5.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "e99da45fabd59361377d468bdd6572bbc9e6b4d346de39d795c9606fb6721b51",
+                      "sha256": "3f20a0e93f541e3258a23c9b7b6999a9b827b0174476a51f4266ed5976bff427",
                       "bytes": 2352,
-                      "compressed_bytes": 886
+                      "compressed_bytes": 885
                     },
                     {
                       "network": "local",
@@ -606,9 +790,9 @@
                       "path": "ledgers/local/6.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "67c3d4bd5faaee1e639169eb3e3503944afa77c27695afeecea683530bcbdf5e",
-                      "bytes": 2852,
-                      "compressed_bytes": 1091
+                      "sha256": "d2d7365d74b485ef18be72dd9dc853bf3d883dce0b6a72e60a6af0f7fed5183b",
+                      "bytes": 2868,
+                      "compressed_bytes": 1111
                     },
                     {
                       "network": "local",
@@ -616,9 +800,9 @@
                       "path": "ledgers/local/8.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "bf2cfefabdadfaa5ecda2e815fbfd14f738e6053cbc327e3d40ff923def3257a",
+                      "sha256": "dd3eb35204fb540df6fdc75f6dcca7b572830615e4701860d7d5f7da587a28c7",
                       "bytes": 1912,
-                      "compressed_bytes": 685
+                      "compressed_bytes": 688
                     },
                     {
                       "network": "local",
@@ -626,9 +810,9 @@
                       "path": "ledgers/local/9.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "906b0a69f1349929a6b64c340329e001032b3437ea10622af9b2c9dfe6f881e0",
+                      "sha256": "94a1810f2aa3ce00ca1ddc6516279d495f4bfe6fa95ddb2bb2f4e36075860be9",
                       "bytes": 1808,
-                      "compressed_bytes": 716
+                      "compressed_bytes": 717
                     },
                     {
                       "network": "local",
@@ -636,9 +820,9 @@
                       "path": "ledgers/local/10.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "c3bc7bef8a80418bb120a9806dff6e1e2ea0b8ef6199301de0c3bb852a01ef32",
+                      "sha256": "a8244d5f395e295186989a81342bcb0e16aedc1d7983d231026147b277795b62",
                       "bytes": 1912,
-                      "compressed_bytes": 692
+                      "compressed_bytes": 691
                     },
                     {
                       "network": "local",
@@ -646,9 +830,9 @@
                       "path": "ledgers/local/11.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "ed58b90069423061fbb8642cce5469a7286ec7bfcfae146358eef20fe1dd7818",
+                      "sha256": "31fe8d8b51fcebc4d65372eea31a704171848bf068ffc2dc26b87d6f86aeb07a",
                       "bytes": 1912,
-                      "compressed_bytes": 687
+                      "compressed_bytes": 692
                     },
                     {
                       "network": "local",
@@ -656,9 +840,9 @@
                       "path": "ledgers/local/12.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "e8ea73a4930fb58ff4df2559ed1fe3a4ba477767350fbc00cf492794001f55b8",
+                      "sha256": "accb2fd4a490d8177d2cf1e470f1625f0ed95234eaa463339a3275a00c00fa54",
                       "bytes": 2404,
-                      "compressed_bytes": 1033
+                      "compressed_bytes": 1044
                     },
                     {
                       "network": "local",
@@ -666,9 +850,309 @@
                       "path": "ledgers/local/13.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
                       "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
-                      "sha256": "e233f6a7ab56b0a7b7d4cc0d85a466f435e3fbfc5637baed926b8cfaa42603c8",
+                      "sha256": "e64ace83a2cf0366f49a87fb47c5ff70e29a4819539f1d181a2f7bf479a906cd",
                       "bytes": 2632,
-                      "compressed_bytes": 910
+                      "compressed_bytes": 906
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 14,
+                      "path": "ledgers/local/14.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "4489f82a774c5bea1a46212c52ea065d6471a40dd391a4c7045b58c49cf39ee9",
+                      "bytes": 1912,
+                      "compressed_bytes": 690
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 15,
+                      "path": "ledgers/local/15.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "a9b26006665b42d2250caa3c5b82b32446f34fd2908e95d97adfc033fd53cde1",
+                      "bytes": 1912,
+                      "compressed_bytes": 693
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 16,
+                      "path": "ledgers/local/16.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "f10fbe8f3974a24ccbe8eb5171c5621370f09602d5a320ac82db18f2bc8b2b95",
+                      "bytes": 1872,
+                      "compressed_bytes": 713
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 17,
+                      "path": "ledgers/local/17.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "d747e69f72b7f5b4c7f01b676aab949698f1ed755a74363f78c89402211bcb83",
+                      "bytes": 1912,
+                      "compressed_bytes": 688
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 18,
+                      "path": "ledgers/local/18.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "d655064bc089beccdee71a7fca3afb0052f641caf5a4bf928710776bb46147e7",
+                      "bytes": 1912,
+                      "compressed_bytes": 691
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 19,
+                      "path": "ledgers/local/19.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "b77ba20f8bafe73c819df52b59c6ab233ea18c17ed362d768d0db6029cec0c0e",
+                      "bytes": 1912,
+                      "compressed_bytes": 690
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 20,
+                      "path": "ledgers/local/20.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "de7250a4c0847c29556df5dfa720f651f6a9b1c2b2876b3f9bdf6eb0c0dd681f",
+                      "bytes": 3548,
+                      "compressed_bytes": 881
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 21,
+                      "path": "ledgers/local/21.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "c83ccb114a8724dfef4b5724137f3b63281bd0685f589d48f4fef54818c587d6",
+                      "bytes": 1912,
+                      "compressed_bytes": 689
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 22,
+                      "path": "ledgers/local/22.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "481e4b219ee1271ff1135e96bcdf67f10eb289f43579ccd374b3e580b5a720af",
+                      "bytes": 1912,
+                      "compressed_bytes": 693
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 23,
+                      "path": "ledgers/local/23.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "7ae0487a098cd0d13222d5b991696b1513b9ee2a9476c4dc838de4f9a885a834",
+                      "bytes": 1888,
+                      "compressed_bytes": 712
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 24,
+                      "path": "ledgers/local/24.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "c9c05ee9b7c5b6f2a907b375d6761af7b7205be896d7c165eebae8e6a59d1070",
+                      "bytes": 1912,
+                      "compressed_bytes": 690
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 25,
+                      "path": "ledgers/local/25.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "8feeff53f7d0d8b8fa85e18aa9bef13af3cb9d6583150c079d75fbe0e7a8334b",
+                      "bytes": 1912,
+                      "compressed_bytes": 696
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 26,
+                      "path": "ledgers/local/26.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "847221c5461b1f5830db47a9bdd34456b11a6c6c8d8c82b2790e17ce4f4436f9",
+                      "bytes": 1912,
+                      "compressed_bytes": 689
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 27,
+                      "path": "ledgers/local/27.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "e6a1d26e6b4bb472c60f8dd6d74cc4d1d48ae212c178c0d8a2250ff61a4cafb8",
+                      "bytes": 58088,
+                      "compressed_bytes": 1614
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 28,
+                      "path": "ledgers/local/28.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "c4fb996d6e65ec03d673f1c602649092acc307a40b60d672b4c9c4e4d3799e14",
+                      "bytes": 29108,
+                      "compressed_bytes": 1963
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 29,
+                      "path": "ledgers/local/29.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "71231f968b6a3347754d6f12b6beac1b45e64a21c9aaafbc56fce7d8a5b53326",
+                      "bytes": 8660,
+                      "compressed_bytes": 2677
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 30,
+                      "path": "ledgers/local/30.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "6263589e4e1a711766cf916d4e0cf15f92d52727454d46df0fc6ec1136c1f42f",
+                      "bytes": 1912,
+                      "compressed_bytes": 689
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 31,
+                      "path": "ledgers/local/31.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "77ce550b84a2a24c53b095e05e06bf47ff54758dea8f10e02cb9cfa23ae7e147",
+                      "bytes": 2404,
+                      "compressed_bytes": 1035
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 32,
+                      "path": "ledgers/local/32.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "484b4daa8701cc2f4519406a58821d26056dcd0d013a4a640544e0301a82ca3f",
+                      "bytes": 1976,
+                      "compressed_bytes": 781
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 33,
+                      "path": "ledgers/local/33.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "bc7355ef235ced05018b6105fd6d4fdeac43ef10b5acc85d3acc9eeb7d3d038e",
+                      "bytes": 1912,
+                      "compressed_bytes": 690
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 34,
+                      "path": "ledgers/local/34.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "4379f99888bdd14c1aca24eeff91d8eadf716de34a0d5f7fd160363737d2d711",
+                      "bytes": 10352,
+                      "compressed_bytes": 2564
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 35,
+                      "path": "ledgers/local/35.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "2c014f3290e2e1c693b7f1741b5b9139cc492e8bb60f8e39e538fe4545ba728b",
+                      "bytes": 2376,
+                      "compressed_bytes": 912
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 36,
+                      "path": "ledgers/local/36.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "9a8a470102f5ce8a6a08ef7c6b1fbf7c6793de6b286b4b8b02895021a480287f",
+                      "bytes": 2376,
+                      "compressed_bytes": 911
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 37,
+                      "path": "ledgers/local/37.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "7b924bce8de8f811d1a8e88937e64f97a089956450e840ab232ae346e26273f9",
+                      "bytes": 2376,
+                      "compressed_bytes": 916
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 38,
+                      "path": "ledgers/local/38.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "2cefac9fa54a078567d9d816209a13b584286a2619642ade826b4428c8c3681e",
+                      "bytes": 2376,
+                      "compressed_bytes": 911
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 39,
+                      "path": "ledgers/local/39.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "6ccdb009a2cfae9778cb48e313f5b837b6a66e8b15c48503db36805ffe21cd29",
+                      "bytes": 2376,
+                      "compressed_bytes": 912
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 40,
+                      "path": "ledgers/local/40.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "d03e10b5e031e49747dfabf3430e55296c5ad0d24b5d7e52a5e2bf2fdf179f17",
+                      "bytes": 2376,
+                      "compressed_bytes": 920
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 41,
+                      "path": "ledgers/local/41.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "3f07fa6fbfcd510c67987ba822bd3aceb26387e3767aaec1b3715a31e192d47d",
+                      "bytes": 2376,
+                      "compressed_bytes": 914
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 42,
+                      "path": "ledgers/local/42.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "6cc509f4e18e7ff7c7830531d3c717e861efbf21a0b0c152b02be7f6f60c5c5c",
+                      "bytes": 2704,
+                      "compressed_bytes": 954
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 43,
+                      "path": "ledgers/local/43.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "aaf0aeaf835222eb7b6e159cc012ef889a337857229321701c1be51667b84651",
+                      "bytes": 3800,
+                      "compressed_bytes": 1073
                     },
                     {
                       "network": "pubnet",
@@ -845,6 +1329,7 @@
                     "goldens-javascript",
                     "goldens-patterns",
                     "goldens-rust",
+                    "javascript-matrix",
                     "javascript",
                     "pilot-wallet-backend",
                     "provenance",
@@ -956,6 +1441,477 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/findings": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "Findings report",
+        "operationId": "getFindings",
+        "description": "Every finding the kit has produced or reproduced: the affected component, severity, upstream issue, the minimal corpus entries that show it, and the failing checks it explains. Each failure the kit reproduces on purpose (an SDK release before a fix, a wallet-backend commit before a fix) maps to one of these. The same file as corpus/findings.json.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "severity_scale",
+                    "findings"
+                  ],
+                  "properties": {
+                    "severity_scale": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "findings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "title",
+                          "component",
+                          "severity",
+                          "status",
+                          "issue",
+                          "fixtures",
+                          "checks",
+                          "reproduced",
+                          "summary"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "enum": [
+                              "critical",
+                              "high",
+                              "medium",
+                              "low",
+                              "info"
+                            ]
+                          },
+                          "status": {
+                            "enum": [
+                              "fixed-upstream",
+                              "open-upstream",
+                              "to-file",
+                              "latent",
+                              "by-design"
+                            ]
+                          },
+                          "issue": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "fixtures": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "checks": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "reproduced": {
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "summary": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "severity_scale": {
+                    "critical": "Consensus, funds or keys at risk.",
+                    "high": "Ingestion halts, or value is attributed to the wrong account.",
+                    "medium": "Data is silently lost or wrong (an amount, an ID, a missing record), or a valid network value is rejected on a common path.",
+                    "low": "A valid but rare value is rejected or mishandled; tooling or test infrastructure is affected.",
+                    "info": "Behaviour worth knowing about that isn't a defect."
+                  },
+                  "findings": [
+                    {
+                      "id": "ISTRAVEX-F-0001",
+                      "title": "Ingestion halts on a CAP-40 signed-payload signer",
+                      "component": "stellar/wallet-backend",
+                      "affected": "before 2c87335 (2026-09-08)",
+                      "fixed_in": "stellar/wallet-backend#729",
+                      "severity": "high",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/wallet-backend#729",
+                      "cap_ids": [
+                        "CAP-0040"
+                      ],
+                      "fixtures": [
+                        "cap40-signed-payload-signer-local-0001"
+                      ],
+                      "checks": [
+                        "pilot-sighting:cap40-signed-payload-signer-local-0001:records-persist"
+                      ],
+                      "reproduced": true,
+                      "summary": "A SetOptions that adds a P… signer produces a state change whose signer column can't be encoded (68-byte key into a 33-byte AddressBytea). The COPY fails, th…",
+                      "evidence": "Pilot at 2a0a84e (before): dropped, records persist: state_change.SignerAccountID … has a 68-byte key. At 2c87335 (the fix): correct. Protocol 28 corpus, kit…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0002",
+                      "title": "SAC-created trustlines produce no trustline state change",
+                      "component": "stellar/wallet-backend",
+                      "affected": "before c152783 (2026-09-17)",
+                      "fixed_in": "stellar/wallet-backend#734",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/wallet-backend#731",
+                      "cap_ids": [
+                        "CAP-0073"
+                      ],
+                      "fixtures": [
+                        "cap73-sac-trust-local-0001"
+                      ],
+                      "checks": [
+                        "pilot-sighting:cap73-sac-trust-local-0001:trustline-state-change"
+                      ],
+                      "reproduced": true,
+                      "summary": "A trustline created by the Stellar Asset Contract's trust() has no changeTrust operation; an indexer keyed on operation types records the trustline but no TR…",
+                      "evidence": "Pilot at 764a4f5 (before): incorrect, TRUSTLINE state change: expected ADD, got none. At c152783 (#734): correct."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0003",
+                      "title": "A Soroban operation from a muxed source halts ingestion",
+                      "component": "stellar/wallet-backend",
+                      "affected": "before bb0b162 (2026-09-25)",
+                      "fixed_in": "stellar/wallet-backend#753",
+                      "severity": "high",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/wallet-backend#716",
+                      "cap_ids": [
+                        "CAP-0046",
+                        "CAP-0027"
+                      ],
+                      "fixtures": [
+                        "cap46-muxed-soroban-source-local-0001"
+                      ],
+                      "checks": [
+                        "pilot-sighting:cap46-muxed-soroban-source-local-0001:records-persist",
+                        "lint:wallet-backend-f8e5786:IX003"
+                      ],
+                      "reproduced": true,
+                      "summary": "The Soroban participant path added the source as M…, the classic path as G…; both encode to one primary key, the COPY fails with SQLSTATE 23505, and ingestio…",
+                      "evidence": "Pilot at f8e5786 (before): dropped, participants G… and M… encode to the same key. At bb0b162 (#753): correct. istravex-lint IX003 flags the four call sites …"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0004",
+                      "title": "Soroban participants collected by unbounded recursion over the authorization tree",
+                      "component": "stellar/wallet-backend",
+                      "affected": "before 9538b3c (2026-09-28)",
+                      "fixed_in": "stellar/wallet-backend@9538b3cae",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/wallet-backend@9538b3cae",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [
+                        "cap46-nested-auth-local-0001"
+                      ],
+                      "checks": [
+                        "lint:wallet-backend-666a64d:IX002"
+                      ],
+                      "reproduced": true,
+                      "summary": "participantsFromInvocationAndSubInvocations recursed over SorobanAuthorizedInvocation with no depth or size limit, and took participants from the authorizati…",
+                      "evidence": "istravex-lint IX002 flags contract_operations.go:53 at 666a64d and not at 9538b3c, which derives Soroban participants from executed meta. The nested-auth fix…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0005",
+                      "title": "Asset issuers and ScMap keys ordered by text instead of network order",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "17.2.0 and earlier",
+                      "fixed_in": "17.2.1",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/js-stellar-sdk#1766",
+                      "cap_ids": [
+                        "CAP-0038",
+                        "CAP-0046"
+                      ],
+                      "fixtures": [
+                        "cap38-pool-issuer-order-local-0001",
+                        "cap46-scmap-host-order-local-0001"
+                      ],
+                      "checks": [
+                        "javascript-matrix:cap38-pool-issuer-order-local-0001:decode_pool_share_op",
+                        "javascript-matrix:cap38-pool-issuer-order-local-0001:asset_compare",
+                        "javascript-matrix:cap38-pool-issuer-order-local-0001:pool_id",
+                        "javascript-matrix:cap46-scmap-host-order-local-0001:sorted_map_matches_host"
+                      ],
+                      "reproduced": true,
+                      "summary": "Strkeys are base32, where 2–7 sort before A–Z in ASCII but after them in value. 17.2.0 orders issuers by strkey text, so decoding a valid pool-share changeTr…",
+                      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 fails the four checks; 17.2.1 and later pass. The fixture's issuers were chosen so their strkey order is the reverse of the…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0006",
+                      "title": "Muxed and offer IDs accept values that encode a different ID",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "17.2.1 and earlier",
+                      "fixed_in": "17.3.0",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/js-stellar-sdk#1785",
+                      "cap_ids": [
+                        "CAP-0027"
+                      ],
+                      "fixtures": [
+                        "cap27-muxed-max-id-local-0001"
+                      ],
+                      "checks": [
+                        "javascript-matrix:cap27-muxed-max-id-local-0001:muxed_id_input_canonical",
+                        "javascript-matrix:cap27-muxed-max-id-local-0001:offer_id_input_exact"
+                      ],
+                      "reproduced": true,
+                      "summary": "MuxedAccount accepts \"0x…\" for the maximum ID and id() then returns the string as typed, not the ID the M-address encodes; manageSellOffer rounds a numeric o…",
+                      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail both checks; 17.3.0 and later reject both inputs."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0007",
+                      "title": "scValToNative silently drops map entries whose keys collide",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "17.2.1 and earlier",
+                      "fixed_in": "17.3.0",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/js-stellar-sdk#1789",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [
+                        "cap46-scmap-host-order-local-0001"
+                      ],
+                      "checks": [
+                        "javascript-matrix:cap46-scmap-host-order-local-0001:native_keeps_every_entry"
+                      ],
+                      "reproduced": true,
+                      "summary": "u32 1 and symbol \"1\" are distinct ScMap keys that become the same object property; the conversion keeps the last and drops the rest with no error.",
+                      "evidence": "On the fixture's real 10-entry map, 17.2.0 and 17.2.1 return 8 entries and no error; 17.3.0 and later throw."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0008",
+                      "title": "XDR string .value getters are lossy for bytes that aren't UTF-8",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "all versions (documented behaviour since the fix)",
+                      "fixed_in": "17.3.0 (documentation; byte-keeping paths unchanged)",
+                      "severity": "info",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/js-stellar-sdk#1823",
+                      "cap_ids": [],
+                      "fixtures": [
+                        "base-memo-non-utf8-local-0001"
+                      ],
+                      "checks": [],
+                      "reproduced": null,
+                      "summary": "The network accepts any 28 bytes as memo text. The SDK's byte-keeping paths (the memo arm's bytes, Memo.fromXDRObject/toXDRObject, TransactionBuilder.fromXDR…",
+                      "evidence": "All SDK versions pass memo_bytes, memo_class_roundtrip and transaction_roundtrip on a real 28-byte memo containing FF FE, a CESU-8 lone surrogate and a Latin…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0009",
+                      "title": "Decoders reserve capacity from untrusted length prefixes and ignore vector maximums",
+                      "component": "stellar/rs-stellar-xdr",
+                      "affected": "before the fixes in #581 and #598",
+                      "fixed_in": "stellar/rs-stellar-xdr#581, #598",
+                      "severity": "medium",
+                      "status": "fixed-upstream",
+                      "issue": "stellar/rs-stellar-xdr#598",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [
+                        "cap46-scval-limits-synthetic-0001",
+                        "base-over-max-length-synthetic-0001"
+                      ],
+                      "checks": [],
+                      "reproduced": null,
+                      "summary": "A 12-byte ScVal claiming 2^32 - 1 elements, a 2,000-deep vec, 101 operations and a 29-byte memo must each be rejected cleanly. The corpus keeps them as regre…",
+                      "evidence": "Synthetic fixtures with expect: decode_error; all three runners pass. Not run against pre-fix rs-stellar-xdr releases."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0010",
+                      "title": "Operation meta lists its ledger entry changes in a different order on different runs",
+                      "component": "stellar/stellar-core",
+                      "affected": "30.0.0 (Homebrew darwin-arm64 build; observed on standalone networks)",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "to-file",
+                      "issue": null,
+                      "cap_ids": [],
+                      "fixtures": [
+                        "cap38-pool-issuer-order-local-0001"
+                      ],
+                      "checks": [],
+                      "reproduced": true,
+                      "summary": "Two runs of the same pinned binary on identical input (same keys, transactions and close times) produce identical ledger headers, transaction sets and result…",
+                      "evidence": "node kit/capture/generate.mjs --check: consensus bytes identical; 2–3 meta files per run differ only in change order, e.g. the changeTrust pool-share operati…",
+                      "draft": "Title: Order of LedgerEntryChange entries within an operation's meta differs between runs\n\nstellar-core 30.0.0 (Homebrew, darwin-arm64), RUN_STANDALONE + MAN…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0011",
+                      "title": "get-settings-upgrade-txs uses a random salt, so standalone networks can't be reproduced",
+                      "component": "stellar/stellar-core",
+                      "affected": "30.0.0",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "to-file",
+                      "issue": null,
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [],
+                      "checks": [],
+                      "reproduced": true,
+                      "summary": "The upgrade contract is deployed with a random salt, so its contract ID, the upgrade key and every later ledger hash differ between otherwise identical runs.…",
+                      "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade().",
+                      "draft": "Title: get-settings-upgrade-txs: accept a salt for reproducible test networks\n\n`stellar-core get-settings-upgrade-txs` deploys the upgrade contract with a ra…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0012",
+                      "title": "TransactionBuilder refuses a muxed source on every Soroban transaction",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "17.4.0",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "to-file",
+                      "issue": null,
+                      "cap_ids": [
+                        "CAP-0046",
+                        "CAP-0027"
+                      ],
+                      "fixtures": [
+                        "cap46-muxed-soroban-source-local-0001"
+                      ],
+                      "checks": [],
+                      "reproduced": true,
+                      "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" for any Soroban transaction. stellar-core rejects a muxed source only on I…",
+                      "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource).",
+                      "draft": "Title: TransactionBuilder rejects a muxed source on ExtendFootprintTtl / RestoreFootprint\n\nBuilding a transaction whose source is an M-address with a single …"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0013",
+                      "title": "Memo text returned as a Go string without UTF-8 validation",
+                      "component": "stellar/wallet-backend",
+                      "affected": "main @ 3e22515",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "latent",
+                      "issue": null,
+                      "cap_ids": [],
+                      "fixtures": [
+                        "base-memo-non-utf8-local-0001"
+                      ],
+                      "checks": [
+                        "lint:wallet-backend-3e22515:IX001"
+                      ],
+                      "reproduced": null,
+                      "summary": "utils.Memo returns MEMO_TEXT as a string with no UTF-8 check. Nothing outside tests calls it and no table has a memo column, so it isn't reachable today. Wor…",
+                      "evidence": "istravex-lint IX001 at internal/utils/ingestion_utils.go:17; triaged in kit/pilot/wallet-backend/triage.json."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0014",
+                      "title": "Fee-processing changes over-count Soroban fees",
+                      "component": "stellar/stellar-core",
+                      "affected": "protocol 23 and later",
+                      "fixed_in": null,
+                      "severity": "info",
+                      "status": "by-design",
+                      "issue": null,
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [
+                        "cap15-fee-bump-pubnet-0001"
+                      ],
+                      "checks": [],
+                      "reproduced": null,
+                      "summary": "On the fee-bump fixture the fee-processing changes debit 46,340 stroops but FeeCharged is 40,354: the Soroban refund settles after apply. Fees computed from …",
+                      "evidence": "kit/replay/replay.mjs, feeMetaDebit on the reference row."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0015",
+                      "title": "Diagnostic events differ between RPC nodes for the same ledger",
+                      "component": "stellar/stellar-rpc",
+                      "affected": "testnet nodes, 2026-11",
+                      "fixed_in": null,
+                      "severity": "info",
+                      "status": "by-design",
+                      "issue": null,
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "fixtures": [],
+                      "checks": [],
+                      "reproduced": null,
+                      "summary": "The same transaction's meta differed in one diagnostic value (core_metrics invoke_time_nsecs, 188,866 vs 126,592 ns) between two nodes. Diagnostic events are…",
+                      "evidence": "kit/capture/canonicalize.mjs; the verifier explains a diagnostic-only difference when it sees one."
+                    }
+                  ]
                 }
               }
             }
@@ -1235,6 +2191,10 @@
           "id": {
             "type": "string"
           },
+          "pattern": {
+            "type": "string",
+            "example": "muxed-payment"
+          },
           "cap_ids": {
             "type": "array",
             "items": {
@@ -1248,16 +2208,25 @@
             "type": "integer"
           },
           "ledger": {
-            "type": "integer"
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "null for synthetic fixtures"
           },
           "tx_hash": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "null for synthetic fixtures"
           },
           "kind": {
             "type": "string",
             "enum": [
               "captured",
-              "generated"
+              "generated",
+              "synthetic"
             ]
           },
           "xdr_type": {
@@ -1271,6 +2240,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "synthetic": {
+            "type": "boolean"
           }
         }
       },
@@ -1280,6 +2252,10 @@
         "properties": {
           "id": {
             "type": "string"
+          },
+          "pattern": {
+            "type": "string",
+            "description": "The ledger pattern the fixture exercises, e.g. muxed-payment"
           },
           "cap_ids": {
             "type": "array",
@@ -1319,6 +2295,13 @@
             "items": {
               "type": "object"
             }
+          },
+          "sightings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Upstream issues this fixture reproduces, as owner/repo#number"
           }
         }
       },

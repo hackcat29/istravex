@@ -30,10 +30,12 @@ jobs:
       - run: npm ci
       - name: Provenance (schema, sha256, canonical ledgers)
         run: npm run corpus:verify
-      - name: Unit tests (mock RPC, linter)
+      - name: Unit tests (mock RPC, bounded memory, data lake, linter)
         run: npm run test:kit
       - name: SDK conformance
         run: npm run corpus:js && npm run corpus:go && npm run corpus:rust
+      - name: JavaScript SDK release matrix (upstream fixes fail before, pass after)
+        run: npm run corpus:js-matrix
       - name: stellar-core golden LedgerCloseMeta (--check-lcm data) in all three SDKs
         run: node kit/goldens/fetch.mjs && npm run corpus:goldens
       - name: Replay
@@ -42,10 +44,22 @@ jobs:
         run: node kit/check-results.mjs
       - name: Site data, docs snippets and API spec are up to date
         run: npm run corpus:data && git diff --exit-code -- src/data/corpus.json docs/snippets docs/api-reference/openapi.json
+      - name: Hardening guide field table agrees with the corpus
+        run: npm run guide:check
+      - name: Hardening guide exports for developers.stellar.org
+        run: npm run guide:export
+      - uses: upload-artifact@v7
+        with:
+          name: hardening-guide-docusaurus
+          path: build/guide
 
   generate:
-    name: Generate on pinned stellar-core
+    name: Generate on pinned stellar-core (${{ matrix.passphrase }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        passphrase: [standalone, testnet, pubnet]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -67,12 +81,40 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/sdf.gpg] https://apt.stellar.org noble stable" | sudo tee /etc/apt/sources.list.d/sdf.list
           sudo apt-get update -q
           sudo apt-get install -y -q stellar-core=30.0.0-3642.0e49751aa.noble
-      - name: Regenerate local fixtures (binary checked against core-pin.json)
-        run: npm run corpus:generate -- --force
-      - name: Verify and run the regenerated corpus
-        run: npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay
-      - name: All green (goldens are covered by the kit job)
-        run: SKIP_GOLDENS=1 node kit/check-results.mjs
+      # Standalone: the committed corpus, regenerated on Linux, must match it
+      # byte for byte (metadata up to stellar-core's change order). Testnet and
+      # pubnet passphrases: two generations must match each other.
+      - name: Regeneration is reproducible
+        run: node kit/capture/generate.mjs --check --passphrase ${{ matrix.passphrase }}
+      - name: Regenerate the committed fixtures and run them
+        if: matrix.passphrase == 'standalone'
+        run: |
+          npm run corpus:generate
+          npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay
+          SKIP_GOLDENS=1 node kit/check-results.mjs
+      - name: Generate under the ${{ matrix.passphrase }} passphrase and run it
+        if: matrix.passphrase != 'standalone'
+        run: |
+          node kit/capture/generate.mjs --passphrase ${{ matrix.passphrase }} --out "$RUNNER_TEMP/corpus"
+          (cd kit/go && go run ./cmd/verify "$RUNNER_TEMP/corpus" && go run ./cmd/conformance "$RUNNER_TEMP/corpus")
+          ISTRAVEX_CORPUS="$RUNNER_TEMP/corpus" node kit/runners/js/run.mjs
+          (cd kit/runners/rust && cargo run --release -q -- "$RUNNER_TEMP/corpus")
+          ISTRAVEX_CORPUS="$RUNNER_TEMP/corpus" node kit/check-results.mjs --runners-only
+
+  probe:
+    name: Probe contract rebuilds byte for byte
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build with the pinned toolchain (rust-toolchain.toml)
+        working-directory: kit/capture/contracts/probe
+        env:
+          SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2: '1'
+        run: cargo build --release --target wasm32v1-none --locked
+      - name: Identical to the committed Wasm
+        run: |
+          sha256sum kit/capture/contracts/probe/target/wasm32v1-none/release/istravex_probe.wasm kit/capture/contracts/probe.wasm
+          cmp kit/capture/contracts/probe/target/wasm32v1-none/release/istravex_probe.wasm kit/capture/contracts/probe.wasm
 
   api:
     name: API tests and container
@@ -123,8 +165,8 @@ jobs:
         with:
           working-directory: kit/go/lint/testdata/selftest
           version: ${{ github.sha }}
-      - name: Expect failure with exactly 3 findings (IX001, IX003 ×2)
-        run: test "${{ steps.bad.outcome }}" = failure && test "${{ steps.bad.outputs.findings }}" = 3
+      - name: Expect failure with exactly 6 findings (IX001 ×2, IX002, IX003 ×3)
+        run: test "${{ steps.bad.outcome }}" = failure && test "${{ steps.bad.outputs.findings }}" = 6
 
   pilot:
     name: Upstream pilot (wallet-backend)
@@ -140,7 +182,15 @@ jobs:
           go-version-file: kit/go/go.mod
           cache-dependency-path: kit/go/go.sum
       - run: npm ci
-      - run: npm run pilot:wallet-backend
+      # The sightings replay a protocol 28 corpus the pinned core generates.
+      - name: Install stellar-core 30.0.0 (SDF apt, pinned)
+        run: |
+          curl -fsSL https://apt.stellar.org/SDF.asc | sudo gpg --dearmor -o /usr/share/keyrings/sdf.gpg
+          echo "deb [signed-by=/usr/share/keyrings/sdf.gpg] https://apt.stellar.org noble stable" | sudo tee /etc/apt/sources.list.d/sdf.list
+          sudo apt-get update -q
+          sudo apt-get install -y -q stellar-core=30.0.0-3642.0e49751aa.noble
+      - name: wallet-backend at main (RPC and data lake), and before and after each upstream fix
+        run: npm run pilot:wallet-backend
       - run: node kit/check-results.mjs
 
   site:

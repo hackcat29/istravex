@@ -1,23 +1,30 @@
 ---
-title: IX003 · Fees from the envelope
+title: IX003 · Participants and fees from the envelope
 sidebarTitle: IX003
-description: The envelope says who bid. The ledger says who paid, and how much.
+description: The envelope says what was asked for, in the form it was written. The ledger says who was affected and who paid.
 ---
 
 ## What it flags
 
-Two patterns:
+Three patterns, each in the narrow context where it's wrong:
 
-1. **`TransactionEnvelope.Fee()` or `FeeBumpFee()`** in a function that never reads `FeeCharged`. The envelope fee is the bid, not the charge.
-2. **`TransactionEnvelope.SourceAccount()` in fee logic** (the function's name or body mentions fees) that never checks for a fee-bump (`IsFeeBump`, `FeeBumpAccount`, `FeeAccount`…). On a fee-bump, `SourceAccount()` is the inner source, who didn't pay.
+1. **A muxed account's `Address()` or `GetAddress()` in participant code** (the function's name or body mentions participants). That's the `M…` form; a participant is the account.
+2. **`TransactionEnvelope.Fee()` or `FeeBumpFee()`** in a function that never reads `FeeCharged`. The envelope fee is the bid, not the charge.
+3. **`TransactionEnvelope.SourceAccount()` in fee logic** (the function's name or body mentions fees) that never checks for a fee-bump (`IsFeeBump`, `FeeBumpAccount`, `FeeAccount`…). On a fee-bump, `SourceAccount()` is the inner source, who didn't pay.
 
 ## Why it matters
 
-On the [fee-bump fixture](/corpus/fixtures#fee-bump-fee-source), reading fees from the envelope gives the wrong account *and* the wrong amount: 46,341 stroops charged to `GDMV…COIW`, when the ledger charged 40,354 to `GA2J…HVAW`. The [naive replay indexer](/tools/replay) makes exactly this mistake.
+**Participants.** `GA…` and `MA…` for the same account are two strings. A participant set built from both holds the account twice, and a database that reduces both to the account's key refuses the second row. In wallet-backend that halted ingestion: a Soroban operation from a muxed source, one cheap `ExtendFootprintTtl`, added the `M…` form next to the `G…` one, and the COPY failed with a duplicate primary key ([#716](https://github.com/stellar/wallet-backend/issues/716), fixed in [#753](https://github.com/stellar/wallet-backend/pull/753)). [`cap46-muxed-soroban-source-local-0001`](/corpus/fixtures) is that transaction.
+
+**Fees.** On the [fee-bump fixture](/corpus/fixtures), reading fees from the envelope gives the wrong account *and* the wrong amount: 46,341 stroops charged to `GDMV…COIW`, when the ledger charged 40,354 to `GA2J…HVAW`.
 
 ## Fix
 
 ```go
+// Participants: the account, never the muxed form.
+participants.Add(op.SourceAccount().ToAccountId().Address())
+
+// Fees: the payer and the charge.
 payer := env.SourceAccount()
 if env.IsFeeBump() {
     payer = env.FeeBumpAccount()
@@ -25,6 +32,9 @@ if env.IsFeeBump() {
 charged := result.Result.FeeCharged
 ```
 
-## Why it's limited to fee logic
+## Calibrated on wallet-backend
 
-`SourceAccount()` is often right. An operation without its own source runs as the inner transaction's source, fee-bump or not, so using it as the fallback is correct. The first version of this rule flagged every call and produced two false positives in wallet-backend, both correct fallbacks. Restricting it to fee logic removed them without losing the real pattern.
+Both halves are deliberately narrow, and the [pilot](/pilots/wallet-backend#before-and-after-each-upstream-fix) holds them to it on every run:
+
+- **Participants.** On the commit before #753, IX003 flags exactly the four call sites #753 changed (`contract_operations.go:156, 259, 303, 347`). On the fix and on main: nothing. Elsewhere the `M…` form is often what's wanted, to display or store the muxed address, so the rule stays out of non-participant code.
+- **Fees.** `SourceAccount()` is often right: an operation without its own source runs as the inner transaction's source, fee-bump or not. The first version of this rule flagged every call and produced two false positives in wallet-backend, both correct fallbacks. Restricting it to fee logic removed them without losing the real pattern.

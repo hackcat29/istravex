@@ -71,7 +71,7 @@ function Card({
 
 /* ── 01 Corpus: the CAP audit. One cell per XDR-changing live CAP ────── */
 const xdrCaps = corpus.coverage.xdr_caps;
-const sample = corpus.fixtures.find((f) => f.cap === 'CAP-0027')!.manifest;
+const sample = corpus.fixtures.find((f) => f.pattern === 'muxed-payment')!.manifest;
 const manifestLines: [string, string][] = [
   ['id', `"${sample.id}"`],
   ['cap_ids', JSON.stringify(sample.cap_ids)],
@@ -205,8 +205,10 @@ const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Ru
 const pkgShort = (p: string) => p.split('/').pop()!;
 const cells = checkKeys.flatMap((c) =>
   corpus.sdks.map((s) => {
-    const pass = s.results.filter((r) => (r.checks as Record<string, string>)[c] === 'pass').length;
-    return { check: c, sdk: s, pass, total: s.results.length };
+    // 'n/a': re-encoding bytes a decoder must refuse doesn't apply.
+    const applicable = s.results.filter((r) => (r.checks as Record<string, string>)[c] !== 'n/a');
+    const pass = applicable.filter((r) => (r.checks as Record<string, string>)[c] === 'pass').length;
+    return { check: c, sdk: s, pass, total: applicable.length };
   }),
 );
 
@@ -335,7 +337,14 @@ function LintVisual() {
 
 /* ── 05 Pilot: wallet-backend's verdict per fixture; pick one to see checks ── */
 const pilotResults = corpus.pilot.results;
-const capName: Record<string, string> = { 'CAP-0015': 'Fee-bump', 'CAP-0027': 'Muxed ID', 'CAP-0040': 'Signer', 'CAP-0073': 'SAC trust' };
+const patternName: Record<string, string> = {
+  'fee-bump': 'Fee-bump',
+  'muxed-payment': 'Muxed ID',
+  'muxed-max-id': 'Max muxed',
+  'muxed-soroban-source': 'Muxed src',
+  'signed-payload-signer': 'Signer',
+  'sac-trust': 'SAC trust',
+};
 const netTag: Record<string, string> = { pubnet: 'main', testnet: 'test', local: 'core' };
 
 function PilotVisual() {
@@ -354,7 +363,7 @@ function PilotVisual() {
           >
             <VerdictMark v={x.verdict as Verdict} />
             <span className="truncate">
-              {capName[x.cap] ?? x.cap} <span className="text-dim">{netTag[x.network] ?? x.network}</span>
+              {patternName[x.pattern] ?? x.pattern} <span className="text-dim">{netTag[x.network] ?? x.network}</span>
             </span>
           </button>
         ))}

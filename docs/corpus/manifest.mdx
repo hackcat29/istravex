@@ -10,6 +10,7 @@ Here's a real one, for the muxed-payment fixture:
 ```json manifest.json
 {
   "id": "cap27-muxed-payment-pubnet-0001",
+  "pattern": "muxed-payment",
   "cap_ids": ["CAP-0027"],
   "protocol_version": 29,
   "network": "pubnet",
@@ -47,11 +48,15 @@ Here's a real one, for the muxed-payment fixture:
 ## Fields
 
 <ResponseField name="id" type="string" required>
-  `cap<NN>-<pattern>-<network>-<NNNN>`. Stable forever: results, docs and the API refer to it.
+  `cap<NN>-<pattern>-<network>-<NNNN>`, or `base-…` for shapes the base protocol already allowed (memo bytes, maximum-length vectors). Stable forever: results, docs and the API refer to it.
+</ResponseField>
+
+<ResponseField name="pattern" type="string" required>
+  The ledger pattern the fixture exercises, e.g. `muxed-payment` or `scmap-host-order`. Runners, scorers and the guide's field table key on it, so several fixtures can share a CAP.
 </ResponseField>
 
 <ResponseField name="cap_ids" type="string[]" required>
-  The CAPs whose XDR the fixture exercises, as `CAP-NNNN`. The first one is the fixture's primary CAP.
+  The CAPs whose XDR the fixture exercises, as `CAP-NNNN` (or `CAP-NNNN-NN`). The first one is the fixture's primary CAP. Empty only for `base-` fixtures.
 </ResponseField>
 
 <ResponseField name="protocol_version" type="integer" required>
@@ -59,7 +64,7 @@ Here's a real one, for the muxed-payment fixture:
 </ResponseField>
 
 <ResponseField name="network" type="string" required>
-  `pubnet`, `testnet`, or `local` (a standalone network built by the [generator](/corpus/generating)).
+  `pubnet`, `testnet`, `local` (a standalone network built by the [generator](/corpus/generating)), or `synthetic` (bytes from no network).
 </ResponseField>
 
 <ResponseField name="xdr_type" type="string" required>
@@ -75,11 +80,11 @@ Here's a real one, for the muxed-payment fixture:
 </ResponseField>
 
 <ResponseField name="source" type="object" required>
-  Where the fixture came from: `kind` (`captured` or `generated`), `network_endpoint`, `ledger`, `tx_hash`, `closed_at`. Generated fixtures add `generator`: the stellar-core version, binary sha256, build and Soroban limits factor that produced them.
+  Where the fixture came from: `kind` (`captured`, `generated` or `synthetic`), `network_endpoint`, `ledger`, `tx_hash`, `closed_at`. Generated fixtures add `generator`: the stellar-core version, binary sha256, build, Soroban limits factor, seed, network passphrase, close-time base and the probe contract's sha256, which together reproduce every byte. When some files come from another transaction, `related` lists it (`ledger`, `tx_hash`, `files`). Synthetic fixtures have only `kind`, `description` and `derived_from`.
 </ResponseField>
 
 <ResponseField name="synthetic" type="boolean" required>
-  `true` only for hand-built XDR that never appeared on any network. Every fixture today is `false`.
+  `true` only for hand-built XDR that never appeared on any network, and then `network` is `synthetic`. Two fixtures today: encodings a decoder must refuse.
 </ResponseField>
 
 <ResponseField name="expected_decoded" type="object">
@@ -90,12 +95,17 @@ Here's a real one, for the muxed-payment fixture:
   What an indexer must store. Used by [replay](/tools/replay) and the [pilots](/pilots/wallet-backend).
 </ResponseField>
 
+<ResponseField name="sightings" type="string[]">
+  Upstream issues the fixture reproduces, as `owner/repo#number`. The [findings report](/project/findings) says how.
+</ResponseField>
+
 <ResponseField name="files" type="object[]" required>
-  One entry per XDR value: `name`, `xdr_type`, `path` (base64 file in the fixture directory), `sha256` and `bytes` of the decoded value.
+  One entry per XDR value: `name`, `xdr_type`, `path` (base64 file in the fixture directory), `sha256` and `bytes` of the decoded value, and `expect: "decode_error"` when a conforming decoder must refuse the bytes.
 </ResponseField>
 
 ## Conventions
 
+- **Expectations are classified.** Every `expected_decoded` and `expected_indexed` field appears in the hardening guide's [field table](/guide/validated-fields), and CI fails if one doesn't.
 - **Every 64-bit integer is a JSON string.** IDs, amounts, fees and limits are strings so that no consumer's `JSON.parse` can round them. This isn't style: the kit's own pilot driver hit that exact bug before it was fixed.
 - **Files are base64 of raw XDR**, one value per file, with a trailing newline. Decode them with any SDK's `fromXDR(..., 'base64')`.
 - **Amounts in `expected_decoded`** use the human decimal form Horizon uses (`59.5110803`); amounts in `expected_indexed` use stroops when the indexer stores stroops.

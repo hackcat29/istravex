@@ -7,8 +7,8 @@ description: Short answers to the questions people ask first.
   <Accordion title="Isn't this what stellar-core's tests already do?">
     Core's tests check that core produces the right ledger. Istravex checks what happens *after*: whether SDKs decode it exactly, and whether indexers store what it means. It also uses core's [golden ledgers](/corpus/goldens) directly, as a second corpus.
   </Accordion>
-  <Accordion title="Why only six fixtures?">
-    Each one is real, verified byte for byte against its ledger, and discriminates: a known-wrong indexer fails it and a known-right one passes. A thousand fixtures that everything passes would test nothing. Breadth comes from the 15,306 golden frames; the corpus is for targeted patterns, and it's [growing](/project/roadmap).
+  <Accordion title="Why only fifteen fixtures?">
+    Each one is real (or, for the two synthetic ones, labelled as built), verified byte for byte against its ledger, and discriminates: a known-wrong indexer or SDK release fails it and a known-right one passes. Ten of them reproduce a bug that was reported upstream. A thousand fixtures that everything passes would test nothing. Breadth comes from the 15,306 golden frames; the corpus is for targeted patterns, and it's [growing](/project/roadmap).
   </Accordion>
   <Accordion title="Do I need Go and Rust to use it?">
     No. To lint Go code you need Go. To replay into your indexer you need nothing but an HTTP client and the [hosted RPC](/api-reference/rpc). Go and Rust are only needed to run all three SDK runners yourself.

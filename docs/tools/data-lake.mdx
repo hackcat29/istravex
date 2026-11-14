@@ -1,0 +1,54 @@
+---
+title: Data lake
+description: The corpus in the Galexie data-lake layout, for indexers that read ledgers from a datastore instead of RPC.
+---
+
+The replay harness feeds ledgers to an indexer two ways. The [mock RPC](/tools/mock-rpc) speaks `getLedgers`. This page is the other: the same canonical ledgers, laid out exactly as [Galexie](https://github.com/stellar/go-stellar-sdk/tree/main/services/galexie) writes them and SDF's public data lake serves them, so anything built on go-stellar-sdk's `BufferedStorageBackend` (or anything that reads the lake directly) replays the corpus unchanged.
+
+## Export
+
+```bash
+npm run lake -- export --out .cache/lake/istravex
+# local: 40 ledgers → .cache/lake/istravex/local
+# pubnet: 2 ledgers → .cache/lake/istravex/pubnet
+# testnet: 2 ledgers → .cache/lake/istravex/testnet
+```
+
+Each network directory gets a `.config.json` and one zstd-compressed `LedgerCloseMetaBatch` per ledger, under the same partition and object names as the public lake:
+
+```text
+pubnet/
+  .config.json     {"networkPassphrase":"Public Global Stellar Network ; September 2015","version":"1.0",
+                    "compression":"zstd","ledgersPerBatch":1,"batchesPerPartition":64000}
+  FC18F9FF--65472000-65535999/
+    FC18F118--65474279.xdr.zst
+    FC18F0FA--65474309.xdr.zst
+```
+
+The pubnet objects aren't just in the same place: they're the public lake's own bytes. `aws-public-blockchain/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F118--65474279.xdr.zst` and the exported file are identical, and `kit/datalake/lake.test.mjs` checks the layout on every run.
+
+## Read it from disk
+
+go-stellar-sdk's `Filesystem` datastore reads the export as is:
+
+```go
+store, _ := datastore.NewDataStore(ctx, datastore.DataStoreConfig{
+    Type:   "Filesystem",
+    Params: map[string]string{"destination_path": ".cache/lake/istravex/pubnet"},
+})
+```
+
+## Or over S3
+
+Some ingestion only speaks S3: wallet-backend's datastore backend, for one. Serve the export as a read-only, path-style S3 endpoint:
+
+```bash
+npm run lake -- serve --root .cache/lake --port 9000
+# S3 endpoint http://127.0.0.1:9000 (path-style; buckets are the directories in .cache/lake)
+```
+
+Point the datastore at bucket path `istravex/pubnet` with `endpoint_url` `http://127.0.0.1:9000`. It answers `GetObject` (with a CRC32 checksum), `HeadObject` and `ListObjectsV2`, and ignores credentials, though the AWS SDK still wants some set (any values). Files are streamed, so memory stays flat whatever the lake's size.
+
+## Proven on a real indexer
+
+The [wallet-backend pilot](/pilots/wallet-backend#over-the-data-lake) runs every fixture through wallet-backend's own datastore backend, over this endpoint, as well as over the mock RPC. Both paths index all eight fixtures correctly.

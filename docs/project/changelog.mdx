@@ -3,6 +3,40 @@ title: Changelog
 description: Releases of the kit, corpus and API.
 ---
 
+<Update label="v1.1.0" description="15 November 2026">
+  Against the SCF RFP's reviewer checks: every check now runs in CI. See the [roadmap](/project/roadmap#against-the-rfps-reviewer-checks).
+
+  **Corpus and generator**
+  - 15 fixtures across 6 CAPs and 13 patterns (from 6): muxed source and the maximum muxed ID, a Soroban operation from a muxed source, pool issuers out of text order, map keys in host order, a six-level authorization tree, memo text that isn't UTF-8, every vector at its maximum, and two synthetic fixtures a decoder must refuse
+  - The generator is byte-reproducible (seeded keys, fixed close times, a seeded settings-upgrade salt), takes any network passphrase and an older protocol, and `--check` proves it on every push, for all three passphrases
+  - A probe contract for specific ScVal shapes and authorization trees, its Wasm rebuilt byte for byte in CI
+  - Manifests gain `pattern`, `sightings`, `source.related` and `expect: decode_error`; CAP coverage 5 of 40
+
+  **Replay and pilot**
+  - The corpus in the Galexie data-lake layout, byte-identical to SDF's public lake for pubnet, with a read-only S3 endpoint
+  - wallet-backend runs over RPC and over its datastore backend: 8/8 both ways
+  - wallet-backend #729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes; persistence encoding is checked without a database
+  - The mock RPC serves a 542 MB corpus under a 128 MB heap: header-only decoding and a 16 MiB page budget
+
+  **Conformance**
+  - Named native checks for every pattern, in JavaScript, Go and Rust
+  - JavaScript runs four releases: 17.2.0 and 17.2.1 fail exactly the checks for js-stellar-sdk #1766, #1785 and #1789; 17.3.0 and 17.4.0 pass
+
+  **Linter**
+  - IX001 also flags muxed IDs converted to a lossy type; IX002 also requires size limits and catches work lists; IX003 also flags a muxed account's `M…` form as a participant
+  - Calibrated on wallet-backend: clean on main, firing on the commits before #753 (IX003) and 9538b3c (IX002); the self-test seeds six violations
+
+  **Guide**
+  - New: [What stellar-core validates](/guide/validated-fields) (field by field, checked against the corpus in CI), [Recommended limits](/guide/limits), [Addresses and strkeys](/guide/addresses); rules 1 and 8 updated; these await engineering review
+  - Exports as Docusaurus Markdown for developers.stellar.org
+
+  **Findings**
+  - [`corpus/findings.json`](/project/findings): 15 findings with severity, upstream issue, corpus entry and the checks they explain; CI fails on any reproduced failure without one. Served at `/v1/findings`
+
+  **Hosting**
+  - No request logs: Cloudflare Workers observability and nginx access logs are off
+</Update>
+
 <Update label="Docs" description="14 November 2026">
   **Guides**, written by task rather than by component, with samples tested against the live API:
   - [Test your SDK's XDR handling](/guides/sdk-conformance): JavaScript, Go and Rust round-trip tests, plus value checks

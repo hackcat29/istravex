@@ -2,10 +2,13 @@
 
 | What | Result |
 |---|---|
-| Fixtures | **6** across 4 CAPs (pubnet, local, testnet) |
-| Provenance | **62/62** checks, byte-identical to canonical ledgers |
-| SDK conformance | **54/54** checks across JavaScript, Go and Rust |
+| Fixtures | **15** across 6 CAPs and 13 patterns (local, synthetic, pubnet, testnet; 2 synthetic) |
+| Provenance | **152/152** checks, byte-identical to canonical ledgers |
+| SDK conformance | **123/123** checks across JavaScript, Go and Rust |
 | stellar-core goldens | **15,306/15,306** LedgerCloseMeta frames round-trip in every SDK |
-| Replay | naive indexer wrong on **4/4**; reference indexer right on **4/4** |
-| wallet-backend pilot | **6/6** fixtures indexed correctly |
-| CAP coverage | 3 of 40 XDR-changing CAPs (70 live) |
+| Replay | naive indexer wrong on **6/6**; reference indexer right on **6/6** |
+| wallet-backend pilot | **8/8** fixtures indexed correctly, over RPC and the data lake |
+| Upstream sightings | **4/4** reproduced: wrong before the fix, right after |
+| JavaScript releases | **4** run; every failure maps to a finding |
+| Findings | **15**, 10 reproduced by the kit |
+| CAP coverage | 5 of 40 XDR-changing CAPs (70 live) |

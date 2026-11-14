@@ -99,6 +99,7 @@
             "pages": [
               "tools/sdk-runners",
               "tools/mock-rpc",
+              "tools/data-lake",
               "tools/replay",
               {
                 "group": "istravex-lint",
@@ -127,6 +128,9 @@
             "group": "Guide",
             "pages": [
               "guide/overview",
+              "guide/validated-fields",
+              "guide/limits",
+              "guide/addresses",
               "guide/checklist"
             ]
           },
@@ -183,7 +187,8 @@
             "pages": [
               "api-reference/endpoint/list-results",
               "api-reference/endpoint/get-result",
-              "api-reference/endpoint/coverage"
+              "api-reference/endpoint/coverage",
+              "api-reference/endpoint/findings"
             ]
           },
           {

@@ -9,7 +9,7 @@ The replay harness answers a narrow question: if you index this fixture, do you 
 
 It runs every fixture that has `expected_indexed` through two small indexers and compares what each produces with the fixture's expectations:
 
-- **naive** derives effects from the transaction envelope. It's written to make exactly the mistakes that show up in real indexers: muxed IDs through `Number()`, fees and payers from the envelope, trustlines only from `changeTrust`.
+- **naive** derives effects and participants from the transaction envelope. It's written to make exactly the mistakes that show up in real indexers: muxed IDs through `Number()`, fees and payers from the envelope, trustlines only from `changeTrust`, participants as the addresses written in the envelope (`M…` forms included).
 - **reference** derives effects from ledger metadata, the way the [hardening guide](/guide/overview) says to.
 
 ## Results
@@ -19,16 +19,29 @@ It runs every fixture that has `expected_indexed` through two small indexers and
 The naive indexer is wrong on every case, in all three ways an indexer can be wrong:
 
 - **Incorrect** on the muxed payment: it stores `1764988090084626400`.
+- **Incorrect** on the maximum muxed ID: it stores `18446744073709552000`, and lists both accounts in their `M…` form.
+- **Incorrect** on the Soroban operation from a muxed source: its only participant is the `M…` address.
 - **Incorrect** on the fee-bump: it records 46,341 stroops (the bid) paid by the inner source.
 - **Dropped** on both SAC trustlines: no `changeTrust`, so as far as it's concerned no trustline exists.
 
-The reference indexer gets all four right. It also records `feeMetaDebit` on the fee-bump (46,340 stroops) to show that reading fees from balance deltas over-counts Soroban fees. See [Fees](/guide/fees).
+The reference indexer gets all six right. It takes participants from the accounts whose entries changed in meta. It also records `feeMetaDebit` on the fee-bump (46,340 stroops) to show that reading fees from balance deltas over-counts Soroban fees. See [Fees](/guide/fees).
 
 ## Why two toy indexers?
 
 Because the point isn't the indexers, it's the scoring. The harness shows that the corpus *discriminates*: a fixture that both indexers passed would be decoration. Every fixture with indexed expectations here separates a known-wrong reading from a known-right one.
 
 For scoring a real indexer, see the [wallet-backend pilot](/pilots/wallet-backend) and [Replaying into your indexer](/pilots/your-indexer).
+
+## Two ways in
+
+A real indexer gets the corpus's ledgers the way it gets ledgers in production:
+
+| Input | For | Page |
+|---|---|---|
+| Mock Stellar RPC (`getLedgers`) | Indexers that ingest from RPC | [Mock RPC](/tools/mock-rpc) |
+| The Galexie data-lake layout, from disk or an S3 endpoint | Indexers built on `BufferedStorageBackend` or reading the data lake | [Data lake](/tools/data-lake) |
+
+Both are offline, need no keys or funds, and hold memory flat on a corpus of any size. The wallet-backend pilot runs through both.
 
 ```bash
 npm run corpus:replay   # → corpus/results/replay.json

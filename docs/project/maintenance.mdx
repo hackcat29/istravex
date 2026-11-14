@@ -12,11 +12,27 @@ Istravex is Apache 2.0 licensed and open by default. Code, corpus, results and d
 | **License** | Apache 2.0 |
 | **Maintainer** | A named maintainer for at least six months after launch |
 | **Protocol upgrades** | At least one protocol upgrade covered end to end |
-| **Telemetry** | None. Neither the site, the API, the tools nor the docs collect any. |
+| **User tracking** | None of Istravex's own. No cookies, analytics or request logs on the site, the API or the RPC; the tools collect nothing. See [what each host sees](#user-tracking). |
+
+## User tracking
+
+Istravex adds no tracking anywhere. What remains is what any host sees:
+
+| Surface | Hosted on | What's recorded |
+|---|---|---|
+| istravex.com | Cloudflare Workers (static assets) | No cookies or analytics scripts; Workers logs and observability are off. Cloudflare handles requests under its own policy. |
+| api.istravex.com, rpc.istravex.com | One container behind nginx on a VPS | nginx request logging is off for both hosts; the API writes no request logs. Rate limiting keeps a per-IP counter in memory for one minute. nginx's error log still records failed connections, with the client address, as it does for every site on the host. |
+| docs.istravex.com | Mintlify | Mintlify records page views for its dashboard, as it does for every site it hosts. Istravex adds nothing. |
+| The kit (CLI tools, runners, linter, mock RPC) | Your machine | Nothing. No network calls except the ones you ask for (fetching ledgers, goldens or SDK releases). |
 
 ## On a protocol upgrade
 
+The next one is protocol 31. Every step below is a command, and CI fails until the last one is done.
+
 <Steps>
+  <Step title="Audit the new CAPs">
+    `npm run corpus:audit` against the latest stellar-protocol. New XDR-changing CAPs appear as gaps on [CAP coverage](/corpus/cap-coverage); each gets a scenario, or a note saying why not.
+  </Step>
   <Step title="Re-pin stellar-core">
     Update `kit/capture/core-pin.json` with the new version, commit and per-platform binary hashes, and the CI job's apt package version.
   </Step>
@@ -24,13 +40,13 @@ Istravex is Apache 2.0 licensed and open by default. Code, corpus, results and d
     Move the JS, Go and Rust runners to the SDK releases for the new protocol.
   </Step>
   <Step title="Regenerate and re-run">
-    `npm run corpus:generate -- --force`, `node kit/goldens/fetch.mjs`, `npm run corpus:run`. The goldens move with the core pin.
+    `npm run corpus:generate`, `node kit/goldens/fetch.mjs`, `npm run corpus:run`, `npm run pilot:wallet-backend`. The goldens move with the core pin; the probe contract moves to the soroban-sdk for the new protocol. `npm run corpus:generate-check` must pass on both platforms.
   </Step>
-  <Step title="Audit">
-    `npm run corpus:audit` against the latest stellar-protocol. New XDR-changing CAPs appear as gaps.
+  <Step title="Triage">
+    Any check that fails on a current pin is a finding: severity, the minimal fixture, an upstream issue, an entry in `corpus/findings.json`. `kit/check-results.mjs` stays red until it's there.
   </Step>
   <Step title="Release">
-    Tag a release with the results, and note any SDK or indexer behaviour that changed.
+    Tag a release with the results, and note any SDK or indexer behaviour that changed. Target: within two weeks of the protocol's mainnet vote.
   </Step>
 </Steps>
 

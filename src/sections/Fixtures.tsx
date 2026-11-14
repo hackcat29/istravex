@@ -67,17 +67,17 @@ export function Fixtures() {
       <div className="wrap">
         <Title lines={[fixtures.title]} accentLast={false} />
         <Reveal className="mt-14 grid gap-3 sm:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-2">
             {fixtures.items.map((it, i) => (
               <li key={it.id}>
                 <button
                   type="button"
                   onClick={() => setActive(i)}
                   aria-pressed={i === active}
-                  className={`card relative w-full overflow-hidden p-6 text-left transition-colors duration-300 sm:p-7 ${i === active ? 'border-fg' : 'hover:border-line-2'}`}
+                  className={`card relative w-full overflow-hidden px-6 py-5 text-left transition-colors duration-300 sm:px-7 ${i === active ? 'border-fg' : 'hover:border-line-2'}`}
                 >
                   <div className="flex items-center justify-between font-mono text-[12px]">
-                    <span className={i === active ? 'text-lime' : 'text-mute'}>{it.cap}</span>
+                    <span className={i === active ? 'text-lime' : 'text-mute'}>{it.cap === 'base' ? 'Base protocol' : it.cap}</span>
                     <motion.span
                       animate={{ rotate: i === active ? 45 : 0 }}
                       className="text-[18px] leading-none text-mute"
@@ -86,10 +86,10 @@ export function Fixtures() {
                       +
                     </motion.span>
                   </div>
-                  <h3 className="mt-4 text-[22px] font-medium tracking-tight">{it.name}</h3>
+                  <h3 className="mt-3 text-[20px] font-medium tracking-tight">{it.name}</h3>
                   <p className="mt-1 font-mono text-[12px] text-dim">
-                    {it.network} · L{it.ledger.toLocaleString('en-US')} · {it.bytes.toLocaleString('en-US')} B
-                    {it.provenance && it.provenance.passed === it.provenance.checks ? ' · ledger-verified' : ''}
+                    {it.synthetic ? 'synthetic · no ledger' : `${it.network} · L${it.ledger.toLocaleString('en-US')}`} · {it.bytes.toLocaleString('en-US')} B
+                    {it.provenance && it.provenance.passed === it.provenance.checks ? (it.synthetic ? ' · hash-verified' : ' · ledger-verified') : ''}
                   </p>
                   <AnimatePresence initial={false}>
                     {i === active && (
@@ -106,7 +106,7 @@ export function Fixtures() {
                             {it.tx_hash.slice(0, 12)}… ↗
                           </a>
                         ) : (
-                          <span className="mt-3 block font-mono text-[12px] text-mute">{it.generator}</span>
+                          <span className="mt-3 block font-mono text-[12px] text-mute">{it.generator || 'Hand-built from generated fixtures'}</span>
                         )}
                       </motion.p>
                     )}
@@ -116,7 +116,7 @@ export function Fixtures() {
             ))}
           </ul>
 
-          <div className="card relative flex min-h-[420px] flex-col overflow-hidden">
+          <div className="card relative flex min-h-[420px] flex-col overflow-hidden lg:sticky lg:top-24 lg:self-start">
             <div className="flex h-12 items-center justify-between border-b border-line pl-2 pr-2">
               <div role="tablist" aria-label="Fixture file" className="flex gap-1">
                 {(['manifest', 'xdr'] as const).map((v) => (

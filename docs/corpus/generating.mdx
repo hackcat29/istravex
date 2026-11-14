@@ -1,15 +1,38 @@
 ---
 title: Generating on stellar-core
-description: Building fixtures on a pinned, standalone stellar-core, with no external network.
+description: Building fixtures on a pinned, standalone stellar-core, reproducibly, with no external network, keys or funds.
 ---
 
-`kit/capture/generate.mjs` runs the same scenarios as the testnet capture on a fresh, private network: a standalone stellar-core started just for this, upgraded to protocol 30, driven over its own HTTP interface, and shut down afterwards. No RPC, no Docker, no friendbot, no internet.
+`kit/capture/generate.mjs` builds the corpus's generated fixtures on a private network: a standalone stellar-core started just for this, upgraded to the pinned protocol, driven over its own HTTP interface, and shut down afterwards. No RPC, no Docker, no friendbot, no internet.
 
 ```bash
-npm run corpus:generate -- --force
+npm run corpus:generate          # the committed fixtures (and the synthetic ones built from them)
+npm run corpus:generate-check    # regenerate into a temporary corpus and compare every byte
 ```
 
-`--force` is required when generated fixtures already exist, because regeneration creates new keys and so new bytes. Without it the script refuses, so nobody overwrites the committed fixtures by accident.
+## Reproducible, byte for byte
+
+Run it twice and you get the same bytes. Every key, the node's included, is derived from a seed; ledgers close at fixed times; and the one source of randomness inside stellar-core, the settings-upgrade contract's salt, is replaced with a seeded one. So the pinned binary regenerates the committed corpus exactly, on macOS or Linux, and `--check` proves it:
+
+```bash
+node kit/capture/generate.mjs --check
+# regeneration matches: 9 fixtures, 40 ledgers; consensus bytes identical, metadata byte-identical
+```
+
+Consensus data (ledger headers, transaction sets, results, every envelope and ledger entry) must match byte for byte. Metadata may differ in one way only: stellar-core 30.0.0 doesn't keep the order of the entries within an operation's changes stable between runs ([finding F-0010](/project/findings)). The check compares metadata with each change list sorted (`kit/lib/canonical.mjs`) and says when it had to.
+
+| Option | Does |
+|---|---|
+| `--force` | Replace the committed generated fixtures. Without it the script refuses, so nobody overwrites them by accident. |
+| `--check` | Regenerate into a temporary directory and compare with the committed corpus; with another passphrase, seed or protocol, compare two fresh generations. Exits 1 on any difference. |
+| `--out <dir>` | Write a complete corpus (fixtures, ledgers, schema) somewhere else. |
+| `--passphrase testnet\|pubnet` | Sign everything for that network instead of the standalone one. |
+| `--protocol <n>` | Upgrade to protocol *n* instead of the pinned one; scenarios that need a later protocol are skipped. |
+| `--seed <string>` | Derive different keys. |
+
+**Any passphrase.** The committed fixtures use the standalone network's passphrase. `--passphrase testnet` or `pubnet` builds the same scenarios exactly as they'd be signed for those networks: every signature, transaction hash and contract ID changes, and CI generates, verifies and runs all three on every push.
+
+**Older protocols.** `--protocol 28` builds the scenarios on a protocol 28 network. The [wallet-backend pilot](/pilots/wallet-backend#before-and-after-each-upstream-fix) uses it: the commits before its September fixes can't decode protocol 29 ledgers.
 
 ## The pinned binary
 
@@ -20,29 +43,58 @@ The generator only runs with the exact stellar-core it was validated against. `k
 | `darwin-arm64` | Homebrew bottle 30.0.0 | `brew install stellar-core` |
 | `linux-x64` | SDF's apt package `30.0.0-3642.0e49751aa.noble` | `apt-get install stellar-core=30.0.0-3642.0e49751aa.noble` from apt.stellar.org |
 
-Before starting, the generator hashes the binary on your `PATH` (or `$STELLAR_CORE`) and compares it with the pin. A different binary is refused. `--allow-unpinned` overrides this for experiments, and the fixture's `source.generator` records whatever was actually used.
+Before starting, the generator hashes the binary on your `PATH` (or `$STELLAR_CORE`) and compares it with the pin. A different binary is refused. `--allow-unpinned` overrides this for experiments, and each fixture's `source.generator` records what was actually used: binary hash, version, seed, passphrase, close-time base and the probe contract's hash.
 
 ## What it does
 
 <Steps>
   <Step title="Start a standalone network">
-    A fresh SQLite database, `RUN_STANDALONE=true`, `MANUAL_CLOSE=true`, and core's metadata stream enabled. The node is its own quorum.
+    A fresh SQLite database, `RUN_STANDALONE=true`, `MANUAL_CLOSE=true`, and core's metadata stream enabled. The node is its own quorum, with a seeded node key.
   </Step>
-  <Step title="Upgrade to protocol 30">
+  <Step title="Upgrade to the pinned protocol">
     In one step from genesis, using core's `/upgrades` endpoint.
   </Step>
   <Step title="Raise Soroban limits">
-    A fresh network starts with tiny Soroban limits: three footprint entries, 3,200-byte reads and writes, one Soroban transaction per ledger. The generator raises every per-ledger and per-transaction maximum tenfold with a **real settings upgrade**, the way network operators do: `stellar-core get-settings-upgrade-txs` builds and signs the transactions, the generator submits them, then arms the upgrade.
+    A fresh network starts with tiny Soroban limits: three footprint entries, 3,200-byte reads and writes, one Soroban transaction per ledger, 2,000-byte contracts. The generator raises every per-ledger and per-transaction maximum, the transaction memory limit and the contract size limit tenfold with a **real settings upgrade**, the way network operators do: `stellar-core get-settings-upgrade-txs` builds the transactions, the generator makes their salt deterministic, re-signs and submits them, then arms the upgrade.
   </Step>
   <Step title="Run the scenarios">
-    Transactions go to core's `/tx`, each ledger is closed with `/manualclose`, and entries are read from core's query server. Soroban transactions declare their footprints explicitly, since there's no simulator.
+    Transactions go to core's `/tx`, each ledger is closed with `/manualclose` at a fixed time, and entries are read from core's query server. Soroban transactions declare their footprints explicitly, since there's no simulator.
   </Step>
   <Step title="Read the ledger from core">
     Each ledger's `LedgerCloseMeta` is read from core's `METADATA_OUTPUT_STREAM`, the canonical output, and stored. No RPC node sits in between, so there's no node-local variance.
   </Step>
 </Steps>
 
-CI runs this on every push, on Ubuntu with the pinned apt package, and then verifies and runs the regenerated corpus. A regression in the generator, the pin or core's behaviour fails the build.
+## The scenarios
+
+| Scenario | Fixture | What's on the ledger |
+|---|---|---|
+| Signed-payload signer | `cap40-signed-payload-signer-local-0001` | An account with an ed25519 signed-payload (`P…`) signer |
+| SAC trustline | `cap73-sac-trust-local-0001` | A trustline created by the Stellar Asset Contract's `trust()` |
+| Muxed source, maximum ID | `cap27-muxed-max-id-local-0001` | A payment from muxed ID 2⁵³ + 1 to muxed ID 2⁶⁴ − 1 |
+| Pool issuers out of text order | `cap38-pool-issuer-order-local-0001` | A pool-share trustline whose issuers sort one way as strkeys and the other as bytes |
+| Memo text, not UTF-8 | `base-memo-non-utf8-local-0001` | A 28-byte memo with `FF FE`, a CESU-8 lone surrogate and a Latin-1 byte |
+| Every vector at its maximum | `base-max-length-vectors-local-0001` | 100 operations; an account with 20 signers; a transaction with 20 signatures |
+| Soroban operation, muxed source | `cap46-muxed-soroban-source-local-0001` | An `ExtendFootprintTtl` from an `M…` source |
+| Map keys in host order | `cap46-scmap-host-order-local-0001` | A 10-entry map with mixed-type keys, two of which print the same, stored as contract data |
+| Nested authorization | `cap46-nested-auth-local-0001` | A six-level authorization tree, one level per contract |
+
+The CAP-0040 and CAP-0073 scenarios also run on public testnet (`kit/capture/testnet.mjs`), which is where the `-testnet-` fixtures come from. `kit/capture/synthetic.mjs` then builds the two synthetic fixtures from these generated ones.
+
+## The probe contract
+
+The map and authorization-tree scenarios need a contract that does something specific, so the kit carries one: [`kit/capture/contracts/probe`](https://github.com/hackcat29/istravex/tree/main/kit/capture/contracts/probe), about 30 lines of Rust on soroban-sdk 29.0.1. `put(key, val)` stores any value; `nest(who, next)` requires `who`'s authorization and calls the next contract in the list, so a chain of instances makes a tree as deep as the chain is long (Soroban forbids re-entry, so it can't call itself).
+
+The built Wasm is committed (`kit/capture/contracts/probe.wasm`, 4.2 KB) and its sha256 is recorded in every generated fixture. The toolchain is pinned in `rust-toolchain.toml`, and CI rebuilds it on Linux and requires identical bytes:
+
+```bash
+cd kit/capture/contracts/probe
+SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 cargo build --release --target wasm32v1-none --locked
+```
+
+<Note>
+soroban-sdk 29 refuses plain `cargo` builds unless the build system says it trims the contract's interface spec, which only stellar-cli 25.2+ does. The spec is metadata for clients; nothing on chain reads it. The probe is never called through generated bindings, so the untrimmed spec is harmless, and the environment variable says so.
+</Note>
 
 ## stellar-core quirks it works around
 
@@ -52,10 +104,22 @@ Getting a standalone core to behave turned up a few behaviours worth knowing if 
   <Accordion title="The HTTP servers reject fetch()">
     Core's HTTP servers close the socket after every response, and the query server matches header names case-sensitively: it answers `400` to `content-type` and `200` to `Content-Type`. Node's `fetch()` pools connections and lowercases headers, so it fails against both. The driver uses `node:http` with one connection per request.
   </Accordion>
-  <Accordion title="A bare /manualclose can abort core">
-    Without a close time, `/manualclose` intermittently trips an assertion (`t >= mVirtualNow`, `util/Timer.cpp:287`) and core exits. The driver always passes an explicit, strictly increasing `closeTime`. Under `MANUAL_CLOSE` core's virtual clock runs ahead of wall time, so when core refuses a time as too early, the driver retries past the "now" core reports.
+  <Accordion title="A bare /manualclose can abort core, and its clock jumps">
+    Without a close time, `/manualclose` intermittently trips an assertion (`t >= mVirtualNow`, `util/Timer.cpp:287`) and core exits. So the driver always passes a close time. Under `MANUAL_CLOSE`, core's virtual clock jumps ahead to its next timer whenever it idles, measured at 105 to 299 seconds past the last close, and core refuses a close time earlier than its clock. The driver closes at fixed times from 2100-01-01 in 600-second steps, which always clear the jump and make every ledger header reproducible.
   </Accordion>
   <Accordion title="The first settings upgrade is too big for the starting limits">
     The full `ConfigUpgradeSet` is about 4 KB, larger than the 2,000-byte contract-data entry limit it is stored under on a fresh network. The driver uploads only the settings it changes.
+  </Accordion>
+  <Accordion title="get-settings-upgrade-txs uses a random salt">
+    The upgrade contract's salt, and so its ID, the upgrade key and every later ledger, differ between runs. The driver swaps in a salt derived from the seed (and the contract ID it implies) in all three transactions and the key, then re-signs them as the root account ([F-0011](/project/findings)).
+  </Accordion>
+  <Accordion title="Change order inside operation meta isn't stable">
+    Two runs with identical input produce identical consensus data, but some operations list their ledger entry changes in a different order ([F-0010](/project/findings)). `--check` compares metadata order-insensitively, and reports when it had to.
+  </Accordion>
+  <Accordion title="20 signatures across 100 operations">
+    A 100-operation transaction from an account whose thresholds need all 20 signers failed with `opBAD_AUTH` at operation 49. The max-length fixture uses two transactions instead: one with 100 operations, one with 20 signatures.
+  </Accordion>
+  <Accordion title="The JavaScript SDK won't build some valid transactions">
+    `TransactionBuilder` refuses a muxed source on any Soroban transaction, and the `Memo` class re-encodes text through JavaScript strings. stellar-core accepts both a muxed source on `ExtendFootprintTtl` and any 28 memo bytes, so the driver sets them on the raw XDR before signing ([F-0012](/project/findings)).
   </Accordion>
 </AccordionGroup>

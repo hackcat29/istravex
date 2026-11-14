@@ -6,17 +6,18 @@ import { join } from 'node:path';
 
 export type Manifest = {
   id: string;
+  pattern: string;
   cap_ids: string[];
   protocol_version: number;
   network: string;
   xdr_type: string;
   xdr_path: string;
   sha256: string;
-  source: { kind: string; ledger: number; tx_hash: string; closed_at: string; [k: string]: unknown };
+  source: { kind: string; ledger?: number; tx_hash?: string; closed_at?: string; [k: string]: unknown };
   synthetic: boolean;
   expected_decoded?: Record<string, unknown>;
   expected_indexed?: Record<string, unknown>;
-  files: { name: string; xdr_type: string; path: string; sha256: string; bytes: number }[];
+  files: { name: string; xdr_type: string; path: string; sha256: string; bytes: number; expect?: string }[];
 };
 
 export type LedgerEntry = { network: string; ledger: number; path: string; sha256: string; bytes: number; compressed_bytes: number; source: string };
@@ -27,6 +28,7 @@ export type Corpus = {
   ledgers: LedgerEntry[];
   results: Map<string, unknown>;
   coverage: unknown;
+  findings: unknown;
   stats: Record<string, unknown>;
 };
 
@@ -45,12 +47,16 @@ export function loadCorpus(dir: string): Corpus {
   }
   const ledgers = json(join(dir, 'ledgers', 'index.json')) as LedgerEntry[];
   const coverage = existsSync(join(dir, 'coverage.json')) ? json(join(dir, 'coverage.json')) : null;
-  return { dir, fixtures, ledgers, results, coverage, stats: summarize(fixtures, results, coverage) };
+  const findings = existsSync(join(dir, 'findings.json')) ? json(join(dir, 'findings.json')) : null;
+  return { dir, fixtures, ledgers, results, coverage, findings, stats: summarize(fixtures, results, coverage) };
 }
 
 function summarize(fixtures: Corpus['fixtures'], results: Map<string, unknown>, coverage: unknown): Record<string, unknown> {
   type Checked = { results: { checks: Record<string, string> }[] };
-  const sdk = ['javascript', 'go', 'rust'].flatMap((s) => ((results.get(s) as Checked | undefined)?.results ?? []).flatMap((r) => Object.values(r.checks)));
+  // 'n/a' marks checks that don't apply (re-encoding bytes a decoder must reject).
+  const sdk = ['javascript', 'go', 'rust']
+    .flatMap((s) => ((results.get(s) as Checked | undefined)?.results ?? []).flatMap((r) => Object.values(r.checks)))
+    .filter((c) => c !== 'n/a');
   const prov = ((results.get('provenance') as { fixtures: { checks: { ok: boolean }[] }[] } | undefined)?.fixtures ?? []).flatMap((p) => p.checks);
   const goldens = ['javascript', 'go', 'rust'].map((s) => results.get(`goldens-${s}`) as { frames: number; exact: number } | undefined).filter(Boolean) as { frames: number; exact: number }[];
   const pilot = (results.get('pilot-wallet-backend') as { results: { verdict: string }[] } | undefined)?.results ?? [];

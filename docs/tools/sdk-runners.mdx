@@ -4,6 +4,7 @@ description: The same three checks, in JavaScript, Go and Rust, against every fi
 ---
 
 import Sdks from '/snippets/sdk-table.mdx';
+import Matrix from '/snippets/js-matrix-table.mdx';
 
 Each official SDK family gets a runner that reads the corpus and checks every fixture three ways.
 
@@ -13,13 +14,32 @@ Each official SDK family gets a runner that reads the corpus and checks every fi
 | **reencode** | Does encoding the decoded value give back the exact original bytes? |
 | **native** | Do the SDK's high-level forms, the ones applications actually use, produce the fixture's expected values? |
 
-The third check is where real bugs live. Decoding and re-encoding are mechanical: the generated XDR code either handles a type or it doesn't. The high-level conversions (strkeys, muxed accounts, transaction hashes, amounts) are hand-written, and they're where a 64-bit ID quietly becomes a float.
+The third check is where real bugs live. Decoding and re-encoding are mechanical: the generated XDR code either handles a type or it doesn't. The high-level conversions (strkeys, muxed accounts, transaction hashes, amounts, asset ordering, native maps) are hand-written, and they're where a 64-bit ID quietly becomes a float.
+
+Each native check has a name (`muxed_id`, `pool_id`, `native_keeps_every_entry`…) and runs on its own, so one failure doesn't hide the rest, and every failure in a result file says exactly which check and why.
+
+**Bytes a decoder must refuse.** The [synthetic fixtures](/corpus/fixtures) hold encodings no network produces: 101 operations, a 29-byte memo, an `ScVal` claiming 2³² − 1 elements, a vector nested 2,000 deep. Their files are marked `expect: decode_error`, and a runner passes them when decoding **fails** cleanly. The Rust runner decodes untrusted input with `Limits { depth: 500, len: input.len() }`, the host's own depth; see [Recommended limits](/guide/limits).
 
 ## Results
 
 <Sdks />
 
-The goldens column is the [stellar-core goldens](/corpus/goldens) check: 15,306 frames from core's own test suite, decoded and re-encoded byte for byte.
+The goldens column is the [stellar-core goldens](/corpus/goldens) check: 15,306 frames from core's own test suite, decoded and re-encoded byte for byte. Re-encode and native counts leave out the synthetic fixtures, where they don't apply.
+
+## Earlier JavaScript releases
+
+A passing SDK only proves the corpus raises no false alarms. To show the checks catch real bugs, the JavaScript runner also runs against the releases just before three upstream fixes, and every check that fails there must be explained by a [finding](/project/findings) that links its upstream issue:
+
+<Matrix />
+
+- **17.2.0** orders asset issuers by strkey text (fixed in 17.2.1, [#1766](https://github.com/stellar/js-stellar-sdk/pull/1766)): `TransactionBuilder.fromXDR` throws on the valid pool-share trustline, and map keys don't come out in host order.
+- **17.2.1** accepts a muxed ID written as `0x…` and rounds a numeric offer ID above 2⁵³ ([#1785](https://github.com/stellar/js-stellar-sdk/issues/1785)), and silently drops two of the map's ten entries when converting it ([#1789](https://github.com/stellar/js-stellar-sdk/issues/1789)). Both fixed in 17.3.0.
+
+```bash
+npm run corpus:js-matrix   # installs each release once into .cache/sdk-js → corpus/results/javascript-matrix.json
+```
+
+The releases are listed in `kit/runners/js/versions.json`; `kit/check-results.mjs` fails if a check fails on the current release, if a failure on an earlier one has no finding, or if a finding claims a failure that no release shows.
 
 ## Running them
 
@@ -33,12 +53,19 @@ Each result file records the SDK, its exact version, the runtime, and per fixtur
 
 ## What "native" checks, per pattern
 
-| Pattern | Native check |
+| Pattern | Native checks |
 |---|---|
-| Muxed payment | `M…` address, exact muxed ID, base `G…` account, asset, amount |
-| Fee-bump | Outer and inner transaction hashes, fee source, inner source |
-| Signed-payload signer | `P…` strkey, its ed25519 key, the payload bytes, weight |
-| SAC trustline | Exactly one trustline created in meta, its account, asset and `i64::MAX` limit |
+| `muxed-payment` | `M…` address, exact muxed ID, base `G…` account, asset, amount |
+| `muxed-max-id` | Muxed source and its 2⁵³ + 1 ID, the 2⁶⁴ − 1 destination ID, base accounts, amount; in JavaScript, that non-canonical ID input and an offer ID above 2⁵³ are refused |
+| `muxed-soroban-source` | The Soroban transaction's muxed source: base account and ID, the operation |
+| `fee-bump` | Outer and inner transaction hashes, fee source, inner source |
+| `signed-payload-signer` | `P…` strkey, its ed25519 key, the payload bytes, weight |
+| `sac-trust` | Exactly one trustline created in meta, its account, asset and `i64::MAX` limit |
+| `pool-issuer-order` | The pool-share operation decodes; the assets compare in network order; the pool ID matches |
+| `scmap-host-order` | Entry count and key order survive decoding; the SDK's map sort reproduces host order; native conversion keeps every entry or fails loudly |
+| `nested-auth` | Authorization depth and count (walked with the host's depth limit), root contract, the call's return value |
+| `memo-non-utf8` | The memo's raw bytes; in JavaScript, that `Memo` and `TransactionBuilder` round-trips keep them |
+| `max-length-vectors` | 100 operations, 20 signatures, 20 signers, the thresholds |
 
 ## The precision probe
 
@@ -47,10 +74,12 @@ The JavaScript runner also records what `Number()` does to every wide integer in
 | Value | `Number(value)` |
 |---|---|
 | `1764988090084626463` (muxed ID) | `1764988090084626400` |
+| `9007199254740993` (muxed ID, 2⁵³ + 1) | `9007199254740992` |
 | `9223372036854775807` (trustline limit) | `9223372036854776000` |
+| `18446744073709551615` (muxed ID, 2⁶⁴ − 1) | `18446744073709552000` |
 
-Both are off. See [Keep 64-bit integers exact](/guide/wide-integers).
+All are off. See [Keep 64-bit integers exact](/guide/wide-integers).
 
 ## Adding an SDK
 
-A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the native checks for the fixture's primary CAP, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. Python and Java runners are on the [roadmap](/project/roadmap).
+A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the named native checks for the fixture's `pattern`, pass files marked `expect: decode_error` only when they fail to decode, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. Python and Java runners are on the [roadmap](/project/roadmap).

@@ -1,13 +1,13 @@
 ---
 title: Fixtures
-description: The six fixtures in the corpus, what each one catches, and the bug it exists for.
+description: Every fixture in the corpus, what each one catches, and the bug it exists for.
 ---
 
 import Fixtures from '/snippets/fixtures-table.mdx';
 
 <Fixtures />
 
-Each fixture below is described the same way: what happened on the ledger, what goes wrong in practice, and what the fixture asserts.
+Each fixture below is described the same way: what happened on the ledger, what goes wrong in practice, and what the fixture asserts. Where a fixture reproduces a bug that was reported upstream, the bug is linked, and the [findings report](/project/findings) shows the kit failing on the affected version and passing on the fix.
 
 ## Muxed payment recipient
 
@@ -48,6 +48,90 @@ A trustline created by calling `trust(address)` on a Stellar Asset Contract, thr
 **What goes wrong.** Indexers that recognise trustlines by operation type never see it. The only record is a `CREATED` trustline entry in the operation's ledger changes, with a limit of `i64::MAX` (`9223372036854775807`, another number above 2^53).
 
 **What it asserts.** The trustline is indexed for the holder and the asset, with the exact limit, and the fixture records that zero `changeTrust` ops were involved.
+
+## Muxed source, maximum muxed ID
+
+`cap27-muxed-max-id-local-0001` · CAP-0027 · generated
+
+A payment from `M…` with ID 2⁵³ + 1 (`9007199254740993`, the smallest a double can't hold) to `M…` with ID 2⁶⁴ − 1 (`18446744073709551615`, the largest there is).
+
+**What goes wrong.** Through a double, the source ID comes out one lower and the destination ID becomes `18446744073709552000`, which isn't a valid `uint64` at all. Through `int64`, the destination goes negative. Participants taken from the envelope as written include two `M…` addresses for accounts that are really `G…`. And the SDK side: before 17.3.0, js-stellar-sdk accepted `0x…` as an ID and reported it back as typed, not as the ID it encoded ([#1785](https://github.com/stellar/js-stellar-sdk/issues/1785)).
+
+**What it asserts.** Both IDs survive exactly; participants are the two `G…` accounts.
+
+## Soroban operation from a muxed source
+
+`cap46-muxed-soroban-source-local-0001` · CAP-0046, CAP-0027 · generated
+
+An `ExtendFootprintTtl` whose transaction source is an `M…` address. stellar-core rejects a muxed source only on `InvokeHostFunction`, so this is valid at every protocol, and cheap.
+
+**What goes wrong.** An indexer that adds the source to the participant set as written gets the `M…` form next to the `G…` form of the same account. In wallet-backend both encoded to one primary key and halted ingestion ([#716](https://github.com/stellar/wallet-backend/issues/716), fixed in [#753](https://github.com/stellar/wallet-backend/pull/753)).
+
+**What it asserts.** The only participant is the `G…` account.
+
+## Pool issuers out of text order
+
+`cap38-pool-issuer-order-local-0001` · [CAP-0038](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0038.md) · generated
+
+A `changeTrust` for a pool share whose two issuers were chosen so their strkeys sort in one order and their key bytes in the other. The network orders by bytes, and accepted it.
+
+**What goes wrong.** Sorting by strkey text gets the pair backwards. Before 17.2.1, js-stellar-sdk couldn't read this transaction at all ("Assets are not in lexicographic order") and couldn't compute its pool ID ([#1766](https://github.com/stellar/js-stellar-sdk/pull/1766)).
+
+**What it asserts.** The operation decodes, the assets compare in network order, and the pool ID matches the trustline the ledger created.
+
+## Map keys in host order
+
+`cap46-scmap-host-order-local-0001` · CAP-0046 · generated
+
+A 10-entry map stored as contract data by the [probe contract](/corpus/generating#the-probe-contract). Its keys mix types the host orders type-first (`u32 1`, `i32 -1`, bytes `[9]` and `[10]`, string `"b"`, symbols `"1"`, `"aa"`, `"b"`, an account and a contract), so text order and host order disagree; and `u32 1` and symbol `"1"` print the same.
+
+**What goes wrong.** Sorting keys by their printed form produces a map the host rejects ([#1766](https://github.com/stellar/js-stellar-sdk/pull/1766)); converting to a native object drops one of the two `"1"` keys without an error ([#1789](https://github.com/stellar/js-stellar-sdk/issues/1789)).
+
+**What it asserts.** All ten entries, in host order; the SDK's sort reproduces it; native conversion keeps every entry or fails loudly.
+
+## Nested authorization
+
+`cap46-nested-auth-local-0001` · CAP-0046 · generated
+
+A call authorized by a six-level `SorobanAuthorizedInvocation` tree: six instances of the probe contract, each calling the next and each requiring the same account's authorization.
+
+**What goes wrong.** Code that recurses over `subInvocations` with no limit is one deeper tree away from a stack overflow; stellar-core bounds the tree only by the transaction size. wallet-backend did exactly this until [9538b3c](https://github.com/stellar/wallet-backend/commit/9538b3caeaebfeb3d034146c0ce9643c3066cf8a).
+
+**What it asserts.** Depth 6, six invocations, the root contract, and the call's return value, walked with the host's depth limit.
+
+## Memo text that isn't UTF-8
+
+`base-memo-non-utf8-local-0001` · base protocol · generated
+
+A payment whose 28-byte memo text contains `FF FE`, `ED A0 80` (a lone surrogate in CESU-8 form) and `E9` (Latin-1 "é"). The network accepts any 28 bytes.
+
+**What goes wrong.** A `TEXT` column rejects the row and ingestion stalls; a lenient decoder replaces the bytes with U+FFFD and a re-encoded transaction has a different hash ([#1823](https://github.com/stellar/js-stellar-sdk/issues/1823)).
+
+**What it asserts.** The raw bytes survive decoding and round-trips.
+
+## Every vector at its maximum
+
+`base-max-length-vectors-local-0001` · base protocol · generated
+
+A transaction with 100 operations, the maximum; an account with 20 signers, the maximum; and a transaction from that account carrying 20 signatures, the maximum.
+
+**What it asserts.** Every count, and every byte, round-trips.
+
+## Synthetic: one past the maximum
+
+`base-over-max-length-synthetic-0001` · base protocol · synthetic
+
+The 100-operation envelope with a 101st operation, and the memo envelope with a 29-byte memo. No network will produce them.
+
+**What it asserts.** A conforming decoder refuses both ([rs-stellar-xdr#598](https://github.com/stellar/rs-stellar-xdr/pull/598) is the Rust fix for vectors past their maximum).
+
+## Synthetic: hostile ScVal lengths
+
+`cap46-scval-limits-synthetic-0001` · CAP-0046 · synthetic
+
+Three `ScVal` encodings: a vector claiming 2³² − 1 elements and a map claiming 2³² − 1 entries, each 12 bytes with nothing after the length; and a vector nested 2,000 deep, past go-xdr's default depth limit of 1,500.
+
+**What it asserts.** Each is refused quickly. A decoder that reserves capacity from the length prefix tries to allocate for four billion elements ([rs-stellar-xdr#581](https://github.com/stellar/rs-stellar-xdr/pull/581)); one without a depth limit recurses 2,000 levels.
 
 <Tip>
 Every fixture can be fetched over the API: `GET /v1/fixtures/{id}` for the manifest, `GET /v1/fixtures/{id}/files/{name}` for the XDR. See the [API reference](/api-reference/introduction).

@@ -96,4 +96,4 @@ Point `query` at any field in [`/v1/stats`](/api-reference/endpoint/stats), for 
 
 - **Not a Stellar RPC.** The mock RPC serves only the corpus's fixture ledgers (`getHealth`, `getNetwork`, `getLatestLedger`, `getLedgers`). Don't point production at it.
 - **Not an SLA.** It's run by the project, on one server. For anything that must not go down, [run your own copy](/operations/self-hosting). It's one container, and the corpus is baked into the image.
-- **Not a place for your data.** It's read-only: no accounts, no writes, no telemetry. The only thing kept is the server's standard access log.
+- **Not a place for your data.** It's read-only: no accounts, no writes, no telemetry, and no request logs. Rate limiting keeps a per-IP counter in memory for a minute; see [user tracking](/project/maintenance#user-tracking).

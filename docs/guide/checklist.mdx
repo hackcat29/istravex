@@ -6,7 +6,8 @@ description: The whole guide as a code-review checklist, in any language.
 
 Copy this into your pull request template, or walk through it before shipping an ingestion change.
 
-- [ ] Effects, participants and balances are derived from ledger metadata, not the envelope. → [Rule 1](/guide/effects-from-meta)
+- [ ] Every field marked "passed through" in [What stellar-core validates](/guide/validated-fields) is validated by your code before it's stored.
+- [ ] Effects, participants and balances are derived from ledger metadata, not the envelope; participants are `G…` accounts, never `M…` forms. → [Rule 1](/guide/effects-from-meta)
 - [ ] The fee payer comes from the fee-bump fee account; the fee amount from `TransactionResult.FeeCharged`. → [Rule 2](/guide/fees)
 - [ ] Balance-delta fee accounting nets Soroban post-apply refunds. → [Rule 2](/guide/fees)
 - [ ] Every 64-bit integer is stored as a string or `NUMERIC`, and emitted as a JSON string. → [Rule 3](/guide/wide-integers)
@@ -14,7 +15,8 @@ Copy this into your pull request template, or walk through it before shipping an
 - [ ] Signed-payload signers are stored as full `P…` keys. → [Rule 5](/guide/signed-payload-signers)
 - [ ] Trustlines and accounts created by contract invocations are indexed from meta. → [Rule 6](/guide/sac-trustlines)
 - [ ] Memo text is UTF-8 validated or stored as bytes. → [Rule 7](/guide/untrusted-strings)
-- [ ] Recursive XDR walkers carry and check a depth limit. → [Rule 8](/guide/bounded-recursion)
+- [ ] XDR walkers, recursive or with a work list, cap depth (100) and node count; untrusted XDR is decoded with limits. → [Rule 8](/guide/bounded-recursion), [Limits](/guide/limits)
+- [ ] Each address column holds one strkey type at its full length; keys are sorted by bytes, not text. → [Addresses](/guide/addresses)
 - [ ] Diagnostic events are never indexed, hashed or compared across nodes. → [Rule 9](/guide/consensus-data)
 - [ ] The Istravex corpus replays through your pipeline with every fixture correct. → [Replaying into your indexer](/pilots/your-indexer)
 - [ ] `istravex-lint ./...` is clean, or every finding is triaged with a reason. → [istravex-lint](/tools/lint)

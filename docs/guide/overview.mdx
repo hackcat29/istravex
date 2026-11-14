@@ -1,11 +1,11 @@
 ---
 title: Indexer hardening guide
 sidebarTitle: Overview
-description: Nine rules for turning Stellar ledger data into records correctly, each one backed by evidence.
+description: What the network validates, what it passes through, and nine rules for turning Stellar ledger data into records correctly, each backed by evidence.
 ---
 
 <Check>
-Reviewed and confirmed by a Stellar Core engineer on 14 November 2026.
+Version 1.0 (the nine rules and the checklist) was reviewed and confirmed by a Stellar Core engineer on 14 November 2026. The pages added in version 1.1 ([validated fields](/guide/validated-fields), [limits](/guide/limits), [addresses](/guide/addresses)) and the 15 November edits to rules 1 and 8 await the same review.
 </Check>
 
 This guide is for anyone writing code that turns Stellar ledger data into records: indexers, explorers, wallets, custody systems, analytics pipelines. It applies in any language. Where a rule can be checked mechanically in Go, [istravex-lint](/tools/lint) does it.
@@ -17,6 +17,14 @@ Every rule cites something you can check yourself: a fixture in the corpus, a li
 > The envelope says what a transaction **asked** for. `LedgerCloseMeta` says what **happened**. When they disagree, the metadata is right.
 
 Most of the rules are that idea applied to a specific field.
+
+## Start here
+
+<CardGroup cols={3}>
+  <Card title="What stellar-core validates" href="/guide/validated-fields">Field by field: what the network checks, and what it passes through to you.</Card>
+  <Card title="Recommended limits" href="/guide/limits">Depth and size caps, each derived from a limit the network enforces.</Card>
+  <Card title="Addresses and strkeys" href="/guide/addresses">The SEP-0023 forms you'll meet, and three ways they're confused.</Card>
+</CardGroup>
 
 ## The rules
 
@@ -36,4 +44,8 @@ Short on time? Start with the [checklist](/guide/checklist).
 
 ## Does following it work?
 
-The replay harness measures it. An indexer that reads effects from the envelope gets **all four** indexed cases wrong: two incorrect, two dropped. One that follows these rules gets all four right. [stellar/wallet-backend](/pilots/wallet-backend), which already follows them, gets all six fixtures right.
+The replay harness measures it. An indexer that reads effects from the envelope gets **all six** indexed cases wrong: four incorrect, two dropped. One that follows these rules gets all six right. [stellar/wallet-backend](/pilots/wallet-backend), which follows them today, gets all eight fixtures it indexes right, over RPC and over the data lake. Its commits from before the September fixes get them wrong in exactly the ways rules 1, 4, 5 and 6 describe.
+
+## Publishing
+
+The guide is written to publish on developers.stellar.org. `npm run guide:export` turns these pages into plain Docusaurus Markdown (admonitions instead of Mintlify components, generated tables inlined, links made relative) in `build/guide/`; CI builds it on every commit.

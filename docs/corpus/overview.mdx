@@ -23,7 +23,9 @@ corpus/
 
 <Fixtures />
 
-That's six fixtures for four CAPs. Two of them are the same scenario on two networks: CAP-0040 and CAP-0073 each exist as a testnet capture and as a fixture generated on a pinned stellar-core. That's deliberate. The testnet copy proves the pattern exists on a real network; the generated copy can be rebuilt by anyone, at any time, without depending on testnet (which resets).
+That's 15 fixtures across six CAPs and 13 patterns. Two are captured on mainnet, two on testnet, nine generated on a pinned stellar-core, and two are synthetic: bytes a decoder must refuse, built from generated ones and labelled as such everywhere.
+
+CAP-0040 and CAP-0073 each exist twice, as a testnet capture and as a generated fixture. That's deliberate. The testnet copy proves the pattern exists on a real network; the generated copy can be rebuilt by anyone, at any time, byte for byte, without depending on testnet (which resets). Ten fixtures reproduce a bug that was reported upstream; their manifests list it under `sightings`, and the [findings report](/project/findings) shows the kit failing before each fix and passing after.
 
 ## Three ways in
 

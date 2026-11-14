@@ -1,15 +1,18 @@
 ---
-title: IX002 · Recursion without a depth limit
+title: IX002 · Walks with no depth or size limit
 sidebarTitle: IX002
-description: ScVal and Soroban auth trees nest. Walkers over them need a bound.
+description: ScVal and Soroban authorization trees nest, and stellar-core bounds neither. Walkers over them need their own caps.
 ---
 
 ## What it flags
 
-A function that takes a recursive XDR type (`ScVal`, `ScVec`, `ScMap`, `ScMapEntry`, `SorobanAuthorizedInvocation`, `SorobanAuthorizedFunction`), calls itself, and has no integer parameter that it compares against anything.
+Two shapes of walk over recursive XDR types (`ScVal`, `ScVec`, `ScMap`, `ScMapEntry`, `SorobanAuthorizedInvocation`, `SorobanAuthorizedFunction`):
+
+1. **Recursion.** A function that takes one of these types, calls itself, and has no integer parameter that it compares against anything.
+2. **Work lists.** A loop that pushes a node's children onto a slice it then pops from (`stack = append(stack, inv.SubInvocations...)`, or the elements of a vec or map), in a function that never compares a counter against a bound.
 
 ```go
-func walk(v xdr.ScVal) int { // IX002
+func walk(v xdr.ScVal) int { // IX002: recursion, no depth limit
     n := 1
     if v.Vec != nil {
         for _, c := range **v.Vec {
@@ -18,33 +21,37 @@ func walk(v xdr.ScVal) int { // IX002
     }
     return n
 }
+
+for len(stack) > 0 {
+    inv := stack[len(stack)-1]
+    stack = stack[:len(stack)-1]
+    stack = append(stack, inv.SubInvocations...) // IX002: work list, no size limit
+}
 ```
 
 ## Why it matters
 
-Decoders bound nesting: go-stellar-sdk's `SafeUnmarshal` has a default depth limit, Rust's `stellar-xdr` takes `Limits`. But those limits protect the decode step only, and only when they're left on. A value built in memory, decoded with limits off, or merged from several sources can nest deeper than your own walker expects, and an unbounded recursive walk over it ends in a stack overflow. In an indexer, that's a crash loop on one ledger.
+stellar-core bounds neither the depth nor the width of an authorization tree or a contract value: only the transaction size does (132,096 bytes on mainnet). Decoders bound nesting when their limits are on, but a value built in memory, decoded with limits off, or merged from several sources can nest deeper than your walker expects. Recursion then overflows the stack; a work list grows the heap without bound. Either way, in an indexer it's a crash loop on one ledger.
 
 ## Fix
 
-Carry a depth and stop past a bound:
+Carry a depth, count nodes, and stop past a bound. [Recommended limits](/guide/limits) derives the numbers: depth 100 (the host's own limit) and about 33,000 nodes per transaction.
 
 ```go
-func walk(v xdr.ScVal, depth int) int {
-    if depth > 64 {
-        return 0 // or return an error
+func walk(v xdr.ScVal, depth int, budget *int) error {
+    if depth > 100 {
+        return errTooDeep
     }
-    n := 1
-    if v.Vec != nil {
-        for _, c := range **v.Vec {
-            n += walk(c, depth+1)
-        }
+    if *budget--; *budget < 0 {
+        return errTooLarge
     }
-    return n
+    // … recurse with depth+1
+    return nil
 }
 ```
 
-Any ordered comparison of an integer parameter satisfies the rule.
+Any ordered comparison of an integer parameter satisfies the recursion check; any ordered comparison of a counter satisfies the work-list check.
 
 ## In the wild
 
-No findings in wallet-backend at the pinned commit.
+On wallet-backend, IX002 flags `participantsFromInvocationAndSubInvocations` (`internal/indexer/processors/contract_operations.go:53`) on every commit up to 28 September 2026: it collected Soroban participants by recursing over the authorization tree with no limit. Commit [9538b3c](https://github.com/stellar/wallet-backend/commit/9538b3caeaebfeb3d034146c0ce9643c3066cf8a) replaced it ("derive Soroban participants from executed meta, not the auth tree"), and IX002 is clean on main. The [pilot](/pilots/wallet-backend#before-and-after-each-upstream-fix) checks both commits on every run.

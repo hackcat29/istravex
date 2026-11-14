@@ -70,12 +70,14 @@ export function createApp({ corpusDir, version = 'dev', limits = [1200, 300], lo
     const items = [...corpus.fixtures.values()]
       .map(({ manifest: m }) => ({
         id: m.id,
+        pattern: m.pattern,
         cap_ids: m.cap_ids,
         network: m.network,
         protocol_version: m.protocol_version,
-        ledger: m.source.ledger,
-        tx_hash: m.source.tx_hash,
+        ledger: m.source.ledger ?? null,
+        tx_hash: m.source.tx_hash ?? null,
         kind: m.source.kind,
+        synthetic: m.synthetic,
         xdr_type: m.xdr_type,
         sha256: m.sha256,
         files: m.files.map((f) => f.name),
@@ -130,6 +132,7 @@ export function createApp({ corpusDir, version = 'dev', limits = [1200, 300], lo
   });
 
   app.get('/v1/coverage', (c) => (corpus.coverage ? (cache(c, 3600), c.json(corpus.coverage)) : notFound(c, 'Coverage')));
+  app.get('/v1/findings', (c) => (corpus.findings ? (cache(c, 300), c.json(corpus.findings)) : notFound(c, 'Findings')));
 
   // ── Mock Stellar RPC ──────────────────────────────────────────────────────
   app.post('/rpc/:network', bodyLimit({ maxSize: 64 * 1024, onError: (c) => c.json({ jsonrpc: '2.0', id: null, error: { code: -32600, message: 'request too large' } }, 413) }), async (c) => {

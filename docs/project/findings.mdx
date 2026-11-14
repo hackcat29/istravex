@@ -1,9 +1,33 @@
 ---
 title: Findings
-description: What building Istravex turned up about Stellar's data, its tools, and our own code.
+description: Every finding the kit has produced or reproduced, with its severity, upstream issue, the corpus entry that shows it, and the checks it explains.
 ---
 
-Building a conformance kit means reading a lot of real ledger data closely. These are the things that surprised us, each with the evidence behind it. Several became rules in the [hardening guide](/guide/overview).
+import Findings from '/snippets/findings-table.mdx';
+import Severity from '/snippets/severity-scale.mdx';
+
+The findings are the deliverable, not the run. Each entry in [`corpus/findings.json`](https://github.com/hackcat29/istravex/blob/main/corpus/findings.json) names the affected component and versions, a severity, the upstream issue (or the draft for one not yet filed), the minimal corpus entries that reproduce it, and the failing checks it explains. It's also served at [`/v1/findings`](/api-reference/endpoint/findings).
+
+<Findings />
+
+## How the report stays complete
+
+Every failure the kit produces on purpose maps to a finding, and CI enforces it (`kit/check-results.mjs`):
+
+- **SDK releases.** A check that fails on an earlier [JavaScript release](/tools/sdk-runners#earlier-javascript-releases) must be listed in some finding's `checks`, and every check a finding lists must really fail on some release and pass on the current one.
+- **wallet-backend commits.** Each commit [before an upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix) must fail its fixtures (or trip its lint rule) and the fix must pass, and every failure must belong to a finding.
+- **The current pins** (JavaScript 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0, wallet-backend main) must pass everything. A new failure there is a new finding: triage it, give it a severity, file it, and add it to the file before CI goes green.
+- **Shape.** `findings.json` validates against [`corpus/findings.schema.json`](https://github.com/hackcat29/istravex/blob/main/corpus/findings.schema.json): a fixed or open finding needs an upstream link; one marked **to-file** needs the draft text.
+
+## Severity
+
+<Severity />
+
+## Not yet filed
+
+Three findings are **to-file**: F-0010 and F-0011 (stellar-core) and F-0012 (js-stellar-sdk). Each carries the issue text in `findings.json`, ready to file, and will be updated with its link once it is. They're low severity: they affect test infrastructure and SDK ergonomics, not ingestion correctness.
+
+## Notes behind the findings
 
 ## About the ledger
 
@@ -29,7 +53,7 @@ Building a conformance kit means reading a lot of real ledger data closely. Thes
     JavaScript, Go and Rust pass all 54 fixture checks and round-trip all 15,306 golden frames byte for byte. The risk isn't in the SDKs' decoding. It's in what applications do with the values next. → [SDK runners](/tools/sdk-runners)
   </Accordion>
   <Accordion title="wallet-backend already does it right">
-    SDF's wallet-backend indexes all six fixtures correctly. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
+    SDF's wallet-backend indexes all eight fixtures it reads correctly, over RPC and over the data lake. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
   </Accordion>
   <Accordion title="stellar-core 30.0.0 standalone quirks">
     A bare `/manualclose` can abort core on a timer assertion; the HTTP query server matches header names case-sensitively and closes every connection; the first Soroban settings upgrade is larger than the starting limit it's stored under. All have workarounds. → [Generating](/corpus/generating#stellar-core-quirks-it-works-around)

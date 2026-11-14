@@ -54,15 +54,28 @@ server.close();
 | `getHealth` | `healthy`, plus the oldest and latest stored ledger. |
 | `getNetwork` | The network passphrase and the latest protocol version. |
 | `getLatestLedger` | Hash, sequence and protocol of the newest stored ledger. |
-| `getLedgers` | `startLedger` or `pagination.cursor`, and `pagination.limit` (1–200, default 5). `xdrFormat` must be `base64`. |
+| `getLedgers` | `startLedger` or `pagination.cursor`, and `pagination.limit` (1–200, default 5). `xdrFormat` must be `base64`. A page also stops at 16 MiB of metadata (always at least one ledger); keep paging with the cursor. |
 
 Errors use Stellar RPC's codes and messages, e.g. `-32600` with *start ledger must be between the oldest ledger: … and the latest ledger: …*, so an indexer's error handling sees what it would see in production.
 
 ## The ledger range is sparse
 
-The corpus stores only the ledgers its fixtures came from: mainnet 65,474,279 and 65,474,309, and nothing in between. `getHealth` reports the full span, and `getLedgers` returns the stored ledgers from `startLedger` onward, skipping the gaps. The cursor always points at the last ledger returned.
+The corpus stores only the ledgers its fixtures came from: on mainnet, 65,474,279 and 65,474,309, and nothing in between. (The generated network is the exception: it stores every ledger it closed.) `getHealth` reports the full span, and `getLedgers` returns the stored ledgers from `startLedger` onward, skipping the gaps. The cursor always points at the last ledger returned.
 
 Most indexers handle this fine because they request a range and process whatever comes back. If yours insists on contiguous sequences, ask for each fixture's ledger directly (`startLedger` = the fixture's `source.ledger`, `limit` = 1), which is what the pilot does.
+
+## Bounded memory
+
+The mock RPC holds a fixed amount of memory however large the corpus is: ledgers are decompressed on demand, at most four stay decoded, only the header of each is parsed (the metadata is served as the stored bytes), and a page stops at 16 MiB. `kit/rpc/memory.test.mjs` holds it to that on every CI run. It builds a 400-ledger corpus of pubnet-sized ledgers (542 MB of metadata), pages through all of it with the server's heap capped at 128 MB, and checks that resident memory in the second half of the sweep is no higher than in the first.
+
+```bash
+node --test kit/rpc/memory.test.mjs
+# 400 ledgers, 542 MB of meta, 50 pages, heap capped at 128 MB; server RSS: first page 236 MB, peak in first half 317 MB, in second half 318 MB
+```
+
+## Or the data lake
+
+If your indexer reads the Galexie data lake instead of RPC, export the same ledgers in that layout: see [Data lake](/tools/data-lake).
 
 ## Limits on the hosted endpoint
 

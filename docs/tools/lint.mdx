@@ -1,15 +1,17 @@
 ---
 title: istravex-lint
-description: Three Go analyzers for ingestion mistakes that keep recurring in Stellar indexers.
+description: Three Go analyzers for the ingestion mistakes that keep recurring in Stellar indexers.
 ---
 
 `istravex-lint` is a set of [`go/analysis`](https://pkg.go.dev/golang.org/x/tools/go/analysis) analyzers for Go code built on Stellar's XDR packages, both `github.com/stellar/go-stellar-sdk/xdr` and the older `github.com/stellar/go/xdr`.
 
 | Rule | Flags | Guide |
 |---|---|---|
-| [IX001](/tools/lint/ix001) | Memo text read without UTF-8 validation | [Untrusted strings](/guide/untrusted-strings) |
-| [IX002](/tools/lint/ix002) | Recursion over recursive XDR values with no depth limit | [Bound recursion](/guide/bounded-recursion) |
-| [IX003](/tools/lint/ix003) | Fee payer or fee amount read from the envelope | [Fees](/guide/fees) |
+| [IX001](/tools/lint/ix001) | Unvalidated fields used as if validated: memo text without a UTF-8 check, muxed IDs converted to a type that can't hold every `uint64` | [Validated fields](/guide/validated-fields), [Untrusted strings](/guide/untrusted-strings) |
+| [IX002](/tools/lint/ix002) | Walks over `ScVal` or authorization trees with no depth or size limit, recursive or with a work list | [Limits](/guide/limits), [Bound recursion](/guide/bounded-recursion) |
+| [IX003](/tools/lint/ix003) | Participants or fees from the envelope: a muxed account's `M…` form as a participant, the inner source or the bid as the fee | [Effects from metadata](/guide/effects-from-meta), [Fees](/guide/fees) |
+
+They're the three mistakes the SCF RFP names (trusting unvalidated fields, missing depth and size caps on recursive structures, deriving participants from the envelope instead of the meta), and each is calibrated on [wallet-backend](/pilots/wallet-backend): clean on main, and firing on the commits before the upstream fixes for #716 (IX003) and 9538b3c (IX002).
 
 ## Run it
 
@@ -51,7 +53,8 @@ The comment can go on the line above or at the end of the reported line. Name th
 
 A linter people disable is worse than none. Each rule is narrow on purpose, and was calibrated against [stellar/wallet-backend](/pilots/wallet-backend), a real, well-maintained indexer:
 
-- IX003 originally flagged every `Envelope.SourceAccount()` call. In wallet-backend that produced two findings, both correct code: operation-source fallbacks, where the inner source *is* the right answer. The rule now fires only inside fee logic.
-- After calibration, the whole rule set produces one finding on wallet-backend, triaged as latent (see [IX001](/tools/lint/ix001)).
+- IX003 originally flagged every `Envelope.SourceAccount()` call. In wallet-backend that produced two findings, both correct code: operation-source fallbacks, where the inner source *is* the right answer. The fee check now fires only inside fee logic, and the participant check only inside participant code.
+- On wallet-backend main, the whole rule set produces one finding, triaged as latent (see [IX001](/tools/lint/ix001)).
+- On the commits before two upstream fixes, it finds what those fixes removed: four IX003 findings before [#753](https://github.com/stellar/wallet-backend/pull/753), one IX002 finding before [9538b3c](https://github.com/stellar/wallet-backend/commit/9538b3caeaebfeb3d034146c0ce9643c3066cf8a). The [pilot](/pilots/wallet-backend#before-and-after-each-upstream-fix) re-checks both pairs on every CI run.
 
-Each rule ships with positive and negative test cases in `kit/go/lint/testdata`.
+Each rule ships with positive and negative test cases in `kit/go/lint/testdata`, and CI runs the [action](#in-ci) over a module of seeded violations, `kit/go/lint/testdata/selftest`, requiring exactly six findings: two IX001, one IX002, three IX003.

@@ -666,6 +666,147 @@
         }
       }
     },
+    "/v1/findings": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "Findings report",
+        "operationId": "getFindings",
+        "description": "Every finding the kit has produced or reproduced: the affected component, severity, upstream issue, the minimal corpus entries that show it, and the failing checks it explains. Each failure the kit reproduces on purpose (an SDK release before a fix, a wallet-backend commit before a fix) maps to one of these. The same file as corpus/findings.json.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "severity_scale",
+                    "findings"
+                  ],
+                  "properties": {
+                    "severity_scale": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "findings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "title",
+                          "component",
+                          "severity",
+                          "status",
+                          "issue",
+                          "fixtures",
+                          "checks",
+                          "reproduced",
+                          "summary"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "component": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "enum": [
+                              "critical",
+                              "high",
+                              "medium",
+                              "low",
+                              "info"
+                            ]
+                          },
+                          "status": {
+                            "enum": [
+                              "fixed-upstream",
+                              "open-upstream",
+                              "to-file",
+                              "latent",
+                              "by-design"
+                            ]
+                          },
+                          "issue": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "fixtures": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "checks": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "reproduced": {
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "summary": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rpc/{network}": {
       "post": {
         "tags": [
@@ -893,6 +1034,10 @@
           "id": {
             "type": "string"
           },
+          "pattern": {
+            "type": "string",
+            "example": "muxed-payment"
+          },
           "cap_ids": {
             "type": "array",
             "items": {
@@ -906,16 +1051,25 @@
             "type": "integer"
           },
           "ledger": {
-            "type": "integer"
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "null for synthetic fixtures"
           },
           "tx_hash": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "null for synthetic fixtures"
           },
           "kind": {
             "type": "string",
             "enum": [
               "captured",
-              "generated"
+              "generated",
+              "synthetic"
             ]
           },
           "xdr_type": {
@@ -929,6 +1083,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "synthetic": {
+            "type": "boolean"
           }
         }
       },
@@ -938,6 +1095,10 @@
         "properties": {
           "id": {
             "type": "string"
+          },
+          "pattern": {
+            "type": "string",
+            "description": "The ledger pattern the fixture exercises, e.g. muxed-payment"
           },
           "cap_ids": {
             "type": "array",
@@ -977,6 +1138,13 @@
             "items": {
               "type": "object"
             }
+          },
+          "sightings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Upstream issues this fixture reproduces, as owner/repo#number"
           }
         }
       },

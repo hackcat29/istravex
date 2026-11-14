@@ -20,7 +20,7 @@ You have two options, and for CI you want the first.
     Pin a release so your tests only change when you decide they should. The fixtures are about 100 KB.
 
     ```bash
-    git clone --depth 1 --branch v1.0.0 --filter=blob:none --sparse \
+    git clone --depth 1 --branch v1.1.0 --filter=blob:none --sparse \
       https://github.com/hackcat29/istravex tests/istravex
     git -C tests/istravex sparse-checkout set corpus/fixtures
     ```
@@ -69,6 +69,11 @@ for (const { id } of fixtures) {
     const manifest = await (await get(`/fixtures/${id}`)).json();
     for (const file of manifest.files) {
       const b64 = (await (await get(`/fixtures/${id}/files/${file.name}`)).text()).trim();
+      if (file.expect === 'decode_error') {
+        // Synthetic bytes a conforming decoder must refuse.
+        assert.throws(() => codec(file.xdr_type).fromXDR(b64, 'base64'), `${file.name} is refused`);
+        continue;
+      }
       const value = codec(file.xdr_type).fromXDR(b64, 'base64');      // 1. decodes
       assert.equal(value.toXDR('base64'), b64, `${file.name} re-encodes`); // 2. byte-for-byte
     }
@@ -99,6 +104,7 @@ type manifest struct {
 	Files           []struct {
 		Name    string `json:"name"`
 		XDRType string `json:"xdr_type"`
+		Expect  string `json:"expect"`
 	} `json:"files"`
 }
 
@@ -132,6 +138,8 @@ func newValue(xdrType string) (any, error) {
 		return &xdr.LedgerEntryData{}, nil
 	case "LedgerEntryChanges":
 		return &xdr.LedgerEntryChanges{}, nil
+	case "ScVal":
+		return &xdr.ScVal{}, nil
 	}
 	return nil, fmt.Errorf("unknown xdr_type %q", xdrType)
 }
@@ -155,7 +163,15 @@ func TestCorpusRoundTrip(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				if err := xdr.SafeUnmarshalBase64(b64, v); err != nil {
+				err = xdr.SafeUnmarshalBase64(b64, v)
+				if file.Expect == "decode_error" {
+					// Synthetic bytes a conforming decoder must refuse.
+					if err == nil {
+						t.Errorf("%s: decoded, but must be refused", file.Name)
+					}
+					continue
+				}
+				if err != nil {
 					t.Fatalf("%s: decode: %v", file.Name, err)
 				}
 				out, err := xdr.MarshalBase64(v)
@@ -176,15 +192,15 @@ func TestCorpusRoundTrip(t *testing.T) {
 // [dev-dependencies] stellar-xdr = { version = "30", features = ["base64"] }, serde_json = "1"
 use std::{fs, path::Path};
 use stellar_xdr::{
-    LedgerEntryChanges, LedgerEntryData, Limits, ReadXdr, TransactionEnvelope, TransactionMeta,
+    LedgerEntryChanges, LedgerEntryData, Limits, ReadXdr, ScVal, TransactionEnvelope, TransactionMeta,
     TransactionResult, WriteXdr,
 };
 
-fn round_trip<T: ReadXdr + WriteXdr>(b64: &str) -> String {
-    // Fixtures are trusted test data, but keep limits on anyway: production decoders should.
-    let limits = || Limits { depth: 500, len: 10 * 1024 * 1024 };
-    let value = T::from_xdr_base64(b64, limits()).expect("decodes");
-    value.to_xdr_base64(limits()).expect("encodes")
+/// Decode and re-encode; Err if decoding fails. Limits as for any untrusted input.
+fn round_trip<T: ReadXdr + WriteXdr>(b64: &str) -> Result<String, stellar_xdr::Error> {
+    let limits = || Limits { depth: 500, len: b64.len() };
+    let value = T::from_xdr_base64(b64, limits())?;
+    value.to_xdr_base64(limits())
 }
 
 #[test]
@@ -203,14 +219,22 @@ fn corpus_round_trips() {
                 "TransactionMeta" => round_trip::<TransactionMeta>(b64),
                 "LedgerEntryData" => round_trip::<LedgerEntryData>(b64),
                 "LedgerEntryChanges" => round_trip::<LedgerEntryChanges>(b64),
+                "ScVal" => round_trip::<ScVal>(b64),
                 other => panic!("unknown xdr_type {other}"),
             };
-            assert_eq!(out, b64, "{} / {}", manifest["id"], file["name"]);
+            if file["expect"] == "decode_error" {
+                // Synthetic bytes a conforming decoder must refuse.
+                assert!(out.is_err(), "{} / {} must be refused", manifest["id"], file["name"]);
+            } else {
+                assert_eq!(out.expect("decodes"), b64, "{} / {}", manifest["id"], file["name"]);
+            }
         }
     }
 }
 ```
 </CodeGroup>
+
+Files marked `expect: decode_error` belong to the synthetic fixtures: bytes no network produces (101 operations, a length prefix of 2³² − 1, 2,000 levels of nesting). For those, the test passes when decoding **fails**.
 
 When a new fixture introduces an XDR type you don't map yet, these tests fail loudly with `unknown xdr_type` rather than skipping it. That's deliberate: a silently skipped fixture is a test that passes while proving nothing.
 
@@ -281,7 +305,7 @@ func TestMuxedPayment(t *testing.T) {
 Never read `expected_decoded` or `expected_indexed` through a parser that turns large integers into floats and then compare numbers. Every 64-bit value in a manifest is a JSON string for exactly this reason. Compare strings, or parse into `BigInt` / `uint64` / `i64`.
 </Warning>
 
-The other fixtures have their own expectations: fee-bump hashes and fee sources (CAP-0015), the signed-payload signer's key and payload (CAP-0040), and the trustline a SAC `trust()` call created (CAP-0073). The kit's own runners check all of them and are the best reference for how: [JavaScript](https://github.com/hackcat29/istravex/blob/main/kit/runners/js/run.mjs), [Go](https://github.com/hackcat29/istravex/blob/main/kit/go/cmd/conformance/main.go) and [Rust](https://github.com/hackcat29/istravex/blob/main/kit/runners/rust/src/main.rs). Current results are on the [SDK runners](/tools/sdk-runners) page.
+The other fixtures have their own expectations: fee-bump hashes and fee sources, the signed-payload signer's key and payload, the trustline a SAC `trust()` call created, pool assets in network order and the pool ID, a map's keys in host order, an authorization tree's depth, raw memo bytes, every vector at its maximum. Two synthetic fixtures carry bytes your decoder must **refuse**; their files are marked `expect: decode_error`. The kit's own runners check all of them and are the best reference for how: [JavaScript](https://github.com/hackcat29/istravex/blob/main/kit/runners/js/run.mjs), [Go](https://github.com/hackcat29/istravex/blob/main/kit/go/cmd/conformance/main.go) and [Rust](https://github.com/hackcat29/istravex/blob/main/kit/runners/rust/src/main.rs). Current results are on the [SDK runners](/tools/sdk-runners) page.
 
 ## Run it in CI
 

@@ -1,0 +1,41 @@
+---
+title: What stellar-core validates
+sidebarTitle: Validated fields
+description: Field by field, what the network checks before a transaction lands in a ledger, and what it passes through untouched.
+---
+
+import FieldTable from '/snippets/field-table.mdx';
+
+stellar-core is strict about some fields and indifferent to others. It checks every signature, every sequence number and every fee bid, because consensus depends on them. It doesn't check that memo text is UTF-8, it doesn't interpret a muxed account's ID, and it doesn't bound how deep a Soroban authorization tree goes, because nothing in consensus depends on those. An indexer that treats the second kind like the first is trusting data nobody vouched for.
+
+This table is that distinction, field by field. Read the right-hand columns as a to-do list: everything in **What it passes through** is your code's responsibility.
+
+<FieldTable />
+
+## How the table stays honest
+
+The table isn't prose that can drift. It's generated from [`kit/guide/fields.json`](https://github.com/hackcat29/istravex/blob/main/kit/guide/fields.json), and CI checks it against the corpus on every commit:
+
+- every pattern a row names has a fixture in the corpus;
+- every manifest field a row names is set by one of those fixtures, so each claim has a real value behind it;
+- every `expected_decoded` and `expected_indexed` field in the corpus is named by some row, so a new fixture can't add a field nobody classified.
+
+The **Corpus** column names the fixtures where you can see each field on real ledger data. [Fixtures](/corpus/fixtures) lists them all.
+
+## Reading the three verdicts
+
+<CardGroup cols={3}>
+  <Card title="✓ validated" icon="shield-check">
+    A transaction with a bad value never makes it into a ledger. You can rely on the value, but you may still be reading the wrong one: the fee bid is validated, and it still isn't the fee charged.
+  </Card>
+  <Card title="◐ partly" icon="shield-halved">
+    Some property is enforced and another isn't. Authorization entries must authorize what they claim, but nothing limits how deep the tree goes.
+  </Card>
+  <Card title="✗ passed through" icon="triangle-exclamation">
+    Any value the XDR type allows will appear on the network eventually. Code for the whole range.
+  </Card>
+</CardGroup>
+
+<Note>
+Version 1.0 of this guide was reviewed by a Stellar Core engineer on 14 November 2026. This page, [Recommended limits](/guide/limits) and [Addresses and strkeys](/guide/addresses) were added in version 1.1 and await the same review.
+</Note>

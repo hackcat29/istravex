@@ -1,0 +1,254 @@
+{
+  "note": "The hardening guide's field-by-field table (docs/guide/validated-fields.mdx). Each row names what stellar-core checks about a field and what it passes through, the corpus patterns that exercise it, and the manifest keys whose expected values pin it down. kit/guide/fields.mjs checks that every key is one some fixture of those patterns has, and that every key in the corpus is classified by some row.",
+  "rows": [
+    {
+      "field": "Signatures",
+      "xdr": "TransactionEnvelope.signatures; AccountEntry.signers, thresholds",
+      "validated": "yes",
+      "checks": "Every signature verifies, the signers' weights meet each operation's threshold, at most 20 signatures, and none is unused.",
+      "passes": "Nothing: but which signer signed is only a weight, not an identity the ledger records.",
+      "rule": null,
+      "patterns": [
+        "max-length-vectors"
+      ],
+      "keys": [
+        "expected_decoded.signature_count",
+        "expected_decoded.signer_count",
+        "expected_decoded.thresholds",
+        "expected_decoded.master_weight"
+      ]
+    },
+    {
+      "field": "Sequence numbers",
+      "xdr": "Transaction.seqNum",
+      "validated": "yes",
+      "checks": "The source account's next sequence number, or within the transaction's sequence preconditions.",
+      "passes": "Nothing.",
+      "rule": null,
+      "patterns": [
+        "fee-bump",
+        "muxed-payment"
+      ],
+      "keys": []
+    },
+    {
+      "field": "Fees",
+      "xdr": "Transaction.fee, FeeBumpTransaction.fee, feeSource",
+      "validated": "yes",
+      "checks": "The bid covers the minimum for every operation and the payer can pay it.",
+      "passes": "The bid is not the charge: FeeCharged is set after apply, net of Soroban refunds. On a fee-bump the payer is the fee source, not the envelope's source.",
+      "rule": "fees",
+      "lint": "IX003",
+      "patterns": [
+        "fee-bump",
+        "muxed-payment"
+      ],
+      "keys": [
+        "expected_decoded.max_fee",
+        "expected_decoded.fee_source",
+        "expected_decoded.inner_source",
+        "expected_decoded.inner_tx_hash",
+        "expected_decoded.fee_bumped",
+        "expected_decoded.tx_hash",
+        "expected_indexed.fee_charged",
+        "expected_indexed.fee_paid_by"
+      ]
+    },
+    {
+      "field": "Time bounds",
+      "xdr": "Transaction.cond.timeBounds",
+      "validated": "yes",
+      "checks": "The ledger's close time falls inside them.",
+      "passes": "Nothing; but a ledger's close time is the validators' agreed value, not wall-clock time.",
+      "rule": null,
+      "patterns": [
+        "fee-bump",
+        "muxed-payment"
+      ],
+      "keys": []
+    },
+    {
+      "field": "Bounded vectors and strings",
+      "xdr": "operations<100>, signatures<20>, signers<20>, memo text<28>",
+      "validated": "yes",
+      "checks": "XDR decoding refuses one element or byte past each maximum.",
+      "passes": "Unbounded types (ScVec, ScMap, authorization subinvocations) have no XDR maximum: only the transaction size bounds them.",
+      "rule": "limits",
+      "patterns": [
+        "max-length-vectors",
+        "over-max-length",
+        "scval-limits"
+      ],
+      "keys": [
+        "expected_decoded.operation_count",
+        "expected_decoded.payer",
+        "expected_decoded.account",
+        "expected_decoded.decode_error",
+        "expected_decoded.depth"
+      ]
+    },
+    {
+      "field": "Memo text",
+      "xdr": "Memo.text",
+      "validated": "no",
+      "checks": "At most 28 bytes.",
+      "passes": "The bytes themselves: any 28 bytes are valid, UTF-8 or not.",
+      "rule": "untrusted-strings",
+      "lint": "IX001",
+      "patterns": [
+        "memo-non-utf8"
+      ],
+      "keys": [
+        "expected_decoded.memo_type",
+        "expected_decoded.memo_hex",
+        "expected_decoded.memo_bytes",
+        "expected_decoded.utf8_valid"
+      ]
+    },
+    {
+      "field": "Muxed account IDs",
+      "xdr": "MuxedAccount.med25519.id",
+      "validated": "no",
+      "checks": "Nothing about the ID: the account behind it is checked as if unmuxed.",
+      "passes": "Any uint64, up to 2^64 − 1, never interpreted. The M… form is not an account: participants and balances belong to the G… account.",
+      "rule": "muxed-accounts",
+      "lint": "IX001, IX003",
+      "patterns": [
+        "muxed-payment",
+        "muxed-max-id",
+        "muxed-soroban-source"
+      ],
+      "keys": [
+        "expected_decoded.muxed_id",
+        "expected_decoded.destination_muxed",
+        "expected_decoded.destination_muxed_id",
+        "expected_decoded.destination_account",
+        "expected_decoded.source_muxed",
+        "expected_decoded.source_muxed_id",
+        "expected_decoded.source_account",
+        "expected_indexed.recipient",
+        "expected_indexed.recipient_muxed_id",
+        "expected_indexed.participants"
+      ]
+    },
+    {
+      "field": "Soroban authorization trees",
+      "xdr": "InvokeHostFunctionOp.auth[].rootInvocation.subInvocations",
+      "validated": "partly",
+      "checks": "Each call that requires authorization must be authorized by a matching entry (signature, nonce, expiry).",
+      "passes": "The tree's shape: depth and width are bounded only by the transaction size (132,096 bytes on mainnet, November 2026).",
+      "rule": "bounded-recursion",
+      "lint": "IX002",
+      "patterns": [
+        "nested-auth"
+      ],
+      "keys": [
+        "expected_decoded.who",
+        "expected_decoded.auth_depth",
+        "expected_decoded.auth_invocations",
+        "expected_decoded.root_contract",
+        "expected_decoded.return_u32"
+      ]
+    },
+    {
+      "field": "Contract values",
+      "xdr": "ScVal, ScMap in arguments, contract data and events",
+      "validated": "partly",
+      "checks": "Maps are sorted in host order (ScVal type first, then value) with no duplicate keys; the host refuses values deeper than 100 levels.",
+      "passes": "What the values are. Keys that differ as ScVals (u32 1, symbol \"1\") can print the same in your language.",
+      "rule": "bounded-recursion",
+      "lint": "IX002",
+      "patterns": [
+        "scmap-host-order",
+        "scval-limits"
+      ],
+      "keys": [
+        "expected_decoded.contract",
+        "expected_decoded.key",
+        "expected_decoded.entry_count",
+        "expected_decoded.keys_xdr",
+        "expected_decoded.colliding_native_keys"
+      ]
+    },
+    {
+      "field": "Signer keys",
+      "xdr": "SignerKey (ed25519SignedPayload), AccountEntry.signers",
+      "validated": "partly",
+      "checks": "The key type, and a payload of 1 to 64 bytes.",
+      "passes": "The payload's content. A signed-payload signer is a P… strkey of up to 101 bytes, not a 32-byte account key.",
+      "rule": "signed-payload-signers",
+      "patterns": [
+        "signed-payload-signer"
+      ],
+      "keys": [
+        "expected_decoded.account",
+        "expected_decoded.signer_strkey",
+        "expected_decoded.signer_ed25519",
+        "expected_decoded.payload_hex",
+        "expected_decoded.weight",
+        "expected_indexed.account",
+        "expected_indexed.signer_added",
+        "expected_indexed.weight"
+      ]
+    },
+    {
+      "field": "Liquidity pool assets",
+      "xdr": "LiquidityPoolConstantProductParameters (assetA, assetB, fee)",
+      "validated": "yes",
+      "checks": "assetA sorts before assetB in network order (issuer key bytes, not strkey text), and the fee is 30 basis points.",
+      "passes": "Nothing; but strkey text order is not network order.",
+      "rule": "addresses",
+      "patterns": [
+        "pool-issuer-order"
+      ],
+      "keys": [
+        "expected_decoded.asset_a",
+        "expected_decoded.asset_b",
+        "expected_decoded.fee_bp",
+        "expected_decoded.pool_id",
+        "expected_decoded.strkey_order_reversed",
+        "expected_decoded.holder"
+      ]
+    },
+    {
+      "field": "Effects of contract calls",
+      "xdr": "TransactionMeta.operations[].changes",
+      "validated": "yes",
+      "checks": "The changes are the consensus result of applying the transaction.",
+      "passes": "The envelope doesn't say what a contract call did: a trustline created by trust() has no changeTrust operation.",
+      "rule": "sac-trustlines",
+      "patterns": [
+        "sac-trust"
+      ],
+      "keys": [
+        "expected_decoded.function",
+        "expected_decoded.contract",
+        "expected_indexed.trustline_created",
+        "expected_indexed.account",
+        "expected_indexed.asset",
+        "expected_indexed.limit",
+        "expected_indexed.classic_change_trust_ops"
+      ]
+    },
+    {
+      "field": "Operations and participants",
+      "xdr": "Transaction.operations, sourceAccount",
+      "validated": "yes",
+      "checks": "Each operation is valid for its source when applied.",
+      "passes": "What the envelope names is what was asked for; the meta says what happened, to which accounts.",
+      "rule": "effects-from-meta",
+      "lint": "IX003",
+      "patterns": [
+        "muxed-payment",
+        "muxed-max-id",
+        "muxed-soroban-source"
+      ],
+      "keys": [
+        "expected_decoded.op_index",
+        "expected_decoded.operation",
+        "expected_decoded.asset",
+        "expected_decoded.amount"
+      ]
+    }
+  ]
+}

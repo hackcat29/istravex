@@ -4,46 +4,88 @@
 
 Istravex is an open-source test kit that helps Stellar indexer and SDK maintainers verify that their software preserves what actually happened on the ledger. It uses a shared, versioned corpus of rare but valid Stellar XDR to answer two questions. Does the SDK decode and re-encode the data faithfully? Does the indexer store the right records and attribute them to the right accounts?
 
-Built for **SCF #46 RFP 2**, Istravex will deliver a CAP coverage audit, a reproducible fixture generator, an offline replay harness, a JavaScript, Go, and Rust conformance runner, and a Go linter backed by a practical indexer-hardening guide.
+Built for **SCF #46 RFP 2** (XDR/CAP-Coverage Audit Tool and Indexer-Hardening Guide). Everything below is built, public and running in CI: the corpus and its reproducible generator, the replay harness, the JavaScript, Go and Rust conformance runner, the Go linter, the hardening guide, and a findings report. The grant would fund growing the corpus across the remaining CAPs and maintaining the kit through the next protocol upgrade.
+
+- Repository: https://github.com/hackcat29/istravex (Apache 2.0)
+- Docs: https://docs.istravex.com · API: https://api.istravex.com · Mock RPC: https://rpc.istravex.com
 
 ### Problem
 
-A Stellar transaction can be valid and still be misread downstream. An indexer might miss a trustline created through a Stellar Asset Contract, discard the ID from a muxed address, or attribute an effect to the wrong account. An SDK can successfully decode an XDR value and still lose information when it converts that value into a language-native representation. Those mistakes can propagate into wallets, explorers, and analytics without a visible error.
+A Stellar transaction can be valid and still be misread downstream. An indexer might miss a trustline created through a Stellar Asset Contract, store a muxed address where an account belongs, or attribute an effect to the wrong account. An SDK can decode an XDR value correctly and still lose information when it converts it to a language-native value. These mistakes propagate into wallets, explorers and analytics without a visible error, and in 2026 several of them halted production ingestion outright.
 
-Today, a regression test added to one SDK or indexer often stays in that repository. Istravex will let maintainers share the original fixture, its expected result, and the protocol context behind it. That makes a fix in one implementation testable across the ecosystem.
+A regression test added to one SDK or indexer usually stays in that repository. Istravex lets maintainers share the original fixture, its expected result and the protocol context behind it, so a fix in one implementation becomes a test for all of them.
 
-### What we will build
+### What it does
 
-**1. A versioned XDR corpus and CAP coverage audit.** Each fixture will be tied to the relevant Core Advancement Proposal (CAP) and protocol version. The corpus will use captured ledger data and fixtures reproducibly generated with a pinned `stellar-core` build. Hand-authored entries will be explicitly labeled synthetic. Where canonical `LedgerCloseMeta` outputs are available, we will check our fixtures against Stellar Core’s `--check-lcm` goldens. The coverage report will show which ledger patterns each CAP introduced or changed, which have fixtures, and where gaps remain.
+```mermaid
+flowchart LR
+  subgraph sources["Ledger data"]
+    M["Mainnet<br/>SDF data lake"]
+    T["Testnet<br/>Stellar RPC"]
+    G["Pinned stellar-core 30.0.0<br/>standalone, reproducible"]
+  end
+  subgraph corpus["Corpus"]
+    F["Fixtures + manifests<br/>(CAP, protocol, expected values)"]
+    L["Canonical LedgerCloseMeta"]
+  end
+  sources --> F
+  sources --> L
+  F --> V["Provenance verifier<br/>byte-identical to the ledger"]
+  L --> V
+  F --> R["Conformance runner<br/>JS · Go · Rust, + earlier JS releases"]
+  L --> RPC["Mock RPC getLedgers"]
+  L --> LAKE["Data-lake layout<br/>filesystem or S3"]
+  RPC --> IDX["Your indexer<br/>(reference: wallet-backend)"]
+  LAKE --> IDX
+  IDX --> S["Scorer<br/>correct · incorrect · dropped"]
+  SRC["Indexer source (Go)"] --> LINT["istravex-lint<br/>IX001–IX003"]
+  R --> FR["Findings report<br/>every failure → an upstream issue"]
+  S --> FR
+  LINT --> FR
+  FR --> GUIDE["Hardening guide<br/>field table checked against the corpus"]
+```
 
-**2. An offline indexer replay harness.** We propose starting with a mock Stellar RPC `getLedgers` endpoint and a reference adapter for `wallet-backend`. The harness will feed fixed ledger sequences through the ingestion pipeline and compare indexed records against expected effects. Its report will distinguish a correct result, an incorrect result, and a record that was silently dropped. Each result will identify the fixture, affected CAP, indexer version, and observed output. Replay will stream fixture data with bounded memory and run locally or in CI without network credentials or funds.
+**In plain English.** The corpus is a folder of real Stellar transactions and ledger entries, each tied to the protocol change (CAP) that introduced its shape, with the values a correct decoder and a correct indexer must produce. A verifier proves every one is byte-identical to the ledger that recorded it. Three small programs, one per SDK language, decode every fixture and check the values. A fake Stellar RPC server, and an export in the same layout as SDF's public data lake, hand the same ledgers to any indexer, and a scorer compares what it stored with what it should have. A linter reads indexer source code for the mistakes that keep recurring. A findings file ties every failure to an issue upstream, and a guide explains each rule with the evidence.
 
-**3. A cross-SDK conformance runner.** Pinned JavaScript, Go, and Rust adapters will run the same fixtures in CI. They will compare decoded values with fixture expectations, check byte-for-byte re-encoding where applicable, and exercise higher-level conversions where information can be lost. The report will identify the SDK version and the exact field or behavior that differed. Fixed-width identifiers and other large integers will retain their full precision in comparisons.
+**Stack.** Node 24 (corpus tooling, mock RPC, data-lake exporter, JavaScript runner, API), Go 1.25 (verifier, Go runner, `go/analysis` linter), Rust (stellar-xdr runner, the Soroban probe contract), stellar-core 30.0.0 pinned by binary sha256, `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0, Mintlify for docs, GitHub Actions for CI and deploys.
 
-**4. A Go linter and indexer-hardening guide.** The linter will flag three ingestion patterns: trusting transaction fields passed through by Stellar Core, processing recursive XDR values without size or depth limits, and deriving affected participants from the envelope where ledger metadata supplies the relevant effects. The guide will document field-level validation guarantees, explain muxed accounts and signed-payload signers, and give maintainers a checklist they can apply in any language. We will seek review from a Stellar Core or platform engineer before publication.
+### What's built
 
-**5. An upstream pilot and findings report.** We will run the corpus against `wallet-backend` and publish a triaged report. Confirmed findings will include the affected component and version, fixture ID, relevant CAP, severity, expected and observed behavior, and upstream issue link. When a divergence affects multiple SDKs, their maintainers will receive reports linked to the same fixture.
+| Deliverable | What exists | RFP reviewer check |
+|---|---|---|
+| **Corpus and generator** | 15 fixtures across 6 CAPs and 13 patterns: 2 mainnet, 2 testnet, 9 generated, 2 synthetic. The generator runs a pinned standalone stellar-core, is byte-reproducible (seeded keys, fixed close times), takes any network passphrase, and needs no network, keys or funds. 152/152 provenance checks. | Every fixture round-trips through rs-stellar-xdr 30.0.0; all three SDKs round-trip stellar-core's 15,306 `--check-lcm` golden frames. |
+| **Replay harness** | Mock Stellar RPC `getLedgers` and the Galexie data-lake layout (filesystem or S3), bounded memory (542 MB of ledgers served under a 128 MB heap). Reference adapter: wallet-backend's own ingestion, 8/8 correct over both inputs. | wallet-backend #729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes, in CI. |
+| **Linter** | Three `go/analysis` rules: unvalidated fields used as if checked (IX001), walks with no depth or size limit (IX002), participants or fees from the envelope (IX003). A GitHub Action and a reusable workflow. | Flags all six seeded violations; clean on current wallet-backend apart from one triaged latent finding; flags the code #753 and 9538b3c fixed, on the commits before them. |
+| **Hardening guide** | Nine rules, a field-by-field table of what stellar-core validates and passes through, recommended limits with sources, SEP-0023 address handling, a checklist. Exports to Docusaurus for developers.stellar.org. | The field table is generated from one file and CI checks it against every manifest. Version 1.0 was reviewed by a Stellar Core engineer; the version 1.1 pages await the same review. |
+| **Conformance runner** | JavaScript, Go and Rust in CI, named checks per pattern, plus four JavaScript releases. | js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789; 17.3.0 and 17.4.0 pass. |
+| **Findings report** | 15 findings with severity, affected versions, the minimal corpus entry and the checks each explains; served at `/v1/findings`. | CI fails on any reproduced failure that no finding explains. Three new findings are drafted and ready to file. |
 
-### Draft manifest and example entries
+### Evidence of reproducing a listed sighting
 
-Each entry will record `id`, `cap_ids`, `protocol_version`, `network`, `xdr_type`, `xdr_path`, `sha256`, `source`, `synthetic`, `expected_decoded`, and `expected_indexed` where applicable. Provenance will identify the source ledger or the pinned generation recipe. Wide integers will be stored as decimal strings.
+All six sightings the RFP's deliverable checks name reproduce in CI, failing before the fix and passing after:
 
-| Proposed fixture | Expected result |
-|---|---|
-| Signed-payload signer under CAP-0040 | Decoding preserves the signer type, public key, and payload bytes. |
-| Stellar Asset Contract trustline under CAP-0073 | Indexed output records the trustline activity supported by ledger metadata even when a conventional trustline state change is absent. |
-| Muxed payment recipient | Decoding preserves the underlying account and the full muxed ID. Indexed output retains the recipient identity supported by ledger metadata. |
+- **wallet-backend #729** (signed-payload signers): on `2a0a84e` the signer's state change can't be encoded (a 68-byte key into a 33-byte column), so ingestion would retry the ledger forever. On `2c87335`: correct.
+- **wallet-backend #731** (SAC trustlines): on `764a4f5` no `TRUSTLINE` state change is recorded. On `c152783`: correct.
+- **wallet-backend #716** (fixed by #753): on `f8e5786` the muxed source's `G…` and `M…` forms collide on one participant key, which halted ingestion; IX003 flags the four lines #753 changed. On `bb0b162`: correct, and no findings.
+- **js-stellar-sdk #1766, #1785, #1789**: 17.2.0 throws decoding a valid pool-share trustline and mis-sorts map keys; 17.2.1 accepts `0x…` muxed IDs, rounds offer IDs above 2⁵³, and silently drops two of ten map entries. 17.3.0 passes every check.
+
+### Infrastructure and decentralization
+
+Nothing in the kit depends on a server Istravex runs. Every tool runs locally or in a user's CI from a clone: the corpus, verifier, runners, mock RPC, data-lake exporter, scorer and linter. The hosted services are conveniences over the same files: istravex.com (static site, Cloudflare Workers), docs.istravex.com (Mintlify), and api.istravex.com and rpc.istravex.com (one read-only container on a VPS, deployed by GitHub Actions, and self-hostable as one Docker image). Mainnet fixtures are pinned to SDF's public data lake by sha256, so anyone can re-derive them independently.
+
+### User tracking
+
+Minimal, and documented at https://docs.istravex.com/project/maintenance#user-tracking. Istravex adds no cookies, analytics or request logs anywhere: Cloudflare Workers observability and nginx access logs are off. The API keeps a per-IP rate-limit counter in memory for one minute. Mintlify records docs page views for its own dashboard, as it does for every site it hosts. The kit's tools collect nothing.
 
 ### Delivery milestones
 
-| Milestone | Acceptance criteria |
-|---|---|
-| **1. Corpus and reference replay** | Publish a starter corpus, fixture generator, manifest schema, and reference adapter. A clean checkout can validate fixture provenance and replay the same sequence offline with stable results. |
-| **2. Conformance and linting** | JavaScript, Go, and Rust run the shared corpus in CI and produce a per-fixture results matrix. The Go linter flags fixtures for all three rules and passes on the agreed clean reference. |
-| **3. Upstream pilot and public release** | Publish the `wallet-backend` findings and upstream links, complete engineering review of the guide, and ship a tagged release with adapter documentation and CI templates. |
+| Milestone | Acceptance criteria | Status |
+|---|---|---|
+| **1. Corpus and reference replay** | Starter corpus, fixture generator, manifest schema and reference adapter. A clean checkout validates fixture provenance and replays the same sequence offline with stable results. | Done; regeneration proven byte-identical in CI |
+| **2. Conformance and linting** | JavaScript, Go and Rust run the shared corpus in CI with a per-fixture results matrix. The Go linter flags fixtures for all three rules and passes on the agreed clean reference. | Done, with release matrices and pre-fix calibration |
+| **3. Upstream pilot and public release** | wallet-backend findings with upstream links, engineering review of the guide, a tagged release with adapter documentation and CI templates. | Done: v1.0.0, v1.1.0; v1.1 guide pages in review |
+| **4. Coverage and the next protocol** (funded work) | From 5 to 12 of the 40 XDR-changing CAPs; Python and Java runners; stellar-etl replayed through the data lake; the next protocol upgrade covered end to end within two weeks of its mainnet vote. | Planned |
 
 ### Open-source maintenance
 
-We propose Apache 2.0 licensing and public development, with repository-based releases and regular updates to the Stellar community. A named maintainer will own fixture review, dependency updates, issue triage, and releases for a proposed six months after launch, including coverage through the first Stellar protocol upgrade after delivery. For that upgrade, we will review the relevant CAPs, add or update fixtures, and publish compatibility results for the supported SDK versions. Istravex will run locally without collecting usage telemetry.
-
-The table contains **proposed fixture entries**. The full RFP application still needs actual sample XDR and evidence of one reproduced case. The mock RPC entry point, Go linter, Apache 2.0 license, and six-month maintenance period are proposed commitments. [Official SCF RFP scope](https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track)
+Apache 2.0, developed in public, with tagged releases and a public changelog. A named maintainer owns fixture review, dependency updates, issue triage and releases for six months after delivery, through the first protocol upgrade after it. On that upgrade, every step is a command and CI stays red until it's done: audit the new CAPs, re-pin stellar-core, move the SDK pins and the probe contract, regenerate (and prove regeneration reproducible on both platforms), re-run the pilot, triage any new failure into a finding with an upstream issue, and release. Progress is posted to the Stellar community with each release.

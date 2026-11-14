@@ -6,3 +6,4 @@ playwright-report
 kit/runners/rust/target
 .cache
 .wrangler
+build/

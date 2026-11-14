@@ -20,5 +20,5 @@
     { "pattern": "istravex.com", "custom_domain": true },
     { "pattern": "www.istravex.com", "custom_domain": true }
   ],
-  "observability": { "enabled": true }
+  "observability": { "enabled": false }
 }

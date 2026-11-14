@@ -9,11 +9,26 @@ description: What runs on every push, and the templates for running Istravex in 
 
 | Job | What it proves |
 |---|---|
-| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JS, Go and Rust runners pass; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; `src/data/corpus.json` is up to date |
-| **Generate on pinned stellar-core** | Installs SDF's stellar-core 30.0.0 package, regenerates the local fixtures from scratch, then verifies and runs them |
+| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JS, Go and Rust runners pass; four JavaScript releases fail exactly the checks their findings explain; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; the mock RPC serves a 542 MB corpus under a 128 MB heap; the data-lake export matches the public lake; the guide's field table agrees with the corpus; the guide exports for developers.stellar.org; `src/data/corpus.json`, the docs tables and the API spec are up to date |
+| **Generate on pinned stellar-core** (×3: standalone, testnet, pubnet passphrases) | Installs SDF's stellar-core 30.0.0 package. Standalone: regenerates the committed fixtures on Linux and requires the same bytes, then verifies and runs them. Testnet and pubnet: two generations must match each other, and the result verifies and passes every runner |
+| **Probe contract rebuilds byte for byte** | The committed Wasm is exactly what the pinned toolchain builds from the committed source |
 | **API tests and container** | The API's tests pass, including the check that every OpenAPI path is served; the image builds and answers correctly while running read-only and unprivileged |
-| **Upstream pilot** | wallet-backend's own ingestion, at its pinned commit, indexes every fixture correctly, and every lint finding on it is triaged |
+| **istravex-lint action (self-test)** | The action passes on clean code and fails with exactly six findings on the seeded violations |
+| **Upstream pilot** | wallet-backend main indexes every fixture correctly over RPC and over the data lake; each commit before an upstream fix fails and each fix passes; every lint finding is triaged |
 | **Site build and e2e** | The site builds, `wrangler deploy --dry-run` accepts the Cloudflare config, and the Playwright suite passes on desktop and mobile |
+
+## How long it takes
+
+The jobs run in parallel, so a push is green as fast as the slowest one. Measured on GitHub's `ubuntu-24.04` runners:
+
+| Job | Typical time |
+|---|---|
+| Corpus, runners and replay | about 3 minutes (the 400-ledger memory test is 25 s of it) |
+| Generate (each passphrase) | about 2½ minutes |
+| Upstream pilot | about 4 minutes: wallet-backend builds at main and at seven other commits |
+| Everything else | under 2 minutes each |
+
+So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 15 fixtures and 44 ledgers.
 
 `node kit/check-results.mjs` is the gate inside the kit jobs. It checks results by substance (every check passed, every frame exact, every verdict correct) rather than diffing result files, which record machine-specific runtime versions.
 

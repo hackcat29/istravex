@@ -4,32 +4,265 @@
     "golden_files": 866,
     "golden_frames": 15306,
     "golden_exact": 15306,
-    "provenance_checks": 62,
-    "provenance_passed": 62,
-    "pilot_fixtures": 6,
-    "pilot_correct": 6,
+    "provenance_checks": 152,
+    "provenance_passed": 152,
+    "pilot_fixtures": 8,
+    "pilot_correct": 8,
     "live_caps": 70,
     "xdr_caps": 40,
-    "covered_xdr_caps": 3,
-    "fixtures": 6,
-    "caps": 4,
+    "covered_xdr_caps": 5,
+    "fixtures": 15,
+    "caps": 6,
+    "patterns": 13,
+    "synthetic": 2,
     "networks": [
-      "pubnet",
       "local",
+      "synthetic",
+      "pubnet",
       "testnet"
     ],
-    "bytes": 10348,
-    "sdk_checks": 54,
-    "sdk_checks_passed": 54,
-    "naive_faults": 4,
-    "reference_correct": 4,
-    "replay_cases": 4,
-    "max_protocol": 30
+    "bytes": 57812,
+    "sdk_checks": 123,
+    "sdk_checks_passed": 123,
+    "naive_faults": 6,
+    "reference_correct": 6,
+    "replay_cases": 6,
+    "max_protocol": 30,
+    "findings": 15,
+    "findings_reproduced": 10,
+    "sightings": 4,
+    "sightings_reproduced": 4,
+    "js_releases": 4
   },
   "fixtures": [
     {
+      "id": "base-max-length-vectors-local-0001",
+      "pattern": "max-length-vectors",
+      "cap": "base",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 27,
+      "tx_hash": "36be436e45fe8825b228e768d9b1e788e92c6336157ce987fccb4d0ab25e36bf",
+      "protocol_version": 30,
+      "bytes": 8360,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "26a6b8f85962db66d3284b4a0fba4a6cbb093b5744c9ed5372012312d3772da0",
+          "bytes": 5760
+        },
+        {
+          "name": "envelope_signatures",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "521ab48b0526cd3a494373686240320fbae51867b065176b78125c526c13a4a7",
+          "bytes": 1584
+        },
+        {
+          "name": "ledger_entry",
+          "xdr_type": "LedgerEntryData",
+          "sha256": "e2af85f94a3fa8a9833aef4303ce01b16b1d3c75b1c1d7bf72dcfeaea5c3e84c",
+          "bytes": 1016
+        }
+      ],
+      "manifest": {
+        "id": "base-max-length-vectors-local-0001",
+        "pattern": "max-length-vectors",
+        "cap_ids": [],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "envelope: tx.operations (100); envelope_signatures: signatures (20); ledger_entry: account.signers (20)",
+        "sha256": "26a6b8f85962db66d3284b4a0fba4a6cbb093b5744c9ed5372012312d3772da0",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 27,
+          "tx_hash": "36be436e45fe8825b228e768d9b1e788e92c6336157ce987fccb4d0ab25e36bf",
+          "closed_at": "2100-01-01T04:20:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          },
+          "related": [
+            {
+              "ledger": 29,
+              "tx_hash": "d4a2993d6104566260123ba93aef36a1423a1f9f06e50d5379db989c9f10df35",
+              "files": [
+                "envelope_signatures",
+                "ledger_entry"
+              ]
+            }
+          ]
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "operation_count": 100,
+          "signature_count": 20,
+          "signer_count": 20,
+          "master_weight": 0,
+          "thresholds": [
+            20,
+            20,
+            20
+          ],
+          "payer": "GB2NRMQHY2W4H4RU7IZNJHLZKUT7TEB2KMQ5XKEYS3BURJASDW4P7N7Z",
+          "account": "GAMFLMQ6MKN345Y7D36NHIO2T3L5JDOXXS4XA2DMSMUKRL2HQHWVTJKW"
+        }
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "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"
+      },
+      "provenance": {
+        "checks": 15,
+        "passed": 15,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "base-memo-non-utf8-local-0001",
+      "pattern": "memo-non-utf8",
+      "cap": "base",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 23,
+      "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
+      "protocol_version": 30,
+      "bytes": 280,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "a457bfa73fb0c3bd308af2d7f2f69d793e166e9ebdbdddbdfe52bcb29126f439",
+          "bytes": 248
+        },
+        {
+          "name": "result",
+          "xdr_type": "TransactionResult",
+          "sha256": "af84e88b1979ab15bfcdbfde2fcd6c9d3a070d86f80cf0ee7fbe11107f998e06",
+          "bytes": 32
+        }
+      ],
+      "manifest": {
+        "id": "base-memo-non-utf8-local-0001",
+        "pattern": "memo-non-utf8",
+        "cap_ids": [],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "tx.memo.text",
+        "sha256": "a457bfa73fb0c3bd308af2d7f2f69d793e166e9ebdbdddbdfe52bcb29126f439",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 23,
+          "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
+          "closed_at": "2100-01-01T03:40:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          }
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "memo_type": "text",
+          "memo_hex": "697374726176657820fffeeda080e92d2d2d2d2d2d2d2d2d2d2d2d2d",
+          "memo_bytes": 28,
+          "utf8_valid": false
+        },
+        "sightings": [
+          "stellar/js-stellar-sdk#1823"
+        ]
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAAAgAAAACBpXR7mRgyzmCZTxbC6pcAW+509l7sWh9AjdqD0geudQAAAGQAAAAVAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABxpc3RyYXZleCD//u2ggOktLS0tLS0tLS0tLS0tAAAAAQAAAAAAAAABAAAAAKE0h2pdTB8fbJmKm9/WrZ62IpNdLW7rgvC1b+TYAvREAAAAAAAAAAAAAAABAAAAAAAAAAHSB651AAAAQDmebhaIsNNr+hryCzlZeXCOeXseTnYZUjqIaA06Lr70PsJ2H7Qgu7zMs7nLRS7UBJxNS6SMKtjxTKQrjir4eA8="
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "base-over-max-length-synthetic-0001",
+      "pattern": "over-max-length",
+      "cap": "base",
+      "synthetic": true,
+      "network": "synthetic",
+      "ledger": 0,
+      "tx_hash": "",
+      "protocol_version": 30,
+      "bytes": 6068,
+      "files": [
+        {
+          "name": "envelope_101_ops",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "288937eec52763976f51a272dfc8ae2e9946a1d7c0924f34cbb97862481d2cf3",
+          "bytes": 5816
+        },
+        {
+          "name": "envelope_memo_29",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "38383bb88fddfe905f9ce4f9a9f0c18d3589b4e8b29295138b61e8cd41a0143e",
+          "bytes": 252
+        }
+      ],
+      "manifest": {
+        "id": "base-over-max-length-synthetic-0001",
+        "pattern": "over-max-length",
+        "cap_ids": [],
+        "protocol_version": 30,
+        "network": "synthetic",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "operations<100> with 101 entries; memo text<28> with 29 bytes",
+        "sha256": "288937eec52763976f51a272dfc8ae2e9946a1d7c0924f34cbb97862481d2cf3",
+        "source": {
+          "kind": "synthetic",
+          "derived_from": "base-max-length-vectors-local-0001, base-memo-non-utf8-local-0001",
+          "description": "Real envelopes from the generated network, re-encoded one element past a bounded XDR array or string maximum."
+        },
+        "synthetic": true,
+        "expected_decoded": {
+          "decode_error": true
+        },
+        "sightings": [
+          "stellar/rs-stellar-xdr#598"
+        ]
+      },
+      "primary": {
+        "name": "envelope_101_ops",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "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"
+      },
+      "provenance": {
+        "checks": 5,
+        "passed": 5,
+        "ledger_source": "synthetic: no ledger"
+      }
+    },
+    {
       "id": "cap15-fee-bump-pubnet-0001",
+      "pattern": "fee-bump",
       "cap": "CAP-0015",
+      "synthetic": false,
       "network": "pubnet",
       "ledger": 65474309,
       "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
@@ -57,6 +290,7 @@
       ],
       "manifest": {
         "id": "cap15-fee-bump-pubnet-0001",
+        "pattern": "fee-bump",
         "cap_ids": [
           "CAP-0015"
         ],
@@ -97,8 +331,97 @@
       }
     },
     {
-      "id": "cap27-muxed-payment-pubnet-0001",
+      "id": "cap27-muxed-max-id-local-0001",
+      "pattern": "muxed-max-id",
       "cap": "CAP-0027",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 16,
+      "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+      "protocol_version": 30,
+      "bytes": 1008,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "74d5a96ed71498e414ceb6c0419546fb5ac43f72c75bf8d34e8f7d5f6b93e2c1",
+          "bytes": 232
+        },
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "62ac905c750c8b93567994a54687b5c712de456d65a4569fd6dc79d95d8a8abf",
+          "bytes": 776
+        }
+      ],
+      "manifest": {
+        "id": "cap27-muxed-max-id-local-0001",
+        "pattern": "muxed-max-id",
+        "cap_ids": [
+          "CAP-0027"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "tx.sourceAccount, tx.operations[0].body.paymentOp.destination",
+        "sha256": "74d5a96ed71498e414ceb6c0419546fb5ac43f72c75bf8d34e8f7d5f6b93e2c1",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 16,
+          "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+          "closed_at": "2100-01-01T02:30:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          }
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "source_muxed": "MACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKIABAAAAAAAAAAEHN6",
+          "source_account": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "source_muxed_id": "9007199254740993",
+          "destination_muxed": "MCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452L7777777777774SRE",
+          "destination_account": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "destination_muxed_id": "18446744073709551615",
+          "asset": "native",
+          "amount": "12.3456789"
+        },
+        "expected_indexed": {
+          "recipient": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "recipient_muxed_id": "18446744073709551615",
+          "participants": [
+            "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+            "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U"
+          ]
+        },
+        "sightings": [
+          "stellar/js-stellar-sdk#1785"
+        ]
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAAAgAAAQAAIAAAAAAAAQTXTUcPDr4nMnoWspfrrD85D7EGDNCSBeJBhxt+fxSkAAAAZAAAAA4AAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAABAP//////////n9MQSnTYpEj6/e909Dj8zeNmwD3DMAdNBAQSeFLHO6UAAAAAAAAAAAdbzRUAAAAAAAAAAX5/FKQAAABABKnHI+oxXFK24/eEnI/1t/7nwtuMdWcYEyLdwueDyZ01cn9AJ5lBEpDV8rHyg5Ft0sVBDNRqn3gajrO4bIs8Bg=="
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "cap27-muxed-payment-pubnet-0001",
+      "pattern": "muxed-payment",
+      "cap": "CAP-0027",
+      "synthetic": false,
       "network": "pubnet",
       "ledger": 65474279,
       "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
@@ -120,6 +443,7 @@
       ],
       "manifest": {
         "id": "cap27-muxed-payment-pubnet-0001",
+        "pattern": "muxed-payment",
         "cap_ids": [
           "CAP-0027"
         ],
@@ -163,29 +487,115 @@
       }
     },
     {
+      "id": "cap38-pool-issuer-order-local-0001",
+      "pattern": "pool-issuer-order",
+      "cap": "CAP-0038",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 20,
+      "tx_hash": "4b340837410808773f6e39173c171cac57896b6a828560d37cdca5a0577822cf",
+      "protocol_version": 30,
+      "bytes": 2760,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "2e2c4e74632a5e4dda8798c676e0959438406a050b2a9ba5275e38ef4b6df6d7",
+          "bytes": 396
+        },
+        {
+          "name": "ledger_entry",
+          "xdr_type": "LedgerEntryData",
+          "sha256": "d1c64d6a7a58766f6d570222bfb2cdd20930f8768c0cf8eed1770680bb23e888",
+          "bytes": 100
+        },
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "c4152e633ba2b8f8c46c4b44bf780860fa18531248b057851012a8f4fbe9a497",
+          "bytes": 2264
+        }
+      ],
+      "manifest": {
+        "id": "cap38-pool-issuer-order-local-0001",
+        "pattern": "pool-issuer-order",
+        "cap_ids": [
+          "CAP-0038"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "tx.operations[2].body.changeTrustOp.line.liquidityPool.constantProduct",
+        "sha256": "2e2c4e74632a5e4dda8798c676e0959438406a050b2a9ba5275e38ef4b6df6d7",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 20,
+          "tx_hash": "4b340837410808773f6e39173c171cac57896b6a828560d37cdca5a0577822cf",
+          "closed_at": "2100-01-01T03:10:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          }
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "asset_a": "ISTX:GBF6JWNKEDNGHKVI535HQLOTOO3RB4EZH7RBOKHLPI65PNBG2FNV3XOU",
+          "asset_b": "ISTX:GB7WP4OBKSRDJXOPXBCMDNQVKDBVE547GVQV2DQHKFB6WHPKT6NZNL7P",
+          "fee_bp": 30,
+          "pool_id": "77891130140a586989d66fbeef5bb088abf42012381c635a55300e6a3958ab90",
+          "strkey_order_reversed": true,
+          "holder": "GCR32AT4GT36R3YMKOE4254JCX37CJTFAYXAGV2WFJODEWEEZO6P7JDC"
+        },
+        "sightings": [
+          "stellar/js-stellar-sdk#1766"
+        ]
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAAAgAAAACjvQJ8NPfo7wxTic13iRX38SZlBi4DV1YqXDJYhMu8/wAAASwAAAATAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAABgAAAAFJU1RYAAAAAEvk2aog2mOqqO76eC3Tc7cQ8Jk/4hco63o917Qm0Vtdf/////////8AAAAAAAAABgAAAAFJU1RYAAAAAH9n8cFUojTdz7hEwbYVUMNSd581YV0OB1FD6x3qn5uWf/////////8AAAAAAAAABgAAAAMAAAAAAAAAAUlTVFgAAAAAS+TZqiDaY6qo7vp4LdNztxDwmT/iFyjrej3XtCbRW10AAAABSVNUWAAAAAB/Z/HBVKI03c+4RMG2FVDDUnefNWFdDgdRQ+sd6p+blgAAAB5//////////wAAAAAAAAABhMu8/wAAAEDlXyvzhdCf/KCNEAJsCqj0pXbj7HSei1JH6n8Lo7KXFG/RtO2EI4qXV33B5NWjnc6Jd9Yime2TTgHf7v7ZDz0F"
+      },
+      "provenance": {
+        "checks": 12,
+        "passed": 12,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
       "id": "cap40-signed-payload-signer-local-0001",
+      "pattern": "signed-payload-signer",
       "cap": "CAP-0040",
+      "synthetic": false,
       "network": "local",
       "ledger": 9,
-      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+      "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
       "protocol_version": 30,
       "bytes": 496,
       "files": [
         {
           "name": "ledger_entry",
           "xdr_type": "LedgerEntryData",
-          "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+          "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
           "bytes": 216
         },
         {
           "name": "envelope",
           "xdr_type": "TransactionEnvelope",
-          "sha256": "9b469380ac1696869964238e2d9763bc508f5294e177c90b3468d2d909304c3d",
+          "sha256": "0088e80b10e99e2dcc4dbdf09cba48f04e3f7ffa638b15552ea0e12607017f37",
           "bytes": 280
         }
       ],
       "manifest": {
         "id": "cap40-signed-payload-signer-local-0001",
+        "pattern": "signed-payload-signer",
         "cap_ids": [
           "CAP-0040"
         ],
@@ -193,40 +603,47 @@
         "network": "local",
         "xdr_type": "LedgerEntryData",
         "xdr_path": "account.signers[0].key.ed25519SignedPayload",
-        "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+        "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
         "source": {
           "kind": "generated",
           "network_endpoint": "stellar-core://standalone",
           "ledger": 9,
-          "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
-          "closed_at": "2026-11-14T15:27:53.000Z",
+          "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
+          "closed_at": "2100-01-01T01:20:00.000Z",
           "generator": {
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
             "protocol_version": 30,
-            "soroban_limits_factor": 10
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
           },
           "ledger_entry_at": 9
         },
         "synthetic": false,
         "expected_decoded": {
-          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
-          "signer_strkey": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
-          "signer_ed25519": "GAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXHV3O",
-          "payload_hex": "71dc829416c333ea7fe25c822940701826a3fcdf7edeb08bac8002040e9056fc",
+          "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
+          "signer_strkey": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
+          "signer_ed25519": "GCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74A6C",
+          "payload_hex": "f5156c22945f70379269320651484b717d7883b4cc085a1b8b119b56531aae40",
           "weight": 1
         },
         "expected_indexed": {
-          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
-          "signer_added": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
+          "signer_added": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
           "weight": 1
-        }
+        },
+        "sightings": [
+          "stellar/wallet-backend#729"
+        ]
       },
       "primary": {
         "name": "ledger_entry",
         "xdr_type": "LedgerEntryData",
-        "b64": "AAAAAAAAAABa+S3EIo8P6gaDHaF6WvTocbCgSazPPFOYK4VaYM1lHQAAABdIduecAAAACAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAADHLbIPGolk3EiUh5/VaZR+MS7LOVxVhccF+rYsY9q3XMAAAAgcdyClBbDM+p/4lyCKUBwGCaj/N9+3rCLrIACBA6QVvwAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAMAAAAAAAAACQAAAABq+H35"
+        "b64": "AAAAAAAAAADtTxtoivDEXukuXvWZk5eX0KlhgzGOngBdjzQN0KZzaQAAABdIduecAAAACAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAADreYLNw9UVA5z04ep6bfZw40Ow6dX+mVNKQg+eAHqj/4AAAAg9RVsIpRfcDeSaTIGUUhLcX14g7TMCFobixGbVlMarkAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAMAAAAAAAAACQAAAAD0hmnA"
       },
       "provenance": {
         "checks": 10,
@@ -236,7 +653,9 @@
     },
     {
       "id": "cap40-signed-payload-signer-testnet-0001",
+      "pattern": "signed-payload-signer",
       "cap": "CAP-0040",
+      "synthetic": false,
       "network": "testnet",
       "ledger": 5727196,
       "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
@@ -258,6 +677,7 @@
       ],
       "manifest": {
         "id": "cap40-signed-payload-signer-testnet-0001",
+        "pattern": "signed-payload-signer",
         "cap_ids": [
           "CAP-0040"
         ],
@@ -286,7 +706,10 @@
           "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
           "signer_added": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
           "weight": 1
-        }
+        },
+        "sightings": [
+          "stellar/wallet-backend#729"
+        ]
       },
       "primary": {
         "name": "ledger_entry",
@@ -300,29 +723,354 @@
       }
     },
     {
+      "id": "cap46-muxed-soroban-source-local-0001",
+      "pattern": "muxed-soroban-source",
+      "cap": "CAP-0046",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 32,
+      "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+      "protocol_version": 30,
+      "bytes": 716,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "92e68dd7ee1283d939ea3fd3615b80b5cd9472f5be79628edad67ecb00059254",
+          "bytes": 264
+        },
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "f428f0392148cc751945d8c98a8ee39a420c06cccbbe1aca4111f874b928f8c6",
+          "bytes": 452
+        }
+      ],
+      "manifest": {
+        "id": "cap46-muxed-soroban-source-local-0001",
+        "pattern": "muxed-soroban-source",
+        "cap_ids": [
+          "CAP-0046",
+          "CAP-0027"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "tx.sourceAccount (muxed), tx.operations[0].body.extendFootprintTtlOp",
+        "sha256": "92e68dd7ee1283d939ea3fd3615b80b5cd9472f5be79628edad67ecb00059254",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 32,
+          "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+          "closed_at": "2100-01-01T05:10:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          },
+          "sac_contract": "CBK32F7W3MYEKCT6XXBLJBMDHUAC4G3RIK7SMJNTIZGASXXF4HI7IEPD"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "source_account": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+          "source_muxed_id": "7",
+          "operation": "extendFootprintTtl"
+        },
+        "expected_indexed": {
+          "participants": [
+            "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
+          ]
+        },
+        "sightings": [
+          "stellar/wallet-backend#716"
+        ]
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAAAgAAAQAAAAAAAAAAB1LurEqRNEiCunO49UP0h9jLa9erjurPqXQBj6fjYm66Avrw5AAAAB4AAAACAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAZAAAAAAAAw1AAAAABAAAAAAAAAAEAAAAGAAAAAVW9F/bbMEUKfr3CtIWDPQAuG3FCvyYls0ZMCV7l4dH0AAAAFAAAAAEAAAAAAA9CQAAAdTAAAE4gAAAAAAL68IAAAAAB42JuugAAAEAoxp5R1iDNDi+YnbuiVrs4YwcnPON2y8pqj4O+1TDXzZdsnvoWy9oQsci1PgyW04fw+hcTsrlL4R/JAONFW7AJ"
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "cap46-nested-auth-local-0001",
+      "pattern": "nested-auth",
+      "cap": "CAP-0046",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 43,
+      "tx_hash": "d88a72034562f8b3ca35ec28dfc0583d50cb07cf96db8ede9cf76f88a44e8e3b",
+      "protocol_version": 30,
+      "bytes": 2508,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "6f926d1775aabe3af20185624fde7eb24f3061c234f6e8d06384497e69a5bacf",
+          "bytes": 2152
+        },
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "e890f41bbd81bff8fa7f106a046767ffb229584bb1490c01ece861e520fc2fb8",
+          "bytes": 356
+        }
+      ],
+      "manifest": {
+        "id": "cap46-nested-auth-local-0001",
+        "pattern": "nested-auth",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "tx.operations[0].body.invokeHostFunctionOp.auth[0].rootInvocation",
+        "sha256": "6f926d1775aabe3af20185624fde7eb24f3061c234f6e8d06384497e69a5bacf",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 43,
+          "tx_hash": "d88a72034562f8b3ca35ec28dfc0583d50cb07cf96db8ede9cf76f88a44e8e3b",
+          "closed_at": "2100-01-01T07:00:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          }
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "who": "GAVFSRFV5PF2I3VJZ2QAGHZZSC7MV7ROXCJK56AQZR3VWFC7XNSXKMTO",
+          "auth_depth": 6,
+          "auth_invocations": 6,
+          "root_contract": "CBUKSEE6BY6FTBDOXIMXT6GPMLZRPKVDEAMWVXSBK46RKPFZLYX3IK75",
+          "return_u32": 6
+        },
+        "sightings": []
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "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"
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "cap46-scmap-host-order-local-0001",
+      "pattern": "scmap-host-order",
+      "cap": "CAP-0046",
+      "synthetic": false,
+      "network": "local",
+      "ledger": 42,
+      "tx_hash": "d6c1eb95d6aba725a0abc6d0d932e59b0589ae86f7af2d6ec341b2fd29702347",
+      "protocol_version": 30,
+      "bytes": 1736,
+      "files": [
+        {
+          "name": "ledger_entry",
+          "xdr_type": "LedgerEntryData",
+          "sha256": "b489ac0b6cf1f098e7ebf5105b438f0e90c4d7ca7d49a3972b68c67964ad104f",
+          "bytes": 324
+        },
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "ec83b2e7a30b03495d0ba098573f0209fa37b3af87067fa4555fb8ed637e0bae",
+          "bytes": 672
+        },
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "b3bfd0a15b5eff8453b29ac3bd31c8b3c60910567d1158d256b7a23d530e84d6",
+          "bytes": 740
+        }
+      ],
+      "manifest": {
+        "id": "cap46-scmap-host-order-local-0001",
+        "pattern": "scmap-host-order",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "LedgerEntryData",
+        "xdr_path": "contractData.val (an scvMap)",
+        "sha256": "b489ac0b6cf1f098e7ebf5105b438f0e90c4d7ca7d49a3972b68c67964ad104f",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 42,
+          "tx_hash": "d6c1eb95d6aba725a0abc6d0d932e59b0589ae86f7af2d6ec341b2fd29702347",
+          "closed_at": "2100-01-01T06:50:00.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+          },
+          "ledger_entry_at": 42,
+          "contract": "CAQJP4LYMMFS5GSORWHDMS3IHB7KPN2UHYZBYXWGAYQSCCIAGSV2DS23"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "contract": "CAQJP4LYMMFS5GSORWHDMS3IHB7KPN2UHYZBYXWGAYQSCCIAGSV2DS23",
+          "key": "m",
+          "entry_count": 10,
+          "keys_xdr": [
+            "AAAAAwAAAAE=",
+            "AAAABP////8=",
+            "AAAADQAAAAEJAAAA",
+            "AAAADQAAAAEKAAAA",
+            "AAAADgAAAAFiAAAA",
+            "AAAADwAAAAExAAAA",
+            "AAAADwAAAAJhYQAA",
+            "AAAADwAAAAFiAAAA",
+            "AAAAEgAAAAAAAAAAKllEtevLpG6pzqADHzmQvsr+LriSrvgQzHdbFF+7ZXU=",
+            "AAAAEgAAAAEgl/F4Ywsumk6NjjZLaDh+p7dUPjIcXsYGISEJADSroQ=="
+          ],
+          "colliding_native_keys": [
+            [
+              "u32 1",
+              "symbol \"1\""
+            ]
+          ]
+        },
+        "sightings": [
+          "stellar/js-stellar-sdk#1766",
+          "stellar/js-stellar-sdk#1789"
+        ]
+      },
+      "primary": {
+        "name": "ledger_entry",
+        "xdr_type": "LedgerEntryData",
+        "b64": "AAAABgAAAAAAAAABIJfxeGMLLppOjY42S2g4fqe3VD4yHF7GBiEhCQA0q6EAAAAPAAAAAW0AAAAAAAABAAAAEQAAAAEAAAAKAAAAAwAAAAEAAAADAAAAAAAAAAT/////AAAAAwAAAAEAAAANAAAAAQkAAAAAAAADAAAAAgAAAA0AAAABCgAAAAAAAAMAAAADAAAADgAAAAFiAAAAAAAAAwAAAAQAAAAPAAAAATEAAAAAAAADAAAABQAAAA8AAAACYWEAAAAAAAMAAAAGAAAADwAAAAFiAAAAAAAAAwAAAAcAAAASAAAAAAAAAAAqWUS168ukbqnOoAMfOZC+yv4uuJKu+BDMd1sUX7tldQAAAAMAAAAIAAAAEgAAAAEgl/F4Ywsumk6NjjZLaDh+p7dUPjIcXsYGISEJADSroQAAAAMAAAAJ"
+      },
+      "provenance": {
+        "checks": 12,
+        "passed": 12,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
+      }
+    },
+    {
+      "id": "cap46-scval-limits-synthetic-0001",
+      "pattern": "scval-limits",
+      "cap": "CAP-0046",
+      "synthetic": true,
+      "network": "synthetic",
+      "ledger": 0,
+      "tx_hash": "",
+      "protocol_version": 30,
+      "bytes": 24028,
+      "files": [
+        {
+          "name": "vec_count_max",
+          "xdr_type": "ScVal",
+          "sha256": "f33ffc3b00e60aaec5a9e89d1c0f7dcf3672b426e4e596bed593b25c84e5d6fe",
+          "bytes": 12
+        },
+        {
+          "name": "map_count_max",
+          "xdr_type": "ScVal",
+          "sha256": "e6d74ef366299b38af7c27593dd9ec2aba5fb1361100d2aa1d342a8409740c54",
+          "bytes": 12
+        },
+        {
+          "name": "vec_depth_2000",
+          "xdr_type": "ScVal",
+          "sha256": "0a9db3b1c991c2e9c4b410002d0138e597c033c4f4b8ad5448468506c181df3e",
+          "bytes": 24004
+        }
+      ],
+      "manifest": {
+        "id": "cap46-scval-limits-synthetic-0001",
+        "pattern": "scval-limits",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "protocol_version": 30,
+        "network": "synthetic",
+        "xdr_type": "ScVal",
+        "xdr_path": "ScVal: vec and map length prefixes of 2^32 - 1 with no elements; a vec nested 2,000 deep",
+        "sha256": "f33ffc3b00e60aaec5a9e89d1c0f7dcf3672b426e4e596bed593b25c84e5d6fe",
+        "source": {
+          "kind": "synthetic",
+          "description": "Hand-built ScVal encodings. A decoder that reserves capacity from the length prefix allocates for 4 billion elements; one without a depth limit recurses 2,000 levels."
+        },
+        "synthetic": true,
+        "expected_decoded": {
+          "decode_error": true,
+          "depth": 2000
+        },
+        "sightings": [
+          "stellar/rs-stellar-xdr#581",
+          "stellar/rs-stellar-xdr#598"
+        ]
+      },
+      "primary": {
+        "name": "vec_count_max",
+        "xdr_type": "ScVal",
+        "b64": "AAAAEAAAAAH/////"
+      },
+      "provenance": {
+        "checks": 6,
+        "passed": 6,
+        "ledger_source": "synthetic: no ledger"
+      }
+    },
+    {
       "id": "cap73-sac-trust-local-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
+      "synthetic": false,
       "network": "local",
       "ledger": 13,
-      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+      "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
       "protocol_version": 30,
       "bytes": 1444,
       "files": [
         {
           "name": "meta",
           "xdr_type": "TransactionMeta",
-          "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+          "sha256": "c422e52fadb266b58562564e55b7e7e70808bea9e10795efa908cfc6a3d635f2",
           "bytes": 820
         },
         {
           "name": "envelope",
           "xdr_type": "TransactionEnvelope",
-          "sha256": "91f3de3c323d454e369502e6b71071a6c9177a654ccca0dd59f06b12a5e11dc9",
+          "sha256": "406c1fc9e39c92fff879bf997afb6d27b4cacdad2300ffb79daaaf5c450f722f",
           "bytes": 624
         }
       ],
       "manifest": {
         "id": "cap73-sac-trust-local-0001",
+        "pattern": "sac-trust",
         "cap_ids": [
           "CAP-0073"
         ],
@@ -330,40 +1078,47 @@
         "network": "local",
         "xdr_type": "TransactionMeta",
         "xdr_path": "operations[0].changes[*].created.data.trustLine",
-        "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+        "sha256": "c422e52fadb266b58562564e55b7e7e70808bea9e10795efa908cfc6a3d635f2",
         "source": {
           "kind": "generated",
           "network_endpoint": "stellar-core://standalone",
           "ledger": 13,
-          "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
-          "closed_at": "2026-11-14T15:38:24.000Z",
+          "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
+          "closed_at": "2100-01-01T02:00:00.000Z",
           "generator": {
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
             "protocol_version": 30,
-            "soroban_limits_factor": 10
+            "soroban_limits_factor": 10,
+            "seed": "istravex",
+            "network_passphrase": "Standalone Network ; February 2017",
+            "close_time_base": 4102444800,
+            "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
           },
-          "sac_contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+          "sac_contract": "CCYMG6TL3W76VQO3EJDYA6EKH6NY7OGOHXGGBEY3NGB63CY5QT6ERAUC"
         },
         "synthetic": false,
         "expected_decoded": {
-          "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+          "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
           "function": "trust",
-          "contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+          "contract": "CCYMG6TL3W76VQO3EJDYA6EKH6NY7OGOHXGGBEY3NGB63CY5QT6ERAUC"
         },
         "expected_indexed": {
           "trustline_created": true,
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
-          "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
+          "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
           "limit": "9223372036854775807",
           "classic_change_trust_ops": 0
-        }
+        },
+        "sightings": [
+          "stellar/wallet-backend#731"
+        ]
       },
       "primary": {
         "name": "meta",
         "xdr_type": "TransactionMeta",
-        "b64": "AAAABAAAAAAAAAACAAAAAwAAAA0AAAAAAAAAAIFL12NX1LGdbb4FEYhdljqB7pucgDU5zLkJQZaS5LBdAAAAF0V79xwAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAAIFL12NX1LGdbb4FEYhdljqB7pucgDU5zLkJQZaS5LBdAAAAF0V79xwAAAALAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAAAADQAAAABq+IBwAAAAAAAAAAEAAAAAAAAABQAAAAAAAAANAAAAAQAAAACBS9djV9SxnW2+BRGIXZY6ge6bnIA1Ocy5CUGWkuSwXQAAAAFJU1RYAAAAAG87bXUoY882asmmOuaL2Eh0HMzP+wXkjnKgMcPyAmJGAAAAAAAAAAB//////////wAAAAEAAAAAAAAAAAAAAAMAAAANAAAAAAAAAACBS9djV9SxnW2+BRGIXZY6ge6bnIA1Ocy5CUGWkuSwXQAAABdFe/ccAAAACwAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA0AAAAAaviAcAAAAAAAAAABAAAADQAAAAAAAAAAgUvXY1fUsZ1tvgURiF2WOoHum5yANTnMuQlBlpLksF0AAAAXRXv3HAAAAAsAAAABAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAANAAAAAGr4gHAAAAAAAAAAAwAAAAwAAAAJ4yaAuDnHkU9ykAgFPsnssJy3PhHbIa0kAVzzWGWpgtsAABALAAAAAAAAAAEAAAANAAAACeMmgLg5x5FPcpAIBT7J7LCctz4R2yGtJAFc81hlqYLbAAHYjQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAEAAAAAAAAAAA=="
+        "b64": "AAAABAAAAAAAAAACAAAAAwAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAAAADQAAAAD0hnMgAAAAAAAAAAEAAAAAAAAABQAAAAAAAAANAAAAAQAAAAD50PoQ0Wgn9ifxJMriod/buwvbnH8ak8TbIJ7rsM4ZFwAAAAFJU1RYAAAAAAU8fW4feO8PFGkwxRR/oXewxTZFmmmEEXfS4wtNp8NcAAAAAAAAAAB//////////wAAAAEAAAAAAAAAAAAAAAMAAAANAAAAAAAAAAD50PoQ0Wgn9ifxJMriod/buwvbnH8ak8TbIJ7rsM4ZFwAAABdFe/ccAAAACwAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA0AAAAA9IZzIAAAAAAAAAABAAAADQAAAAAAAAAA+dD6ENFoJ/Yn8STK4qHf27sL25x/GpPE2yCe67DOGRcAAAAXRXv3HAAAAAsAAAABAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAANAAAAAPSGcyAAAAAAAAAAAwAAAAwAAAAJN9+4Bq0VewxF54W7AgGiILdV9ZK6Aj4EfmUKeYsqKd8AABALAAAAAAAAAAEAAAANAAAACTffuAatFXsMReeFuwIBoiC3VfWSugI+BH5lCnmLKinfAAHYjQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAEAAAAAAAAAAA=="
       },
       "provenance": {
         "checks": 10,
@@ -373,7 +1128,9 @@
     },
     {
       "id": "cap73-sac-trust-testnet-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
+      "synthetic": false,
       "network": "testnet",
       "ledger": 5727199,
       "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
@@ -395,6 +1152,7 @@
       ],
       "manifest": {
         "id": "cap73-sac-trust-testnet-0001",
+        "pattern": "sac-trust",
         "cap_ids": [
           "CAP-0073"
         ],
@@ -423,7 +1181,10 @@
           "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
           "limit": "9223372036854775807",
           "classic_change_trust_ops": 0
-        }
+        },
+        "sightings": [
+          "stellar/wallet-backend#731"
+        ]
       },
       "primary": {
         "name": "meta",
@@ -449,8 +1210,13 @@
           "exact": false
         },
         {
-          "input": "9223372036854775807",
-          "number": "9223372036854776000",
+          "input": "18446744073709551615",
+          "number": "18446744073709552000",
+          "exact": false
+        },
+        {
+          "input": "9007199254740993",
+          "number": "9007199254740992",
           "exact": false
         },
         {
@@ -461,12 +1227,53 @@
       ],
       "results": [
         {
+          "fixture": "base-max-length-vectors-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "base-memo-non-utf8-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "base-over-max-length-synthetic-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "n/a",
+            "native": "n/a"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
           "fixture": "cap15-fee-bump-pubnet-0001",
           "checks": {
             "decode": "pass",
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap27-muxed-max-id-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -476,6 +1283,17 @@
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap38-pool-issuer-order-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -485,6 +1303,7 @@
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
           "detail": []
         },
         {
@@ -494,6 +1313,47 @@
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-muxed-soroban-source-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-nested-auth-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-scmap-host-order-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-scval-limits-synthetic-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "n/a",
+            "native": "n/a"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -503,6 +1363,7 @@
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
           "detail": []
         },
         {
@@ -512,6 +1373,7 @@
             "reencode": "pass",
             "native": "pass"
           },
+          "failed": [],
           "detail": []
         }
       ]
@@ -522,12 +1384,53 @@
       "version": "0.9.0",
       "results": [
         {
+          "fixture": "base-max-length-vectors-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "base-memo-non-utf8-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "base-over-max-length-synthetic-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "n/a",
+            "reencode": "n/a"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
           "fixture": "cap15-fee-bump-pubnet-0001",
           "checks": {
             "decode": "pass",
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap27-muxed-max-id-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -537,6 +1440,17 @@
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap38-pool-issuer-order-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -546,6 +1460,7 @@
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
           "detail": []
         },
         {
@@ -555,6 +1470,47 @@
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-muxed-soroban-source-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-nested-auth-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-scmap-host-order-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "failed": [],
+          "detail": []
+        },
+        {
+          "fixture": "cap46-scval-limits-synthetic-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "n/a",
+            "reencode": "n/a"
+          },
+          "failed": [],
           "detail": []
         },
         {
@@ -564,6 +1520,7 @@
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
           "detail": []
         },
         {
@@ -573,6 +1530,7 @@
             "native": "pass",
             "reencode": "pass"
           },
+          "failed": [],
           "detail": []
         }
       ]
@@ -589,6 +1547,37 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
+          "fixture": "base-max-length-vectors-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
+          "fixture": "base-memo-non-utf8-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "n/a",
+            "reencode": "n/a"
+          },
+          "detail": [],
+          "failed": [],
+          "fixture": "base-over-max-length-synthetic-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
           "fixture": "cap15-fee-bump-pubnet-0001"
         },
         {
@@ -598,6 +1587,17 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
+          "fixture": "cap27-muxed-max-id-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
           "fixture": "cap27-muxed-payment-pubnet-0001"
         },
         {
@@ -607,6 +1607,17 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
+          "fixture": "cap38-pool-issuer-order-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
           "fixture": "cap40-signed-payload-signer-local-0001"
         },
         {
@@ -616,6 +1627,7 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
           "fixture": "cap40-signed-payload-signer-testnet-0001"
         },
         {
@@ -625,6 +1637,47 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
+          "fixture": "cap46-muxed-soroban-source-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
+          "fixture": "cap46-nested-auth-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
+          "fixture": "cap46-scmap-host-order-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "n/a",
+            "reencode": "n/a"
+          },
+          "detail": [],
+          "failed": [],
+          "fixture": "cap46-scval-limits-synthetic-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "failed": [],
           "fixture": "cap73-sac-trust-local-0001"
         },
         {
@@ -634,6 +1687,7 @@
             "reencode": "pass"
           },
           "detail": [],
+          "failed": [],
           "fixture": "cap73-sac-trust-testnet-0001"
         }
       ]
@@ -646,8 +1700,13 @@
       "exact": false
     },
     {
-      "input": "9223372036854775807",
-      "number": "9223372036854776000",
+      "input": "18446744073709551615",
+      "number": "18446744073709552000",
+      "exact": false
+    },
+    {
+      "input": "9007199254740993",
+      "number": "9007199254740992",
       "exact": false
     },
     {
@@ -659,6 +1718,7 @@
   "replay": [
     {
       "fixture": "cap15-fee-bump-pubnet-0001",
+      "pattern": "fee-bump",
       "cap": "CAP-0015",
       "ledger": 65474309,
       "network": "pubnet",
@@ -679,6 +1739,7 @@
     },
     {
       "fixture": "cap15-fee-bump-pubnet-0001",
+      "pattern": "fee-bump",
       "cap": "CAP-0015",
       "ledger": 65474309,
       "network": "pubnet",
@@ -696,7 +1757,63 @@
       "diffs": []
     },
     {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "pattern": "muxed-max-id",
+      "cap": "CAP-0027",
+      "ledger": 16,
+      "network": "local",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "recipient": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+        "recipient_muxed_id": "18446744073709551615",
+        "participants": [
+          "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U"
+        ]
+      },
+      "observed": {
+        "recipient": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+        "recipient_muxed_id": "18446744073709552000",
+        "participants": [
+          "MACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKIABAAAAAAAAAAEHN6",
+          "MCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452L7777777777774SRE"
+        ]
+      },
+      "diffs": [
+        "recipient_muxed_id",
+        "participants"
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "pattern": "muxed-max-id",
+      "cap": "CAP-0027",
+      "ledger": 16,
+      "network": "local",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "recipient": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+        "recipient_muxed_id": "18446744073709551615",
+        "participants": [
+          "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U"
+        ]
+      },
+      "observed": {
+        "recipient": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+        "recipient_muxed_id": "18446744073709551615",
+        "participants": [
+          "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U"
+        ]
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap27-muxed-payment-pubnet-0001",
+      "pattern": "muxed-payment",
       "cap": "CAP-0027",
       "ledger": 65474279,
       "network": "pubnet",
@@ -716,6 +1833,7 @@
     },
     {
       "fixture": "cap27-muxed-payment-pubnet-0001",
+      "pattern": "muxed-payment",
       "cap": "CAP-0027",
       "ledger": 65474279,
       "network": "pubnet",
@@ -732,7 +1850,50 @@
       "diffs": []
     },
     {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "pattern": "muxed-soroban-source",
+      "cap": "CAP-0046",
+      "ledger": 32,
+      "network": "local",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "participants": [
+          "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
+        ]
+      },
+      "observed": {
+        "participants": [
+          "MBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUAAAAAAAAAAAA4S5K"
+        ]
+      },
+      "diffs": [
+        "participants"
+      ]
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "pattern": "muxed-soroban-source",
+      "cap": "CAP-0046",
+      "ledger": 32,
+      "network": "local",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "participants": [
+          "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
+        ]
+      },
+      "observed": {
+        "participants": [
+          "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
+        ]
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap73-sac-trust-local-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "ledger": 13,
       "network": "local",
@@ -740,8 +1901,8 @@
       "verdict": "dropped",
       "expected": {
         "trustline_created": true,
-        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
-        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
+        "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
         "limit": "9223372036854775807",
         "classic_change_trust_ops": 0
       },
@@ -750,6 +1911,7 @@
     },
     {
       "fixture": "cap73-sac-trust-local-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "ledger": 13,
       "network": "local",
@@ -757,15 +1919,15 @@
       "verdict": "correct",
       "expected": {
         "trustline_created": true,
-        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
-        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
+        "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
         "limit": "9223372036854775807",
         "classic_change_trust_ops": 0
       },
       "observed": {
         "trustline_created": true,
-        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
-        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
+        "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
         "limit": "9223372036854775807",
         "classic_change_trust_ops": 0
       },
@@ -773,6 +1935,7 @@
     },
     {
       "fixture": "cap73-sac-trust-testnet-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "ledger": 5727199,
       "network": "testnet",
@@ -790,6 +1953,7 @@
     },
     {
       "fixture": "cap73-sac-trust-testnet-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "ledger": 5727199,
       "network": "testnet",
@@ -918,7 +2082,7 @@
         "cap": "CAP-0038",
         "title": "Automated Market Makers",
         "protocol": 18,
-        "covered": false
+        "covered": true
       },
       {
         "cap": "CAP-0040",
@@ -936,7 +2100,7 @@
         "cap": "CAP-0046",
         "title": "Soroban smart contract system overview",
         "protocol": 20,
-        "covered": false
+        "covered": true
       },
       {
         "cap": "CAP-0046-01",
@@ -1133,6 +2297,7 @@
     "results": [
       {
         "fixture": "cap15-fee-bump-pubnet-0001",
+        "pattern": "fee-bump",
         "cap": "CAP-0015",
         "network": "pubnet",
         "ledger": 65474309,
@@ -1160,7 +2325,37 @@
         ]
       },
       {
+        "fixture": "cap27-muxed-max-id-local-0001",
+        "pattern": "muxed-max-id",
+        "cap": "CAP-0027",
+        "network": "local",
+        "ledger": 16,
+        "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "recipient credited",
+            "expected": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+            "observed": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+            "ok": true
+          },
+          {
+            "field": "to_muxed_id",
+            "expected": "18446744073709551615",
+            "observed": "18446744073709551615",
+            "ok": true
+          },
+          {
+            "field": "participants",
+            "expected": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46,GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+            "observed": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46,GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+            "ok": true
+          }
+        ]
+      },
+      {
         "fixture": "cap27-muxed-payment-pubnet-0001",
+        "pattern": "muxed-payment",
         "cap": "CAP-0027",
         "network": "pubnet",
         "ledger": 65474279,
@@ -1183,16 +2378,17 @@
       },
       {
         "fixture": "cap40-signed-payload-signer-local-0001",
+        "pattern": "signed-payload-signer",
         "cap": "CAP-0040",
         "network": "local",
         "ledger": 9,
-        "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+        "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
         "verdict": "correct",
         "checks": [
           {
             "field": "signer",
-            "expected": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
-            "observed": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+            "expected": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
+            "observed": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
             "ok": true
           },
           {
@@ -1205,6 +2401,7 @@
       },
       {
         "fixture": "cap40-signed-payload-signer-testnet-0001",
+        "pattern": "signed-payload-signer",
         "cap": "CAP-0040",
         "network": "testnet",
         "ledger": 5727196,
@@ -1226,11 +2423,29 @@
         ]
       },
       {
+        "fixture": "cap46-muxed-soroban-source-local-0001",
+        "pattern": "muxed-soroban-source",
+        "cap": "CAP-0046",
+        "network": "local",
+        "ledger": 32,
+        "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "participants",
+            "expected": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+            "observed": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+            "ok": true
+          }
+        ]
+      },
+      {
         "fixture": "cap73-sac-trust-local-0001",
+        "pattern": "sac-trust",
         "cap": "CAP-0073",
         "network": "local",
         "ledger": 13,
-        "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+        "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
         "verdict": "correct",
         "checks": [
           {
@@ -1241,8 +2456,8 @@
           },
           {
             "field": "asset",
-            "expected": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
-            "observed": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+            "expected": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
+            "observed": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
             "ok": true
           },
           {
@@ -1261,6 +2476,7 @@
       },
       {
         "fixture": "cap73-sac-trust-testnet-0001",
+        "pattern": "sac-trust",
         "cap": "CAP-0073",
         "network": "testnet",
         "ledger": 5727199,
@@ -1324,6 +2540,530 @@
           }
         }
       ]
-    }
+    },
+    "datastore": [
+      {
+        "fixture": "cap15-fee-bump-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap27-muxed-max-id-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap27-muxed-payment-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-muxed-soroban-source-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap73-sac-trust-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap73-sac-trust-testnet-0001",
+        "verdict": "correct"
+      }
+    ],
+    "sightings": [
+      {
+        "issue": "stellar/wallet-backend#729",
+        "title": "handle CAP-40 signed-payload signers in ingestion",
+        "fixed_by": {
+          "pr": "stellar/wallet-backend#729",
+          "ref": "2c873353c1f0f3c9b145e25a7d009023ad104a1c"
+        },
+        "before": {
+          "ref": "2a0a84ea12523b6c92e278c0c84b443041240095",
+          "verdicts": [
+            "dropped"
+          ],
+          "lint": 0
+        },
+        "after": {
+          "ref": "2c873353c1f0f3c9b145e25a7d009023ad104a1c",
+          "verdicts": [
+            "correct"
+          ],
+          "lint": 0
+        },
+        "lint_rules": [],
+        "reproduced": true
+      },
+      {
+        "issue": "stellar/wallet-backend#731",
+        "title": "SAC-created trustlines produce no trustline state change (CAP-0073)",
+        "fixed_by": {
+          "pr": "stellar/wallet-backend#734",
+          "ref": "c152783c054c765c8b51fd26ed313fd1ebc1c50c"
+        },
+        "before": {
+          "ref": "764a4f5bcbff5abb0949d93da37f769063013ea0",
+          "verdicts": [
+            "incorrect"
+          ],
+          "lint": 0
+        },
+        "after": {
+          "ref": "c152783c054c765c8b51fd26ed313fd1ebc1c50c",
+          "verdicts": [
+            "correct"
+          ],
+          "lint": 0
+        },
+        "lint_rules": [],
+        "reproduced": true
+      },
+      {
+        "issue": "stellar/wallet-backend#716",
+        "title": "AddressBytea truncates muxed and signed-payload addresses (Soroban participant path)",
+        "fixed_by": {
+          "pr": "stellar/wallet-backend#753",
+          "ref": "bb0b162b072583c7dabffbdee664d1c117e5ba56"
+        },
+        "before": {
+          "ref": "f8e5786d22c04adad16318f2e126728beec5aac9",
+          "verdicts": [
+            "dropped"
+          ],
+          "lint": 4
+        },
+        "after": {
+          "ref": "bb0b162b072583c7dabffbdee664d1c117e5ba56",
+          "verdicts": [
+            "correct"
+          ],
+          "lint": 0
+        },
+        "lint_rules": [
+          "IX003"
+        ],
+        "reproduced": true
+      },
+      {
+        "issue": "stellar/wallet-backend@9538b3c",
+        "title": "derive Soroban participants from executed meta, not the auth tree (unbounded recursion over authorization trees)",
+        "fixed_by": {
+          "commit": "stellar/wallet-backend@9538b3cae",
+          "ref": "9538b3caeaebfeb3d034146c0ce9643c3066cf8a"
+        },
+        "before": {
+          "ref": "666a64d426263fa6bd2a0ee61ee8dfb1f4729019",
+          "verdicts": [],
+          "lint": 1
+        },
+        "after": {
+          "ref": "9538b3caeaebfeb3d034146c0ce9643c3066cf8a",
+          "verdicts": [],
+          "lint": 0
+        },
+        "lint_rules": [
+          "IX002"
+        ],
+        "reproduced": true
+      }
+    ]
+  },
+  "matrix": {
+    "package": "@stellar/stellar-sdk",
+    "versions": [
+      {
+        "version": "17.2.0",
+        "role": "before js-stellar-sdk#1766 (fixed in 17.2.1)",
+        "failed": [
+          {
+            "fixture": "cap27-muxed-max-id-local-0001",
+            "checks": [
+              "muxed_id_input_canonical",
+              "offer_id_input_exact"
+            ]
+          },
+          {
+            "fixture": "cap38-pool-issuer-order-local-0001",
+            "checks": [
+              "decode_pool_share_op",
+              "asset_compare",
+              "pool_id"
+            ]
+          },
+          {
+            "fixture": "cap46-scmap-host-order-local-0001",
+            "checks": [
+              "sorted_map_matches_host",
+              "native_keeps_every_entry"
+            ]
+          }
+        ]
+      },
+      {
+        "version": "17.2.1",
+        "role": "before js-stellar-sdk#1785 and #1789 (fixed in 17.3.0)",
+        "failed": [
+          {
+            "fixture": "cap27-muxed-max-id-local-0001",
+            "checks": [
+              "muxed_id_input_canonical",
+              "offer_id_input_exact"
+            ]
+          },
+          {
+            "fixture": "cap46-scmap-host-order-local-0001",
+            "checks": [
+              "native_keeps_every_entry"
+            ]
+          }
+        ]
+      },
+      {
+        "version": "17.3.0",
+        "role": "first release with every fix",
+        "failed": []
+      },
+      {
+        "version": "17.4.0",
+        "role": "current (package.json pin)",
+        "failed": []
+      }
+    ]
+  },
+  "findings": {
+    "severity_scale": {
+      "critical": "Consensus, funds or keys at risk.",
+      "high": "Ingestion halts, or value is attributed to the wrong account.",
+      "medium": "Data is silently lost or wrong (an amount, an ID, a missing record), or a valid network value is rejected on a common path.",
+      "low": "A valid but rare value is rejected or mishandled; tooling or test infrastructure is affected.",
+      "info": "Behaviour worth knowing about that isn't a defect."
+    },
+    "findings": [
+      {
+        "id": "ISTRAVEX-F-0001",
+        "title": "Ingestion halts on a CAP-40 signed-payload signer",
+        "component": "stellar/wallet-backend",
+        "affected": "before 2c87335 (2026-09-08)",
+        "fixed_in": "stellar/wallet-backend#729",
+        "severity": "high",
+        "status": "fixed-upstream",
+        "issue": "stellar/wallet-backend#729",
+        "cap_ids": [
+          "CAP-0040"
+        ],
+        "fixtures": [
+          "cap40-signed-payload-signer-local-0001"
+        ],
+        "checks": [
+          "pilot-sighting:cap40-signed-payload-signer-local-0001:records-persist"
+        ],
+        "reproduced": true,
+        "summary": "A SetOptions that adds a P… signer produces a state change whose signer column can't be encoded (68-byte key into a 33-byte AddressBytea). The COPY fails, the persist transaction rolls back with the cursor, and ingestion retries the ledger forever.",
+        "evidence": "Pilot at 2a0a84e (before): dropped, records persist: state_change.SignerAccountID … has a 68-byte key. At 2c87335 (the fix): correct. Protocol 28 corpus, kit/pilot/wallet-backend/refs.json."
+      },
+      {
+        "id": "ISTRAVEX-F-0002",
+        "title": "SAC-created trustlines produce no trustline state change",
+        "component": "stellar/wallet-backend",
+        "affected": "before c152783 (2026-09-17)",
+        "fixed_in": "stellar/wallet-backend#734",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/wallet-backend#731",
+        "cap_ids": [
+          "CAP-0073"
+        ],
+        "fixtures": [
+          "cap73-sac-trust-local-0001"
+        ],
+        "checks": [
+          "pilot-sighting:cap73-sac-trust-local-0001:trustline-state-change"
+        ],
+        "reproduced": true,
+        "summary": "A trustline created by the Stellar Asset Contract's trust() has no changeTrust operation; an indexer keyed on operation types records the trustline but no TRUSTLINE state change.",
+        "evidence": "Pilot at 764a4f5 (before): incorrect, TRUSTLINE state change: expected ADD, got none. At c152783 (#734): correct."
+      },
+      {
+        "id": "ISTRAVEX-F-0003",
+        "title": "A Soroban operation from a muxed source halts ingestion",
+        "component": "stellar/wallet-backend",
+        "affected": "before bb0b162 (2026-09-25)",
+        "fixed_in": "stellar/wallet-backend#753",
+        "severity": "high",
+        "status": "fixed-upstream",
+        "issue": "stellar/wallet-backend#716",
+        "cap_ids": [
+          "CAP-0046",
+          "CAP-0027"
+        ],
+        "fixtures": [
+          "cap46-muxed-soroban-source-local-0001"
+        ],
+        "checks": [
+          "pilot-sighting:cap46-muxed-soroban-source-local-0001:records-persist",
+          "lint:wallet-backend-f8e5786:IX003"
+        ],
+        "reproduced": true,
+        "summary": "The Soroban participant path added the source as M…, the classic path as G…; both encode to one primary key, the COPY fails with SQLSTATE 23505, and ingestion stops at the ledger. Anyone can trigger it with one cheap ExtendFootprintTtl.",
+        "evidence": "Pilot at f8e5786 (before): dropped, participants G… and M… encode to the same key. At bb0b162 (#753): correct. istravex-lint IX003 flags the four call sites #753 changed (contract_operations.go:156, 259, 303, 347) at f8e5786 and none at bb0b162."
+      },
+      {
+        "id": "ISTRAVEX-F-0004",
+        "title": "Soroban participants collected by unbounded recursion over the authorization tree",
+        "component": "stellar/wallet-backend",
+        "affected": "before 9538b3c (2026-09-28)",
+        "fixed_in": "stellar/wallet-backend@9538b3cae",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/wallet-backend@9538b3cae",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [
+          "cap46-nested-auth-local-0001"
+        ],
+        "checks": [
+          "lint:wallet-backend-666a64d:IX002"
+        ],
+        "reproduced": true,
+        "summary": "participantsFromInvocationAndSubInvocations recursed over SorobanAuthorizedInvocation with no depth or size limit, and took participants from the authorization tree rather than from what executed. stellar-core bounds neither the tree's depth nor its width beyond the transaction size.",
+        "evidence": "istravex-lint IX002 flags contract_operations.go:53 at 666a64d and not at 9538b3c, which derives Soroban participants from executed meta. The nested-auth fixture is a real six-level tree from the generated network."
+      },
+      {
+        "id": "ISTRAVEX-F-0005",
+        "title": "Asset issuers and ScMap keys ordered by text instead of network order",
+        "component": "stellar/js-stellar-sdk",
+        "affected": "17.2.0 and earlier",
+        "fixed_in": "17.2.1",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/js-stellar-sdk#1766",
+        "cap_ids": [
+          "CAP-0038",
+          "CAP-0046"
+        ],
+        "fixtures": [
+          "cap38-pool-issuer-order-local-0001",
+          "cap46-scmap-host-order-local-0001"
+        ],
+        "checks": [
+          "javascript-matrix:cap38-pool-issuer-order-local-0001:decode_pool_share_op",
+          "javascript-matrix:cap38-pool-issuer-order-local-0001:asset_compare",
+          "javascript-matrix:cap38-pool-issuer-order-local-0001:pool_id",
+          "javascript-matrix:cap46-scmap-host-order-local-0001:sorted_map_matches_host"
+        ],
+        "reproduced": true,
+        "summary": "Strkeys are base32, where 2–7 sort before A–Z in ASCII but after them in value. 17.2.0 orders issuers by strkey text, so decoding a valid pool-share changeTrust throws (\"Assets are not in lexicographic order\") and the pool ID can't be computed; scvSortedMap orders keys by their native string forms, which the host rejects.",
+        "evidence": "kit/runners/js/matrix.mjs: 17.2.0 fails the four checks; 17.2.1 and later pass. The fixture's issuers were chosen so their strkey order is the reverse of their key-byte order; stellar-core accepted the operation."
+      },
+      {
+        "id": "ISTRAVEX-F-0006",
+        "title": "Muxed and offer IDs accept values that encode a different ID",
+        "component": "stellar/js-stellar-sdk",
+        "affected": "17.2.1 and earlier",
+        "fixed_in": "17.3.0",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/js-stellar-sdk#1785",
+        "cap_ids": [
+          "CAP-0027"
+        ],
+        "fixtures": [
+          "cap27-muxed-max-id-local-0001"
+        ],
+        "checks": [
+          "javascript-matrix:cap27-muxed-max-id-local-0001:muxed_id_input_canonical",
+          "javascript-matrix:cap27-muxed-max-id-local-0001:offer_id_input_exact"
+        ],
+        "reproduced": true,
+        "summary": "MuxedAccount accepts \"0x…\" for the maximum ID and id() then returns the string as typed, not the ID the M-address encodes; manageSellOffer rounds a numeric offer ID above 2^53 (9007199254740993 encodes as …992).",
+        "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail both checks; 17.3.0 and later reject both inputs."
+      },
+      {
+        "id": "ISTRAVEX-F-0007",
+        "title": "scValToNative silently drops map entries whose keys collide",
+        "component": "stellar/js-stellar-sdk",
+        "affected": "17.2.1 and earlier",
+        "fixed_in": "17.3.0",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/js-stellar-sdk#1789",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [
+          "cap46-scmap-host-order-local-0001"
+        ],
+        "checks": [
+          "javascript-matrix:cap46-scmap-host-order-local-0001:native_keeps_every_entry"
+        ],
+        "reproduced": true,
+        "summary": "u32 1 and symbol \"1\" are distinct ScMap keys that become the same object property; the conversion keeps the last and drops the rest with no error.",
+        "evidence": "On the fixture's real 10-entry map, 17.2.0 and 17.2.1 return 8 entries and no error; 17.3.0 and later throw."
+      },
+      {
+        "id": "ISTRAVEX-F-0008",
+        "title": "XDR string .value getters are lossy for bytes that aren't UTF-8",
+        "component": "stellar/js-stellar-sdk",
+        "affected": "all versions (documented behaviour since the fix)",
+        "fixed_in": "17.3.0 (documentation; byte-keeping paths unchanged)",
+        "severity": "info",
+        "status": "fixed-upstream",
+        "issue": "stellar/js-stellar-sdk#1823",
+        "cap_ids": [],
+        "fixtures": [
+          "base-memo-non-utf8-local-0001"
+        ],
+        "checks": [],
+        "reproduced": null,
+        "summary": "The network accepts any 28 bytes as memo text. The SDK's byte-keeping paths (the memo arm's bytes, Memo.fromXDRObject/toXDRObject, TransactionBuilder.fromXDR) keep them; .value decodes leniently and must not be used to rebuild a value.",
+        "evidence": "All SDK versions pass memo_bytes, memo_class_roundtrip and transaction_roundtrip on a real 28-byte memo containing FF FE, a CESU-8 lone surrogate and a Latin-1 byte."
+      },
+      {
+        "id": "ISTRAVEX-F-0009",
+        "title": "Decoders reserve capacity from untrusted length prefixes and ignore vector maximums",
+        "component": "stellar/rs-stellar-xdr",
+        "affected": "before the fixes in #581 and #598",
+        "fixed_in": "stellar/rs-stellar-xdr#581, #598",
+        "severity": "medium",
+        "status": "fixed-upstream",
+        "issue": "stellar/rs-stellar-xdr#598",
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [
+          "cap46-scval-limits-synthetic-0001",
+          "base-over-max-length-synthetic-0001"
+        ],
+        "checks": [],
+        "reproduced": null,
+        "summary": "A 12-byte ScVal claiming 2^32 - 1 elements, a 2,000-deep vec, 101 operations and a 29-byte memo must each be rejected cleanly. The corpus keeps them as regression guards: every pinned SDK (JavaScript 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0 with bounded Limits) rejects all five.",
+        "evidence": "Synthetic fixtures with expect: decode_error; all three runners pass. Not run against pre-fix rs-stellar-xdr releases."
+      },
+      {
+        "id": "ISTRAVEX-F-0010",
+        "title": "Operation meta lists its ledger entry changes in a different order on different runs",
+        "component": "stellar/stellar-core",
+        "affected": "30.0.0 (Homebrew darwin-arm64 build; observed on standalone networks)",
+        "fixed_in": null,
+        "severity": "low",
+        "status": "to-file",
+        "issue": null,
+        "cap_ids": [],
+        "fixtures": [
+          "cap38-pool-issuer-order-local-0001"
+        ],
+        "checks": [],
+        "reproduced": true,
+        "summary": "Two runs of the same pinned binary on identical input (same keys, transactions and close times) produce identical ledger headers, transaction sets and results, but the LedgerEntryChange entries inside some operations' changes come out in a different order. Anything that hashes or byte-compares meta from two producers (data lake objects from two captive cores, RPC nodes) can disagree on a ledger both closed identically.",
+        "evidence": "node kit/capture/generate.mjs --check: consensus bytes identical; 2–3 meta files per run differ only in change order, e.g. the changeTrust pool-share operation (operations[2].changes: CREATED trustline vs STATE account first) and the first Soroban settings-upgrade transaction. kit/lib/canonical.mjs compares order-insensitively.",
+        "draft": "Title: Order of LedgerEntryChange entries within an operation's meta differs between runs\n\nstellar-core 30.0.0 (Homebrew, darwin-arm64), RUN_STANDALONE + MANUAL_CLOSE with explicit close times.\n\nRunning the same scenario twice from new-db (same node seed, same transactions, same close times) gives byte-identical ledger headers, tx sets and results, but LedgerCloseMeta differs: within some operations' `changes`, entries for different keys come out in a different order (e.g. a changeTrust on a pool share: CREATED trustline first in one run, STATE account first in the other). Meta isn't consensus data, but downstream systems compare it byte for byte (data lake objects, RPC nodes, golden files). Is the order meant to be stable? If so, it looks like iteration over an unordered container.\n\nReproduce: github.com/hackcat29/istravex, node kit/capture/generate.mjs --check (needs stellar-core 30.0.0)."
+      },
+      {
+        "id": "ISTRAVEX-F-0011",
+        "title": "get-settings-upgrade-txs uses a random salt, so standalone networks can't be reproduced",
+        "component": "stellar/stellar-core",
+        "affected": "30.0.0",
+        "fixed_in": null,
+        "severity": "low",
+        "status": "to-file",
+        "issue": null,
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [],
+        "checks": [],
+        "reproduced": true,
+        "summary": "The upgrade contract is deployed with a random salt, so its contract ID, the upgrade key and every later ledger hash differ between otherwise identical runs. The generator swaps in a seeded salt and re-signs the three transactions.",
+        "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade().",
+        "draft": "Title: get-settings-upgrade-txs: accept a salt for reproducible test networks\n\n`stellar-core get-settings-upgrade-txs` deploys the upgrade contract with a random salt. Test harnesses that need byte-reproducible standalone networks (golden files, fixture generators) have to rewrite the salt, the derived contract ID and the upgrade key, then re-sign. An optional --salt (or a salt derived from the source account and sequence number) would make the output deterministic."
+      },
+      {
+        "id": "ISTRAVEX-F-0012",
+        "title": "TransactionBuilder refuses a muxed source on every Soroban transaction",
+        "component": "stellar/js-stellar-sdk",
+        "affected": "17.4.0",
+        "fixed_in": null,
+        "severity": "low",
+        "status": "to-file",
+        "issue": null,
+        "cap_ids": [
+          "CAP-0046",
+          "CAP-0027"
+        ],
+        "fixtures": [
+          "cap46-muxed-soroban-source-local-0001"
+        ],
+        "checks": [],
+        "reproduced": true,
+        "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" for any Soroban transaction. stellar-core rejects a muxed source only on InvokeHostFunction; ExtendFootprintTtl and RestoreFootprint accept one, and the fixture is such a transaction, accepted by stellar-core 30.0.0. Decoding it works; building it doesn't.",
+        "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource).",
+        "draft": "Title: TransactionBuilder rejects a muxed source on ExtendFootprintTtl / RestoreFootprint\n\nBuilding a transaction whose source is an M-address with a single ExtendFootprintTtl operation throws \"Soroban transactions cannot use a muxed source account; use the base account\". stellar-core accepts it (it rejects a muxed source only for InvokeHostFunction, from protocol 25), so the SDK can decode transactions it can't build. Real example: github.com/hackcat29/istravex corpus/fixtures/cap46-muxed-soroban-source-local-0001. Suggest limiting the check to InvokeHostFunction."
+      },
+      {
+        "id": "ISTRAVEX-F-0013",
+        "title": "Memo text returned as a Go string without UTF-8 validation",
+        "component": "stellar/wallet-backend",
+        "affected": "main @ 3e22515",
+        "fixed_in": null,
+        "severity": "low",
+        "status": "latent",
+        "issue": null,
+        "cap_ids": [],
+        "fixtures": [
+          "base-memo-non-utf8-local-0001"
+        ],
+        "checks": [
+          "lint:wallet-backend-3e22515:IX001"
+        ],
+        "reproduced": null,
+        "summary": "utils.Memo returns MEMO_TEXT as a string with no UTF-8 check. Nothing outside tests calls it and no table has a memo column, so it isn't reachable today. Worth a guard before memos are stored.",
+        "evidence": "istravex-lint IX001 at internal/utils/ingestion_utils.go:17; triaged in kit/pilot/wallet-backend/triage.json."
+      },
+      {
+        "id": "ISTRAVEX-F-0014",
+        "title": "Fee-processing changes over-count Soroban fees",
+        "component": "stellar/stellar-core",
+        "affected": "protocol 23 and later",
+        "fixed_in": null,
+        "severity": "info",
+        "status": "by-design",
+        "issue": null,
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [
+          "cap15-fee-bump-pubnet-0001"
+        ],
+        "checks": [],
+        "reproduced": null,
+        "summary": "On the fee-bump fixture the fee-processing changes debit 46,340 stroops but FeeCharged is 40,354: the Soroban refund settles after apply. Fees computed from fee-processing balance deltas alone over-report.",
+        "evidence": "kit/replay/replay.mjs, feeMetaDebit on the reference row."
+      },
+      {
+        "id": "ISTRAVEX-F-0015",
+        "title": "Diagnostic events differ between RPC nodes for the same ledger",
+        "component": "stellar/stellar-rpc",
+        "affected": "testnet nodes, 2026-11",
+        "fixed_in": null,
+        "severity": "info",
+        "status": "by-design",
+        "issue": null,
+        "cap_ids": [
+          "CAP-0046"
+        ],
+        "fixtures": [],
+        "checks": [],
+        "reproduced": null,
+        "summary": "The same transaction's meta differed in one diagnostic value (core_metrics invoke_time_nsecs, 188,866 vs 126,592 ns) between two nodes. Diagnostic events are node-local and not consensus data; fixtures re-source meta from canonical ledgers for this reason.",
+        "evidence": "kit/capture/canonicalize.mjs; the verifier explains a diagnostic-only difference when it sees one."
+      }
+    ]
   }
 }

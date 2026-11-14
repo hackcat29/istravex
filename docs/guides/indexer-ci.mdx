@@ -7,7 +7,7 @@ If you run an indexer, wallet backend or anything else that turns ledgers into r
 
 | Job | What it catches | Cost |
 |---|---|---|
-| **Lint** | Code patterns that have caused real ingestion bugs: unvalidated memo text, unbounded recursion over XDR, fees read from the envelope | Seconds. Go only. |
+| **Lint** | Code patterns that have caused real ingestion bugs: unvalidated memo text and lossy muxed IDs, unbounded walks over XDR, participants and fees taken from the envelope | Seconds. Go only. |
 | **Replay** | What your indexer actually *stores* for each fixture, compared field by field with what the ledger supports | One ingestion run over a handful of ledgers |
 
 They're independent. Start with whichever fits. Lint is a five-line change; replay takes an afternoon the first time, then catches the bugs lint can't see.
@@ -39,7 +39,7 @@ They're independent. Start with whichever fits. Lint is a five-line change; repl
         id: ixlint
         with:
           packages: ./internal/ingest/...
-          version: v1.0.0           # pin the analyzers; default is v1.0.0
+          version: v1.1.0           # pin the analyzers; default is v1.1.0
       - run: echo "istravex-lint found ${{ steps.ixlint.outputs.findings }} issue(s)"
         if: always()
     ```
@@ -48,7 +48,7 @@ They're independent. Start with whichever fits. Lint is a five-line change; repl
     No GitHub Actions dependency. Works in any CI.
 
     ```bash
-    go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@v1.0.0 ./...
+    go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@v1.1.0 ./...
     ```
   </Tab>
 </Tabs>
@@ -180,6 +180,8 @@ jobs:
         run: node istravex-score.mjs observed.json pubnet
 ```
 
+If your indexer reads the Galexie data lake rather than RPC, export the corpus in that layout instead and point your datastore at it, from disk or through a local S3 endpoint: see [Data lake](/tools/data-lake).
+
 The hosted RPC allows 300 requests a minute, which is plenty for a CI run over a handful of ledgers. If you'd rather have no network dependency at all, run the mock RPC inside the job: clone Istravex at a tag, run `npm ci`, and start `npm run rpc -- --network pubnet --port 8000` in the background, then point `RPC_URL` at `http://localhost:8000`.
 
 ## When replay fails
@@ -192,5 +194,7 @@ Every fixture maps to a rule in the [hardening guide](/guide/overview) that expl
 | `cap27-muxed-payment-*` | Muxed ID through a float, or the muxed address stored instead of the base account | [Muxed accounts](/guide/muxed-accounts), [Wide integers](/guide/wide-integers) |
 | `cap40-signed-payload-signer-*` | Signer key not handled, or truncated to its account part | [Signed-payload signers](/guide/signed-payload-signers) |
 | `cap73-sac-trust-*` | Trustlines only recorded from `changeTrust` operations | [SAC trustlines](/guide/sac-trustlines) |
+| `cap27-muxed-max-id-*` | The maximum muxed ID through a float or `int64`; participants as `M…` addresses | [Wide integers](/guide/wide-integers), [Addresses](/guide/addresses) |
+| `cap46-muxed-soroban-source-*` | The source added as a participant in its `M…` form | [Effects from metadata](/guide/effects-from-meta) |
 
 If you believe the fixture is wrong rather than your indexer, [open an issue](https://github.com/hackcat29/istravex/issues). Expectations come from independent sources, but that doesn't make them infallible.
