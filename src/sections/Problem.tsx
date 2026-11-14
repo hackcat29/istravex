@@ -1,12 +1,9 @@
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { MUXED_ID, problem, verdictLabel, type Row } from '../content';
+import { useEffect, useRef, useState } from 'react';
+import { problem, verdictLabel, type Row } from '../content';
 import { Title, VerdictMark } from '../components/ui';
 
 const CYCLE_MS = 7000;
-
-/** What `Number()` does to a uint64 — computed live, not hard-coded. */
-const lossy = String(Number(MUXED_ID));
 
 function Digits({ value, against }: { value: string; against: string }) {
   return (
@@ -33,12 +30,6 @@ export function Problem() {
     const id = setTimeout(() => setActive((a) => (a + 1) % problem.cases.length), CYCLE_MS);
     return () => clearTimeout(id);
   }, [active, auto, inView, reduce]);
-
-  const indexer: Row[] = useMemo(
-    () =>
-      c.indexer ?? c.ledger.map(([k, v]): Row => [k, k === 'id' ? lossy : v]),
-    [c],
-  );
 
   return (
     <section id="problem" className="relative border-t border-line py-28 sm:py-36">
@@ -84,12 +75,12 @@ export function Problem() {
             aria-labelledby={`tab-${c.id}`}
             className="mt-6 grid gap-3 lg:grid-cols-[1fr_120px_1fr] lg:gap-0"
           >
-            <Column title={c.ledgerTitle} cap={c.cap} rows={c.ledger} keyId={c.id} />
+            <Column title={c.ledgerTitle} cap={c.cap} ledger={c.ledger} href={c.href} rows={c.ledger_rows} keyId={c.id} />
             <Flow verdict={c.verdict} keyId={c.id} />
             <Column
               title={c.indexerTitle}
-              rows={indexer}
-              against={c.ledger}
+              rows={c.indexer_rows}
+              against={c.ledger_rows}
               verdict={c.verdict}
               keyId={c.id}
             />
@@ -103,6 +94,8 @@ export function Problem() {
 function Column({
   title,
   cap,
+  ledger,
+  href,
   rows,
   against,
   verdict,
@@ -110,6 +103,8 @@ function Column({
 }: {
   title: string;
   cap?: string;
+  ledger?: number;
+  href?: string;
   rows: Row[];
   against?: Row[];
   verdict?: 'correct' | 'incorrect' | 'dropped';
@@ -133,7 +128,9 @@ function Column({
                 <span className={verdict === 'incorrect' ? 'text-coral' : 'text-fg'}>{verdictLabel[verdict]}</span>
               </>
             ) : (
-              cap
+              <a href={href} target="_blank" rel="noreferrer" className="transition-colors hover:text-fg">
+                {cap} · L{ledger?.toLocaleString('en-US')} ↗
+              </a>
             )}
           </motion.span>
         </AnimatePresence>
@@ -162,7 +159,7 @@ function Column({
                       </svg>
                       not indexed
                     </span>
-                  ) : wrong && ref && /^\d+$/.test(v) ? (
+                  ) : wrong && ref && /^[\d,]+$/.test(v) ? (
                     <Digits value={v} against={ref} />
                   ) : (
                     <span className={wrong ? 'bg-coral/15 text-coral' : undefined}>{v}</span>

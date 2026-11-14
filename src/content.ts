@@ -2,7 +2,28 @@
  * Single source of truth for every word on the page.
  * Sections import from here; edit copy here, not in components.
  * Keep it terse: no taglines, eyebrows or helper text.
+ *
+ * Every number and XDR value comes from src/data/corpus.json, which
+ * `npm run corpus:run` regenerates from corpus/ and the SDK runners.
  */
+import corpus from './data/corpus.json';
+
+export { corpus };
+export const REPO_URL = 'https://github.com/hackcat29/istravex';
+
+type Fixture = (typeof corpus.fixtures)[number];
+type ReplayRow = (typeof corpus.replay)[number];
+const byCap = (cap: string) => corpus.fixtures.find((f) => f.cap === cap) as Fixture;
+const replayOf = (cap: string, indexer: 'naive' | 'reference') =>
+  corpus.replay.find((r) => r.cap === cap && r.indexer === indexer) as ReplayRow;
+const obs = (r: ReplayRow) => (r.observed ?? {}) as unknown as Record<string, string | boolean | null>;
+const exp = (f: Fixture) => f.manifest.expected_decoded as unknown as Record<string, string>;
+
+/** G…/M…/P… addresses shortened for tables; numbers are never shortened. */
+export const short = (s: string) => (s.length > 14 ? `${s.slice(0, 4)}…${s.slice(-4)}` : s);
+export const grouped = (s: string) => BigInt(s).toLocaleString('en-US');
+export const explorerTx = (f: { network: string; tx_hash: string }) =>
+  `https://stellar.expert/explorer/${f.network === 'pubnet' ? 'public' : 'testnet'}/tx/${f.tx_hash}`;
 
 export const RFP_URL = 'https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track';
 export const PROPOSAL_URL = '/proposal.md';
@@ -22,6 +43,15 @@ export const hero = {
   secondary: { label: 'See the kit', href: '#kit' },
 };
 
+const st = corpus.stats;
+const protocols = [...new Set(corpus.fixtures.map((f) => f.protocol_version))].sort();
+export const heroStats = [
+  { value: String(st.fixtures), label: 'Real fixtures' },
+  { value: `${st.sdk_checks_passed}/${st.sdk_checks}`, label: 'SDK checks' },
+  { value: `${st.naive_faults}/${st.replay_cases}`, label: 'Indexer faults caught' },
+  { value: protocols.join('–'), label: 'Protocol' },
+];
+
 export type Verdict = 'correct' | 'incorrect' | 'dropped';
 export const verdictLabel: Record<Verdict, string> = {
   correct: 'Correct',
@@ -29,21 +59,33 @@ export const verdictLabel: Record<Verdict, string> = {
   dropped: 'Dropped',
 };
 
-/** A real uint64 muxed ID. JS `Number` cannot hold it; the page computes the loss live. */
-export const MUXED_ID = '9223372036854775807';
+const f27 = byCap('CAP-0027');
+const f15 = byCap('CAP-0015');
+const f73 = byCap('CAP-0073');
+const n27 = obs(replayOf('CAP-0027', 'naive'));
+const n15 = obs(replayOf('CAP-0015', 'naive'));
+const r15 = obs(replayOf('CAP-0015', 'reference'));
+const x15 = exp(f15);
+const i73 = f73.manifest.expected_indexed as unknown as Record<string, string>;
+
+/** A real uint64 muxed ID from mainnet ledger 65,474,279. */
+export const MUXED_ID = exp(f27).muxed_id;
 
 export type Row = readonly [field: string, value: string];
 export type ProblemCase = {
   id: string;
   tab: string;
   cap: string;
+  ledger: number;
+  href: string;
   ledgerTitle: string;
   indexerTitle: string;
-  ledger: Row[];
-  /** null → derived at runtime (see Problem.tsx) */
-  indexer: Row[] | null;
+  ledger_rows: Row[];
+  indexer_rows: Row[];
   verdict: Verdict;
 };
+
+const verdictOf = (cap: string) => replayOf(cap, 'naive').verdict as Verdict;
 
 export const problem: { title: string[]; cases: ProblemCase[] } = {
   title: ['Valid on chain.', 'Wrong downstream.'],
@@ -51,53 +93,62 @@ export const problem: { title: string[]; cases: ProblemCase[] } = {
     {
       id: 'muxed',
       tab: 'Muxed ID',
-      cap: 'CAP-0027',
+      cap: f27.cap,
+      ledger: f27.ledger,
+      href: explorerTx(f27),
       ledgerTitle: 'Ledger',
       indexerTitle: 'Indexer',
-      ledger: [
-        ['destination', 'M…AAAAAAAAAH7777'],
-        ['ed25519', 'GA7Q…K2XM'],
-        ['id', MUXED_ID],
+      ledger_rows: [
+        ['destination', short(exp(f27).destination_muxed)],
+        ['account', short(exp(f27).destination_account)],
+        ['muxed id', exp(f27).muxed_id],
       ],
-      // indexer rows are derived at runtime for this case
-      indexer: null,
-      verdict: 'incorrect',
+      indexer_rows: [
+        ['destination', short(exp(f27).destination_muxed)],
+        ['account', short(String(n27.recipient))],
+        ['muxed id', String(n27.recipient_muxed_id)],
+      ],
+      verdict: verdictOf('CAP-0027'),
     },
     {
       id: 'sac',
       tab: 'SAC trustline',
-      cap: 'CAP-0073',
+      cap: f73.cap,
+      ledger: f73.ledger,
+      href: explorerTx(f73),
       ledgerTitle: 'Ledger',
       indexerTitle: 'Indexer',
-      ledger: [
-        ['op', 'invokeHostFunction'],
-        ['change', 'CREATED trustline'],
-        ['asset', 'USDC:GA5Z…KZVN'],
+      ledger_rows: [
+        ['call', `trust(${short(i73.account)})`],
+        ['change', 'trustline created'],
+        ['asset', `ISTX:${short(i73.asset.split(':')[1])}`],
       ],
-      indexer: [
-        ['op', 'invokeHostFunction'],
+      indexer_rows: [
+        ['call', `trust(${short(i73.account)})`],
         ['change', '—'],
         ['asset', '—'],
       ],
-      verdict: 'dropped',
+      verdict: verdictOf('CAP-0073'),
     },
     {
       id: 'feebump',
       tab: 'Fee-bump',
-      cap: 'CAP-0015',
+      cap: f15.cap,
+      ledger: f15.ledger,
+      href: explorerTx(f15),
       ledgerTitle: 'Ledger',
       indexerTitle: 'Indexer',
-      ledger: [
-        ['fee charged', '200 stroops'],
-        ['fee source', 'GDFE…E7QA'],
-        ['inner source', 'GB3S…RC4M'],
+      ledger_rows: [
+        ['fee charged', grouped(String(r15.fee_charged))],
+        ['paid by', short(x15.fee_source)],
+        ['inner source', short(x15.inner_source)],
       ],
-      indexer: [
-        ['fee charged', '200 stroops'],
-        ['fee source', 'GB3S…RC4M'],
-        ['inner source', 'GB3S…RC4M'],
+      indexer_rows: [
+        ['fee charged', grouped(String(n15.fee_charged))],
+        ['paid by', short(String(n15.fee_paid_by))],
+        ['inner source', short(x15.inner_source)],
       ],
-      verdict: 'incorrect',
+      verdict: verdictOf('CAP-0015'),
     },
   ],
 };
@@ -139,7 +190,7 @@ export const kit = {
 };
 
 export const lintRules = [
-  { id: 'IX001', line: 3, label: 'Trusts a Core pass-through field' },
+  { id: 'IX001', line: 3, label: 'Trusts memo text Core never validated' },
   { id: 'IX002', line: 6, label: 'Recursion with no depth limit' },
   { id: 'IX003', line: 9, label: 'Participants read from the envelope' },
 ] as const;
@@ -147,104 +198,72 @@ export const lintRules = [
 export const lintCode = [
   'func ingest(tx ingest.LedgerTransaction) error {',
   '  env := tx.Envelope',
-  '  fee := tx.Result.FeeCharged',
+  '  memo := env.Memo().MustText()',
   '  ops := env.Operations()',
   '  for _, op := range ops {',
   '    walk(op.Body, 0)',
   '  }',
   '  // who was affected?',
   '  who := env.SourceAccount()',
-  '  return store(fee, who, ops)',
+  '  return store(memo, who, ops)',
   '}',
 ];
 
 export const sdks = ['JavaScript', 'Go', 'Rust'] as const;
 export const checks = ['decode', 're-encode', 'native'] as const;
 
-/** XDR tree for the muxed-payment fixture, rendered in 3D by the anatomy scene. */
+/** XDR tree of the real muxed-payment fixture, rendered in 3D by the anatomy scene. */
 export type XdrNode = {
   id: string;
   label: string;
   type: string;
   path: string;
   parent?: string;
+  value?: string;
   expect?: string;
 };
 
+const av = corpus.anatomy.values;
+const usdc = (stroops: string) => `${(BigInt(stroops) / 10_000_000n).toString()}.${(BigInt(stroops) % 10_000_000n).toString().padStart(7, '0')}`;
+
 export const anatomy = {
   title: ['Anatomy of', 'a fixture.'],
-  fixtureId: 'muxed-payment-recipient-0001',
+  fixtureId: corpus.anatomy.fixture,
+  ledger: corpus.anatomy.ledger,
+  href: explorerTx({ network: 'pubnet', tx_hash: corpus.anatomy.tx_hash }),
   defaultNode: 'id',
   nodes: [
-    { id: 'env', label: 'TransactionEnvelope', type: 'union ENVELOPE_TYPE_TX', path: 'envelope' },
-    { id: 'v1', label: 'v1', type: 'TransactionV1Envelope', path: 'envelope.v1', parent: 'env' },
-    { id: 'tx', label: 'tx', type: 'Transaction', path: 'envelope.v1.tx', parent: 'v1' },
-    { id: 'sigs', label: 'signatures', type: 'DecoratedSignature<20>', path: 'envelope.v1.signatures', parent: 'v1', expect: 'Count and hints re-encode unchanged.' },
-    { id: 'src', label: 'sourceAccount', type: 'MuxedAccount', path: 'envelope.v1.tx.sourceAccount', parent: 'tx' },
-    { id: 'fee', label: 'fee', type: 'uint32', path: 'envelope.v1.tx.fee', parent: 'tx' },
-    { id: 'seq', label: 'seqNum', type: 'int64', path: 'envelope.v1.tx.seqNum', parent: 'tx', expect: 'Stored as a decimal string.' },
-    { id: 'op', label: 'operations[0]', type: 'Operation', path: 'envelope.v1.tx.operations[0]', parent: 'tx' },
-    { id: 'pay', label: 'paymentOp', type: 'PaymentOp', path: 'envelope.v1.tx.operations[0].body.paymentOp', parent: 'op' },
-    { id: 'dest', label: 'destination', type: 'MuxedAccount', path: '….paymentOp.destination', parent: 'pay', expect: 'Arm stays KEY_TYPE_MUXED_ED25519.' },
-    { id: 'amt', label: 'amount', type: 'int64', path: '….paymentOp.amount', parent: 'pay', expect: 'Full precision, no float.' },
-    { id: 'asset', label: 'asset', type: 'Asset', path: '….paymentOp.asset', parent: 'pay' },
-    { id: 'id', label: 'id', type: 'uint64', path: '….destination.med25519.id', parent: 'dest', expect: `Exactly ${MUXED_ID}.` },
-    { id: 'key', label: 'ed25519', type: 'uint256', path: '….destination.med25519.ed25519', parent: 'dest', expect: 'Underlying G-account preserved.' },
+    { id: 'env', label: 'TransactionEnvelope', type: 'ENVELOPE_TYPE_TX_FEE_BUMP', path: 'envelope' },
+    { id: 'fb', label: 'feeBump', type: 'FeeBumpTransactionEnvelope', path: 'feeBump', parent: 'env' },
+    { id: 'fbtx', label: 'tx', type: 'FeeBumpTransaction', path: 'feeBump.tx', parent: 'fb' },
+    { id: 'sigs', label: 'signatures', type: 'DecoratedSignature<20>', path: 'feeBump.signatures', parent: 'fb', value: `${av.signatures} signature` },
+    { id: 'fsrc', label: 'feeSource', type: 'MuxedAccount', path: 'feeBump.tx.feeSource', parent: 'fbtx', value: av.feeSource, expect: 'Pays the fee — not the inner source.' },
+    { id: 'ofee', label: 'fee', type: 'int64', path: 'feeBump.tx.fee', parent: 'fbtx', value: av.outerFee, expect: 'A bid. The charge is in the result.' },
+    { id: 'inner', label: 'innerTx', type: 'TransactionV1Envelope', path: 'feeBump.tx.innerTx.v1', parent: 'fbtx' },
+    { id: 'tx', label: 'tx', type: 'Transaction', path: '….innerTx.v1.tx', parent: 'inner' },
+    { id: 'src', label: 'sourceAccount', type: 'MuxedAccount', path: '….tx.sourceAccount', parent: 'tx', value: av.source },
+    { id: 'fee', label: 'fee', type: 'uint32', path: '….tx.fee', parent: 'tx', value: av.fee },
+    { id: 'seq', label: 'seqNum', type: 'int64', path: '….tx.seqNum', parent: 'tx', value: av.seqNum, expect: 'Above 2^53. Stored as a decimal string.' },
+    { id: 'op', label: 'operations[0]', type: 'Operation', path: '….tx.operations[0]', parent: 'tx' },
+    { id: 'pay', label: 'paymentOp', type: 'PaymentOp', path: '….operations[0].body.paymentOp', parent: 'op' },
+    { id: 'dest', label: 'destination', type: 'MuxedAccount', path: '….paymentOp.destination', parent: 'pay', value: av.destination, expect: 'Arm stays KEY_TYPE_MUXED_ED25519.' },
+    { id: 'id', label: 'id', type: 'uint64', path: '….destination.med25519.id', parent: 'dest', value: av.id, expect: `Number() reads ${String(Number(av.id))}.` },
+    { id: 'key', label: 'ed25519', type: 'uint256', path: '….destination.med25519.ed25519', parent: 'dest', value: av.ed25519 },
+    { id: 'asset', label: 'asset', type: 'Asset', path: '….paymentOp.asset', parent: 'pay', value: av.asset },
+    { id: 'amt', label: 'amount', type: 'int64', path: '….paymentOp.amount', parent: 'pay', value: av.amount, expect: `${usdc(av.amount)} USDC. No floats.` },
   ] satisfies XdrNode[],
 };
 
+const fixtureCopy: Record<string, { name: string; expect: string }> = {
+  'CAP-0027': { name: 'Muxed payment recipient', expect: 'Underlying account and full 64-bit muxed ID survive decode and indexing.' },
+  'CAP-0015': { name: 'Fee-bump fee source', expect: 'Fee is attributed to the fee source, at the amount in the result.' },
+  'CAP-0040': { name: 'Signed-payload signer', expect: 'Signer type, public key and payload bytes survive decoding.' },
+  'CAP-0073': { name: 'SAC trustline', expect: 'A trustline created by trust() is indexed with no changeTrust op.' },
+};
+
 export const fixtures = {
-  title: 'Proposed fixtures',
-  items: [
-    {
-      id: 'signed-payload-signer',
-      cap: 'CAP-0040',
-      name: 'Signed-payload signer',
-      expect: 'Signer type, public key and payload bytes survive decoding.',
-      manifest: {
-        id: 'cap40-signed-payload-signer-0001',
-        cap_ids: ['CAP-0040'],
-        network: 'testnet',
-        xdr_type: 'LedgerEntry',
-        xdr_path: 'account.signers[0].key.ed25519SignedPayload',
-        source: 'stellar-core@pinned recipe',
-        synthetic: false,
-        expected_decoded: { type: 'SIGNER_KEY_TYPE_ED25519_SIGNED_PAYLOAD', payload_len: '32' },
-      },
-    },
-    {
-      id: 'sac-trustline',
-      cap: 'CAP-0073',
-      name: 'SAC trustline',
-      expect: 'Trustline activity in ledger meta is indexed, even with no classic change.',
-      manifest: {
-        id: 'cap73-sac-trustline-0001',
-        cap_ids: ['CAP-0073'],
-        network: 'testnet',
-        xdr_type: 'LedgerCloseMeta',
-        xdr_path: 'v2.txProcessing[0].txApplyProcessing',
-        source: 'captured ledger',
-        synthetic: false,
-        expected_indexed: { trustline: 'created', asset: 'USDC' },
-      },
-    },
-    {
-      id: 'muxed-recipient',
-      cap: 'CAP-0027',
-      name: 'Muxed payment recipient',
-      expect: 'Underlying account and full muxed ID survive decode and indexing.',
-      manifest: {
-        id: 'muxed-payment-recipient-0001',
-        cap_ids: ['CAP-0027'],
-        network: 'testnet',
-        xdr_type: 'TransactionEnvelope',
-        xdr_path: 'v1.tx.operations[0].body.paymentOp.destination',
-        source: 'captured ledger',
-        synthetic: false,
-        expected_decoded: { muxed_id: MUXED_ID },
-      },
-    },
-  ],
+  title: 'Fixtures',
+  items: corpus.fixtures.map((f) => ({ ...f, ...fixtureCopy[f.cap], href: explorerTx(f) })),
 };
 
 export const milestones = {
@@ -288,5 +307,5 @@ export const cta = {
 };
 
 export const footer = {
-  note: 'Proposed for SCF #46. Interface previews are illustrative.',
+  note: 'Fixtures and results are real: captured from Stellar pubnet and testnet, run through the kit.',
 };
