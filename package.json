@@ -8,7 +8,14 @@
     "build": "tsc -p . && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "corpus:capture": "node kit/capture/mainnet.mjs && node kit/capture/testnet.mjs",
+    "corpus:js": "node kit/runners/js/run.mjs",
+    "corpus:go": "cd kit/runners/go && go run . ../../../corpus",
+    "corpus:rust": "cd kit/runners/rust && cargo run --release -q -- ../../../corpus",
+    "corpus:replay": "node kit/replay/replay.mjs",
+    "corpus:data": "node kit/site-data.mjs",
+    "corpus:run": "npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay && npm run corpus:data"
   },
   "dependencies": {
     "@babylonjs/core": "^9.36.0",

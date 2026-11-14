@@ -1,0 +1,552 @@
+{
+  "generated_by": "kit/site-data.mjs",
+  "stats": {
+    "fixtures": 4,
+    "caps": 4,
+    "networks": [
+      "pubnet",
+      "testnet"
+    ],
+    "bytes": 8408,
+    "sdk_checks": 36,
+    "sdk_checks_passed": 36,
+    "naive_faults": 3,
+    "reference_correct": 3,
+    "replay_cases": 3,
+    "max_protocol": 30
+  },
+  "fixtures": [
+    {
+      "id": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "network": "pubnet",
+      "ledger": 65474309,
+      "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+      "protocol_version": 29,
+      "bytes": 4068,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
+          "bytes": 3656
+        },
+        {
+          "name": "result",
+          "xdr_type": "TransactionResult",
+          "sha256": "e5f351e74d8d2a8145bb3633f51fd6e1098ad382e7a0759d1f79847b8c6996cd",
+          "bytes": 112
+        },
+        {
+          "name": "fee_meta",
+          "xdr_type": "LedgerEntryChanges",
+          "sha256": "8e46c61596d206f51f38b2439599558e2aba4c4fdecccdedc32f7097892e0c95",
+          "bytes": 300
+        }
+      ],
+      "manifest": {
+        "id": "cap15-fee-bump-pubnet-0001",
+        "cap_ids": [
+          "CAP-0015"
+        ],
+        "protocol_version": 29,
+        "network": "pubnet",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "feeBump.tx.feeSource",
+        "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
+        "source": {
+          "kind": "captured",
+          "network_endpoint": "https://horizon.stellar.org",
+          "ledger": 65474309,
+          "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+          "closed_at": "2026-11-14T11:59:47Z"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+          "inner_tx_hash": "8365f77d05770513f0af7810349a7a3c11a7c9c36212dad37f2fad794984a37a",
+          "fee_source": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "inner_source": "GDMV47YWTKKLU4J6ZDXVINMHWBBVGAXFMNJ4EHFXH4UUCQJEBORCOOIW",
+          "max_fee": "46341"
+        },
+        "expected_indexed": {
+          "fee_charged": "40354",
+          "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+        }
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAABQAAAAA0mMHF8QGzwsMRBhe9i8PSIqxjNjKyQMyXZODBAdhAUwAAAAAAALUFAAAAAgAAAADZXn8WmpS6cT7I71Q1h7BDUwLlY1PCHLc/KUFBJAuiJwAAtKADrVrpAAJD+QAAAAEAAAAAAAAAAAAAAABq+E1rAAAAAAAAAAEAAAAAAAAAGAAAAAAAAAABTSCrDMO85hjwvdrgxNWgy0HUWrrFuV3N7HUm3QuP7iUAAAAHaGFydmVzdAAAAAACAAAAEgAAAAAAAAAAccrajcU6h1uO25LyHnh07HN4h7ivwhNx3INh9pM9EZkAAAAQAAAAAQAAAA4AAAADAAMPJAAAAAMAAw8lAAAAAwADDyYAAAADAAMPJwAAAAMAAw8oAAAAAwADDykAAAADAAMPKgAAAAMAAw8rAAAAAwADDywAAAADAAMPLQAAAAMAAw8uAAAAAwADDy8AAAADAAMPMAAAAAMAAw8xAAAAAAAAAAEAAAAAAAAAEwAAAAYAAAABTSCrDMO85hjwvdrgxNWgy0HUWrrFuV3N7HUm3QuP7iUAAAAUAAAAAQAAAAYAAAABdbtEcLGk/2Hsxylei463RBndWG7uQEzfUkmRXYkOCHcAAAAUAAAAAQAAAAYAAAAB1/5EvQrxHWArEJHy9KH03yEtRE0DIeoyrbPMHLurCgQAAAAQAAAAAQAAAAIAAAAPAAAABUJsb2NrAAAAAAAAAwADDyQAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAgAAAA8AAAAFQmxvY2sAAAAAAAADAAMPJQAAAAAAAAAGAAAAAdf+RL0K8R1gKxCR8vSh9N8hLURNAyHqMq2zzBy7qwoEAAAAEAAAAAEAAAACAAAADwAAAAVCbG9jawAAAAAAAAMAAw8mAAAAAAAAAAYAAAAB1/5EvQrxHWArEJHy9KH03yEtRE0DIeoyrbPMHLurCgQAAAAQAAAAAQAAAAIAAAAPAAAABUJsb2NrAAAAAAAAAwADDycAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAgAAAA8AAAAFQmxvY2sAAAAAAAADAAMPKAAAAAAAAAAGAAAAAdf+RL0K8R1gKxCR8vSh9N8hLURNAyHqMq2zzBy7qwoEAAAAEAAAAAEAAAACAAAADwAAAAVCbG9jawAAAAAAAAMAAw8pAAAAAAAAAAYAAAAB1/5EvQrxHWArEJHy9KH03yEtRE0DIeoyrbPMHLurCgQAAAAQAAAAAQAAAAIAAAAPAAAABUJsb2NrAAAAAAAAAwADDyoAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAgAAAA8AAAAFQmxvY2sAAAAAAAADAAMPKwAAAAAAAAAGAAAAAdf+RL0K8R1gKxCR8vSh9N8hLURNAyHqMq2zzBy7qwoEAAAAEAAAAAEAAAACAAAADwAAAAVCbG9jawAAAAAAAAMAAw8sAAAAAAAAAAYAAAAB1/5EvQrxHWArEJHy9KH03yEtRE0DIeoyrbPMHLurCgQAAAAQAAAAAQAAAAIAAAAPAAAABUJsb2NrAAAAAAAAAwADDy0AAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAgAAAA8AAAAFQmxvY2sAAAAAAAADAAMPLgAAAAAAAAAGAAAAAdf+RL0K8R1gKxCR8vSh9N8hLURNAyHqMq2zzBy7qwoEAAAAEAAAAAEAAAACAAAADwAAAAVCbG9jawAAAAAAAAMAAw8vAAAAAAAAAAYAAAAB1/5EvQrxHWArEJHy9KH03yEtRE0DIeoyrbPMHLurCgQAAAAQAAAAAQAAAAIAAAAPAAAABUJsb2NrAAAAAAAAAwADDzAAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAgAAAA8AAAAFQmxvY2sAAAAAAAADAAMPMQAAAAAAAAAGAAAAAdf+RL0K8R1gKxCR8vSh9N8hLURNAyHqMq2zzBy7qwoEAAAAFAAAAAEAAAAHcP5EaUyf5rCrxpptpIWPwqq6BPoQSSpGah1CbQTKhWAAAAAH2ywUKQ1JZOOAXyUn3RMpObpfs/zKxWswv6uP0JEBFicAAAAPAAAAAQAAAABxytqNxTqHW47bkvIeeHTsc3iHuK/CE3Hcg2H2kz0RmQAAAAFLQUxFAAAAAEdb8qRYhyh3ioJxNp7gOVYRA//ONUlALOCkec6/Gwn1AAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDyQAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDyUAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDyYAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDycAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDygAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDykAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDyoAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDysAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDywAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDy0AAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDy4AAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDy8AAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDzAAAAAAAAAABgAAAAHX/kS9CvEdYCsQkfL0ofTfIS1ETQMh6jKts8wcu6sKBAAAABAAAAABAAAAAwAAAA8AAAAEUGFpbAAAABIAAAAAAAAAAHHK2o3FOodbjtuS8h54dOxzeIe4r8ITcdyDYfaTPRGZAAAAAwADDzEAAAAAAO+tBQAAAHQAAAB0AAAAAAAAtDwAAAABJAuiJwAAAECuXWoHLfqt1pJYvJzpEDyZ4+8b+zKufcGlSQ2/nc1txM36jVbGTeDAwou9xHjYv01i7c31Vh/BM6DqQVHKkB8EAAAAAAAAAAEB2EBTAAAAQAmjUAFa37y6R4cArbi9N/uMXkGgT3wkqqrSLQFuYnD5UYbfW/0cVLNvyAO3yF10lO/A2OxpeVe1Z0yw5ngz1Qk="
+      }
+    },
+    {
+      "id": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "network": "pubnet",
+      "ledger": 65474279,
+      "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+      "protocol_version": 29,
+      "bytes": 472,
+      "files": [
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+          "bytes": 392
+        },
+        {
+          "name": "result",
+          "xdr_type": "TransactionResult",
+          "sha256": "aa929c476658f91e8a6006b6e0a55e84c0d20253cee67a4681f60ae6b73557d6",
+          "bytes": 80
+        }
+      ],
+      "manifest": {
+        "id": "cap27-muxed-payment-pubnet-0001",
+        "cap_ids": [
+          "CAP-0027"
+        ],
+        "protocol_version": 29,
+        "network": "pubnet",
+        "xdr_type": "TransactionEnvelope",
+        "xdr_path": "feeBump.tx.innerTx.v1.tx.operations[0].body.paymentOp.destination",
+        "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+        "source": {
+          "kind": "captured",
+          "network_endpoint": "https://horizon.stellar.org",
+          "ledger": 65474279,
+          "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+          "closed_at": "2026-11-14T11:57:17Z"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+          "fee_bumped": true,
+          "op_index": 0,
+          "destination_muxed": "MA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGGD6P5IQ4SQQD6IPC",
+          "destination_account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "muxed_id": "1764988090084626463",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "amount": "59.5110803"
+        },
+        "expected_indexed": {
+          "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "recipient_muxed_id": "1764988090084626463"
+        }
+      },
+      "primary": {
+        "name": "envelope",
+        "xdr_type": "TransactionEnvelope",
+        "b64": "AAAABQAAAABIs5aGToOgIJMwNgpdL1/fismZD3ICZpBg3SZ/X37iAgAAAAAAAYagAAAAAgAAAACRlo2Vdr+l+xGAWXd2v6LymIX4vUWdwq/QNNMRb+iLoQAAAG4D5w3KAAAAAQAAAAEAAAAAAAAAAAAAAABq+FAcAAAAAAAAAAEAAAAAAAAAAQAAAQAYfn9RDkoQHzt0GB0X4TfO14Hx5gkxZOORukePiFQFo4TFA5te03hjAAAAAVVTREMAAAAAO5kROA7+mIugqJAOsc/kTzZvfb6Ua+0HckD39iTfFcUAAAAAI3irkwAAAAAAAAABb+iLoQAAAEDig9oFG5Qz22A60BkJjuyuN5q3Nq/ky1czBcL77mRyEU3K/9pAP6uFr27/MnAeh5niCW0QfhnHxd878P1kVbAEAAAAAAAAAAFffuICAAAAQIeORJS1Uca0+xKNHrsysGeDSnIMf7/zx4JvcUkGK1xLxDhdMY0XWbswBNpNfgUGLBNqKL6VcNq6u8isfkujIAU="
+      }
+    },
+    {
+      "id": "cap40-signed-payload-signer-testnet-0001",
+      "cap": "CAP-0040",
+      "network": "testnet",
+      "ledger": 5727196,
+      "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+      "protocol_version": 30,
+      "bytes": 496,
+      "files": [
+        {
+          "name": "ledger_entry",
+          "xdr_type": "LedgerEntryData",
+          "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
+          "bytes": 216
+        },
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "48eec5fc26eb4de5daa6c71a8fdb813be9e5476c9c2bf5058fab983d0ae8bdb7",
+          "bytes": 280
+        }
+      ],
+      "manifest": {
+        "id": "cap40-signed-payload-signer-testnet-0001",
+        "cap_ids": [
+          "CAP-0040"
+        ],
+        "protocol_version": 30,
+        "network": "testnet",
+        "xdr_type": "LedgerEntryData",
+        "xdr_path": "account.signers[0].key.ed25519SignedPayload",
+        "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
+        "source": {
+          "kind": "captured",
+          "network_endpoint": "https://soroban-testnet.stellar.org",
+          "ledger": 5727196,
+          "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+          "closed_at": "2026-11-14T12:33:44.000Z",
+          "ledger_entry_at": 5727196
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+          "signer_strkey": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+          "signer_ed25519": "GDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQLEOP",
+          "payload_hex": "349a1726c6c6f14d4e991463bd1cc9257d08150692a62a559b4136f518d35e4a",
+          "weight": 1
+        }
+      },
+      "primary": {
+        "name": "ledger_entry",
+        "xdr_type": "LedgerEntryData",
+        "b64": "AAAAAAAAAADnukFQH24x7HHfbwhTPMx75j1LWKhj/ZkcCxmDVjvmXAAAABdIduecAFdj2wAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAD40tw9YVCq5Ts4FNx7x76eBsbbLTb465h6pbuW1wnpQUAAAAgNJoXJsbG8U1OmRRjvRzJJX0IFQaSpipVm0E29RjTXkoAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAMAAAAAAFdj3AAAAABq+FUo"
+      }
+    },
+    {
+      "id": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "network": "testnet",
+      "ledger": 5727199,
+      "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+      "protocol_version": 30,
+      "bytes": 3372,
+      "files": [
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+          "bytes": 2748
+        },
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "efec80ad37db5c58db9b7ce078b878fbd80476d7b125b6253e247e11b9a986e3",
+          "bytes": 624
+        }
+      ],
+      "manifest": {
+        "id": "cap73-sac-trust-testnet-0001",
+        "cap_ids": [
+          "CAP-0073"
+        ],
+        "protocol_version": 30,
+        "network": "testnet",
+        "xdr_type": "TransactionMeta",
+        "xdr_path": "operations[0].changes[*].created.data.trustLine",
+        "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+        "source": {
+          "kind": "captured",
+          "network_endpoint": "https://soroban-testnet.stellar.org",
+          "ledger": 5727199,
+          "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+          "closed_at": "2026-11-14T12:33:59.000Z",
+          "sac_contract": "CAOGE33V2LEBFMHOYAXDPBIDKTGATIAJNF6FIP27TY37U7Q2CYSKLVSI"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+          "function": "trust",
+          "contract": "CAOGE33V2LEBFMHOYAXDPBIDKTGATIAJNF6FIP27TY37U7Q2CYSKLVSI"
+        },
+        "expected_indexed": {
+          "trustline_created": true,
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+          "limit": "9223372036854775807",
+          "classic_change_trust_ops": 0
+        }
+      },
+      "primary": {
+        "name": "meta",
+        "xdr_type": "TransactionMeta",
+        "b64": "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"
+      }
+    }
+  ],
+  "sdks": [
+    {
+      "sdk": "javascript",
+      "package": "@stellar/stellar-sdk",
+      "version": "17.4.0",
+      "runtime": "node 24.10.0",
+      "probes": [
+        {
+          "input": "1764988090084626463",
+          "number": "1764988090084626400",
+          "exact": false
+        },
+        {
+          "input": "9223372036854775807",
+          "number": "9223372036854776000",
+          "exact": false
+        }
+      ],
+      "results": [
+        {
+          "fixture": "cap15-fee-bump-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap27-muxed-payment-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap40-signed-payload-signer-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap73-sac-trust-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        }
+      ]
+    },
+    {
+      "package": "github.com/stellar/go-stellar-sdk",
+      "runtime": "go1.26.2",
+      "sdk": "go",
+      "version": "0.9.0",
+      "results": [
+        {
+          "fixture": "cap15-fee-bump-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap27-muxed-payment-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap40-signed-payload-signer-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap73-sac-trust-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        }
+      ]
+    },
+    {
+      "package": "stellar-xdr",
+      "runtime": "rustc 1.94.1 (e408947bf 2026-03-25)",
+      "sdk": "rust",
+      "version": "30.0.0",
+      "results": [
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "fixture": "cap15-fee-bump-pubnet-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "fixture": "cap27-muxed-payment-pubnet-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "fixture": "cap40-signed-payload-signer-testnet-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "fixture": "cap73-sac-trust-testnet-0001"
+        }
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "input": "1764988090084626463",
+      "number": "1764988090084626400",
+      "exact": false
+    },
+    {
+      "input": "9223372036854775807",
+      "number": "9223372036854776000",
+      "exact": false
+    }
+  ],
+  "replay": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "ledger": 65474309,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+      },
+      "observed": {
+        "fee_charged": "46341",
+        "fee_paid_by": "GDMV47YWTKKLU4J6ZDXVINMHWBBVGAXFMNJ4EHFXH4UUCQJEBORCOOIW"
+      },
+      "diffs": [
+        "fee_charged",
+        "fee_paid_by"
+      ]
+    },
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "ledger": 65474309,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+      },
+      "observed": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+        "feeMetaDebit": "46340"
+      },
+      "diffs": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "ledger": 65474279,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "observed": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626400"
+      },
+      "diffs": [
+        "recipient_muxed_id"
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "ledger": 65474279,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "observed": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "ledger": 5727199,
+      "network": "testnet",
+      "indexer": "naive",
+      "verdict": "dropped",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": null,
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "ledger": 5727199,
+      "network": "testnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "diffs": []
+    }
+  ],
+  "anatomy": {
+    "fixture": "cap27-muxed-payment-pubnet-0001",
+    "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+    "ledger": 65474279,
+    "values": {
+      "feeSource": "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
+      "outerFee": "100000",
+      "source": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
+      "fee": "110",
+      "seqNum": "281208662968500225",
+      "destination": "MA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGGD6P5IQ4SQQD6IPC",
+      "id": "1764988090084626463",
+      "ed25519": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+      "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+      "amount": "595110803",
+      "signatures": "1"
+    }
+  }
+}
