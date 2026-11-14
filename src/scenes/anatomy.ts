@@ -22,6 +22,7 @@ import type { Mesh } from '@babylonjs/core/Meshes/mesh';
 import '@babylonjs/core/Culling/ray';
 import type { XdrNode } from '../content';
 import type { SceneContext, SceneHandle } from './types';
+import { preferWebGPU } from '../lib/gpu';
 
 export interface AnatomyOptions {
   nodes: XdrNode[];
@@ -52,7 +53,7 @@ export async function createAnatomyScene(
   let backend: SceneHandle['backend'] = 'webgl2';
   const engineOpts = { antialias: true, adaptToDeviceRatio: true, doNotHandleTouchAction: true };
 
-  if (await WebGPUEngine.IsSupportedAsync) {
+  if (await preferWebGPU()) {
     try {
       const gpu = new WebGPUEngine(canvas, engineOpts);
       await gpu.initAsync();

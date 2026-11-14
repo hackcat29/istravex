@@ -7,6 +7,7 @@
 import tgpu from 'typegpu';
 import * as d from 'typegpu/data';
 import type { SceneContext, SceneHandle } from './types';
+import { preferWebGPU } from '../lib/gpu';
 
 const CELL = 14; // css px per cell
 
@@ -34,7 +35,7 @@ export async function createByteField({ canvas, reducedMotion }: SceneContext): 
     host.removeEventListener('pointerleave', onLeave);
   };
 
-  const gpu = navigator.gpu ? await createGpu().catch(() => null) : null;
+  const gpu = (await preferWebGPU()) ? await createGpu().catch(() => null) : null;
   const impl = gpu ?? createCanvas2d();
 
   function size() {

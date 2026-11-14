@@ -47,6 +47,21 @@ test('scenes fall back when WebGPU is unavailable', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('software WebGPU adapters fall back to WebGL2 / Canvas 2D', async ({ page }) => {
+  // Simulate CI-style SwiftShader: an adapter exists but is a fallback adapter.
+  await page.addInitScript(() => {
+    const gpu = (navigator as Navigator & { gpu?: GPU }).gpu;
+    if (gpu) gpu.requestAdapter = async () => ({ info: { isFallbackAdapter: true } }) as unknown as GPUAdapter;
+  });
+  const errors = collectErrors(page);
+  await page.goto('/');
+  await visitAll(page);
+  await expect(page.locator('#top [data-backend]')).toHaveAttribute('data-backend', 'webgl2', { timeout: 20_000 });
+  await expect(page.locator('#anatomy [data-backend]')).toHaveAttribute('data-backend', 'webgl2', { timeout: 20_000 });
+  await expect(page.locator('#cta [data-backend]')).toHaveAttribute('data-backend', 'canvas2d', { timeout: 20_000 });
+  expect(errors).toEqual([]);
+});
+
 test('problem tab shows the real muxed ID and its Number() corruption', async ({ page }) => {
   const id = corpus.anatomy.values.id;
   await page.goto('/#problem');

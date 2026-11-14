@@ -7,6 +7,7 @@ import * as THREE from 'three/webgpu';
 import { color, fract, mix, step, time, uv } from 'three/tsl';
 import type { Verdict } from '../content';
 import type { SceneContext, SceneHandle } from './types';
+import { preferWebGPU } from '../lib/gpu';
 
 const INK = 0x0b0b0c;
 const NEUTRAL = new THREE.Color(0x4f4e4a);
@@ -38,7 +39,7 @@ export async function createHeroScene(
 ): Promise<SceneHandle> {
   let next = Math.floor(Math.random() * verdicts.length);
   const pickVerdict = (): Verdict => verdicts[next++ % verdicts.length];
-  const renderer = new THREE.WebGPURenderer({ canvas, antialias: true, alpha: true });
+  const renderer = new THREE.WebGPURenderer({ canvas, antialias: true, alpha: true, forceWebGL: !(await preferWebGPU()) });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(INK, 0);
   await renderer.init();
