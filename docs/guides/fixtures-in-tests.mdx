@@ -1,0 +1,86 @@
+---
+title: Use a fixture as a test case
+description: Pick the fixture that matches the code you're writing, load it in a test, and assert against values that came from the ledger.
+---
+
+You don't need to adopt the whole kit to get value from the corpus. If you're writing a payment-history view, a fee display, a signer list or a balance tracker, there's probably a fixture holding exactly the transaction that breaks naive implementations of that feature. This guide shows you how to find it and use it as an ordinary unit test.
+
+## Pick a fixture
+
+| If your code… | Use | What it holds | The trap |
+|---|---|---|---|
+| Shows who received a payment | `cap27-muxed-payment-pubnet-0001` | A fee-bumped USDC payment to a muxed (`M…`) address | The muxed ID is 19 digits. Through a float it rounds, and the payment is attributed to the wrong sub-account. |
+| Shows what a transaction cost, or who paid | `cap15-fee-bump-pubnet-0001` | A fee-bump on mainnet, with its result and fee metadata | The envelope says `max_fee` 46,341; the ledger charged 40,354, to the fee-bump payer rather than the inner source. |
+| Lists an account's signers | `cap40-signed-payload-signer-*` | An account with a signed-payload (`P…`) signer | The signer carries a payload. Code that expects ed25519 keys only drops it or truncates it. |
+| Tracks trustlines or balances | `cap73-sac-trust-*` | A trustline created by a Stellar Asset Contract `trust()` call | There's no `changeTrust` operation. The trustline only appears in metadata. |
+
+Each fixture's manifest has two sets of answers. `expected_decoded` is what correct *parsing* yields; `expected_indexed` is what a correct *indexer* stores. The values come from Horizon, the ledger, or the transaction as it was built, never from the SDK you're testing.
+
+Browse every fixture, with its files and expectations, on the [fixtures page](/corpus/fixtures) or at [`/v1/fixtures`](/api-reference/endpoint/list-fixtures).
+
+## Load it
+
+Fetch the manifest and the files you need. In tests, verify the hash too. It costs one line and guarantees you're asserting against the exact bytes the manifest describes.
+
+```js
+const API = 'https://api.istravex.com/v1';
+
+/** Fetch one fixture file as raw bytes and prove it is the file the manifest describes. */
+async function fixtureBytes(id, name) {
+  const manifest = await (await fetch(`${API}/fixtures/${id}`)).json();
+  const entry = manifest.files.find((f) => f.name === name);
+  const res = await fetch(`${API}/fixtures/${id}/files/${name}?encoding=binary`);
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+  if (hex !== entry.sha256 || hex !== res.headers.get('x-content-sha256')) {
+    throw new Error(`${id}/${name}: sha256 mismatch`);
+  }
+  return bytes;
+}
+```
+
+This works unchanged in Node 18+, Deno, Bun and the browser. The API allows every origin.
+
+If your tests can't reach the network, copy the fixture directory into your repository instead. Each file is base64 with a trailing newline, so `trim()` before decoding. The [SDK guide](/guides/sdk-conformance#get-the-corpus) shows a pinned sparse checkout.
+
+## Assert on what your code produces
+
+The point is to test *your* function, not the SDK. Run the fixture through the code path your users hit, then compare with the manifest. Here's the shape of it for a payment-history row, with `toPaymentRow` standing in for your own code:
+
+```js payment-row.test.mjs
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { toPaymentRow } from '../src/history.js'; // your code
+
+const API = 'https://api.istravex.com/v1';
+const id = 'cap27-muxed-payment-pubnet-0001';
+
+test('payment to a muxed account keeps the full sub-account ID', async () => {
+  const manifest = await (await fetch(`${API}/fixtures/${id}`)).json();
+  const envelope = (await (await fetch(`${API}/fixtures/${id}/files/envelope`)).text()).trim();
+
+  const row = toPaymentRow(envelope);
+
+  assert.equal(row.to, manifest.expected_indexed.recipient);
+  assert.equal(String(row.toMuxedId), manifest.expected_indexed.recipient_muxed_id);
+  assert.equal(row.amount, manifest.expected_decoded.amount);
+});
+```
+
+Two habits make these tests trustworthy:
+
+- **Compare as strings.** Every 64-bit value in a manifest is a JSON string. If your code produces a `bigint` or a `uint64`, stringify it before comparing. If it produces a `number`, the test should fail, and it will.
+- **Pin the fixture id, not "the first fixture".** Ids are stable forever. A test that reads `fixtures[0]` changes meaning when the corpus grows.
+
+## Need the whole ledger?
+
+Some code works on ledgers, not transactions: a custom ingestion loop, a meta parser, a replay tool. Every fixture's canonical ledger is available as a zstd-compressed `LedgerCloseMetaBatch`, the format Galexie and the data lake use:
+
+```bash
+curl https://api.istravex.com/v1/ledgers     # which ledgers exist, with sha256 and sizes
+curl -o 65474279.xdr.zst https://api.istravex.com/v1/ledgers/pubnet/65474279
+zstd -d 65474279.xdr.zst                     # raw XDR LedgerCloseMetaBatch
+```
+
+Or, if your code already talks to Stellar RPC, speak `getLedgers` to [the mock RPC](/tools/mock-rpc) and get each `LedgerCloseMeta` as base64, exactly as Stellar RPC returns it.

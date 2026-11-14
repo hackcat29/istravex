@@ -1,0 +1,196 @@
+---
+title: Add Istravex to your indexer's CI
+description: Two jobs that catch ingestion bugs before they reach your database. A linter on every PR, and a replay test that scores what your indexer stores.
+---
+
+If you run an indexer, wallet backend or anything else that turns ledgers into rows, this guide adds two checks to your pipeline:
+
+| Job | What it catches | Cost |
+|---|---|---|
+| **Lint** | Code patterns that have caused real ingestion bugs: unvalidated memo text, unbounded recursion over XDR, fees read from the envelope | Seconds. Go only. |
+| **Replay** | What your indexer actually *stores* for each fixture, compared field by field with what the ledger supports | One ingestion run over a handful of ledgers |
+
+They're independent. Start with whichever fits. Lint is a five-line change; replay takes an afternoon the first time, then catches the bugs lint can't see.
+
+## Lint
+
+<Tabs>
+  <Tab title="Reusable workflow">
+    The least setup. It installs Go from your `go.mod`, runs the linter, and annotates findings inline on the PR.
+
+    ```yaml .github/workflows/istravex.yml
+    name: Istravex
+    on: [pull_request]
+    jobs:
+      lint:
+        uses: hackcat29/istravex/.github/workflows/lint-indexer.yml@v1
+        with:
+          packages: ./...            # optional
+          # working-directory: indexer   if go.mod isn't at the root
+    ```
+  </Tab>
+  <Tab title="Composite action">
+    For when you want it as a step inside an existing job. It also exposes the number of findings as an output.
+
+    ```yaml
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hackcat29/istravex/actions/lint@v1
+        id: ixlint
+        with:
+          packages: ./internal/ingest/...
+          version: v1.0.0           # pin the analyzers; default is v1.0.0
+      - run: echo "istravex-lint found ${{ steps.ixlint.outputs.findings }} issue(s)"
+        if: always()
+    ```
+  </Tab>
+  <Tab title="Plain go run">
+    No GitHub Actions dependency. Works in any CI.
+
+    ```bash
+    go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@v1.0.0 ./...
+    ```
+  </Tab>
+</Tabs>
+
+The job fails on any unsuppressed finding. Before you turn it on, run it once locally and go through what it reports. The rules are tuned to stay quiet on correct code (one finding across all of wallet-backend), but when one fires on code you've reviewed and know is fine, suppress it *with a reason*:
+
+```go
+//ixlint:ignore IX001 memo is hashed, never stored or displayed
+text := memo.MustText()
+```
+
+Each rule's page ([IX001](/tools/lint/ix001), [IX002](/tools/lint/ix002), [IX003](/tools/lint/ix003)) explains what it looks for and what the fix usually is.
+
+## Replay
+
+The linter reads code. Replay checks behavior: feed your indexer the corpus's real ledgers, then ask it what it stored.
+
+### 1. Point your indexer at the mock RPC
+
+The mock RPC serves the corpus's canonical ledgers through the same `getLedgers` interface as Stellar RPC, so your indexer runs unmodified. Only the URL and passphrase change:
+
+| Fixtures | RPC URL | Network passphrase |
+|---|---|---|
+| Mainnet (CAP-0015, CAP-0027) | `https://rpc.istravex.com/pubnet` | `Public Global Stellar Network ; September 2015` |
+| Testnet (CAP-0040, CAP-0073) | `https://rpc.istravex.com/testnet` | `Test SDF Network ; September 2015` |
+| Generated (CAP-0040, CAP-0073) | `https://rpc.istravex.com/local` | `Standalone Network ; February 2017` |
+
+Most indexers are configured for one network at a time. Start with `pubnet`, which covers the two patterns with the most real-world bugs (fee-bumps and muxed accounts), and add the others as separate runs.
+
+<Note>
+Only the fixture ledgers exist, so the range is sparse: mainnet has ledger 65,474,279 and 65,474,309 and nothing in between. If your ingestion insists on contiguous ledgers, request each fixture's ledger on its own (`startLedger` = the fixture's ledger, `limit` = 1). That's exactly what the wallet-backend pilot does. See [the ledger range is sparse](/tools/mock-rpc#the-ledger-range-is-sparse).
+</Note>
+
+The ledger numbers come from the fixture list:
+
+```bash
+curl -s 'https://api.istravex.com/v1/fixtures?network=pubnet' | jq -r '.fixtures[] | "\(.ledger) \(.tx_hash) \(.id)"'
+```
+
+### 2. Write down what you stored
+
+After ingestion, look up each fixture's transaction in your store and write what you find to `observed.json`, using the same keys as the fixture's `expected_indexed`:
+
+```json observed.json
+{
+  "cap15-fee-bump-pubnet-0001": {
+    "fee_charged": "40354",
+    "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+  },
+  "cap27-muxed-payment-pubnet-0001": {
+    "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+    "recipient_muxed_id": "1764988090084626463"
+  }
+}
+```
+
+Use `null`, or leave the key out, when your indexer stored nothing for a fixture. This is the only part that's specific to your codebase, usually a short query or a call into your repository layer. For a complete real example, see the [wallet-backend adapter](https://github.com/hackcat29/istravex/blob/main/kit/pilot/wallet-backend/adapter.go): it runs wallet-backend's own `ProcessLedger` against the mock RPC and prints what it produced.
+
+<Tip>
+Write 64-bit values as strings if you can. The scorer below compares numbers by their exact source text, so `1764988090084626463` written as a bare number still scores correctly. But if your adapter is in JavaScript and the value passed through `Number` on the way out, the damage is already done. That's the bug this fixture exists to catch.
+</Tip>
+
+### 3. Score it
+
+Save this next to your adapter. It fetches each fixture's expectations, compares field by field, prints a verdict per fixture and exits non-zero unless every one is correct.
+
+```js istravex-score.mjs
+// node istravex-score.mjs observed.json [network]
+import { readFileSync } from 'node:fs';
+
+const API = 'https://api.istravex.com/v1';
+const [file, network] = process.argv.slice(2);
+
+// Keep every number's source text, so a 64-bit value is compared exactly as
+// your indexer wrote it, never after JSON.parse has rounded it.
+const observed = JSON.parse(readFileSync(file, 'utf8'), (_k, v, ctx) => (typeof v === 'number' ? ctx.source : v));
+
+const query = network ? `?network=${network}` : '';
+const { fixtures } = await (await fetch(`${API}/fixtures${query}`)).json();
+
+let failures = 0;
+for (const { id } of fixtures) {
+  const { expected_indexed: expected } = await (await fetch(`${API}/fixtures/${id}`)).json();
+  if (!expected) continue;
+  const got = observed[id];
+  const diffs = got
+    ? Object.entries(expected).filter(([k, v]) => String(got[k]) !== String(v)).map(([k, v]) => `${k}: want ${v}, got ${got[k]}`)
+    : [];
+  const verdict = !got ? 'dropped' : diffs.length ? 'incorrect' : 'correct';
+  if (verdict !== 'correct') failures++;
+  console.log(`${verdict.padEnd(9)} ${id}${diffs.map((d) => `\n          ${d}`).join('')}`);
+}
+process.exit(failures ? 1 : 0);
+```
+
+It needs Node 22 or later (for the `source` argument to the `JSON.parse` reviver). A failing run looks like this:
+
+```text
+correct   cap15-fee-bump-pubnet-0001
+incorrect cap27-muxed-payment-pubnet-0001
+          recipient_muxed_id: want 1764988090084626463, got 1764988090084626400
+```
+
+The verdicts mean the same as everywhere else in Istravex: **correct**, **incorrect** (stored, but a field differs) and **dropped** (the ledger supports a record you didn't store).
+
+### 4. Wire it into CI
+
+```yaml .github/workflows/istravex.yml
+name: Istravex
+on: [pull_request]
+jobs:
+  lint:
+    uses: hackcat29/istravex/.github/workflows/lint-indexer.yml@v1
+
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with: { go-version-file: go.mod }
+      - uses: actions/setup-node@v7
+        with: { node-version: 24 }
+      - name: Ingest the corpus and record what was stored
+        env:
+          RPC_URL: https://rpc.istravex.com/pubnet
+          NETWORK_PASSPHRASE: Public Global Stellar Network ; September 2015
+        run: go run ./cmd/istravex-adapter > observed.json   # your adapter from step 2
+      - name: Score
+        run: node istravex-score.mjs observed.json pubnet
+```
+
+The hosted RPC allows 300 requests a minute, which is plenty for a CI run over a handful of ledgers. If you'd rather have no network dependency at all, run the mock RPC inside the job: clone Istravex at a tag, run `npm ci`, and start `npm run rpc -- --network pubnet --port 8000` in the background, then point `RPC_URL` at `http://localhost:8000`.
+
+## When replay fails
+
+Every fixture maps to a rule in the [hardening guide](/guide/overview) that explains the mechanism and the fix:
+
+| Fixture | Usual cause | Rule |
+|---|---|---|
+| `cap15-fee-bump-*` | Fee read from the envelope's `max_fee`, or charged to the inner source instead of the fee-bump payer | [Fees](/guide/fees), [Effects from metadata](/guide/effects-from-meta) |
+| `cap27-muxed-payment-*` | Muxed ID through a float, or the muxed address stored instead of the base account | [Muxed accounts](/guide/muxed-accounts), [Wide integers](/guide/wide-integers) |
+| `cap40-signed-payload-signer-*` | Signer key not handled, or truncated to its account part | [Signed-payload signers](/guide/signed-payload-signers) |
+| `cap73-sac-trust-*` | Trustlines only recorded from `changeTrust` operations | [SAC trustlines](/guide/sac-trustlines) |
+
+If you believe the fixture is wrong rather than your indexer, [open an issue](https://github.com/hackcat29/istravex/issues). Expectations come from independent sources, but that doesn't make them infallible.

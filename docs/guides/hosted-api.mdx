@@ -1,0 +1,99 @@
+---
+title: Build on the hosted API
+description: What api.istravex.com and rpc.istravex.com are good for, how to use them politely, and when to run your own.
+---
+
+`api.istravex.com` serves the whole corpus: every fixture, every XDR file, every canonical ledger, and the latest results from the SDK runners, replay and pilots. `rpc.istravex.com` serves the same ledgers through Stellar RPC's `getLedgers`. Both are free, need no key, and allow every origin.
+
+This page is about using them well. For every endpoint and field, see the [API reference](/api-reference/introduction).
+
+## Pick the right source
+
+The same data is available three ways. They suit different jobs:
+
+| You want to… | Use | Why |
+|---|---|---|
+| Explore, prototype, or build a page that shows the corpus | **Hosted API** | Nothing to install, always current, callable from a browser. |
+| Run a test on every PR | **A pinned copy** ([how](/guides/sdk-conformance#get-the-corpus)) | Your tests change only when you bump the tag, and there's no network to flake. |
+| Run a nightly job that should notice new fixtures | **Hosted API** | New fixtures start testing you the day they're published. |
+| Replay at volume, or work offline | **[Self-host](/operations/self-hosting)** | One container, no rate limits. |
+
+## A five-minute tour
+
+```bash
+curl https://api.istravex.com/v1/stats                          # the headline numbers
+curl 'https://api.istravex.com/v1/fixtures?cap=CAP-0040'         # filter by CAP or network
+curl https://api.istravex.com/v1/fixtures/cap15-fee-bump-pubnet-0001
+curl https://api.istravex.com/v1/fixtures/cap15-fee-bump-pubnet-0001/files/envelope
+curl https://api.istravex.com/v1/results                        # javascript, go, rust, replay, pilot-wallet-backend…
+curl https://api.istravex.com/v1/coverage                       # which XDR-changing CAPs have fixtures
+```
+
+And the mock RPC, which takes the same JSON-RPC requests as Stellar RPC:
+
+```bash
+curl -X POST https://rpc.istravex.com/pubnet -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"getLedgers","params":{"startLedger":65474279,"pagination":{"limit":1}}}'
+```
+
+## Verify what you download
+
+Every fixture file response carries `X-Content-SHA256`, the sha256 of the decoded XDR, which is also in the manifest. If you're going to assert against the bytes, check them first:
+
+```js
+const res = await fetch('https://api.istravex.com/v1/fixtures/cap27-muxed-payment-pubnet-0001/files/envelope?encoding=binary');
+const bytes = new Uint8Array(await res.arrayBuffer());
+const hex = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+  .map((b) => b.toString(16).padStart(2, '0')).join('');
+if (hex !== res.headers.get('x-content-sha256')) throw new Error('corrupted download');
+```
+
+Without `?encoding=binary` you get base64, byte-identical to the file in the repository.
+
+## Be a good neighbor
+
+The limits are generous for normal use: **1,200 requests a minute** on `/v1/*` and **300 a minute** on the RPC, per client. Two habits keep you well inside them.
+
+**Send `If-None-Match`.** The corpus only changes on deploy, so most repeat requests can be answered with an empty `304`:
+
+```js
+let etag, cached;
+async function fixtures() {
+  const res = await fetch('https://api.istravex.com/v1/fixtures', etag ? { headers: { 'if-none-match': etag } } : {});
+  if (res.status === 304) return cached;
+  etag = res.headers.get('etag');
+  return (cached = await res.json());
+}
+```
+
+Browsers do this for you automatically. Responses also carry `Cache-Control`, so a CDN or HTTP cache in front of your app will hold them too.
+
+**Honor `429`.** If you do hit the limit, the response says when to come back:
+
+```js
+async function getJSON(url, tries = 3) {
+  const res = await fetch(url);
+  if (res.status === 429 && tries > 1) {
+    await new Promise((r) => setTimeout(r, Number(res.headers.get('retry-after') ?? 5) * 1000));
+    return getJSON(url, tries - 1);
+  }
+  if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
+  return res.json();
+}
+```
+
+## Show the numbers somewhere
+
+`/v1/stats` and `/v1/results/*` are stable JSON, so they're easy to surface in a README, a dashboard or a release checklist. A [shields.io](https://shields.io) dynamic badge needs no code at all:
+
+```markdown
+![Istravex fixtures](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.istravex.com%2Fv1%2Fstats&query=%24.fixtures&label=istravex%20fixtures)
+```
+
+Point `query` at any field in [`/v1/stats`](/api-reference/endpoint/stats), for example `$.sdk_checks.passed` or `$.wallet_backend_pilot.correct`.
+
+## What the hosted service is not
+
+- **Not a Stellar RPC.** The mock RPC serves only the corpus's fixture ledgers (`getHealth`, `getNetwork`, `getLatestLedger`, `getLedgers`). Don't point production at it.
+- **Not an SLA.** It's run by the project, on one server. For anything that must not go down, [run your own copy](/operations/self-hosting). It's one container, and the corpus is baked into the image.
+- **Not a place for your data.** It's read-only: no accounts, no writes, no telemetry. The only thing kept is the server's standard access log.

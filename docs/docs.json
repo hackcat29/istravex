@@ -42,7 +42,7 @@
     ]
   },
   "search": {
-    "prompt": "Search fixtures, rules, the API\u2026"
+    "prompt": "Search fixtures, rules, the API…"
   },
   "api": {
     "openapi": "api-reference/openapi.json",
@@ -69,6 +69,15 @@
               "index",
               "quickstart",
               "concepts"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/sdk-conformance",
+              "guides/indexer-ci",
+              "guides/fixtures-in-tests",
+              "guides/hosted-api"
             ]
           },
           {

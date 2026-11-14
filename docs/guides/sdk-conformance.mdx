@@ -1,0 +1,311 @@
+---
+title: Test your SDK's XDR handling
+description: Run every fixture through your decoder, prove it re-encodes byte-for-byte, and check the values where SDKs actually go wrong.
+---
+
+This guide is for anyone who maintains code that turns Stellar XDR into objects: an SDK, a language binding, or an in-house decoder sitting under an indexer or wallet. By the end you'll have a test that runs on every commit and fails the moment your decoder drifts from what the network actually produced.
+
+It checks three things, in order of how much they'll save you:
+
+1. **It decodes.** Every fixture is real network data, including shapes that synthetic tests rarely build: fee-bumps wrapping muxed destinations, signed-payload signers, Soroban metadata.
+2. **It re-encodes byte-for-byte.** Decode, encode, compare. If the bytes differ, your SDK will compute the wrong transaction hash and sign something different from what it showed the user.
+3. **The values are right.** A decoder can round-trip perfectly and still hand your users a corrupted muxed ID. These checks compare what your SDK exposes against values taken from an independent source.
+
+## Get the corpus
+
+You have two options, and for CI you want the first.
+
+<Tabs>
+  <Tab title="Vendor a pinned copy (recommended)">
+    Pin a release so your tests only change when you decide they should. The fixtures are about 100 KB.
+
+    ```bash
+    git clone --depth 1 --branch v1.0.0 --filter=blob:none --sparse \
+      https://github.com/hackcat29/istravex tests/istravex
+    git -C tests/istravex sparse-checkout set corpus/fixtures
+    ```
+
+    Fixtures land in `tests/istravex/corpus/fixtures/<id>/`, each with a `manifest.json` and one `.xdr.b64` file per XDR value. Commit them, add them as a submodule, or fetch them in CI. Whichever you choose, bump the tag deliberately.
+  </Tab>
+  <Tab title="Fetch from the hosted API">
+    No checkout needed. You always get the current corpus, so new fixtures start testing you as soon as they're published. That's great for a nightly job, less great for a PR gate.
+
+    ```bash
+    curl https://api.istravex.com/v1/fixtures
+    curl https://api.istravex.com/v1/fixtures/cap27-muxed-payment-pubnet-0001
+    curl https://api.istravex.com/v1/fixtures/cap27-muxed-payment-pubnet-0001/files/envelope
+    ```
+
+    The examples below use the API because they're self-contained. Swapping in the vendored files is a few lines.
+  </Tab>
+</Tabs>
+
+## The round-trip test
+
+Each manifest lists its files and their XDR types. Decode each one with the matching type, encode it back, and compare it with the original base64.
+
+<CodeGroup>
+```js JavaScript (node --test)
+// conformance.test.mjs
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { xdr } from '@stellar/stellar-sdk';
+
+const API = 'https://api.istravex.com/v1';
+const get = async (path) => {
+  const res = await fetch(API + path);
+  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+  return res;
+};
+
+// LedgerEntryChanges is an XDR typedef with no JS class. OperationMeta is a
+// struct holding exactly one LedgerEntryChanges, so its bytes are identical.
+const codec = (type) => (type === 'LedgerEntryChanges' ? xdr.OperationMeta : xdr[type]);
+
+const { fixtures } = await (await get('/fixtures')).json();
+
+for (const { id } of fixtures) {
+  test(id, async () => {
+    const manifest = await (await get(`/fixtures/${id}`)).json();
+    for (const file of manifest.files) {
+      const b64 = (await (await get(`/fixtures/${id}/files/${file.name}`)).text()).trim();
+      const value = codec(file.xdr_type).fromXDR(b64, 'base64');      // 1. decodes
+      assert.equal(value.toXDR('base64'), b64, `${file.name} re-encodes`); // 2. byte-for-byte
+    }
+  });
+}
+```
+
+```go Go (go test)
+// corpus_test.go
+package corpus_test
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"strings"
+	"testing"
+
+	"github.com/stellar/go-stellar-sdk/xdr"
+)
+
+const api = "https://api.istravex.com/v1"
+
+type manifest struct {
+	ID              string         `json:"id"`
+	ExpectedDecoded map[string]any `json:"expected_decoded"`
+	Files           []struct {
+		Name    string `json:"name"`
+		XDRType string `json:"xdr_type"`
+	} `json:"files"`
+}
+
+func get(t *testing.T, path string) []byte {
+	t.Helper()
+	res, err := http.Get(api + path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("%s: HTTP %d", path, res.StatusCode)
+	}
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return b
+}
+
+// newValue maps a manifest xdr_type to an empty value of that type.
+func newValue(xdrType string) (any, error) {
+	switch xdrType {
+	case "TransactionEnvelope":
+		return &xdr.TransactionEnvelope{}, nil
+	case "TransactionResult":
+		return &xdr.TransactionResult{}, nil
+	case "TransactionMeta":
+		return &xdr.TransactionMeta{}, nil
+	case "LedgerEntryData":
+		return &xdr.LedgerEntryData{}, nil
+	case "LedgerEntryChanges":
+		return &xdr.LedgerEntryChanges{}, nil
+	}
+	return nil, fmt.Errorf("unknown xdr_type %q", xdrType)
+}
+
+func TestCorpusRoundTrip(t *testing.T) {
+	var list struct {
+		Fixtures []struct{ ID string } `json:"fixtures"`
+	}
+	if err := json.Unmarshal(get(t, "/fixtures"), &list); err != nil {
+		t.Fatal(err)
+	}
+	for _, f := range list.Fixtures {
+		t.Run(f.ID, func(t *testing.T) {
+			var m manifest
+			if err := json.Unmarshal(get(t, "/fixtures/"+f.ID), &m); err != nil {
+				t.Fatal(err)
+			}
+			for _, file := range m.Files {
+				b64 := strings.TrimSpace(string(get(t, "/fixtures/"+f.ID+"/files/"+file.Name)))
+				v, err := newValue(file.XDRType)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := xdr.SafeUnmarshalBase64(b64, v); err != nil {
+					t.Fatalf("%s: decode: %v", file.Name, err)
+				}
+				out, err := xdr.MarshalBase64(v)
+				if err != nil {
+					t.Fatalf("%s: encode: %v", file.Name, err)
+				}
+				if out != b64 {
+					t.Errorf("%s: re-encoded bytes differ", file.Name)
+				}
+			}
+		})
+	}
+}
+```
+
+```rust Rust (cargo test, vendored corpus)
+// tests/corpus.rs
+// [dev-dependencies] stellar-xdr = { version = "30", features = ["base64"] }, serde_json = "1"
+use std::{fs, path::Path};
+use stellar_xdr::{
+    LedgerEntryChanges, LedgerEntryData, Limits, ReadXdr, TransactionEnvelope, TransactionMeta,
+    TransactionResult, WriteXdr,
+};
+
+fn round_trip<T: ReadXdr + WriteXdr>(b64: &str) -> String {
+    // Fixtures are trusted test data, but keep limits on anyway: production decoders should.
+    let limits = || Limits { depth: 500, len: 10 * 1024 * 1024 };
+    let value = T::from_xdr_base64(b64, limits()).expect("decodes");
+    value.to_xdr_base64(limits()).expect("encodes")
+}
+
+#[test]
+fn corpus_round_trips() {
+    let dir = Path::new("tests/istravex/corpus/fixtures");
+    for entry in fs::read_dir(dir).expect("vendored corpus") {
+        let fixture = entry.unwrap().path();
+        let manifest: serde_json::Value =
+            serde_json::from_str(&fs::read_to_string(fixture.join("manifest.json")).unwrap()).unwrap();
+        for file in manifest["files"].as_array().unwrap() {
+            let b64 = fs::read_to_string(fixture.join(file["path"].as_str().unwrap())).unwrap();
+            let b64 = b64.trim();
+            let out = match file["xdr_type"].as_str().unwrap() {
+                "TransactionEnvelope" => round_trip::<TransactionEnvelope>(b64),
+                "TransactionResult" => round_trip::<TransactionResult>(b64),
+                "TransactionMeta" => round_trip::<TransactionMeta>(b64),
+                "LedgerEntryData" => round_trip::<LedgerEntryData>(b64),
+                "LedgerEntryChanges" => round_trip::<LedgerEntryChanges>(b64),
+                other => panic!("unknown xdr_type {other}"),
+            };
+            assert_eq!(out, b64, "{} / {}", manifest["id"], file["name"]);
+        }
+    }
+}
+```
+</CodeGroup>
+
+When a new fixture introduces an XDR type you don't map yet, these tests fail loudly with `unknown xdr_type` rather than skipping it. That's deliberate: a silently skipped fixture is a test that passes while proving nothing.
+
+## Check the values that matter
+
+Round-tripping proves your codec is symmetric. It doesn't prove the values your SDK hands to application code are right. Each manifest's `expected_decoded` lists what a correct decoder must extract, with values taken from Horizon or from the transaction as it was built, never from an SDK under test.
+
+The muxed-payment fixture is the one most worth automating, because the failure mode is silent: a 64-bit muxed ID passed through a float comes out *close*, and nobody notices until a deposit lands in the wrong customer's account.
+
+<CodeGroup>
+```js JavaScript
+// muxed.test.mjs
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { MuxedAccount, Networks, TransactionBuilder } from '@stellar/stellar-sdk';
+
+const API = 'https://api.istravex.com/v1';
+const id = 'cap27-muxed-payment-pubnet-0001';
+
+test('muxed payment: full 64-bit ID survives decoding', async () => {
+  const m = await (await fetch(`${API}/fixtures/${id}`)).json();
+  const envelope = (await (await fetch(`${API}/fixtures/${id}/files/envelope`)).text()).trim();
+  const e = m.expected_decoded;
+
+  const tx = TransactionBuilder.fromXDR(envelope, Networks.PUBLIC);
+  const inner = e.fee_bumped ? tx.innerTransaction : tx;
+  const op = inner.operations[e.op_index];
+  const muxed = MuxedAccount.fromAddress(op.destination, '0');
+
+  assert.equal(op.destination, e.destination_muxed);
+  assert.equal(muxed.baseAccount().accountId(), e.destination_account);
+  assert.equal(muxed.id(), e.muxed_id);    // a string: compare as strings
+  assert.equal(op.amount, e.amount);
+});
+```
+
+```go Go
+// Add to corpus_test.go (also import "strconv").
+func TestMuxedPayment(t *testing.T) {
+	const id = "cap27-muxed-payment-pubnet-0001"
+	var m manifest
+	if err := json.Unmarshal(get(t, "/fixtures/"+id), &m); err != nil {
+		t.Fatal(err)
+	}
+	e := m.ExpectedDecoded
+	var env xdr.TransactionEnvelope
+	if err := xdr.SafeUnmarshalBase64(strings.TrimSpace(string(get(t, "/fixtures/"+id+"/files/envelope"))), &env); err != nil {
+		t.Fatal(err)
+	}
+	opIndex := int(e["op_index"].(float64)) // a small index, safe as a float
+	dest := env.Operations()[opIndex].Body.MustPaymentOp().Destination
+	muxedID, err := dest.GetId()
+	if err != nil {
+		t.Fatal(err)
+	}
+	base := dest.ToAccountId()
+	if got := strconv.FormatUint(muxedID, 10); got != e["muxed_id"] {
+		t.Errorf("muxed_id = %s, want %s", got, e["muxed_id"])
+	}
+	if got := base.Address(); got != e["destination_account"] {
+		t.Errorf("destination_account = %s, want %s", got, e["destination_account"])
+	}
+}
+```
+</CodeGroup>
+
+<Warning>
+Never read `expected_decoded` or `expected_indexed` through a parser that turns large integers into floats and then compare numbers. Every 64-bit value in a manifest is a JSON string for exactly this reason. Compare strings, or parse into `BigInt` / `uint64` / `i64`.
+</Warning>
+
+The other fixtures have their own expectations: fee-bump hashes and fee sources (CAP-0015), the signed-payload signer's key and payload (CAP-0040), and the trustline a SAC `trust()` call created (CAP-0073). The kit's own runners check all of them and are the best reference for how: [JavaScript](https://github.com/hackcat29/istravex/blob/main/kit/runners/js/run.mjs), [Go](https://github.com/hackcat29/istravex/blob/main/kit/go/cmd/conformance/main.go) and [Rust](https://github.com/hackcat29/istravex/blob/main/kit/runners/rust/src/main.rs). Current results are on the [SDK runners](/tools/sdk-runners) page.
+
+## Run it in CI
+
+The vendored corpus makes this an ordinary unit test with no network access. If you went with the API instead, run it on a schedule rather than on every PR, so a newly published fixture opens an issue instead of blocking someone's unrelated change.
+
+```yaml .github/workflows/istravex.yml
+on:
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'   # weekly, against the live corpus
+jobs:
+  conformance:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 24 }
+      - run: npm ci
+      - run: node --test conformance.test.mjs muxed.test.mjs
+```
+
+## When a check fails
+
+- **Decode fails.** Your XDR definitions are probably behind the protocol version in the manifest's `protocol_version`. Regenerate from the matching [stellar-xdr](https://github.com/stellar/stellar-xdr) release.
+- **Re-encode differs.** Usually a union arm or optional field that's normalized on encode. This one matters: it changes hashes and signatures.
+- **A value is wrong.** Find the pattern in the [hardening guide](/guide/overview); each rule explains the mechanism and the fix.
+- **You think the fixture is wrong.** [Open an issue](https://github.com/hackcat29/istravex/issues). Each manifest's `source` says exactly where the bytes came from, and [provenance](/corpus/provenance) explains how they were verified against the ledger that closed them.

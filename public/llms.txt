@@ -25,6 +25,7 @@
 - Hardening guide: https://docs.istravex.com/guide/overview (reviewed and confirmed by a Stellar Core engineer)
 - stellar-core goldens: all three SDKs round-trip 15,306/15,306 LedgerCloseMeta frames from core's --check-lcm data (v30.0.0)
 - Docs: https://docs.istravex.com
+- Guides: https://docs.istravex.com/guides/sdk-conformance (SDK), https://docs.istravex.com/guides/indexer-ci (indexer CI), https://docs.istravex.com/guides/fixtures-in-tests (app tests), https://docs.istravex.com/guides/hosted-api (API)
 - API: https://api.istravex.com (OpenAPI: https://api.istravex.com/openapi.json)
 - Mock Stellar RPC: https://rpc.istravex.com/{pubnet,testnet,local}
 
