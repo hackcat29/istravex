@@ -1,5 +1,7 @@
 import { Nav } from './sections/Nav';
 import { Hero } from './sections/Hero';
+import { Problem } from './sections/Problem';
+import { Kit } from './sections/Kit';
 
 export default function App() {
   return (
@@ -10,7 +12,8 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
-
+        <Problem />
+        <Kit />
       </main>
     </>
   );
