@@ -1,0 +1,36 @@
+---
+title: 3. Keep 64-bit integers exact
+sidebarTitle: 64-bit integers
+description: A double holds integers exactly up to 2^53. Stellar's IDs and amounts don't stop there.
+---
+
+Stellar uses 64-bit integers everywhere that matters: muxed IDs (`uint64`); amounts, balances and limits (`int64`); sequence numbers; operation IDs (TOIDs). They routinely exceed 2^53 = 9,007,199,254,740,992, the largest integer an IEEE-754 double holds exactly.
+
+Above that, a double silently rounds:
+
+| Value | Where | As a double |
+|---|---|---|
+| `1764988090084626463` | Mainnet muxed ID (`cap27-muxed-payment-pubnet-0001`) | `1764988090084626400` |
+| `9223372036854775807` | SAC trustline limit (`cap73-sac-trust-*`) | `9223372036854776000` |
+| `281209887034449920` | A TOID | depends on the value, often off |
+
+No error, no warning. The number just changes.
+
+## Where it happens
+
+Rarely in the SDK. All three SDKs pass every exact-value check in the corpus. It happens one step later, in your code:
+
+- `Number(x)` or `parseInt(x)` in JavaScript.
+- `JSON.parse` on a payload with a bare number above 2^53. **This is the most common one**, because it's invisible: the producer emits correct JSON, and the consumer rounds it.
+- A `DOUBLE PRECISION` or `FLOAT` column, or an ORM that maps `int64` to a float.
+- A dataframe library that infers `float64`.
+
+## The rules
+
+- **Store** these values as decimal strings or `NUMERIC`/`BIGINT`, never as floats.
+- **Emit** them as JSON strings. The corpus does: every 64-bit value in every manifest is a string.
+- **In JavaScript**, use `BigInt` or the SDK's string accessors (`MuxedAccount.id()` returns a string).
+
+<Warning>
+Istravex's own pilot driver had this bug. It passed wallet-backend's output through `JSON.parse` and reported muxed IDs off by a few hundred. wallet-backend was right; the driver was rounding. The fix was to emit integers as strings. If it can happen in a tool written specifically to catch it, it can happen anywhere.
+</Warning>

@@ -1,0 +1,64 @@
+---
+title: Mock Stellar RPC
+description: Replay the corpus through any RPC-backed indexer at rpc.istravex.com.
+---
+
+`https://rpc.istravex.com/{network}` speaks JSON-RPC 2.0 with Stellar RPC's wire shapes. It's the [mock RPC](/tools/mock-rpc) from the kit, hosted. The same handler is also reachable as `POST https://api.istravex.com/rpc/{network}`.
+
+| Network | URL |
+|---|---|
+| Mainnet fixtures | `https://rpc.istravex.com/pubnet` |
+| Testnet fixtures | `https://rpc.istravex.com/testnet` |
+| Generated fixtures | `https://rpc.istravex.com/local` |
+
+## Example: fetch a fixture's ledger
+
+<CodeGroup>
+```bash curl
+curl -X POST https://rpc.istravex.com/pubnet \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"getLedgers","params":{"startLedger":65474279,"pagination":{"limit":1}}}'
+```
+
+```js JavaScript
+import { rpc } from '@stellar/stellar-sdk';
+
+const server = new rpc.Server('https://rpc.istravex.com/pubnet');
+const { ledgers } = await server.getLedgers({ startLedger: 65474279, pagination: { limit: 1 } });
+console.log(ledgers[0].sequence); // 65474279
+```
+
+```go Go
+import (
+    "github.com/stellar/go-stellar-sdk/clients/rpcclient"
+    protocol "github.com/stellar/go-stellar-sdk/protocols/rpc"
+)
+
+client := rpcclient.NewClient("https://rpc.istravex.com/pubnet", nil)
+resp, err := client.GetLedgers(ctx, protocol.GetLedgersRequest{
+    StartLedger: 65474279,
+    Pagination:  &protocol.LedgerPaginationOptions{Limit: 1},
+})
+```
+</CodeGroup>
+
+`result.ledgers[0].metadataXdr` is the ledger's `LedgerCloseMeta`, base64, byte-identical to the stored canonical ledger.
+
+## Methods
+
+| Method | Params | Returns |
+|---|---|---|
+| `getHealth` | — | `status`, oldest and latest ledger and close times, retention window |
+| `getNetwork` | — | `passphrase`, `protocolVersion` |
+| `getLatestLedger` | — | `id` (hash), `sequence`, `protocolVersion` |
+| `getLedgers` | `startLedger` or `pagination.cursor`; `pagination.limit` 1–200; `xdrFormat` `base64` | `ledgers`, `cursor`, oldest and latest ledger |
+
+Unknown methods return `-32601`. Invalid params return `-32602` with Stellar RPC's own messages.
+
+## Batches and limits
+
+Send an array for a batch of up to 20 requests. Bodies are limited to 64 KB, and each client to 300 requests per minute.
+
+<Note>
+Only fixture ledgers exist, so the range is sparse. See [the ledger range is sparse](/tools/mock-rpc#the-ledger-range-is-sparse).
+</Note>

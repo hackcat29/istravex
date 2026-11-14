@@ -1,0 +1,39 @@
+---
+title: Indexer hardening guide
+sidebarTitle: Overview
+description: Nine rules for turning Stellar ledger data into records correctly, each one backed by evidence.
+---
+
+<Check>
+Reviewed and confirmed by a Stellar Core engineer on 14 November 2026.
+</Check>
+
+This guide is for anyone writing code that turns Stellar ledger data into records: indexers, explorers, wallets, custody systems, analytics pipelines. It applies in any language. Where a rule can be checked mechanically in Go, [istravex-lint](/tools/lint) does it.
+
+Every rule cites something you can check yourself: a fixture in the corpus, a lint rule, or a measured result in `corpus/results/`. Nothing here is "best practice" by assertion.
+
+## The one idea underneath all of it
+
+> The envelope says what a transaction **asked** for. `LedgerCloseMeta` says what **happened**. When they disagree, the metadata is right.
+
+Most of the rules are that idea applied to a specific field.
+
+## The rules
+
+<CardGroup cols={2}>
+  <Card title="1. Effects from metadata" href="/guide/effects-from-meta">Participants, balances and created entries come from meta, not the envelope.</Card>
+  <Card title="2. Fees" href="/guide/fees">Who paid, how much, and why fee changes over-count Soroban fees.</Card>
+  <Card title="3. 64-bit integers" href="/guide/wide-integers">Muxed IDs, amounts, limits and TOIDs all exceed 2^53.</Card>
+  <Card title="4. Muxed accounts" href="/guide/muxed-accounts">Keep the account and the ID; expect fee-bump wrapping.</Card>
+  <Card title="5. Signed-payload signers" href="/guide/signed-payload-signers">Store the full P… key, payload included.</Card>
+  <Card title="6. SAC trustlines" href="/guide/sac-trustlines">Trustlines and accounts created without classic operations.</Card>
+  <Card title="7. Untrusted strings" href="/guide/untrusted-strings">Memo text isn't validated UTF-8.</Card>
+  <Card title="8. Bounded recursion" href="/guide/bounded-recursion">Walkers over ScVal and auth trees need a depth limit.</Card>
+  <Card title="9. Consensus data only" href="/guide/consensus-data">Diagnostic events differ between nodes. Never index them.</Card>
+</CardGroup>
+
+Short on time? Start with the [checklist](/guide/checklist).
+
+## Does following it work?
+
+The replay harness measures it. An indexer that reads effects from the envelope gets **all four** indexed cases wrong: two incorrect, two dropped. One that follows these rules gets all four right. [stellar/wallet-backend](/pilots/wallet-backend), which already follows them, gets all six fixtures right.

@@ -1,0 +1,50 @@
+---
+title: IX002 · Recursion without a depth limit
+sidebarTitle: IX002
+description: ScVal and Soroban auth trees nest. Walkers over them need a bound.
+---
+
+## What it flags
+
+A function that takes a recursive XDR type (`ScVal`, `ScVec`, `ScMap`, `ScMapEntry`, `SorobanAuthorizedInvocation`, `SorobanAuthorizedFunction`), calls itself, and has no integer parameter that it compares against anything.
+
+```go
+func walk(v xdr.ScVal) int { // IX002
+    n := 1
+    if v.Vec != nil {
+        for _, c := range **v.Vec {
+            n += walk(c)
+        }
+    }
+    return n
+}
+```
+
+## Why it matters
+
+Decoders bound nesting: go-stellar-sdk's `SafeUnmarshal` has a default depth limit, Rust's `stellar-xdr` takes `Limits`. But those limits protect the decode step only, and only when they're left on. A value built in memory, decoded with limits off, or merged from several sources can nest deeper than your own walker expects, and an unbounded recursive walk over it ends in a stack overflow. In an indexer, that's a crash loop on one ledger.
+
+## Fix
+
+Carry a depth and stop past a bound:
+
+```go
+func walk(v xdr.ScVal, depth int) int {
+    if depth > 64 {
+        return 0 // or return an error
+    }
+    n := 1
+    if v.Vec != nil {
+        for _, c := range **v.Vec {
+            n += walk(c, depth+1)
+        }
+    }
+    return n
+}
+```
+
+Any ordered comparison of an integer parameter satisfies the rule.
+
+## In the wild
+
+No findings in wallet-backend at the pinned commit.

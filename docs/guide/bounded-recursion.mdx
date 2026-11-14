@@ -1,0 +1,28 @@
+---
+title: 8. Bound recursion
+sidebarTitle: Bounded recursion
+description: Decoder limits protect decoding. Your walkers need their own.
+---
+
+`ScVal` nests: vectors, maps, contract instances. Soroban authorization trees nest too, through `SorobanAuthorizedInvocation.subInvocations`.
+
+Decoders bound that nesting: go-stellar-sdk's `SafeUnmarshal` applies a default depth limit, and Rust's `stellar-xdr` takes `Limits`. But those limits protect the **decode step only**, and only when they're left on.
+
+## The rule
+
+Every recursive walker you write over decoded values carries a depth counter and stops past a limit, instead of recursing until the stack runs out:
+
+```go
+func walk(v xdr.ScVal, depth int) error {
+    if depth > 64 {
+        return errTooDeep
+    }
+    // … recurse with depth+1
+}
+```
+
+## What goes wrong
+
+A value that's deeper than your walker expects, whether built in memory, decoded with limits off, or assembled from parts, overflows the stack. In an indexer that's a crash on one ledger, then a crash loop on restart.
+
+[IX002](/tools/lint/ix002) flags recursive functions over these types with no depth guard.

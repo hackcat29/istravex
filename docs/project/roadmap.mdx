@@ -1,0 +1,47 @@
+---
+title: Roadmap
+description: The three proposal milestones, where each stands, and what comes after.
+---
+
+Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2) as three milestones, each shippable on its own. All three are built.
+
+## Milestone 1 · Corpus and reference replay <Badge color="green">Done</Badge>
+
+| Deliverable | Where |
+|---|---|
+| Starter corpus | [6 fixtures, 4 CAPs](/corpus/fixtures), verified against canonical ledgers |
+| Fixture generator | [Pinned stellar-core generator](/corpus/generating), run in CI |
+| Manifest schema | [`corpus/manifest.schema.json`](/corpus/manifest) |
+| Reference adapter | [Mock RPC](/tools/mock-rpc) and [replay](/tools/replay) |
+
+**Acceptance:** a clean checkout validates provenance and replays the same sequence offline with stable results. CI does exactly this on every push.
+
+## Milestone 2 · Conformance and linting <Badge color="green">Done</Badge>
+
+| Deliverable | Where |
+|---|---|
+| JS, Go and Rust in CI | [SDK runners](/tools/sdk-runners) plus [stellar-core goldens](/corpus/goldens) |
+| Per-fixture results matrix | `corpus/results/`, the [API](/api-reference/introduction), and the site |
+| Go linter, three rules | [istravex-lint](/tools/lint) |
+
+**Acceptance:** all three SDKs run the shared corpus in CI; the linter flags all three rules and passes the clean reference. Both hold.
+
+## Milestone 3 · Upstream pilot and release <Badge color="green">Done</Badge>
+
+| Deliverable | Where |
+|---|---|
+| wallet-backend findings | [wallet-backend pilot](/pilots/wallet-backend) |
+| Reviewed guide | [Hardening guide](/guide/overview), reviewed by a Stellar Core engineer |
+| Tagged release | `v1.0.0` on GitHub |
+| CI templates | [Reusable workflow and action](/operations/ci#in-your-repository) |
+
+**Acceptance:** findings and upstream links are public, the guide has engineering review, and a tagged release ships.
+
+## Next
+
+In rough order of value:
+
+- **Coverage.** Fixtures for the 37 uncovered XDR-changing CAPs, starting with Soroban values (CAP-0046-01), live-state and archival changes (CAP-0062, CAP-0066) and liquidity pools (CAP-0038).
+- **More SDKs.** Python (`stellar-sdk`) and Java runners.
+- **More pilots.** Horizon's ingestion and at least one third-party explorer.
+- **Protocol upgrades.** Re-pin core, regenerate, and publish results within a week of each protocol release.

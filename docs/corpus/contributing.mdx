@@ -1,0 +1,48 @@
+---
+title: Contributing a fixture
+description: How to add a fixture for an uncovered CAP, from finding the pattern to a green CI run.
+---
+
+The [coverage audit](/corpus/cap-coverage) lists 37 XDR-changing CAPs with no fixture. Each one introduced a ledger pattern that someone's SDK or indexer probably mishandles. Adding a fixture is the most useful contribution you can make.
+
+## What makes a good fixture
+
+- **Real.** It happened on a network. Mainnet is best, testnet or generated is fine. Hand-built XDR is a last resort and must set `synthetic: true`.
+- **Pointed.** It isolates one pattern, and `xdr_path` says exactly where it lives.
+- **Independently checked.** `expected_decoded` and `expected_indexed` come from Horizon or from the transaction as you built it, never from the SDK output you're testing.
+- **Exact.** Every 64-bit integer is a string.
+
+## Steps
+
+<Steps>
+  <Step title="Pick a gap">
+    Choose an XDR-changing CAP marked **gap** on the [coverage page](/corpus/cap-coverage). Read its specification and write down, in one sentence, what an indexer could get wrong.
+  </Step>
+  <Step title="Find or make the pattern">
+    For mainnet, find a transaction hash and add it to `kit/capture/mainnet.mjs`, with expectations read from Horizon's JSON. If it's rare, write a scenario in `kit/capture/scenarios.mjs` instead. It then runs on testnet and on the pinned stellar-core.
+  </Step>
+  <Step title="Capture and generate">
+    ```bash
+    npm run corpus:capture              # mainnet hash or testnet scenario
+    npm run corpus:generate -- --force  # if you added a scenario
+    ```
+  </Step>
+  <Step title="Teach the runners">
+    If the pattern has a native conversion where precision or structure can be lost, add a check for it to each SDK runner (`kit/runners/js/run.mjs`, `kit/go/cmd/conformance`, `kit/runners/rust`). If indexers can get it wrong, add naive and reference indexers to `kit/replay/replay.mjs`.
+  </Step>
+  <Step title="Run everything">
+    ```bash
+    npm run corpus:run
+    npm run corpus:audit
+    node kit/check-results.mjs
+    ```
+    The audit picks up the new fixture's `cap_ids` and moves the CAP from gap to covered.
+  </Step>
+  <Step title="Open a pull request">
+    Include the fixture directory, its canonical ledger, `corpus/ledgers/index.json`, the results, and a short note on the bug the fixture catches. CI re-verifies everything from scratch.
+  </Step>
+</Steps>
+
+## Naming
+
+`cap<NN>-<pattern>-<network>-<NNNN>`, lowercase, e.g. `cap46-contract-event-pubnet-0001`. Use the CAP's number without leading zeros, a short hyphenated pattern name, and a four-digit counter for multiple fixtures of the same pattern.

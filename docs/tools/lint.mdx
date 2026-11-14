@@ -1,0 +1,57 @@
+---
+title: istravex-lint
+description: Three Go analyzers for ingestion mistakes that keep recurring in Stellar indexers.
+---
+
+`istravex-lint` is a set of [`go/analysis`](https://pkg.go.dev/golang.org/x/tools/go/analysis) analyzers for Go code built on Stellar's XDR packages, both `github.com/stellar/go-stellar-sdk/xdr` and the older `github.com/stellar/go/xdr`.
+
+| Rule | Flags | Guide |
+|---|---|---|
+| [IX001](/tools/lint/ix001) | Memo text read without UTF-8 validation | [Untrusted strings](/guide/untrusted-strings) |
+| [IX002](/tools/lint/ix002) | Recursion over recursive XDR values with no depth limit | [Bound recursion](/guide/bounded-recursion) |
+| [IX003](/tools/lint/ix003) | Fee payer or fee amount read from the envelope | [Fees](/guide/fees) |
+
+## Run it
+
+```bash
+go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@latest ./...
+```
+
+Or install it once:
+
+```bash
+go install github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@latest
+istravex-lint ./...
+istravex-lint -json ./... > findings.json
+```
+
+It's a standard `multichecker`, so the usual flags work: `-IX002=false` to disable a rule, `-json` for machine-readable output.
+
+## In CI
+
+```yaml .github/workflows/lint.yml
+- uses: actions/setup-go@v7
+  with:
+    go-version-file: go.mod
+- run: go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@latest ./...
+```
+
+## Suppressing a finding
+
+When you've reviewed a finding and it's fine, say so in the code, with a reason:
+
+```go
+//ixlint:ignore IX001 memo is hashed, never stored or displayed
+text := memo.MustText()
+```
+
+The comment can go on the line above or at the end of the reported line. Name the rule; a bare `//ixlint:ignore` suppresses nothing.
+
+## Designed to stay quiet
+
+A linter people disable is worse than none. Each rule is narrow on purpose, and was calibrated against [stellar/wallet-backend](/pilots/wallet-backend), a real, well-maintained indexer:
+
+- IX003 originally flagged every `Envelope.SourceAccount()` call. In wallet-backend that produced two findings, both correct code: operation-source fallbacks, where the inner source *is* the right answer. The rule now fires only inside fee logic.
+- After calibration, the whole rule set produces one finding on wallet-backend, triaged as latent (see [IX001](/tools/lint/ix001)).
+
+Each rule ships with positive and negative test cases in `kit/go/lint/testdata`.

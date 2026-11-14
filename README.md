@@ -1,6 +1,8 @@
 # Istravex
 
-The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This repository holds the kit as built so far, and the project site that reports its results.
+The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This repository holds the kit, the corpus, the API, the project site and its docs.
+
+**Docs:** [docs.istravex.com](https://docs.istravex.com) · **Site:** [istravex.com](https://istravex.com) · **API:** [api.istravex.com](https://api.istravex.com/v1/stats) · **RPC:** `https://rpc.istravex.com/{pubnet,testnet,local}`
 
 [![CI](https://github.com/hackcat29/istravex/actions/workflows/ci.yml/badge.svg)](https://github.com/hackcat29/istravex/actions/workflows/ci.yml)
 
@@ -13,8 +15,9 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | SDK conformance | 54/54: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 |
 | Replay | the naive envelope-based indexer is wrong on 4/4 cases; the metadata-based reference indexer is right on 4/4 |
 | Upstream pilot | `stellar/wallet-backend` @ `3e22515`: 6/6 fixtures indexed correctly; 1 lint finding, triaged as latent |
-| CAP audit | 70 live CAPs, 40 change XDR, 3 of those covered ([docs/cap-coverage.md](docs/cap-coverage.md)) |
-| Guide | [docs/indexer-hardening-guide.md](docs/indexer-hardening-guide.md), reviewed and confirmed by a Stellar Core engineer |
+| stellar-core goldens | all three SDKs round-trip 15,306/15,306 `LedgerCloseMeta` frames from core's `--check-lcm` data |
+| CAP audit | 70 live CAPs, 40 change XDR, 3 of those covered ([coverage](https://docs.istravex.com/corpus/cap-coverage)) |
+| Guide | [Indexer hardening guide](https://docs.istravex.com/guide/overview), reviewed and confirmed by a Stellar Core engineer |
 
 ## Kit
 
@@ -28,14 +31,22 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | `kit/replay/` | Naive and reference indexers scored against `expected_indexed` |
 | `kit/pilot/` | wallet-backend adapter: its own RPC ledger backend + `indexer.ProcessLedger`, scored, plus lint with reviewed triage |
 | `kit/go/lint`, `kit/go/cmd/istravex-lint` | `go/analysis` rules IX001–IX003 |
+| `kit/goldens/`, `kit/go/cmd/goldens` | stellar-core's `--check-lcm` golden `LedgerCloseMeta`, round-tripped by every SDK |
 | `kit/audit/` | CAP coverage audit from a pinned stellar-protocol checkout |
+| `server/` | The API (Hono): corpus, ledgers, results and the mock RPC over HTTP; OpenAPI in `server/openapi.json` |
+| `deploy/`, `Dockerfile` | Production stack (Docker Compose + Caddy), deployed by `.github/workflows/deploy.yml` |
+| `actions/lint`, `.github/workflows/lint-indexer.yml` | CI templates: run istravex-lint in your own repository |
+| `docs/` | Mintlify docs, published at docs.istravex.com |
 
 ```bash
 npm ci
-npm run corpus:run            # verify → JS/Go/Rust runners → replay → site data
+node kit/goldens/fetch.mjs    # once: stellar-core golden ledgers (~80 MB)
+npm run corpus:run            # verify → JS/Go/Rust runners → goldens → replay → site + docs data
 npm run pilot:wallet-backend  # upstream pilot (clones wallet-backend into .cache/)
 npm run corpus:audit          # CAP coverage audit (clones stellar-protocol into .cache/)
 npm run test:kit              # mock RPC + linter tests
+npm run test:api              # API tests
+npm run api                   # API + mock RPC on :8080
 npm run rpc -- --network pubnet --port 8000   # serve the corpus to your own indexer
 
 # capture / generate (network or pinned core required)

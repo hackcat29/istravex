@@ -1,0 +1,1417 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Istravex API",
+    "version": "1.0.0",
+    "description": "Read-only access to the Istravex corpus: fixtures, their raw XDR, the canonical ledgers they were verified against, and the kit's results. Also hosts a mock Stellar RPC that replays the corpus for any RPC-backed indexer.",
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "contact": {
+      "url": "https://github.com/hackcat29/istravex"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.istravex.com",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local (`npm run api`)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Service"
+    },
+    {
+      "name": "Fixtures"
+    },
+    {
+      "name": "Ledgers"
+    },
+    {
+      "name": "Results"
+    },
+    {
+      "name": "RPC"
+    }
+  ],
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "Health",
+        "operationId": "getHealth",
+        "description": "Liveness and the build the server is running. Never cached.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                },
+                "example": {
+                  "status": "ok",
+                  "version": "41398ce",
+                  "uptime_s": 3600,
+                  "fixtures": 6,
+                  "rpc_networks": [
+                    "pubnet",
+                    "testnet",
+                    "local"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "Corpus statistics",
+        "operationId": "getStats",
+        "description": "The headline numbers: fixtures, SDK checks, provenance checks, golden frames, the wallet-backend pilot and CAP coverage.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stats"
+                },
+                "example": {
+                  "fixtures": 6,
+                  "caps": 4,
+                  "networks": [
+                    "local",
+                    "pubnet",
+                    "testnet"
+                  ],
+                  "sdk_checks": {
+                    "passed": 54,
+                    "total": 54
+                  },
+                  "provenance_checks": {
+                    "passed": 62,
+                    "total": 62
+                  },
+                  "golden_frames": {
+                    "exact": 15306,
+                    "total": 15306
+                  },
+                  "wallet_backend_pilot": {
+                    "correct": 6,
+                    "total": 6
+                  },
+                  "cap_coverage": {
+                    "live": 70,
+                    "xdr_changing": 40,
+                    "xdr_covered": 3
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/fixtures": {
+      "get": {
+        "tags": [
+          "Fixtures"
+        ],
+        "summary": "List fixtures",
+        "operationId": "listFixtures",
+        "parameters": [
+          {
+            "name": "cap",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "CAP-0027"
+            },
+            "description": "Only fixtures for this CAP."
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pubnet",
+                "testnet",
+                "local"
+              ]
+            },
+            "description": "Only fixtures from this network."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "fixtures"
+                  ],
+                  "properties": {
+                    "fixtures": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FixtureSummary"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "fixtures": [
+                    {
+                      "id": "cap15-fee-bump-pubnet-0001",
+                      "cap_ids": [
+                        "CAP-0015"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 29,
+                      "ledger": 65474309,
+                      "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+                      "kind": "captured",
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap27-muxed-payment-pubnet-0001",
+                      "cap_ids": [
+                        "CAP-0027"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 29,
+                      "ledger": 65474279,
+                      "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+                      "kind": "captured",
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+                      "files": [
+                        "envelope",
+                        "result"
+                      ]
+                    },
+                    {
+                      "id": "cap40-signed-payload-signer-local-0001",
+                      "cap_ids": [
+                        "CAP-0040"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 9,
+                      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+                      "kind": "generated",
+                      "xdr_type": "LedgerEntryData",
+                      "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+                      "files": [
+                        "ledger_entry",
+                        "envelope"
+                      ]
+                    },
+                    {
+                      "id": "cap40-signed-payload-signer-testnet-0001",
+                      "cap_ids": [
+                        "CAP-0040"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5727196,
+                      "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+                      "kind": "captured",
+                      "xdr_type": "LedgerEntryData",
+                      "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
+                      "files": [
+                        "ledger_entry",
+                        "envelope"
+                      ]
+                    },
+                    {
+                      "id": "cap73-sac-trust-local-0001",
+                      "cap_ids": [
+                        "CAP-0073"
+                      ],
+                      "network": "local",
+                      "protocol_version": 30,
+                      "ledger": 13,
+                      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+                      "kind": "generated",
+                      "xdr_type": "TransactionMeta",
+                      "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+                      "files": [
+                        "meta",
+                        "envelope"
+                      ]
+                    },
+                    {
+                      "id": "cap73-sac-trust-testnet-0001",
+                      "cap_ids": [
+                        "CAP-0073"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5727199,
+                      "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+                      "kind": "captured",
+                      "xdr_type": "TransactionMeta",
+                      "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
+                      "files": [
+                        "meta",
+                        "envelope"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/fixtures/{id}": {
+      "get": {
+        "tags": [
+          "Fixtures"
+        ],
+        "summary": "Get a fixture manifest",
+        "operationId": "getFixture",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "cap27-muxed-payment-pubnet-0001"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manifest"
+                },
+                "example": {
+                  "id": "cap27-muxed-payment-pubnet-0001",
+                  "cap_ids": [
+                    "CAP-0027"
+                  ],
+                  "protocol_version": 29,
+                  "network": "pubnet",
+                  "xdr_type": "TransactionEnvelope",
+                  "xdr_path": "feeBump.tx.innerTx.v1.tx.operations[0].body.paymentOp.destination",
+                  "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+                  "source": {
+                    "kind": "captured",
+                    "network_endpoint": "https://horizon.stellar.org",
+                    "ledger": 65474279,
+                    "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+                    "closed_at": "2026-11-14T11:57:17Z"
+                  },
+                  "synthetic": false,
+                  "expected_decoded": {
+                    "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+                    "fee_bumped": true,
+                    "op_index": 0,
+                    "destination_muxed": "MA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGGD6P5IQ4SQQD6IPC",
+                    "destination_account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+                    "muxed_id": "1764988090084626463",
+                    "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+                    "amount": "59.5110803"
+                  },
+                  "expected_indexed": {
+                    "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+                    "recipient_muxed_id": "1764988090084626463"
+                  },
+                  "files": [
+                    {
+                      "name": "envelope",
+                      "xdr_type": "TransactionEnvelope",
+                      "path": "envelope.xdr.b64",
+                      "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+                      "bytes": 392
+                    },
+                    {
+                      "name": "result",
+                      "xdr_type": "TransactionResult",
+                      "path": "result.xdr.b64",
+                      "sha256": "aa929c476658f91e8a6006b6e0a55e84c0d20253cee67a4681f60ae6b73557d6",
+                      "bytes": 80
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/fixtures/{id}/files/{name}": {
+      "get": {
+        "tags": [
+          "Fixtures"
+        ],
+        "summary": "Download a fixture's XDR",
+        "operationId": "getFixtureFile",
+        "description": "Returns one XDR value from the fixture, base64 by default (exactly as stored in the repository), or raw bytes with `encoding=binary`. `X-XDR-Type` names the XDR type and `X-Content-SHA256` is the sha256 of the decoded bytes, matching the manifest.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "cap27-muxed-payment-pubnet-0001"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "envelope"
+            },
+            "description": "File name from the manifest's `files` (e.g. `envelope`, `meta`, `result`, `fee_meta`, `ledger_entry`)."
+          },
+          {
+            "name": "encoding",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "binary"
+              ],
+              "default": "base64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "XDR value",
+            "headers": {
+              "X-XDR-Type": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Content-SHA256": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ledgers": {
+      "get": {
+        "tags": [
+          "Ledgers"
+        ],
+        "summary": "List canonical ledgers",
+        "operationId": "listLedgers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ledgers"
+                  ],
+                  "properties": {
+                    "ledgers": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LedgerEntry"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "ledgers": [
+                    {
+                      "network": "local",
+                      "ledger": 3,
+                      "path": "ledgers/local/3.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "d9b6029db087297e6cb6c72a6a5968f2f42b36507fa22b25b54a3ba04eb1e99c",
+                      "bytes": 1676,
+                      "compressed_bytes": 683
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 4,
+                      "path": "ledgers/local/4.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "8b79d67a0b738a9db0b2bfbf7e71edaec181352689a6049b68fb96ab99ab4d3b",
+                      "bytes": 2988,
+                      "compressed_bytes": 1161
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 5,
+                      "path": "ledgers/local/5.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "e99da45fabd59361377d468bdd6572bbc9e6b4d346de39d795c9606fb6721b51",
+                      "bytes": 2352,
+                      "compressed_bytes": 886
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 6,
+                      "path": "ledgers/local/6.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "67c3d4bd5faaee1e639169eb3e3503944afa77c27695afeecea683530bcbdf5e",
+                      "bytes": 2852,
+                      "compressed_bytes": 1091
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 8,
+                      "path": "ledgers/local/8.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "bf2cfefabdadfaa5ecda2e815fbfd14f738e6053cbc327e3d40ff923def3257a",
+                      "bytes": 1912,
+                      "compressed_bytes": 685
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 9,
+                      "path": "ledgers/local/9.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "906b0a69f1349929a6b64c340329e001032b3437ea10622af9b2c9dfe6f881e0",
+                      "bytes": 1808,
+                      "compressed_bytes": 716
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 10,
+                      "path": "ledgers/local/10.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "c3bc7bef8a80418bb120a9806dff6e1e2ea0b8ef6199301de0c3bb852a01ef32",
+                      "bytes": 1912,
+                      "compressed_bytes": 692
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 11,
+                      "path": "ledgers/local/11.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "ed58b90069423061fbb8642cce5469a7286ec7bfcfae146358eef20fe1dd7818",
+                      "bytes": 1912,
+                      "compressed_bytes": 687
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 12,
+                      "path": "ledgers/local/12.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "e8ea73a4930fb58ff4df2559ed1fe3a4ba477767350fbc00cf492794001f55b8",
+                      "bytes": 2404,
+                      "compressed_bytes": 1033
+                    },
+                    {
+                      "network": "local",
+                      "ledger": 13,
+                      "path": "ledgers/local/13.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+                      "sha256": "e233f6a7ab56b0a7b7d4cc0d85a466f435e3fbfc5637baed926b8cfaa42603c8",
+                      "bytes": 2632,
+                      "compressed_bytes": 910
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 65474279,
+                      "path": "ledgers/pubnet/65474279.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F118--65474279.xdr.zst",
+                      "sha256": "430d225846e9ad36780e7b9bf36f73bc2088c522878ee8c8214f49ac0a77a141",
+                      "bytes": 1420656,
+                      "compressed_bytes": 116613
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 65474309,
+                      "path": "ledgers/pubnet/65474309.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F0FA--65474309.xdr.zst",
+                      "sha256": "e64086eebeb5db34e7f879bcb09527e2b48c4ab59fc971dafa92c596c7fd462c",
+                      "bytes": 1638156,
+                      "compressed_bytes": 126802
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5727196,
+                      "path": "ledgers/testnet/5727196.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://soroban-testnet.stellar.org#getLedgers(5727196)",
+                      "sha256": "cac799d6e80f0e5c6414932a8c3016a83360248298776050bdc7935c86dce7cf",
+                      "bytes": 382464,
+                      "compressed_bytes": 31250
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5727199,
+                      "path": "ledgers/testnet/5727199.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://soroban-testnet.stellar.org#getLedgers(5727199)",
+                      "sha256": "92242430d394e6f4b96fb26ddbee7228972fed07a62f5a9c7660ba9cc87ccd89",
+                      "bytes": 158128,
+                      "compressed_bytes": 21449
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ledgers/{network}/{seq}": {
+      "get": {
+        "tags": [
+          "Ledgers"
+        ],
+        "summary": "Download a canonical ledger",
+        "operationId": "getLedger",
+        "description": "The full `LedgerCloseMeta` a fixture was verified against, as a zstd-compressed `LedgerCloseMetaBatch` (the layout of SDF's public data lake). `X-Content-SHA256` is the sha256 of the decompressed XDR.",
+        "parameters": [
+          {
+            "name": "network",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pubnet",
+                "testnet",
+                "local"
+              ]
+            }
+          },
+          {
+            "name": "seq",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 65474279
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "zstd LedgerCloseMetaBatch",
+            "content": {
+              "application/zstd": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/results": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "List result sets",
+        "operationId": "listResults",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "results": [
+                    "go",
+                    "goldens-go",
+                    "goldens-javascript",
+                    "goldens-patterns",
+                    "goldens-rust",
+                    "javascript",
+                    "pilot-wallet-backend",
+                    "provenance",
+                    "replay",
+                    "rust"
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/results/{name}": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "Get a result set",
+        "operationId": "getResult",
+        "description": "The raw output of one kit stage, exactly as committed in `corpus/results/`: SDK runs (`javascript`, `go`, `rust`), golden checks (`goldens-*`), `provenance`, `replay` and `pilot-wallet-backend`. 64-bit integers are JSON strings.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "provenance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/coverage": {
+      "get": {
+        "tags": [
+          "Results"
+        ],
+        "summary": "CAP coverage audit",
+        "operationId": "getCoverage",
+        "description": "Every live CAP (Final or Implemented) from the pinned stellar-protocol checkout, whether it changes XDR, and which fixtures cover it.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rpc/{network}": {
+      "post": {
+        "tags": [
+          "RPC"
+        ],
+        "summary": "Mock Stellar RPC",
+        "operationId": "rpc",
+        "description": "JSON-RPC 2.0 with the wire shapes of Stellar RPC. Supports `getHealth`, `getNetwork`, `getLatestLedger` and `getLedgers` (cursor paging over the corpus's sparse ledgers). Point an RPC-backed indexer at `https://rpc.istravex.com/{network}` to replay the corpus. Batches of up to 20 requests; bodies up to 64 KB.",
+        "parameters": [
+          {
+            "name": "network",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pubnet",
+                "testnet",
+                "local"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonRpcRequest"
+              },
+              "example": {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "getLedgers",
+                "params": {
+                  "startLedger": 65474279,
+                  "pagination": {
+                    "limit": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonRpcResponse"
+                },
+                "example": {
+                  "jsonrpc": "2.0",
+                  "id": 1,
+                  "result": {
+                    "status": "healthy",
+                    "latestLedger": 65474309,
+                    "latestLedgerCloseTime": "1794657587",
+                    "oldestLedger": 65474279,
+                    "oldestLedgerCloseTime": "1794657437",
+                    "ledgerRetentionWindow": 31
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Fixture not found"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body over 64 KB"
+          },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Health": {
+        "type": "object",
+        "required": [
+          "status",
+          "version",
+          "uptime_s",
+          "fixtures",
+          "rpc_networks"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          },
+          "version": {
+            "type": "string"
+          },
+          "uptime_s": {
+            "type": "integer"
+          },
+          "fixtures": {
+            "type": "integer"
+          },
+          "rpc_networks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Ratio": {
+        "type": "object",
+        "properties": {
+          "passed": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        }
+      },
+      "Stats": {
+        "type": "object",
+        "properties": {
+          "fixtures": {
+            "type": "integer"
+          },
+          "caps": {
+            "type": "integer"
+          },
+          "networks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sdk_checks": {
+            "$ref": "#/components/schemas/Ratio"
+          },
+          "provenance_checks": {
+            "$ref": "#/components/schemas/Ratio"
+          },
+          "golden_frames": {
+            "type": "object",
+            "properties": {
+              "exact": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              }
+            }
+          },
+          "wallet_backend_pilot": {
+            "type": "object",
+            "properties": {
+              "correct": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              }
+            }
+          },
+          "cap_coverage": {
+            "type": "object",
+            "properties": {
+              "live": {
+                "type": "integer"
+              },
+              "xdr_changing": {
+                "type": "integer"
+              },
+              "xdr_covered": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "FixtureSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cap_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "network": {
+            "type": "string"
+          },
+          "protocol_version": {
+            "type": "integer"
+          },
+          "ledger": {
+            "type": "integer"
+          },
+          "tx_hash": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "captured",
+              "generated"
+            ]
+          },
+          "xdr_type": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Manifest": {
+        "type": "object",
+        "description": "A fixture manifest. Full schema: https://github.com/hackcat29/istravex/blob/main/corpus/manifest.schema.json",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cap_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "protocol_version": {
+            "type": "integer"
+          },
+          "network": {
+            "type": "string"
+          },
+          "xdr_type": {
+            "type": "string"
+          },
+          "xdr_path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object"
+          },
+          "synthetic": {
+            "type": "boolean"
+          },
+          "expected_decoded": {
+            "type": "object"
+          },
+          "expected_indexed": {
+            "type": "object"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "LedgerEntry": {
+        "type": "object",
+        "properties": {
+          "network": {
+            "type": "string"
+          },
+          "ledger": {
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          },
+          "xdr_type": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "bytes": {
+            "type": "integer"
+          },
+          "compressed_bytes": {
+            "type": "integer"
+          }
+        }
+      },
+      "JsonRpcRequest": {
+        "type": "object",
+        "required": [
+          "jsonrpc",
+          "method"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "type": "string",
+            "const": "2.0"
+          },
+          "id": {
+            "type": [
+              "string",
+              "integer",
+              "null"
+            ]
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "getHealth",
+              "getNetwork",
+              "getLatestLedger",
+              "getLedgers"
+            ]
+          },
+          "params": {
+            "type": "object"
+          }
+        }
+      },
+      "JsonRpcResponse": {
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "type": "string"
+          },
+          "id": {
+            "type": [
+              "string",
+              "integer",
+              "null"
+            ]
+          },
+          "result": {
+            "type": "object"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

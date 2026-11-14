@@ -1,0 +1,50 @@
+---
+title: The corpus
+description: What the corpus holds, where each piece comes from, and why you can trust it.
+---
+
+import Fixtures from '/snippets/fixtures-table.mdx';
+
+The corpus is the heart of Istravex. Everything else, from the SDK runners and replay to the pilot and the linter's calibration, exists to run code against it.
+
+It's a directory in the repository:
+
+```
+corpus/
+├── fixtures/<id>/            manifest.json + one base64 file per XDR value
+├── ledgers/<network>/<seq>.xdr.zst   canonical LedgerCloseMeta, zstd
+├── ledgers/index.json        sha256 and source of every stored ledger
+├── manifest.schema.json      JSON Schema 2020-12 for manifests
+├── coverage.json             the CAP audit
+└── results/                  output of every kit stage
+```
+
+## What's in it today
+
+<Fixtures />
+
+That's six fixtures for four CAPs. Two of them are the same scenario on two networks: CAP-0040 and CAP-0073 each exist as a testnet capture and as a fixture generated on a pinned stellar-core. That's deliberate. The testnet copy proves the pattern exists on a real network; the generated copy can be rebuilt by anyone, at any time, without depending on testnet (which resets).
+
+## Three ways in
+
+| How | Script | Used for |
+|---|---|---|
+| **Captured from mainnet** | `kit/capture/mainnet.mjs` | Patterns that already happen in the wild. Pinned by transaction hash, so re-running reproduces the same bytes. |
+| **Created on testnet** | `kit/capture/testnet.mjs` | Patterns that are rare on mainnet but can be produced on demand. |
+| **Generated on stellar-core** | `kit/capture/generate.mjs` | The same scenarios on a standalone network, fully reproducible, no external dependencies. |
+
+Each has its own page: [Capturing](/corpus/capturing) covers the first two, [Generating](/corpus/generating) the third.
+
+## Why you can trust it
+
+A fixture is only as good as the claim that it's real. Three things back that claim:
+
+1. **Canonical ledgers.** Every fixture's full ledger is stored, from the most authoritative source we could get (SDF's public data lake for mainnet), and its sha256 is recorded.
+2. **Byte equality.** The [provenance verifier](/corpus/provenance) requires every XDR value in every fixture to be byte-identical to the ledger's copy. 62 checks, all passing, on every CI run.
+3. **Independent expectations.** What a fixture says correct software should produce comes from Horizon or from the transaction as constructed, never from the SDKs being tested.
+
+On top of the corpus, the SDKs are also checked against [stellar-core's own golden ledgers](/corpus/goldens): 15,306 `LedgerCloseMeta` frames from core's test suite.
+
+## What it doesn't cover yet
+
+Four CAPs is a start, not a finish. Of the 40 live CAPs that change XDR, 37 have no fixture yet. The [CAP coverage](/corpus/cap-coverage) page lists every one, and [Contributing a fixture](/corpus/contributing) explains how to close a gap.

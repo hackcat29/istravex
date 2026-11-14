@@ -1,0 +1,57 @@
+---
+title: Provenance
+description: How every fixture is proven byte-identical to the ledger that closed it.
+---
+
+A conformance corpus that's slightly wrong is worse than none: it trains everyone to agree on the wrong answer. So the first thing Istravex does on every run is prove that each fixture is exactly what the network recorded.
+
+## Canonical ledgers
+
+For each fixture, the full `LedgerCloseMeta` of its ledger is stored in `corpus/ledgers/<network>/<seq>.xdr.zst`, as a zstd-compressed `LedgerCloseMetaBatch`. That's the same layout SDF uses for its public data lake.
+
+| Network | Where the ledger comes from | Stable? |
+|---|---|---|
+| `pubnet` | SDF's public data lake (`aws-public-blockchain/v1.1/stellar/ledgers/pubnet`), byte for byte | Yes. Re-downloading gives the same sha256. |
+| `testnet` | Stellar RPC `getLedgers`, stored once | Pinned, not re-fetched. See below. |
+| `local` | stellar-core's `METADATA_OUTPUT_STREAM` during generation | Yes, for that generation run. |
+
+`corpus/ledgers/index.json` records each ledger's sha256 (of the decompressed XDR), its size and its source.
+
+<Warning>
+**Testnet ledgers are snapshots.** Re-fetching testnet ledgers 5,727,196 and 5,727,199 from the same RPC endpoint a few hours apart returned different bytes. A different node behind the load balancer answered, and node-local diagnostic events differ between nodes. So `kit/capture/ledgers.mjs` never overwrites a stored ledger unless you pass `--refresh`. See [Compare only consensus data](/guide/consensus-data).
+</Warning>
+
+## The verifier
+
+`kit/go/cmd/verify` checks every fixture, in order:
+
+<Steps>
+  <Step title="Manifest">
+    `manifest.json` parses and validates against `corpus/manifest.schema.json`.
+  </Step>
+  <Step title="Files">
+    Each file decodes, and its sha256 and size match the manifest.
+  </Step>
+  <Step title="Ledger">
+    The stored ledger's sha256 matches `index.json`, and its header's protocol version matches the manifest.
+  </Step>
+  <Step title="Transaction">
+    The fixture's transaction is found in that ledger by hash, using go-stellar-sdk's ingestion reader with the network's passphrase.
+  </Step>
+  <Step title="Byte equality">
+    Every XDR value in the fixture (envelope, result, fee changes, meta) is byte-identical to the ledger's copy. For ledger-entry fixtures, the entry is found among the transaction's changes.
+  </Step>
+</Steps>
+
+```bash
+npm run corpus:verify
+# ok   cap15-fee-bump-pubnet-0001                 12 checks
+# ok   cap27-muxed-payment-pubnet-0001            10 checks
+# …
+```
+
+It writes `corpus/results/provenance.json` and exits non-zero on any failure, which fails CI. Today: **62 of 62 checks pass**.
+
+## Why the fixture is cut from the ledger
+
+Testnet fixtures were first captured from `getTransaction`, and the verifier caught the problem immediately: one RPC node's meta and another node's ledger differed in a single diagnostic value. Rather than special-case that, `kit/capture/canonicalize.mjs` rewrites each fixture's meta from the stored ledger. The ledger is the source of truth; the fixture is a slice of it.

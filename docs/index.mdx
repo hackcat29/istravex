@@ -1,0 +1,62 @@
+---
+title: Introduction
+description: Istravex checks that Stellar SDKs and indexers preserve what actually happened on the ledger.
+---
+
+import Numbers from '/snippets/numbers.mdx';
+
+A Stellar transaction can be perfectly valid and still be misread by the software that consumes it.
+
+Here is a real one. On 14 November 2026, mainnet ledger 65,474,279 recorded a USDC payment to the muxed account ID `1764988090084626463`. Every SDK decodes it correctly. Then a JavaScript service passes that ID through `Number()` on its way to the database, and what gets stored is `1764988090084626400`. Nothing errors and nothing logs. The payment is now credited to a customer who doesn't exist.
+
+Istravex exists to catch that class of bug before it ships. It's a shared, versioned corpus of rare-but-valid Stellar XDR, plus the tools to run your SDK or indexer against it and see exactly where it disagrees with the ledger.
+
+## What's in the kit
+
+<CardGroup cols={2}>
+  <Card title="The corpus" icon="database" href="/corpus/overview">
+    Real fixtures, each tied to the CAP that introduced the pattern and verified byte-for-byte against the ledger that closed it.
+  </Card>
+  <Card title="SDK runners" icon="code" href="/tools/sdk-runners">
+    The same checks in JavaScript, Go and Rust: decode, byte-exact re-encode, and the high-level conversions where precision leaks.
+  </Card>
+  <Card title="Mock RPC and replay" icon="rotate" href="/tools/mock-rpc">
+    Serve the corpus over Stellar RPC's `getLedgers` and replay it through any indexer, offline, with verdicts per record.
+  </Card>
+  <Card title="istravex-lint" icon="magnifying-glass-chart" href="/tools/lint">
+    Three Go analyzers for the ingestion mistakes that keep recurring: unvalidated memo text, unbounded recursion, fees read from the envelope.
+  </Card>
+  <Card title="Hardening guide" icon="shield-check" href="/guide/overview">
+    Nine rules for turning ledger data into records correctly, reviewed by a Stellar Core engineer. Every rule cites evidence.
+  </Card>
+  <Card title="API" icon="plug" href="/api-reference/introduction">
+    The corpus, canonical ledgers and every result at `api.istravex.com`, and a public replay endpoint at `rpc.istravex.com`.
+  </Card>
+</CardGroup>
+
+## Where things stand
+
+These numbers are generated from the repository on every build. They aren't typed by hand.
+
+<Numbers />
+
+## Who it's for
+
+- **SDK maintainers** who want proof that decode, re-encode and native conversions survive real ledger data, and who want a regression test that other SDKs share.
+- **Indexer authors** (explorers, wallets, analytics, custody) who want to know whether their pipeline stores the right records for the right accounts.
+- **Reviewers and auditors** who need evidence, not assurances: every result links back to a fixture, a ledger and a commit.
+
+<Note>
+Istravex is proposed for the Stellar Community Fund (SCF #46, RFP 2). The kit described here is built and running; the [roadmap](/project/roadmap) shows what the grant would fund next.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/quickstart">
+    Run the whole kit locally in a few minutes.
+  </Card>
+  <Card title="Concepts" icon="lightbulb" href="/concepts">
+    Fixtures, canonical ledgers, verdicts: the vocabulary used everywhere else.
+  </Card>
+</CardGroup>

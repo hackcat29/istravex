@@ -1,0 +1,43 @@
+---
+title: stellar-core goldens
+description: Checking every SDK against the golden LedgerCloseMeta stellar-core's own CI uses.
+---
+
+import Sdks from '/snippets/sdk-table.mdx';
+
+stellar-core keeps a set of **golden ledgers** in its repository, under `test-lcm-current/`. Its test suite captures them with `--capture-lcm` (fixed RNG seed 12345, diagnostic events zeroed) and checks them on every CI run with `stellar-core test --check-lcm`. They are core's canonical output for its own transaction tests.
+
+That makes them a second conformance corpus, a much larger one: 866 files and 15,306 `LedgerCloseMeta` frames at core v30.0.0. Istravex runs all three SDKs over every frame.
+
+<Sdks />
+
+## What's checked
+
+For each frame, in each SDK: decode it as `LedgerCloseMeta`, re-encode it, and require the bytes to be identical. A frame that fails either step is recorded with its file and index, and any failure fails CI.
+
+```bash
+node kit/goldens/fetch.mjs   # sparse, shallow checkout at the pinned commit (~80 MB)
+npm run corpus:goldens
+# javascript: 15306/15306 frames exact in 866 files, 0 failures
+# go: 15306/15306 frames exact in 866 files, 0 failures
+# rust: 15306/15306 frames exact in 866 files, 0 failures
+```
+
+The checkout lives in `.cache/stellar-core` and is pinned to the same commit as the generator's stellar-core build, so goldens, generator and SDK expectations all describe one protocol.
+
+## How the goldens relate to the corpus
+
+The goldens are broad; the corpus is targeted. The JavaScript check also indexes which golden tests contain each corpus pattern (`corpus/results/goldens-patterns.json`):
+
+| Pattern | Golden files containing it |
+|---|---|
+| Fee-bump transaction (CAP-0015) | 19 |
+| Muxed account (CAP-0027) | 2 |
+| SAC `trust()` creating a trustline (CAP-0073) | 1 |
+| Ed25519 signed-payload signer (CAP-0040) | **0** |
+
+Core's goldens don't cover signed-payload signers at all, which is one reason the corpus exists alongside them. The goldens also use a test passphrase (`(V) (;,,;) (V)`) and test-suite accounts, so they prove decoding but say nothing about what an indexer should store. That's what `expected_indexed` is for.
+
+<Note>
+These goldens are the "`--check-lcm` goldens" the Istravex proposal refers to. Rather than replacing them, Istravex runs SDKs against them directly.
+</Note>

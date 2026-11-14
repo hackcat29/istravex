@@ -1,0 +1,30 @@
+---
+title: IX003 · Fees from the envelope
+sidebarTitle: IX003
+description: The envelope says who bid. The ledger says who paid, and how much.
+---
+
+## What it flags
+
+Two patterns:
+
+1. **`TransactionEnvelope.Fee()` or `FeeBumpFee()`** in a function that never reads `FeeCharged`. The envelope fee is the bid, not the charge.
+2. **`TransactionEnvelope.SourceAccount()` in fee logic** (the function's name or body mentions fees) that never checks for a fee-bump (`IsFeeBump`, `FeeBumpAccount`, `FeeAccount`…). On a fee-bump, `SourceAccount()` is the inner source, who didn't pay.
+
+## Why it matters
+
+On the [fee-bump fixture](/corpus/fixtures#fee-bump-fee-source), reading fees from the envelope gives the wrong account *and* the wrong amount: 46,341 stroops charged to `GDMV…COIW`, when the ledger charged 40,354 to `GA2J…HVAW`. The [naive replay indexer](/tools/replay) makes exactly this mistake.
+
+## Fix
+
+```go
+payer := env.SourceAccount()
+if env.IsFeeBump() {
+    payer = env.FeeBumpAccount()
+}
+charged := result.Result.FeeCharged
+```
+
+## Why it's limited to fee logic
+
+`SourceAccount()` is often right. An operation without its own source runs as the inner transaction's source, fee-bump or not, so using it as the fallback is correct. The first version of this rule flagged every call and produced two false positives in wallet-backend, both correct fallbacks. Restricting it to fee logic removed them without losing the real pattern.

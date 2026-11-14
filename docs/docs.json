@@ -1,0 +1,238 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Istravex",
+  "description": "The XDR conformance and replay kit for Stellar.",
+  "colors": {
+    "primary": "#4D6B00",
+    "light": "#D4FF3F",
+    "dark": "#4D6B00"
+  },
+  "appearance": {
+    "default": "dark"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://istravex.com"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "istravex.com",
+        "href": "https://istravex.com"
+      },
+      {
+        "label": "API status",
+        "href": "https://api.istravex.com/v1/health"
+      }
+    ],
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/hackcat29/istravex"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
+  },
+  "search": {
+    "prompt": "Search fixtures, rules, the API\u2026"
+  },
+  "api": {
+    "openapi": "api-reference/openapi.json",
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "languages": [
+        "curl",
+        "javascript",
+        "go",
+        "python"
+      ]
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "quickstart",
+              "concepts"
+            ]
+          },
+          {
+            "group": "The corpus",
+            "pages": [
+              "corpus/overview",
+              "corpus/fixtures",
+              "corpus/manifest",
+              "corpus/provenance",
+              "corpus/capturing",
+              "corpus/generating",
+              "corpus/goldens",
+              "corpus/cap-coverage",
+              "corpus/contributing"
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              "tools/sdk-runners",
+              "tools/mock-rpc",
+              "tools/replay",
+              {
+                "group": "istravex-lint",
+                "pages": [
+                  "tools/lint",
+                  "tools/lint/ix001",
+                  "tools/lint/ix002",
+                  "tools/lint/ix003"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Pilots",
+            "pages": [
+              "pilots/wallet-backend",
+              "pilots/your-indexer"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Hardening guide",
+        "groups": [
+          {
+            "group": "Guide",
+            "pages": [
+              "guide/overview",
+              "guide/checklist"
+            ]
+          },
+          {
+            "group": "Rules",
+            "pages": [
+              "guide/effects-from-meta",
+              "guide/fees",
+              "guide/wide-integers",
+              "guide/muxed-accounts",
+              "guide/signed-payload-signers",
+              "guide/sac-trustlines",
+              "guide/untrusted-strings",
+              "guide/bounded-recursion",
+              "guide/consensus-data"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/rpc"
+            ]
+          },
+          {
+            "group": "Service",
+            "pages": [
+              "api-reference/endpoint/health",
+              "api-reference/endpoint/stats"
+            ]
+          },
+          {
+            "group": "Fixtures",
+            "pages": [
+              "api-reference/endpoint/list-fixtures",
+              "api-reference/endpoint/get-fixture",
+              "api-reference/endpoint/get-fixture-file"
+            ]
+          },
+          {
+            "group": "Ledgers",
+            "pages": [
+              "api-reference/endpoint/list-ledgers",
+              "api-reference/endpoint/get-ledger"
+            ]
+          },
+          {
+            "group": "Results",
+            "pages": [
+              "api-reference/endpoint/list-results",
+              "api-reference/endpoint/get-result",
+              "api-reference/endpoint/coverage"
+            ]
+          },
+          {
+            "group": "RPC",
+            "pages": [
+              "api-reference/endpoint/rpc"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Operations",
+        "groups": [
+          {
+            "group": "Running Istravex",
+            "pages": [
+              "operations/self-hosting",
+              "operations/deployment",
+              "operations/ci",
+              "operations/docs"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Project",
+        "groups": [
+          {
+            "group": "Project",
+            "pages": [
+              "project/findings",
+              "project/roadmap",
+              "project/maintenance",
+              "project/faq",
+              "project/changelog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/hackcat29/istravex",
+      "website": "https://istravex.com"
+    }
+  },
+  "seo": {
+    "indexing": "navigable"
+  },
+  "redirects": [
+    {
+      "source": "/indexer-hardening-guide",
+      "destination": "/guide/overview"
+    },
+    {
+      "source": "/cap-coverage",
+      "destination": "/corpus/cap-coverage"
+    }
+  ]
+}

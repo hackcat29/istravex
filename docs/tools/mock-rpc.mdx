@@ -1,0 +1,69 @@
+---
+title: Mock RPC
+description: Serve the corpus over Stellar RPC's wire format, so any RPC-backed indexer can replay it offline.
+---
+
+Most Stellar indexers built today ingest ledgers from Stellar RPC's `getLedgers`. The mock RPC serves the corpus's canonical ledgers with exactly the same request and response shapes, so you can point an unmodified indexer at it and replay the corpus with no network, no credentials and no funds.
+
+## Hosted
+
+```bash
+curl -X POST https://rpc.istravex.com/pubnet \
+  -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"getHealth"}'
+```
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "status": "healthy",
+    "latestLedger": 65474309,
+    "oldestLedger": 65474279,
+    "ledgerRetentionWindow": 31,
+    "latestLedgerCloseTime": "…",
+    "oldestLedgerCloseTime": "…"
+  }
+}
+```
+
+There's one endpoint per network: `/pubnet`, `/testnet` and `/local`. Each answers with that network's passphrase from `getNetwork`.
+
+## Local
+
+```bash
+npm run rpc -- --network pubnet --port 8000
+```
+
+Or embed it in a test, which is how the [wallet-backend pilot](/pilots/wallet-backend) uses it:
+
+```js
+import { startServer } from './kit/rpc/server.mjs';
+
+const server = await startServer({ network: 'pubnet', port: 0 });
+const url = `http://127.0.0.1:${server.address().port}`;
+// … run your indexer against url …
+server.close();
+```
+
+## Methods
+
+| Method | Notes |
+|---|---|
+| `getHealth` | `healthy`, plus the oldest and latest stored ledger. |
+| `getNetwork` | The network passphrase and the latest protocol version. |
+| `getLatestLedger` | Hash, sequence and protocol of the newest stored ledger. |
+| `getLedgers` | `startLedger` or `pagination.cursor`, and `pagination.limit` (1–200, default 5). `xdrFormat` must be `base64`. |
+
+Errors use Stellar RPC's codes and messages, e.g. `-32600` with *start ledger must be between the oldest ledger: … and the latest ledger: …*, so an indexer's error handling sees what it would see in production.
+
+## The ledger range is sparse
+
+The corpus stores only the ledgers its fixtures came from: mainnet 65,474,279 and 65,474,309, and nothing in between. `getHealth` reports the full span, and `getLedgers` returns the stored ledgers from `startLedger` onward, skipping the gaps. The cursor always points at the last ledger returned.
+
+Most indexers handle this fine because they request a range and process whatever comes back. If yours insists on contiguous sequences, ask for each fixture's ledger directly (`startLedger` = the fixture's `source.ledger`, `limit` = 1), which is what the pilot does.
+
+## Limits on the hosted endpoint
+
+300 requests per minute per client, batches of up to 20 requests, bodies up to 64 KB. Running it locally has no limits.

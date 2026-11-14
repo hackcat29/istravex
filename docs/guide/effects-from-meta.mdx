@@ -1,0 +1,24 @@
+---
+title: 1. Read effects from metadata, not the envelope
+sidebarTitle: Effects from metadata
+description: The envelope is a request. The metadata is the outcome.
+---
+
+A transaction envelope is what someone submitted. By the time it's in a ledger, a lot has happened that the envelope can't tell you: who actually paid, what was actually charged, which entries were created, which accounts were touched by a contract.
+
+| Question | Wrong source | Right source | Evidence |
+|---|---|---|---|
+| Who paid the fee? | `Envelope.SourceAccount()` | The fee-bump fee account, i.e. the account debited in fee changes | `cap15-fee-bump-pubnet-0001`, IX003 |
+| How much was charged? | `Envelope.Fee()` (the bid) | `TransactionResult.FeeCharged` | `cap15-fee-bump-pubnet-0001`, IX003 |
+| Was a trustline created? | A `changeTrust` operation | A `CREATED` trustline entry in the operation's changes | `cap73-sac-trust-*` |
+| Which accounts were affected? | Envelope source + operation destinations | Ledger entry changes and events in meta | replay harness |
+
+## Measured
+
+The [replay harness](/tools/replay)'s naive indexer reads effects from the envelope. It gets all four indexed cases wrong: the muxed ID and the fee-bump are incorrect, both SAC trustlines are dropped. The reference indexer reads metadata and gets all four right. So does [wallet-backend](/pilots/wallet-backend), on all six fixtures.
+
+## Not every envelope read is wrong
+
+An operation with no source of its own runs as the *inner* transaction's source, fee-bump or not. So `Envelope.SourceAccount()` is the right fallback for an operation's source. [IX003](/tools/lint/ix003) only fires inside fee logic for exactly this reason: a broader version of the rule flagged two correct fallbacks in wallet-backend.
+
+The test is simple. If you're asking "what did the submitter say?", the envelope is fine. If you're asking "what happened?", read the meta.

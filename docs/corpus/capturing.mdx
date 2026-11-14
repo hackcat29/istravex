@@ -1,0 +1,43 @@
+---
+title: Capturing from networks
+description: Pulling pinned mainnet transactions and creating fresh testnet cases.
+---
+
+Two scripts bring real network data into the corpus. Both write fixtures through the same helper (`kit/lib/fixture.mjs`), so every fixture ends up in the same shape regardless of where it came from.
+
+```bash
+npm run corpus:capture   # mainnet + testnet + canonical ledgers
+```
+
+## Mainnet
+
+`kit/capture/mainnet.mjs` captures transactions by **pinned hash**. Mainnet history never changes, so re-running it reproduces exactly the same bytes.
+
+For each hash it fetches the transaction, its ledger and its operations from Horizon, writes the XDR, and fills `expected_decoded` and `expected_indexed` from **Horizon's JSON**. That separation matters: Horizon is a different codebase from the SDKs under test, so a runner that agrees with the fixture is agreeing with an independent reading of the ledger.
+
+To add a mainnet case, add its hash to the script and read its expectations from Horizon's response.
+
+## Testnet
+
+Some patterns are valid but rare on mainnet. For those, `kit/capture/testnet.mjs` makes them happen: it funds fresh accounts from friendbot, submits the transactions that produce the pattern, and captures the result through Stellar RPC.
+
+The scenarios themselves live in `kit/capture/scenarios.mjs` and are shared with the [generator](/corpus/generating). The testnet run uses the RPC driver (`kit/capture/drivers/rpc.mjs`), which simulates Soroban transactions to get their footprints and resources, then reads the ledger back with `getLedgers`.
+
+<Note>
+Testnet resets periodically, so testnet captures can't be reproduced later by hash. Every run creates *new* cases with new keys. That's why the same scenarios also exist as generated fixtures.
+</Note>
+
+## Canonical ledgers
+
+After capturing, `kit/capture/ledgers.mjs` stores the full ledger for every fixture: from the SDF data lake for mainnet, from `getLedgers` for testnet. Then `kit/capture/canonicalize.mjs` rewrites each fixture's meta from the stored ledger, so the fixture is a byte-exact slice of it. [Provenance](/corpus/provenance) explains why.
+
+Stored ledgers are never overwritten unless you pass `--refresh`.
+
+## After capturing
+
+```bash
+npm run corpus:run
+node kit/check-results.mjs
+```
+
+Commit the new fixture directory, its ledger, the updated `corpus/ledgers/index.json` and the results together.

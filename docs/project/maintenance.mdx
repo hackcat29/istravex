@@ -1,0 +1,41 @@
+---
+title: Maintenance
+description: Who maintains Istravex, what happens on a protocol upgrade, and how to get involved.
+---
+
+Istravex is Apache 2.0 licensed and open by default. Code, corpus, results and docs all live in one public repository.
+
+## Commitments
+
+| | |
+|---|---|
+| **License** | Apache 2.0 |
+| **Maintainer** | A named maintainer for at least six months after launch |
+| **Protocol upgrades** | At least one protocol upgrade covered end to end |
+| **Telemetry** | None. Neither the site, the API, the tools nor the docs collect any. |
+
+## On a protocol upgrade
+
+<Steps>
+  <Step title="Re-pin stellar-core">
+    Update `kit/capture/core-pin.json` with the new version, commit and per-platform binary hashes, and the CI job's apt package version.
+  </Step>
+  <Step title="Bump the SDKs">
+    Move the JS, Go and Rust runners to the SDK releases for the new protocol.
+  </Step>
+  <Step title="Regenerate and re-run">
+    `npm run corpus:generate -- --force`, `node kit/goldens/fetch.mjs`, `npm run corpus:run`. The goldens move with the core pin.
+  </Step>
+  <Step title="Audit">
+    `npm run corpus:audit` against the latest stellar-protocol. New XDR-changing CAPs appear as gaps.
+  </Step>
+  <Step title="Release">
+    Tag a release with the results, and note any SDK or indexer behaviour that changed.
+  </Step>
+</Steps>
+
+## Getting involved
+
+- **Report** a wrong fixture, a lint false positive, or a broken page as a [GitHub issue](https://github.com/hackcat29/istravex/issues).
+- **Contribute** a fixture for an uncovered CAP. See [Contributing a fixture](/corpus/contributing).
+- **Run a pilot** on your indexer and share what you find. See [Replaying into your indexer](/pilots/your-indexer).

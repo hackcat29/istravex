@@ -1,0 +1,54 @@
+---
+title: Fixtures
+description: The six fixtures in the corpus, what each one catches, and the bug it exists for.
+---
+
+import Fixtures from '/snippets/fixtures-table.mdx';
+
+<Fixtures />
+
+Each fixture below is described the same way: what happened on the ledger, what goes wrong in practice, and what the fixture asserts.
+
+## Muxed payment recipient
+
+`cap27-muxed-payment-pubnet-0001` · [CAP-0027](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0027.md) · mainnet ledger 65,474,279
+
+A fee-bumped USDC payment of 59.5110803 to the muxed address `MA5XIGA5…IPC`: the account `GA5XIGA5…GKTM` plus the 64-bit ID `1764988090084626463`.
+
+**What goes wrong.** That ID is larger than 2^53, so any code path that turns it into a double rounds it. In JavaScript, `Number("1764988090084626463")` is `1764988090084626400`, and the payment gets credited to a sub-account that doesn't exist. The operation also sits inside a fee-bump, at `feeBump.tx.innerTx.v1.tx.operations[0]`, which trips code that only expects `v1` envelopes.
+
+**What it asserts.** SDKs decode the exact ID and re-encode the envelope byte for byte. Indexers store the recipient as the `G…` account and the muxed ID as the exact string.
+
+## Fee-bump fee source
+
+`cap15-fee-bump-pubnet-0001` · [CAP-0015](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0015.md) · mainnet ledger 65,474,309
+
+A fee-bump around a Soroban transaction. The outer fee source `GA2J…HVAW` pays; the inner source `GDMV…COIW` doesn't.
+
+**What goes wrong.** Two mistakes, both common. Reading the payer from the envelope's source gives the inner account. Reading the fee from the envelope gives the bid (46,341 stroops), not the charge (40,354). There's a third, subtler one: the fee changes in metadata show a 46,340-stroop debit, because they're recorded *before* Soroban's refund settles.
+
+**What it asserts.** The fee is charged to the fee-bump account, at `TransactionResult.FeeCharged`. This fixture carries the envelope, the result, and the fee changes, so all three readings can be checked.
+
+## Signed-payload signer
+
+`cap40-signed-payload-signer-testnet-0001` and `…-local-0001` · [CAP-0040](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0040.md)
+
+An account with an ed25519 signed-payload signer: a public key plus a 32-byte payload, written as a `P…` strkey. The fixture is the account's `LedgerEntryData` after `setOptions`.
+
+**What goes wrong.** Code that stores only the ed25519 key collapses different signers into one. Two signers with the same key and different payloads are different signers.
+
+**What it asserts.** SDKs round-trip the `P…` key and the entry exactly; the stored signer is the full key, with its weight.
+
+## SAC trustline
+
+`cap73-sac-trust-testnet-0001` and `…-local-0001` · [CAP-0073](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0073.md)
+
+A trustline created by calling `trust(address)` on a Stellar Asset Contract, through `invokeHostFunction`. There's no `changeTrust` operation, and `trust` emits no event.
+
+**What goes wrong.** Indexers that recognise trustlines by operation type never see it. The only record is a `CREATED` trustline entry in the operation's ledger changes, with a limit of `i64::MAX` (`9223372036854775807`, another number above 2^53).
+
+**What it asserts.** The trustline is indexed for the holder and the asset, with the exact limit, and the fixture records that zero `changeTrust` ops were involved.
+
+<Tip>
+Every fixture can be fetched over the API: `GET /v1/fixtures/{id}` for the manifest, `GET /v1/fixtures/{id}/files/{name}` for the XDR. See the [API reference](/api-reference/introduction).
+</Tip>

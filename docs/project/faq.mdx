@@ -1,0 +1,28 @@
+---
+title: FAQ
+description: Short answers to the questions people ask first.
+---
+
+<AccordionGroup>
+  <Accordion title="Isn't this what stellar-core's tests already do?">
+    Core's tests check that core produces the right ledger. Istravex checks what happens *after*: whether SDKs decode it exactly, and whether indexers store what it means. It also uses core's [golden ledgers](/corpus/goldens) directly, as a second corpus.
+  </Accordion>
+  <Accordion title="Why only six fixtures?">
+    Each one is real, verified byte for byte against its ledger, and discriminates: a known-wrong indexer fails it and a known-right one passes. A thousand fixtures that everything passes would test nothing. Breadth comes from the 15,306 golden frames; the corpus is for targeted patterns, and it's [growing](/project/roadmap).
+  </Accordion>
+  <Accordion title="Do I need Go and Rust to use it?">
+    No. To lint Go code you need Go. To replay into your indexer you need nothing but an HTTP client and the [hosted RPC](/api-reference/rpc). Go and Rust are only needed to run all three SDK runners yourself.
+  </Accordion>
+  <Accordion title="My indexer isn't written in Go. Is the guide still relevant?">
+    Yes. Every rule applies in any language; only the linter is Go-specific. The [64-bit integers](/guide/wide-integers) rule matters most in JavaScript and Python.
+  </Accordion>
+  <Accordion title="My indexer reads from Horizon or Galexie, not RPC.">
+    The canonical ledgers are available as files (`GET /v1/ledgers/{network}/{seq}`) in the same zstd `LedgerCloseMetaBatch` format as SDF's data lake, so a Galexie-style reader can consume them directly. A Horizon-compatible mock isn't planned.
+  </Accordion>
+  <Accordion title="Can I trust the expected values?">
+    They come from sources independent of the SDKs under test: Horizon for mainnet, the transaction as constructed for testnet and generated fixtures. And the fixtures themselves are proven byte-identical to the ledger. If you still think one is wrong, open an issue; that's a finding too.
+  </Accordion>
+  <Accordion title="Is the hosted API rate limited?">
+    Yes: 1,200 requests per minute for the read API and 300 for RPC, per client. For more, [run your own](/operations/self-hosting).
+  </Accordion>
+</AccordionGroup>

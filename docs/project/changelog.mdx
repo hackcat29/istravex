@@ -1,0 +1,30 @@
+---
+title: Changelog
+description: Releases of the kit, corpus and API.
+---
+
+<Update label="v1.0.0" description="14 November 2026">
+  First release. All three proposal milestones complete.
+
+  **Corpus**
+  - 6 fixtures for CAP-0015, 0027, 0040 and 0073: 2 mainnet, 2 testnet, 2 generated on pinned stellar-core 30.0.0
+  - Canonical ledgers for every fixture; provenance verifier, 62/62 checks
+  - Generator on a standalone stellar-core, pinned by binary sha256 per platform, run in CI
+  - CAP coverage audit: 70 live CAPs, 40 change XDR, 3 covered
+
+  **Conformance**
+  - JS, Go and Rust runners: 54/54 checks
+  - stellar-core `--check-lcm` goldens: 15,306/15,306 frames exact in every SDK
+
+  **Replay and pilots**
+  - Mock Stellar RPC, replay harness with naive and reference indexers
+  - stellar/wallet-backend pilot: 6/6 correct, 1 latent lint finding
+
+  **Tools and guide**
+  - istravex-lint with IX001–IX003, plus a reusable workflow and composite action
+  - Indexer hardening guide, reviewed by a Stellar Core engineer
+
+  **Hosting**
+  - Public API at `api.istravex.com` and mock RPC at `rpc.istravex.com`
+  - Docs at `docs.istravex.com`
+</Update>

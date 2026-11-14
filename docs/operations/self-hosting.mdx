@@ -1,0 +1,52 @@
+---
+title: Self-hosting the API
+description: Run the API and mock RPC yourself, as one container or straight from a checkout.
+---
+
+The hosted API is a convenience. Everything it serves is in the repository, and running your own copy takes one command. Do that when you need higher limits, an air-gapped environment, or a corpus with your own private fixtures.
+
+## From a checkout
+
+```bash
+npm ci
+npm run api            # http://localhost:8080
+```
+
+Node 24 runs the TypeScript sources directly; there's no build step.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `PORT` | `8080` | Listen port |
+| `CORPUS_DIR` | `./corpus` | Corpus to serve: point it at a fork with extra fixtures |
+| `GIT_SHA` | `dev` | Version reported by `/v1/health` |
+
+Logs are one JSON object per request on stdout. `SIGTERM` stops accepting connections and lets in-flight requests finish (up to 10 seconds).
+
+## As a container
+
+The image is published to GitHub Container Registry on every deploy of `main`:
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/hackcat29/istravex-api:latest
+```
+
+Or build it yourself:
+
+```bash
+docker build -t istravex-api .
+docker run --rm -p 8080:8080 --read-only --tmpfs /tmp --cap-drop ALL istravex-api
+```
+
+The image is Node 24 on Alpine, runs as the unprivileged `node` user, works on a read-only filesystem, and has a `HEALTHCHECK` on `/v1/health`. It contains only the server, the mock RPC and the corpus, with production dependencies: no SDK runners, no Go, no Rust.
+
+## Just the mock RPC
+
+If you only need replay, skip the API:
+
+```bash
+npm run rpc -- --network pubnet --port 8000
+```
+
+## Adding private fixtures
+
+Fork the repository, add fixtures as described in [Contributing a fixture](/corpus/contributing), run `npm run corpus:verify`, and serve your fork's `corpus/` with `CORPUS_DIR`. The API and RPC pick up every fixture and ledger at startup.

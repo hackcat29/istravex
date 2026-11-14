@@ -1,0 +1,56 @@
+---
+title: SDK runners
+description: The same three checks, in JavaScript, Go and Rust, against every fixture.
+---
+
+import Sdks from '/snippets/sdk-table.mdx';
+
+Each official SDK family gets a runner that reads the corpus and checks every fixture three ways.
+
+| Check | Question it answers |
+|---|---|
+| **decode** | Does every XDR value in the fixture parse as its declared type? |
+| **reencode** | Does encoding the decoded value give back the exact original bytes? |
+| **native** | Do the SDK's high-level forms, the ones applications actually use, produce the fixture's expected values? |
+
+The third check is where real bugs live. Decoding and re-encoding are mechanical: the generated XDR code either handles a type or it doesn't. The high-level conversions (strkeys, muxed accounts, transaction hashes, amounts) are hand-written, and they're where a 64-bit ID quietly becomes a float.
+
+## Results
+
+<Sdks />
+
+The goldens column is the [stellar-core goldens](/corpus/goldens) check: 15,306 frames from core's own test suite, decoded and re-encoded byte for byte.
+
+## Running them
+
+```bash
+npm run corpus:js     # @stellar/stellar-sdk   → corpus/results/javascript.json
+npm run corpus:go     # go-stellar-sdk         → corpus/results/go.json
+npm run corpus:rust   # stellar-xdr (Rust)     → corpus/results/rust.json
+```
+
+Each result file records the SDK, its exact version, the runtime, and per fixture every check with the differing fields if a check fails.
+
+## What "native" checks, per pattern
+
+| Pattern | Native check |
+|---|---|
+| Muxed payment | `M…` address, exact muxed ID, base `G…` account, asset, amount |
+| Fee-bump | Outer and inner transaction hashes, fee source, inner source |
+| Signed-payload signer | `P…` strkey, its ed25519 key, the payload bytes, weight |
+| SAC trustline | Exactly one trustline created in meta, its account, asset and `i64::MAX` limit |
+
+## The precision probe
+
+The JavaScript runner also records what `Number()` does to every wide integer in the corpus. It's not a pass/fail check, because the SDK itself is right. It's a measurement of what happens the moment someone's code steps outside it:
+
+| Value | `Number(value)` |
+|---|---|
+| `1764988090084626463` (muxed ID) | `1764988090084626400` |
+| `9223372036854775807` (trustline limit) | `9223372036854776000` |
+
+Both are off. See [Keep 64-bit integers exact](/guide/wide-integers).
+
+## Adding an SDK
+
+A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the native checks for the fixture's primary CAP, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. Python and Java runners are on the [roadmap](/project/roadmap).

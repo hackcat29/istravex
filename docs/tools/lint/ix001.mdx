@@ -1,0 +1,35 @@
+---
+title: IX001 · Memo text without UTF-8 validation
+sidebarTitle: IX001
+description: stellar-core accepts any 28 bytes as MEMO_TEXT. Your database might not.
+---
+
+## What it flags
+
+A function that reads a transaction's memo text (`Memo.MustText()`, `Memo.GetText()` or the `Text` field) and never validates UTF-8 anywhere in the same function.
+
+## Why it matters
+
+`MEMO_TEXT` is defined as up to 28 bytes, and stellar-core doesn't check that they're valid UTF-8. Go will happily put invalid bytes in a `string`. Then one of these happens:
+
+- PostgreSQL rejects the row (`invalid byte sequence for encoding "UTF8"`), and ingestion stalls on that ledger.
+- A JSON encoder replaces the bytes with U+FFFD, and the memo the user sees isn't the memo they sent. For exchanges that route deposits by memo, that's a lost deposit.
+
+Horizon exposes `memo_bytes` alongside `memo` for exactly this reason.
+
+## Fix
+
+Validate, or keep the bytes:
+
+```go
+text, ok := memo.GetText()
+if ok && !utf8.ValidString(text) {
+    // store base64(text) in a bytes column, or reject explicitly
+}
+```
+
+The rule recognises `utf8.ValidString`, `utf8.Valid`, `strings.ToValidUTF8`, and helpers named `ValidUTF8` or `SanitizeUTF8`.
+
+## In the wild
+
+The [wallet-backend pilot](/pilots/wallet-backend) found one instance: `internal/utils/ingestion_utils.go:17`, a helper that returns memo text as a Go string. Nothing outside tests calls it at the pinned commit and no table has a memo column, so it isn't reachable today. It's triaged **latent**: worth a guard before memos are stored. No upstream issue was filed.

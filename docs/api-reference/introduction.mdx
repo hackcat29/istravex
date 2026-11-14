@@ -1,0 +1,56 @@
+---
+title: API overview
+description: The corpus, canonical ledgers and every kit result, over HTTP.
+---
+
+The Istravex API is a read-only view of the repository's `corpus/` directory: the same files CI verifies, served at `https://api.istravex.com`. It needs no key.
+
+```bash
+curl https://api.istravex.com/v1/stats
+```
+
+<CardGroup cols={2}>
+  <Card title="Fixtures" icon="cube" href="/api-reference/endpoint/list-fixtures">List, filter and download fixtures and their raw XDR.</Card>
+  <Card title="Ledgers" icon="layer-group" href="/api-reference/endpoint/list-ledgers">The canonical LedgerCloseMeta each fixture was verified against.</Card>
+  <Card title="Results" icon="square-poll-vertical" href="/api-reference/endpoint/list-results">Raw output of every kit stage, and the CAP audit.</Card>
+  <Card title="RPC" icon="tower-broadcast" href="/api-reference/rpc">A mock Stellar RPC for replaying the corpus.</Card>
+</CardGroup>
+
+## Conventions
+
+**Versioning.** Everything is under `/v1`. Additive changes (new fields, new endpoints) don't bump the version; anything that could break a client does.
+
+**64-bit integers are strings.** IDs, amounts, fees and limits come back as JSON strings, exactly as stored in the manifests. Parse them with `BigInt` or a decimal type. See [why](/guide/wide-integers).
+
+**XDR.** Fixture files are base64 by default, byte-identical to the repository. Add `?encoding=binary` for raw bytes. `X-XDR-Type` names the type; `X-Content-SHA256` is the sha256 of the decoded bytes, matching the manifest, so you can verify every download.
+
+**Caching.** Responses carry `ETag` and `Cache-Control`. The corpus only changes on deploy, so conditional requests with `If-None-Match` return `304` and cost nothing.
+
+**CORS.** Every origin is allowed. Call it straight from a browser.
+
+## Errors
+
+Errors are JSON with a stable code:
+
+```json
+{ "error": { "code": "not_found", "message": "Fixture not found" } }
+```
+
+| Status | Code | When |
+|---|---|---|
+| 404 | `not_found` | Unknown fixture, file, ledger, result or route |
+| 429 | `rate_limited` | Over the rate limit; see `Retry-After` |
+| 500 | `internal` | A bug. Please report it. |
+
+## Rate limits
+
+| Endpoints | Limit |
+|---|---|
+| `/v1/*` | 1,200 requests per minute per client |
+| `/rpc/*` (`rpc.istravex.com`) | 300 requests per minute per client |
+
+Every response carries `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset`. If you need more, [run your own](/operations/self-hosting): it's one container.
+
+## OpenAPI
+
+The full spec is served at [`https://api.istravex.com/openapi.json`](https://api.istravex.com/openapi.json) (OpenAPI 3.1). It's the same file these reference pages are generated from, and a test fails if the server and the spec disagree.

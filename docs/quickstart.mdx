@@ -1,0 +1,93 @@
+---
+title: Quickstart
+description: Run the full kit locally, then point it at your own code.
+---
+
+You can be useful with Istravex in three ways, depending on how much you want to install. Pick the one that fits.
+
+<Tabs>
+  <Tab title="Just look">
+    No install. The hosted API serves the corpus and every result.
+
+    ```bash
+    # The headline numbers
+    curl https://api.istravex.com/v1/stats
+
+    # Every fixture, then one manifest
+    curl https://api.istravex.com/v1/fixtures
+    curl https://api.istravex.com/v1/fixtures/cap27-muxed-payment-pubnet-0001
+
+    # The raw XDR, exactly as stored
+    curl https://api.istravex.com/v1/fixtures/cap27-muxed-payment-pubnet-0001/files/envelope
+    ```
+
+    See the [API reference](/api-reference/introduction) for everything else.
+  </Tab>
+  <Tab title="Replay into your indexer">
+    If your indexer reads ledgers from Stellar RPC, point it at the public mock RPC instead. It speaks `getLedgers` and serves the corpus's canonical ledgers.
+
+    ```bash
+    curl -X POST https://rpc.istravex.com/pubnet \
+      -H 'content-type: application/json' \
+      -d '{"jsonrpc":"2.0","id":1,"method":"getHealth"}'
+    ```
+
+    Use `https://rpc.istravex.com/pubnet`, `/testnet` or `/local` as your RPC URL, ingest the ledgers it reports, and compare what you stored against each fixture's `expected_indexed`. [Replaying into your indexer](/pilots/your-indexer) walks through it.
+  </Tab>
+  <Tab title="Run everything">
+    Clone the repository and run the whole pipeline. You'll need Node 24, Go 1.25 and a stable Rust toolchain.
+
+    <Steps>
+      <Step title="Install">
+        ```bash
+        git clone https://github.com/hackcat29/istravex
+        cd istravex
+        npm ci
+        ```
+      </Step>
+      <Step title="Run the kit">
+        ```bash
+        node kit/goldens/fetch.mjs   # once: stellar-core's golden ledgers (~80 MB)
+        npm run corpus:run
+        ```
+        This verifies every fixture against its canonical ledger, runs the JavaScript, Go and Rust SDK checks, round-trips stellar-core's golden ledgers, replays the corpus through the reference indexers, and regenerates `src/data/corpus.json`.
+      </Step>
+      <Step title="Confirm it's green">
+        ```bash
+        node kit/check-results.mjs
+        # all green: 6 fixtures
+        ```
+      </Step>
+      <Step title="Optional: the upstream pilot and the audit">
+        ```bash
+        npm run pilot:wallet-backend   # runs wallet-backend's ingestion over the corpus
+        npm run corpus:audit           # re-audits CAP coverage from stellar-protocol
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Lint your Go indexer
+
+`istravex-lint` runs anywhere Go does. No clone required:
+
+```bash
+go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@latest ./...
+```
+
+Each finding names its rule (`IX001` to `IX003`) and links to an explanation. Read [istravex-lint](/tools/lint) before adding it to CI. It's tuned to stay quiet on correct code, and you'll want to know how to suppress a finding you've reviewed.
+
+## Serve the corpus yourself
+
+```bash
+npm run rpc -- --network pubnet --port 8000   # mock Stellar RPC only
+npm run api                                    # the full API on :8080
+```
+
+## Where to go next
+
+<CardGroup cols={2}>
+  <Card title="Concepts" icon="lightbulb" href="/concepts">How fixtures, canonical ledgers and verdicts fit together.</Card>
+  <Card title="Hardening guide" icon="shield-check" href="/guide/overview">The rules the corpus exists to enforce.</Card>
+</CardGroup>

@@ -1,0 +1,101 @@
+---
+title: Manifest format
+description: Every field in a fixture's manifest.json, and the rules it follows.
+---
+
+Every fixture directory has a `manifest.json` that describes the fixture and points to its XDR files. Manifests are validated against [`corpus/manifest.schema.json`](https://github.com/hackcat29/istravex/blob/main/corpus/manifest.schema.json) (JSON Schema 2020-12) on every run of the verifier.
+
+Here's a real one, for the muxed-payment fixture:
+
+```json manifest.json
+{
+  "id": "cap27-muxed-payment-pubnet-0001",
+  "cap_ids": ["CAP-0027"],
+  "protocol_version": 29,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "feeBump.tx.innerTx.v1.tx.operations[0].body.paymentOp.destination",
+  "sha256": "cd2060293cc1e6ff33a164c6758fa83349743ed078a6faefbc2215e2fe0d91cb",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 65474279,
+    "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+    "closed_at": "2026-11-14T11:57:17Z"
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "fee_bumped": true,
+    "op_index": 0,
+    "destination_muxed": "MA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGGD6P5IQ4SQQD6IPC",
+    "destination_account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+    "muxed_id": "1764988090084626463",
+    "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+    "amount": "59.5110803"
+  },
+  "expected_indexed": {
+    "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+    "recipient_muxed_id": "1764988090084626463"
+  },
+  "files": [
+    { "name": "envelope", "xdr_type": "TransactionEnvelope", "path": "envelope.xdr.b64", "sha256": "cd2060…91cb", "bytes": 392 },
+    { "name": "result", "xdr_type": "TransactionResult", "path": "result.xdr.b64", "sha256": "aa929c…57d6", "bytes": 80 }
+  ]
+}
+```
+
+## Fields
+
+<ResponseField name="id" type="string" required>
+  `cap<NN>-<pattern>-<network>-<NNNN>`. Stable forever: results, docs and the API refer to it.
+</ResponseField>
+
+<ResponseField name="cap_ids" type="string[]" required>
+  The CAPs whose XDR the fixture exercises, as `CAP-NNNN`. The first one is the fixture's primary CAP.
+</ResponseField>
+
+<ResponseField name="protocol_version" type="integer" required>
+  The ledger's protocol version. The verifier checks it against the ledger header.
+</ResponseField>
+
+<ResponseField name="network" type="string" required>
+  `pubnet`, `testnet`, or `local` (a standalone network built by the [generator](/corpus/generating)).
+</ResponseField>
+
+<ResponseField name="xdr_type" type="string" required>
+  The XDR type of the primary file.
+</ResponseField>
+
+<ResponseField name="xdr_path" type="string" required>
+  Where in that value the interesting part lives, e.g. the muxed destination inside a fee-bump. For humans; tools don't parse it.
+</ResponseField>
+
+<ResponseField name="sha256" type="string" required>
+  sha256 of the primary file's decoded bytes.
+</ResponseField>
+
+<ResponseField name="source" type="object" required>
+  Where the fixture came from: `kind` (`captured` or `generated`), `network_endpoint`, `ledger`, `tx_hash`, `closed_at`. Generated fixtures add `generator`: the stellar-core version, binary sha256, build and Soroban limits factor that produced them.
+</ResponseField>
+
+<ResponseField name="synthetic" type="boolean" required>
+  `true` only for hand-built XDR that never appeared on any network. Every fixture today is `false`.
+</ResponseField>
+
+<ResponseField name="expected_decoded" type="object">
+  What an SDK must extract from the bytes. Values come from an independent source (Horizon, or the transaction as built), never from an SDK under test.
+</ResponseField>
+
+<ResponseField name="expected_indexed" type="object">
+  What an indexer must store. Used by [replay](/tools/replay) and the [pilots](/pilots/wallet-backend).
+</ResponseField>
+
+<ResponseField name="files" type="object[]" required>
+  One entry per XDR value: `name`, `xdr_type`, `path` (base64 file in the fixture directory), `sha256` and `bytes` of the decoded value.
+</ResponseField>
+
+## Conventions
+
+- **Every 64-bit integer is a JSON string.** IDs, amounts, fees and limits are strings so that no consumer's `JSON.parse` can round them. This isn't style: the kit's own pilot driver hit that exact bug before it was fixed.
+- **Files are base64 of raw XDR**, one value per file, with a trailing newline. Decode them with any SDK's `fromXDR(..., 'base64')`.
+- **Amounts in `expected_decoded`** use the human decimal form Horizon uses (`59.5110803`); amounts in `expected_indexed` use stroops when the indexer stores stroops.

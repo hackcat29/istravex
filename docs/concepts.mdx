@@ -1,0 +1,57 @@
+---
+title: Concepts
+description: The handful of ideas everything else in Istravex is built on.
+---
+
+Most of Istravex is plumbing around a few ideas. Once these click, the rest of the docs read quickly.
+
+## Fixtures
+
+A **fixture** is one interesting thing that happened on a Stellar network, captured as XDR and annotated with what correct software should do with it.
+
+It lives in `corpus/fixtures/<id>/` as a `manifest.json` and one base64 file per XDR value. A fixture can hold several values: the muxed-payment fixture carries the transaction envelope and its result; the fee-bump fixture adds the fee changes, because that's where the payer is recorded.
+
+Every fixture is tied to the **CAP** (Core Advancement Proposal) that introduced or changed the pattern it exercises. That's how the [coverage audit](/corpus/cap-coverage) knows what's missing.
+
+## Two kinds of expectation
+
+Each manifest says what correct software must reproduce, at two levels:
+
+- **`expected_decoded`**: what an SDK must get out of the bytes. For example: the muxed ID is exactly `1764988090084626463`, and the transaction hashes to `ebfeab1b…`.
+- **`expected_indexed`**: what an indexer must store. For example: the fee of 40,354 stroops is debited from the fee-bump payer, not the inner transaction's source.
+
+These are written from an **independent source**: Horizon's JSON for mainnet captures, and the transaction as we built it for testnet and generated fixtures. They are never produced by the SDKs under test. A runner that agreed with itself would prove nothing.
+
+## Canonical ledgers and provenance
+
+A fixture is only trustworthy if it is exactly what the network recorded. So for every fixture, Istravex stores the full `LedgerCloseMeta` of the ledger it came from, from the most canonical source available:
+
+| Network | Source |
+|---|---|
+| `pubnet` | SDF's public data lake, byte for byte |
+| `testnet` | Stellar RPC `getLedgers`, stored once and pinned |
+| `local` | stellar-core's own metadata stream, during generation |
+
+The [provenance verifier](/corpus/provenance) then requires every XDR value in the fixture to be **byte-identical** to the ledger's copy. If a fixture drifts, CI fails.
+
+## Consensus data versus node-local data
+
+Not everything in ledger metadata is agreed by the network. **Diagnostic events** are written by whichever node executed the transaction, and they include things like wall-clock execution time. Two RPC nodes can return different bytes for the same transaction, and both are honest.
+
+Istravex found this the hard way: the same testnet transaction's meta differed between `getTransaction` and `getLedgers` in exactly one value, `invoke_time_nsecs`. The [consensus data](/guide/consensus-data) rule in the guide explains what to do about it.
+
+## Verdicts
+
+When the [replay harness](/tools/replay) or a [pilot](/pilots/wallet-backend) scores an indexer, each fixture gets one of three verdicts:
+
+| Verdict | Meaning |
+|---|---|
+| **correct** | The record the ledger supports is present and every checked field matches. |
+| **incorrect** | The record is present but a field is wrong, e.g. a rounded muxed ID or the wrong fee payer. |
+| **dropped** | The record the ledger supports is missing entirely, e.g. a trustline created by a contract call. |
+
+"Dropped" is usually the worst of the three, because nothing downstream can notice it.
+
+## Pinning
+
+Everything that could change underneath you is pinned: the SDK versions, the stellar-core build (by binary sha256), the wallet-backend commit used in the pilot, the stellar-protocol commit used in the audit, and the stellar-core commit whose golden ledgers are checked. Re-running the kit next year should give the same answers, or tell you exactly which pin moved.

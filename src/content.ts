@@ -10,6 +10,7 @@ import corpus from './data/corpus.json';
 
 export { corpus };
 export const REPO_URL = 'https://github.com/hackcat29/istravex';
+export const DOCS_URL = 'https://docs.istravex.com';
 
 type Fixture = (typeof corpus.fixtures)[number];
 type ReplayRow = (typeof corpus.replay)[number];
@@ -309,8 +310,10 @@ export const cta = {
 };
 
 export const docs = [
-  { href: `${REPO_URL}/blob/main/docs/indexer-hardening-guide.md`, label: 'Hardening guide' },
-  { href: `${REPO_URL}/blob/main/docs/cap-coverage.md`, label: 'CAP coverage' },
+  { href: DOCS_URL, label: 'Docs' },
+  { href: `${DOCS_URL}/guide/overview`, label: 'Hardening guide' },
+  { href: `${DOCS_URL}/corpus/cap-coverage`, label: 'CAP coverage' },
+  { href: `${DOCS_URL}/api-reference/introduction`, label: 'API' },
 ];
 
 export const footer = {

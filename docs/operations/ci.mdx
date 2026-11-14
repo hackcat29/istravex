@@ -1,0 +1,64 @@
+---
+title: CI
+description: What runs on every push, and the templates for running Istravex in your own CI.
+---
+
+## This repository
+
+`.github/workflows/ci.yml` runs on every push and pull request. Every job must pass before `main` deploys.
+
+| Job | What it proves |
+|---|---|
+| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JS, Go and Rust runners pass; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; `src/data/corpus.json` is up to date |
+| **Generate on pinned stellar-core** | Installs SDF's stellar-core 30.0.0 package, regenerates the local fixtures from scratch, then verifies and runs them |
+| **API tests and container** | The API's tests pass, including the check that every OpenAPI path is served; the image builds and answers correctly while running read-only and unprivileged |
+| **Upstream pilot** | wallet-backend's own ingestion, at its pinned commit, indexes every fixture correctly, and every lint finding on it is triaged |
+| **Site build and e2e** | The site builds and the Playwright suite passes on desktop and mobile |
+
+`node kit/check-results.mjs` is the gate inside the kit jobs. It checks results by substance (every check passed, every frame exact, every verdict correct) rather than diffing result files, which record machine-specific runtime versions.
+
+## In your repository
+
+Two templates let you run Istravex checks in your own CI.
+
+### Lint a Go indexer
+
+```yaml .github/workflows/istravex.yml
+name: Istravex
+on: [push, pull_request]
+jobs:
+  lint:
+    uses: hackcat29/istravex/.github/workflows/lint-indexer.yml@v1
+    with:
+      packages: ./...
+```
+
+### As a step in an existing job
+
+```yaml
+- uses: actions/checkout@v7
+- uses: hackcat29/istravex/actions/lint@v1
+  with:
+    packages: ./...
+    working-directory: .
+```
+
+Both run `istravex-lint` at the matching release and fail the job on any unsuppressed finding. Findings appear as annotations on the pull request.
+
+### Replay the corpus in your tests
+
+Start the mock RPC as a service and point your ingestion tests at it:
+
+```yaml
+- uses: actions/checkout@v7
+  with:
+    repository: hackcat29/istravex
+    ref: v1
+    path: istravex
+- uses: actions/setup-node@v7
+  with: { node-version: 24 }
+- run: cd istravex && npm ci --omit=dev && (npm run rpc -- --network pubnet --port 8000 &)
+- run: ISTRAVEX_RPC=http://127.0.0.1:8000 go test ./ingest/...
+```
+
+Or skip the setup and use `https://rpc.istravex.com/pubnet`, within its rate limits.

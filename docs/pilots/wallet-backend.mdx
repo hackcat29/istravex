@@ -1,0 +1,64 @@
+---
+title: wallet-backend pilot
+description: Running stellar/wallet-backend's own ingestion over the corpus, unmodified, and scoring what it produces.
+---
+
+import Pilot from '/snippets/pilot-table.mdx';
+
+Toy indexers prove the corpus discriminates. A real indexer proves it's useful. The pilot runs [stellar/wallet-backend](https://github.com/stellar/wallet-backend), SDF's backend for wallets, over every fixture and scores the result.
+
+## How it works
+
+Nothing in wallet-backend is changed or mocked except the network:
+
+<Steps>
+  <Step title="Pinned checkout">
+    wallet-backend is cloned into `.cache/wallet-backend` at commit [`3e22515`](https://github.com/stellar/wallet-backend/commit/3e22515a44979fdc3a558fda3991ca2b48e38cef) (main, 12 November 2026).
+  </Step>
+  <Step title="Adapter">
+    A small Go file, `kit/pilot/wallet-backend/adapter.go`, is copied in behind a build tag. It needs the module's internal packages, which is why it lives inside the checkout.
+  </Step>
+  <Step title="Mock RPC">
+    The [mock RPC](/tools/mock-rpc) serves the corpus's canonical ledgers, one server per network.
+  </Step>
+  <Step title="wallet-backend's own pipeline">
+    For each fixture, the adapter builds wallet-backend's own RPC ledger backend (`ingest.NewLedgerBackend`), fetches the fixture's ledger through `getLedgers`, and runs `indexer.ProcessLedger`, the same per-ledger function live ingestion calls. It prints what the indexer produced for the fixture's transaction. Nothing is written to a database; the output is exactly what ingestion would hand to persistence.
+  </Step>
+  <Step title="Score">
+    `kit/pilot/score.mjs` compares that output with each fixture's expectations, field by field.
+  </Step>
+  <Step title="Lint">
+    `istravex-lint` runs over the same checkout, and each finding is matched against a reviewed triage in `kit/pilot/wallet-backend/triage.json`. An untriaged finding fails CI.
+  </Step>
+</Steps>
+
+```bash
+npm run pilot:wallet-backend   # → corpus/results/pilot-wallet-backend.json
+```
+
+## Results
+
+<Pilot />
+
+**6 of 6 correct.** wallet-backend charges fee-bump fees to the right account at the charged amount, keeps the muxed ID exact (it stores `to_muxed_id` as text), records the full `P…` signer, and indexes the SAC trustline from metadata. On every pattern in the corpus, it already does what the [hardening guide](/guide/overview) asks.
+
+## Lint
+
+One finding, triaged **latent**:
+
+```go internal/utils/ingestion_utils.go
+switch memoType {
+case xdr.MemoTypeMemoNone:
+    return nil, memoType.String()
+case xdr.MemoTypeMemoText:
+    if text, ok := memo.GetText(); ok {   // IX001
+        return &text, memoType.String()
+    }
+case xdr.MemoTypeMemoId:
+```
+
+`utils.Memo` returns memo text as a Go string without UTF-8 validation. Nothing outside tests calls it at this commit and no migration has a memo column, so it isn't reachable today. It's worth a guard before memos are stored. Because it isn't a live bug, no upstream issue was filed.
+
+## What the pilot taught us about our own code
+
+The first version of the pilot driver passed wallet-backend's JSON output through `JSON.parse` and reported muxed IDs off by a few hundred. wallet-backend was right. The driver was rounding them, the exact bug the corpus exists to catch. The adapter now emits every 64-bit integer as a string.

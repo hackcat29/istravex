@@ -1,0 +1,48 @@
+---
+title: Findings
+description: What building Istravex turned up about Stellar's data, its tools, and our own code.
+---
+
+Building a conformance kit means reading a lot of real ledger data closely. These are the things that surprised us, each with the evidence behind it. Several became rules in the [hardening guide](/guide/overview).
+
+## About the ledger
+
+<AccordionGroup>
+  <Accordion title="Fee changes over-count Soroban fees">
+    On the fee-bump fixture, the fee-processing changes debit 46,340 stroops, but `FeeCharged` is 40,354. The difference is the Soroban refund, which settles after apply, later in the transaction's meta. Anyone computing fees from balance deltas in fee processing alone over-reports by about 15% on this transaction. → [Fees](/guide/fees)
+  </Accordion>
+  <Accordion title="RPC nodes disagree about the same ledger">
+    The same testnet transaction's meta differed between one node's `getTransaction` and another's `getLedgers` in a single value: a diagnostic `invoke_time_nsecs` (188,866 vs 126,592 ns). Whole testnet ledgers re-fetched hours later from the same endpoint hashed differently. Mainnet data-lake objects never did. → [Consensus data only](/guide/consensus-data)
+  </Accordion>
+  <Accordion title="SAC trustlines leave almost no trace">
+    A trustline created with the SAC's `trust()` has no classic operation and no event. Its only record is a `CREATED` entry in the operation's changes. An indexer keyed on operation types drops it silently. → [SAC trustlines](/guide/sac-trustlines)
+  </Accordion>
+  <Accordion title="stellar-core's goldens don't cover signed-payload signers">
+    Of 866 golden files at core v30.0.0, none contains an ed25519 signed-payload signer. The corpus covers it on testnet and on a generated network. → [stellar-core goldens](/corpus/goldens)
+  </Accordion>
+</AccordionGroup>
+
+## About the tools
+
+<AccordionGroup>
+  <Accordion title="All three SDKs are correct on everything we threw at them">
+    JavaScript, Go and Rust pass all 54 fixture checks and round-trip all 15,306 golden frames byte for byte. The risk isn't in the SDKs' decoding. It's in what applications do with the values next. → [SDK runners](/tools/sdk-runners)
+  </Accordion>
+  <Accordion title="wallet-backend already does it right">
+    SDF's wallet-backend indexes all six fixtures correctly. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
+  </Accordion>
+  <Accordion title="stellar-core 30.0.0 standalone quirks">
+    A bare `/manualclose` can abort core on a timer assertion; the HTTP query server matches header names case-sensitively and closes every connection; the first Soroban settings upgrade is larger than the starting limit it's stored under. All have workarounds. → [Generating](/corpus/generating#stellar-core-quirks-it-works-around)
+  </Accordion>
+</AccordionGroup>
+
+## About our own code
+
+<AccordionGroup>
+  <Accordion title="We shipped the bug we were looking for">
+    The first pilot driver passed wallet-backend's JSON through `JSON.parse` and reported muxed IDs off by a few hundred. wallet-backend was right; our driver was rounding. Every 64-bit integer the kit emits is now a string. → [64-bit integers](/guide/wide-integers)
+  </Accordion>
+  <Accordion title="Our first lint rule was too eager">
+    The first IX003 flagged every `Envelope.SourceAccount()` call and produced two false positives in wallet-backend, both correct operation-source fallbacks. It now fires only in fee logic. → [IX003](/tools/lint/ix003)
+  </Accordion>
+</AccordionGroup>

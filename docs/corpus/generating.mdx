@@ -1,0 +1,61 @@
+---
+title: Generating on stellar-core
+description: Building fixtures on a pinned, standalone stellar-core, with no external network.
+---
+
+`kit/capture/generate.mjs` runs the same scenarios as the testnet capture on a fresh, private network: a standalone stellar-core started just for this, upgraded to protocol 30, driven over its own HTTP interface, and shut down afterwards. No RPC, no Docker, no friendbot, no internet.
+
+```bash
+npm run corpus:generate -- --force
+```
+
+`--force` is required when generated fixtures already exist, because regeneration creates new keys and so new bytes. Without it the script refuses, so nobody overwrites the committed fixtures by accident.
+
+## The pinned binary
+
+The generator only runs with the exact stellar-core it was validated against. `kit/capture/core-pin.json` pins version 30.0.0 (commit `0e49751`) and one build per platform:
+
+| Platform | Build | Install |
+|---|---|---|
+| `darwin-arm64` | Homebrew bottle 30.0.0 | `brew install stellar-core` |
+| `linux-x64` | SDF's apt package `30.0.0-3642.0e49751aa.noble` | `apt-get install stellar-core=30.0.0-3642.0e49751aa.noble` from apt.stellar.org |
+
+Before starting, the generator hashes the binary on your `PATH` (or `$STELLAR_CORE`) and compares it with the pin. A different binary is refused. `--allow-unpinned` overrides this for experiments, and the fixture's `source.generator` records whatever was actually used.
+
+## What it does
+
+<Steps>
+  <Step title="Start a standalone network">
+    A fresh SQLite database, `RUN_STANDALONE=true`, `MANUAL_CLOSE=true`, and core's metadata stream enabled. The node is its own quorum.
+  </Step>
+  <Step title="Upgrade to protocol 30">
+    In one step from genesis, using core's `/upgrades` endpoint.
+  </Step>
+  <Step title="Raise Soroban limits">
+    A fresh network starts with tiny Soroban limits: three footprint entries, 3,200-byte reads and writes, one Soroban transaction per ledger. The generator raises every per-ledger and per-transaction maximum tenfold with a **real settings upgrade**, the way network operators do: `stellar-core get-settings-upgrade-txs` builds and signs the transactions, the generator submits them, then arms the upgrade.
+  </Step>
+  <Step title="Run the scenarios">
+    Transactions go to core's `/tx`, each ledger is closed with `/manualclose`, and entries are read from core's query server. Soroban transactions declare their footprints explicitly, since there's no simulator.
+  </Step>
+  <Step title="Read the ledger from core">
+    Each ledger's `LedgerCloseMeta` is read from core's `METADATA_OUTPUT_STREAM`, the canonical output, and stored. No RPC node sits in between, so there's no node-local variance.
+  </Step>
+</Steps>
+
+CI runs this on every push, on Ubuntu with the pinned apt package, and then verifies and runs the regenerated corpus. A regression in the generator, the pin or core's behaviour fails the build.
+
+## stellar-core quirks it works around
+
+Getting a standalone core to behave turned up a few behaviours worth knowing if you drive core directly. Each is handled in `kit/capture/drivers/core.mjs` and commented there.
+
+<AccordionGroup>
+  <Accordion title="The HTTP servers reject fetch()">
+    Core's HTTP servers close the socket after every response, and the query server matches header names case-sensitively: it answers `400` to `content-type` and `200` to `Content-Type`. Node's `fetch()` pools connections and lowercases headers, so it fails against both. The driver uses `node:http` with one connection per request.
+  </Accordion>
+  <Accordion title="A bare /manualclose can abort core">
+    Without a close time, `/manualclose` intermittently trips an assertion (`t >= mVirtualNow`, `util/Timer.cpp:287`) and core exits. The driver always passes an explicit, strictly increasing `closeTime`. Under `MANUAL_CLOSE` core's virtual clock runs ahead of wall time, so when core refuses a time as too early, the driver retries past the "now" core reports.
+  </Accordion>
+  <Accordion title="The first settings upgrade is too big for the starting limits">
+    The full `ConfigUpgradeSet` is about 4 KB, larger than the 2,000-byte contract-data entry limit it is stored under on a fresh network. The driver uploads only the settings it changes.
+  </Accordion>
+</AccordionGroup>
