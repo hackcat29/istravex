@@ -16,6 +16,8 @@ const replay = read('replay.json').rows;
 const provenance = read('provenance.json').fixtures;
 const pilotRaw = read('pilot-wallet-backend.json');
 const coverage = JSON.parse(readFileSync(join(ROOT, 'corpus', 'coverage.json'), 'utf8'));
+const goldens = ['javascript', 'go', 'rust'].map((s) => read(`goldens-${s}.json`));
+const goldenPatterns = read('goldens-patterns.json');
 
 const lintFindings = pilotRaw.lint.findings; // each carries its source snippet
 
@@ -42,6 +44,9 @@ const fixtures = corpus.map(({ manifest: m, blobs }) => {
 const checks = sdks.flatMap((s) => s.results.flatMap((r) => Object.values(r.checks)));
 const provChecks = provenance.flatMap((p) => p.checks);
 const stats = {
+  golden_files: goldens[0].files,
+  golden_frames: goldens[0].frames,
+  golden_exact: Math.min(...goldens.map((g) => g.exact)),
   provenance_checks: provChecks.length,
   provenance_passed: provChecks.filter((c) => c.ok).length,
   pilot_fixtures: pilotRaw.results.length,
@@ -93,6 +98,11 @@ const out = {
   coverage: {
     source: coverage.source,
     xdr_caps: coverage.caps.filter((c) => c.changes_xdr).map((c) => ({ cap: c.cap, title: c.title, protocol: c.protocol_version, covered: c.fixtures.length > 0 })),
+  },
+  goldens: {
+    core_commit: goldenPatterns.core_commit,
+    sdks: goldens.map(({ sdk, package: pkg, version, files, frames, exact }) => ({ sdk, package: pkg, version, files, frames, exact })),
+    patterns: Object.fromEntries(Object.entries(goldenPatterns.caps).map(([cap, c]) => [cap, { pattern: c.pattern, golden_files: c.golden_files }])),
   },
   pilot: {
     component: pilotRaw.component,

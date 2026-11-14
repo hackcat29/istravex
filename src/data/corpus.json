@@ -1,6 +1,9 @@
 {
   "generated_by": "kit/site-data.mjs",
   "stats": {
+    "golden_files": 866,
+    "golden_frames": 15306,
+    "golden_exact": 15306,
     "provenance_checks": 62,
     "provenance_passed": 62,
     "pilot_fixtures": 6,
@@ -1074,6 +1077,53 @@
         "covered": false
       }
     ]
+  },
+  "goldens": {
+    "core_commit": "0e49751aa9ddf892302cca02cea7f3f5d97df9f1",
+    "sdks": [
+      {
+        "sdk": "javascript",
+        "package": "@stellar/stellar-sdk",
+        "version": "17.4.0",
+        "files": 866,
+        "frames": 15306,
+        "exact": 15306
+      },
+      {
+        "sdk": "go",
+        "package": "github.com/stellar/go-stellar-sdk",
+        "version": "0.9.0",
+        "files": 866,
+        "frames": 15306,
+        "exact": 15306
+      },
+      {
+        "sdk": "rust",
+        "package": "stellar-xdr",
+        "version": "30.0.0",
+        "files": 866,
+        "frames": 15306,
+        "exact": 15306
+      }
+    ],
+    "patterns": {
+      "CAP-0015": {
+        "pattern": "fee-bump transaction",
+        "golden_files": 19
+      },
+      "CAP-0027": {
+        "pattern": "muxed account (M-address)",
+        "golden_files": 2
+      },
+      "CAP-0040": {
+        "pattern": "ed25519 signed-payload signer (P-address)",
+        "golden_files": 0
+      },
+      "CAP-0073": {
+        "pattern": "SAC trust() creating a trustline",
+        "golden_files": 1
+      }
+    }
   },
   "pilot": {
     "component": "stellar/wallet-backend",

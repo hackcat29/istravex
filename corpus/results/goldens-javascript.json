@@ -1,0 +1,10 @@
+{
+  "sdk": "javascript",
+  "package": "@stellar/stellar-sdk",
+  "version": "17.4.0",
+  "core_commit": "0e49751aa9ddf892302cca02cea7f3f5d97df9f1",
+  "files": 866,
+  "frames": 15306,
+  "exact": 15306,
+  "failures": []
+}

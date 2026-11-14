@@ -18,6 +18,14 @@ for (const sdk of ['javascript', 'go', 'rust']) {
   for (const id of fixtures) if (!seen.has(id)) failures.push(`${sdk}: no result for ${id}`);
   for (const x of r.results) for (const [k, v] of Object.entries(x.checks)) if (v !== 'pass') failures.push(`${sdk} ${x.fixture} ${k}: ${x.detail.join('; ')}`);
 }
+for (const sdk of process.env.SKIP_GOLDENS ? [] : ['javascript', 'go', 'rust']) {
+  if (!existsSync(join(RESULTS, `goldens-${sdk}.json`))) {
+    failures.push(`goldens: no ${sdk} result (npm run corpus:goldens)`);
+    continue;
+  }
+  const g = read(`goldens-${sdk}.json`);
+  if (!g.frames || g.exact !== g.frames) failures.push(`goldens ${sdk}: ${g.exact}/${g.frames} frames exact`);
+}
 for (const row of read('replay.json').rows) {
   if (row.indexer === 'reference' && row.verdict !== 'correct') failures.push(`replay reference ${row.fixture}: ${row.verdict}`);
 }

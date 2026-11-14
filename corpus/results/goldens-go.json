@@ -1,0 +1,9 @@
+{
+  "exact": 15306,
+  "failures": [],
+  "files": 866,
+  "frames": 15306,
+  "package": "github.com/stellar/go-stellar-sdk",
+  "sdk": "go",
+  "version": "0.9.0"
+}

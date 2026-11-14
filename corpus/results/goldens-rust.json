@@ -1,0 +1,9 @@
+{
+  "exact": 15306,
+  "failures": [],
+  "files": 866,
+  "frames": 15306,
+  "package": "stellar-xdr",
+  "sdk": "rust",
+  "version": "30.0.0"
+}

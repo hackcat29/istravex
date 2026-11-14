@@ -196,7 +196,56 @@ fn native(m: &Manifest, dec: &BTreeMap<String, Decoded>) -> Result<Rows, String>
     }
 }
 
+/// `goldens <test-lcm-current dir> <corpus dir>`: decode and byte-exact
+/// re-encode every LedgerCloseMeta frame in stellar-core's golden files.
+fn goldens(dir: &Path, corpus: &Path) {
+    let mut files: Vec<_> = fs::read_dir(dir)
+        .expect("goldens dir")
+        .filter_map(|d| d.ok())
+        .filter(|d| d.path().is_dir())
+        .flat_map(|d| fs::read_dir(d.path()).into_iter().flatten().filter_map(|e| e.ok()).map(|e| e.path()))
+        .filter(|p| p.extension().and_then(|e| e.to_str()) == Some("xdr"))
+        .collect();
+    files.sort();
+    let (mut frames, mut exact) = (0usize, 0usize);
+    let mut failures = vec![];
+    for f in &files {
+        let raw = fs::read(f).unwrap();
+        let rel = f.strip_prefix(dir).unwrap().display().to_string();
+        let mut off = 0usize;
+        let mut i = 0usize;
+        while off + 4 <= raw.len() {
+            let n = (u32::from_be_bytes(raw[off..off + 4].try_into().unwrap()) & 0x7fff_ffff) as usize;
+            if off + 4 + n > raw.len() {
+                break;
+            }
+            let fr = &raw[off + 4..off + 4 + n];
+            frames += 1;
+            match stellar_xdr::LedgerCloseMeta::from_xdr(fr, Limits::none()) {
+                Ok(v) => match v.to_xdr(Limits::none()) {
+                    Ok(out) if out == fr => exact += 1,
+                    _ => failures.push(json!({ "file": rel, "frame": i, "error": "re-encode differs" })),
+                },
+                Err(e) => failures.push(json!({ "file": rel, "frame": i, "error": e.to_string() })),
+            }
+            off += 4 + n;
+            i += 1;
+        }
+    }
+    println!("rust: {exact}/{frames} frames exact in {} files, {} failures", files.len(), failures.len());
+    let ok = failures.is_empty();
+    let out = json!({ "sdk": "rust", "package": "stellar-xdr", "version": "30.0.0", "files": files.len(), "frames": frames, "exact": exact, "failures": failures });
+    fs::write(corpus.join("results").join("goldens-rust.json"), serde_json::to_string_pretty(&out).unwrap() + "\n").unwrap();
+    if !ok {
+        std::process::exit(1);
+    }
+}
+
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
+    if args.get(1).map(String::as_str) == Some("goldens") {
+        return goldens(Path::new(&args[2]), Path::new(&args[3]));
+    }
     let corpus = std::env::args().nth(1).unwrap_or("../../../corpus".into());
     let mut dirs: Vec<_> = fs::read_dir(Path::new(&corpus).join("fixtures"))
         .expect("corpus/fixtures")

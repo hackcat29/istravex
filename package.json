@@ -15,13 +15,14 @@
     "corpus:rust": "cd kit/runners/rust && cargo run --release -q -- ../../../corpus",
     "corpus:replay": "node kit/replay/replay.mjs",
     "corpus:data": "node kit/site-data.mjs",
-    "corpus:run": "npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay && npm run corpus:data",
+    "corpus:run": "npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:goldens && npm run corpus:replay && npm run corpus:data",
     "corpus:verify": "cd kit/go && go run ./cmd/verify ../../corpus",
     "corpus:audit": "node kit/audit/caps.mjs",
     "pilot:wallet-backend": "node kit/pilot/wallet-backend.mjs",
     "rpc": "node kit/rpc/server.mjs",
     "test:kit": "node --test kit/rpc/server.test.mjs && cd kit/go && go test ./... && go vet ./...",
-    "corpus:generate": "node kit/capture/generate.mjs"
+    "corpus:generate": "node kit/capture/generate.mjs",
+    "corpus:goldens": "node kit/goldens/check.mjs && cd kit/go && go run ./cmd/goldens ../../.cache/stellar-core/test-lcm-current ../../corpus && cd ../runners/rust && cargo run --release -q -- goldens ../../../.cache/stellar-core/test-lcm-current ../../../corpus"
   },
   "dependencies": {
     "@babylonjs/core": "^9.36.0",

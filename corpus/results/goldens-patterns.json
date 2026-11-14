@@ -1,0 +1,51 @@
+{
+  "core_commit": "0e49751aa9ddf892302cca02cea7f3f5d97df9f1",
+  "source": "stellar-core test-lcm-current (checked by `stellar-core test --check-lcm`)",
+  "caps": {
+    "CAP-0015": {
+      "pattern": "fee-bump transaction",
+      "golden_files": 19,
+      "tests": [
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|failure|fee bump fee is not sufficient to cover the resource fee with low resource fee",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|success|inclusion fee exceeds uint32",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|success|low inclusion fee",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|failure|fee bump fee is not sufficient to cover the resource fee with low resource fee",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|success|low inclusion fee",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|failure|fee bump fee is not sufficient to cover the resource fee with high inclusion fee",
+        "InvokeHostFunctionTests: Soroban pre-apply removes pre-auth tx signers|protocol version 30",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|success|inclusion fee exceeds uint32",
+        "InvokeHostFunctionTests: refund is sent to fee-bump source|protocol version 30",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|success|inclusion fee and refund exceed uint32",
+        "InvokeHostFunctionTests: fee bump refund account merged|protocol version 30",
+        "InvokeHostFunctionTests: classic payment to soroban fee bump account|protocol version 30",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|success|inclusion fee and refund exceed uint32",
+        "InvokeHostFunctionTests: parallel txs|basic test",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|failure|fee bump fee is not sufficient to cover the resource fee",
+        "InvokeHostFunctionTests: classic payment source same as soroban fee bump source|protocol version 30",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|self fee bump|failure|fee bump fee is not sufficient to cover the resource fee",
+        "InvokeHostFunctionTests: fee bump inner account merged then used as inner account on soroban fee bump|protocol version 30",
+        "InvokeHostFunctionTests: resource fee exceeds uint32|other account fee bump|failure|fee bump fee is not sufficient to cover the resource fee with high inclusion fee"
+      ]
+    },
+    "CAP-0027": {
+      "pattern": "muxed account (M-address)",
+      "golden_files": 2,
+      "tests": [
+        "InvokeHostFunctionTests: Stellar asset contract transfer with CAP-67 address types|custom asset",
+        "InvokeHostFunctionTests: Stellar asset contract transfer with CAP-67 address types|native asset"
+      ]
+    },
+    "CAP-0040": {
+      "pattern": "ed25519 signed-payload signer (P-address)",
+      "golden_files": 0,
+      "tests": []
+    },
+    "CAP-0073": {
+      "pattern": "SAC trust() creating a trustline",
+      "golden_files": 1,
+      "tests": [
+        "InvokeHostFunctionTests: Trustline stellar asset contract|protocol version 30"
+      ]
+    }
+  }
+}
