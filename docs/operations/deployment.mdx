@@ -10,9 +10,9 @@ Production is split by what each part needs. The site is static, so it lives on 
 ```mermaid
 flowchart LR
   browser([Browser]) -->|istravex.com| cf[Cloudflare<br/>Workers static assets]
-  client([Indexer / curl]) -->|api.istravex.com<br/>rpc.istravex.com| caddy
-  subgraph VPS
-    caddy[Caddy<br/>TLS, compression, headers] --> api[istravex-api<br/>Node 24]
+  client([Indexer / curl]) -->|api.istravex.com<br/>rpc.istravex.com| nginx
+  subgraph VPS [VPS, shared with other sites]
+    nginx[host nginx<br/>TLS via certbot] -->|127.0.0.1:3480| api[istravex-api<br/>Node 24]
   end
   reader([Reader]) -->|docs.istravex.com| mintlify[Mintlify]
 ```
@@ -20,11 +20,11 @@ flowchart LR
 | Host | Served by | Deployed by |
 |---|---|---|
 | `istravex.com`, `www.istravex.com` | Cloudflare Workers static assets (`wrangler.jsonc`) | `wrangler deploy` in the Deploy workflow |
-| `api.istravex.com` | Caddy → `istravex-api` container on the VPS | Deploy workflow, over SSH |
-| `rpc.istravex.com` | Same container; Caddy rewrites the path to `/rpc/…` | Deploy workflow, over SSH |
+| `api.istravex.com` | Host nginx → `istravex-api` container on the VPS | Deploy workflow, over SSH |
+| `rpc.istravex.com` | Same container; nginx rewrites the path to `/rpc/…` | Deploy workflow, over SSH |
 | `docs.istravex.com` | Mintlify, from `docs/` | Mintlify's GitHub app, on push |
 
-The DNS zone is on Cloudflare. The site's records are created by Cloudflare when the Worker's custom domains are attached; `api` and `rpc` are created by the workflow (`deploy/dns.mjs`) as **DNS-only** records, so Caddy terminates TLS itself and sees real client addresses for rate limiting.
+The DNS zone is on Cloudflare. The site's records are created by Cloudflare when the Worker's custom domains are attached; `api` and `rpc` are created by the workflow (`deploy/dns.mjs`) as **DNS-only** records, so nginx on the VPS terminates TLS itself and sees real client addresses for rate limiting.
 
 ## The site on Cloudflare
 
@@ -35,6 +35,19 @@ The DNS zone is on Cloudflare. The site's records are created by Cloudflare when
 - `public/_headers` (copied into `dist/`) sets HSTS, `nosniff`, a referrer policy, `X-Frame-Options: DENY`, and a one-year immutable cache on Vite's fingerprinted `/assets/*`. Everything else revalidates on every request.
 
 CI runs `wrangler deploy --dry-run` on every push, so a broken config fails before merge.
+
+## The VPS is shared
+
+The VPS also runs other, unrelated sites behind its own nginx, so the deploy is careful to stay inside its own footprint:
+
+| Touches | Never touches |
+|---|---|
+| `/opt/istravex` | Other directories under `/opt` |
+| One container in the Compose project `istravex`, on `127.0.0.1:3480` | Other containers, networks or volumes; image cleanup is filtered to this repository's label |
+| One nginx site, `istravex-api.conf` | Other sites' configs; new server blocks reuse the existing `:80`/`:443` sockets, so no socket options change |
+| One certbot certificate, `istravex-api` | Other certificates or certbot settings |
+
+Every nginx change is checked with `nginx -t` before a graceful `systemctl reload nginx`; if the check fails, the previous `istravex-api.conf` is restored and nothing is reloaded.
 
 ## The pipeline
 
@@ -48,7 +61,7 @@ CI runs `wrangler deploy --dry-run` on every push, so a broken config fails befo
     Built from the `Dockerfile` and pushed to `ghcr.io/hackcat29/istravex-api`, tagged with the commit SHA and `latest`.
   </Step>
   <Step title="API → VPS">
-    Upserts the `api` and `rpc` DNS records, then over SSH (strict host-key checking against a pinned `known_hosts`) copies `deploy/` to `/opt/istravex` and runs `deploy/remote.sh`. That script installs Docker if it's missing, logs in to GHCR with the workflow's short-lived token, pulls the image for this commit, and runs `docker compose up -d --wait`, which only returns once the API's health check passes. A smoke test then requires `https://api.istravex.com/v1/health` to report the commit just deployed, and the RPC to report healthy.
+    Upserts the `api` and `rpc` DNS records, then over SSH (strict host-key checking against a pinned `known_hosts`) copies `deploy/` to `/opt/istravex` and runs `deploy/remote.sh`. That script logs in to GHCR with the workflow's short-lived token, pulls the image for this commit, and runs `docker compose up -d --wait`, which only returns once the API's health check passes. It then installs the nginx site. On the first deploy it serves the ACME challenge over HTTP, gets a certificate from certbot (webroot, renewed by the host's certbot timer with a reload hook), and switches to HTTPS. A smoke test then requires `https://api.istravex.com/v1/health` to report the commit just deployed, and the RPC to report healthy.
   </Step>
 </Steps>
 
@@ -90,8 +103,8 @@ Deploys are serialised (`concurrency: deploy-production`), so two merges in quic
 
     Then delete the private key from your machine.
   </Step>
-  <Step title="Firewall">
-    Allow inbound 22, 80 and 443 (TCP) and 443/UDP in the VPS provider's firewall, or set the variable `CONFIGURE_UFW=true` and `remote.sh` configures `ufw`.
+  <Step title="Server prerequisites">
+    Docker with the Compose plugin, nginx, certbot (with an ACME account registered), and ports 80 and 443 open. The deploy doesn't install or reconfigure any of these, since other sites depend on them.
   </Step>
   <Step title="Docs domain">
     See [Docs](/operations/docs#publishing). In Cloudflare, keep the `docs` CNAME **DNS-only**: Mintlify issues its own certificate.
@@ -109,7 +122,8 @@ ssh root@<VPS IPv4>
 cd /opt/istravex
 docker compose ps                 # status and health
 docker compose logs -f api        # JSON request logs
-docker compose logs -f caddy      # TLS and proxy logs
+nginx -t && tail -f /var/log/nginx/error.log   # proxy
+certbot certificates --cert-name istravex-api  # TLS
 ```
 
 Roll back by re-running the Deploy workflow on an earlier commit, or on the server:
@@ -118,4 +132,4 @@ Roll back by re-running the Deploy workflow on an earlier commit, or on the serv
 echo "TAG=<earlier sha>" > .env && docker compose up -d --wait
 ```
 
-**Resources.** The API holds corpus metadata in memory and decompresses at most four ledgers at a time; it runs comfortably in under 200 MB. Container logs rotate at 5 × 10 MB.
+**Resources.** The API holds corpus metadata in memory and decompresses at most four ledgers at a time; it runs comfortably in under 200 MB, and the container is capped at 512 MB so it can't crowd out the server's other services. Container logs rotate at 5 × 10 MB.

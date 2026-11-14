@@ -1,5 +1,5 @@
 // Upsert the VPS's DNS records in Cloudflare: api and rpc → the VPS, DNS-only
-// (grey cloud) so Caddy terminates TLS and sees client addresses directly.
+// (grey cloud) so the VPS's nginx terminates TLS and sees client addresses directly.
 // Idempotent; run by .github/workflows/deploy.yml before the API deploy.
 //
 //   CLOUDFLARE_API_TOKEN  needs Zone:Read and DNS:Edit on the zone

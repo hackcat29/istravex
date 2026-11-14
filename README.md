@@ -35,7 +35,7 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | `kit/audit/` | CAP coverage audit from a pinned stellar-protocol checkout |
 | `server/` | The API (Hono): corpus, ledgers, results and the mock RPC over HTTP; OpenAPI in `server/openapi.json` |
 | `wrangler.jsonc`, `public/_headers` | The site on Cloudflare Workers static assets (istravex.com) |
-| `deploy/`, `Dockerfile` | API + RPC stack for the VPS (Docker Compose + Caddy) and its DNS script |
+| `deploy/`, `Dockerfile` | API + RPC stack for the VPS (Docker Compose, an nginx site, certbot) and its DNS script |
 | `.github/workflows/deploy.yml` | After CI: site → Cloudflare with wrangler, API image → GHCR, API → VPS |
 | `actions/lint`, `.github/workflows/lint-indexer.yml` | CI templates: run istravex-lint in your own repository |
 | `docs/` | Mintlify docs, published at docs.istravex.com |
