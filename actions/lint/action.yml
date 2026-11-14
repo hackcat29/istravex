@@ -1,0 +1,52 @@
+name: istravex-lint
+description: Run the Istravex ingestion analyzers (IX001–IX003) over a Go module and annotate findings.
+branding:
+  icon: shield
+  color: green
+inputs:
+  packages:
+    description: Package pattern to lint.
+    default: ./...
+  working-directory:
+    description: Directory containing the Go module.
+    default: .
+  version:
+    description: istravex module version (a tag such as v1.0.0, or latest).
+    default: v1.0.0
+  go-version-file:
+    description: Passed to actions/setup-go. Leave empty to use the module's go.mod.
+    default: ''
+outputs:
+  findings:
+    description: Number of unsuppressed findings.
+    value: ${{ steps.lint.outputs.findings }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v7
+      with:
+        go-version-file: ${{ inputs.go-version-file != '' && inputs.go-version-file || format('{0}/go.mod', inputs.working-directory) }}
+        cache: false
+    - name: istravex-lint
+      id: lint
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        PACKAGES: ${{ inputs.packages }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        set -o pipefail
+        go install "github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@${VERSION}"
+        status=0
+        # shellcheck disable=SC2086
+        "$(go env GOPATH)/bin/istravex-lint" $PACKAGES > findings.txt 2>&1 || status=$?
+        # Paths relative to the repository root, for annotations.
+        sed -i -E "s#^${GITHUB_WORKSPACE}/##" findings.txt
+        count=$(grep -cE ': IX[0-9]{3}: ' findings.txt || true)
+        echo "findings=${count}" >> "$GITHUB_OUTPUT"
+        # file:line:col: IX00n: message  →  GitHub annotation
+        sed -nE 's#^([^:]+):([0-9]+):([0-9]+): (IX[0-9]{3}): (.*)$#::error file=\1,line=\2,col=\3,title=\4::\4: \5#p' findings.txt
+        cat findings.txt
+        if [ "$status" -ne 0 ] && [ "$count" -eq 0 ]; then echo "::error title=istravex-lint::lint did not run (does the module build?)"; fi
+        rm -f findings.txt
+        exit $status

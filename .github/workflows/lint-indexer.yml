@@ -1,0 +1,36 @@
+name: istravex-lint (reusable)
+
+# Reusable workflow for other repositories:
+#   jobs:
+#     lint:
+#       uses: hackcat29/istravex/.github/workflows/lint-indexer.yml@v1
+#       with:
+#         packages: ./...
+
+on:
+  workflow_call:
+    inputs:
+      packages:
+        type: string
+        default: ./...
+      working-directory:
+        type: string
+        default: .
+      version:
+        type: string
+        default: v1.0.0
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: istravex-lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hackcat29/istravex/actions/lint@v1
+        with:
+          packages: ${{ inputs.packages }}
+          working-directory: ${{ inputs.working-directory }}
+          version: ${{ inputs.version }}

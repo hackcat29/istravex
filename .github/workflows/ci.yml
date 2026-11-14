@@ -40,8 +40,8 @@ jobs:
         run: npm run corpus:replay
       - name: All results green
         run: node kit/check-results.mjs
-      - name: Site data is up to date
-        run: npm run corpus:data && git diff --exit-code -- src/data/corpus.json ':(exclude)corpus/results'
+      - name: Site data, docs snippets and API spec are up to date
+        run: npm run corpus:data && git diff --exit-code -- src/data/corpus.json docs/snippets docs/api-reference/openapi.json
 
   generate:
     name: Generate on pinned stellar-core
@@ -73,6 +73,58 @@ jobs:
         run: npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay
       - name: All green (goldens are covered by the kit job)
         run: SKIP_GOLDENS=1 node kit/check-results.mjs
+
+  api:
+    name: API tests and container
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsc -p tsconfig.server.json
+      - run: npm run test:api
+      - name: Build image
+        run: docker build --build-arg GIT_SHA=${{ github.sha }} -t istravex-api:ci .
+      - name: Container smoke test (read-only, non-root, as in production)
+        run: |
+          docker run -d --name api --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges -p 8080:8080 istravex-api:ci
+          for i in $(seq 1 30); do curl -fsS localhost:8080/v1/health && break; sleep 1; done
+          curl -fsS localhost:8080/v1/health | grep -q '"version":"${{ github.sha }}"'
+          curl -fsS localhost:8080/v1/fixtures/cap27-muxed-payment-pubnet-0001 | grep -q 1764988090084626463
+          curl -fsS -X POST localhost:8080/rpc/pubnet -H 'content-type: application/json' \
+            -d '{"jsonrpc":"2.0","id":1,"method":"getLedgers","params":{"startLedger":65474279,"pagination":{"limit":1}}}' | grep -q '"sequence":65474279'
+          test "$(docker inspect -f '{{.State.Health.Status}}' api)" != unhealthy
+      - if: failure()
+        run: docker logs api || true
+
+  lint-action:
+    name: istravex-lint action (self-test)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Clean code passes
+        uses: ./actions/lint
+        with:
+          working-directory: kit/go
+          packages: ./lint/...
+          version: ${{ github.sha }}
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+      - name: Self-test module builds
+        run: cd kit/go/lint/testdata/selftest && go build ./...
+      - name: Known findings fail and are annotated
+        id: bad
+        continue-on-error: true
+        uses: ./actions/lint
+        with:
+          working-directory: kit/go/lint/testdata/selftest
+          version: ${{ github.sha }}
+      - name: Expect failure with exactly 3 findings (IX001, IX003 ×2)
+        run: test "${{ steps.bad.outcome }}" = failure && test "${{ steps.bad.outputs.findings }}" = 3
 
   pilot:
     name: Upstream pilot (wallet-backend)
