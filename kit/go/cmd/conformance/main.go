@@ -2,7 +2,7 @@
 // Checks per fixture: decode, byte-exact re-encode, and a high-level
 // ("native") conversion compared against the fixture's expected values.
 //
-//	go run . ../../../corpus
+//	go run ./cmd/conformance ../../corpus
 package main
 
 import (
@@ -206,7 +206,7 @@ func run(m manifest) result {
 }
 
 func main() {
-	corpus := "../../../corpus"
+	corpus := "../../corpus"
 	if len(os.Args) > 1 {
 		corpus = os.Args[1]
 	}

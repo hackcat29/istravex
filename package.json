@@ -11,7 +11,7 @@
     "test:e2e": "playwright test",
     "corpus:capture": "node kit/capture/mainnet.mjs && node kit/capture/testnet.mjs",
     "corpus:js": "node kit/runners/js/run.mjs",
-    "corpus:go": "cd kit/runners/go && go run . ../../../corpus",
+    "corpus:go": "cd kit/go && go run ./cmd/conformance ../../corpus",
     "corpus:rust": "cd kit/runners/rust && cargo run --release -q -- ../../../corpus",
     "corpus:replay": "node kit/replay/replay.mjs",
     "corpus:data": "node kit/site-data.mjs",

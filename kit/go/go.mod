@@ -1,4 +1,4 @@
-module github.com/hackcat29/istravex/kit/runners/go
+module github.com/hackcat29/istravex/kit/go
 
 go 1.25.0
 
