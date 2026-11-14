@@ -11,4 +11,4 @@ const d = await rpcDriver({
   friendbotUrl: 'https://friendbot.stellar.org/',
   passphrase: Networks.TESTNET,
 });
-await runScenarios(d);
+await runScenarios(d, 'rpc');

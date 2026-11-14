@@ -1,5 +1,6 @@
 {
   "id": "cap40-signed-payload-signer-local-0001",
+  "pattern": "signed-payload-signer",
   "cap_ids": [
     "CAP-0040"
   ],
@@ -7,48 +8,55 @@
   "network": "local",
   "xdr_type": "LedgerEntryData",
   "xdr_path": "account.signers[0].key.ed25519SignedPayload",
-  "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+  "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
   "source": {
     "kind": "generated",
     "network_endpoint": "stellar-core://standalone",
     "ledger": 9,
-    "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
-    "closed_at": "2026-11-14T15:27:53.000Z",
+    "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
+    "closed_at": "2100-01-01T01:20:00.000Z",
     "generator": {
       "core_version": "v30.0.0-dirty",
       "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
       "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
       "protocol_version": 30,
-      "soroban_limits_factor": 10
+      "soroban_limits_factor": 10,
+      "seed": "istravex",
+      "network_passphrase": "Standalone Network ; February 2017",
+      "close_time_base": 4102444800,
+      "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
     },
     "ledger_entry_at": 9
   },
   "synthetic": false,
   "expected_decoded": {
-    "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
-    "signer_strkey": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
-    "signer_ed25519": "GAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXHV3O",
-    "payload_hex": "71dc829416c333ea7fe25c822940701826a3fcdf7edeb08bac8002040e9056fc",
+    "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
+    "signer_strkey": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
+    "signer_ed25519": "GCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74A6C",
+    "payload_hex": "f5156c22945f70379269320651484b717d7883b4cc085a1b8b119b56531aae40",
     "weight": 1
   },
   "expected_indexed": {
-    "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
-    "signer_added": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+    "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
+    "signer_added": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
     "weight": 1
   },
+  "sightings": [
+    "stellar/wallet-backend#729"
+  ],
   "files": [
     {
       "name": "ledger_entry",
       "xdr_type": "LedgerEntryData",
       "path": "ledger_entry.xdr.b64",
-      "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+      "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
       "bytes": 216
     },
     {
       "name": "envelope",
       "xdr_type": "TransactionEnvelope",
       "path": "envelope.xdr.b64",
-      "sha256": "9b469380ac1696869964238e2d9763bc508f5294e177c90b3468d2d909304c3d",
+      "sha256": "0088e80b10e99e2dcc4dbdf09cba48f04e3f7ffa638b15552ea0e12607017f37",
       "bytes": 280
     }
   ]

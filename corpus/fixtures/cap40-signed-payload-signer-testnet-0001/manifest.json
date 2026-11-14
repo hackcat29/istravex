@@ -1,5 +1,6 @@
 {
   "id": "cap40-signed-payload-signer-testnet-0001",
+  "pattern": "signed-payload-signer",
   "cap_ids": [
     "CAP-0040"
   ],
@@ -29,6 +30,9 @@
     "signer_added": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
     "weight": 1
   },
+  "sightings": [
+    "stellar/wallet-backend#729"
+  ],
   "files": [
     {
       "name": "ledger_entry",

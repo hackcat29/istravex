@@ -1,5 +1,6 @@
 {
   "id": "cap73-sac-trust-testnet-0001",
+  "pattern": "sac-trust",
   "cap_ids": [
     "CAP-0073"
   ],
@@ -29,6 +30,9 @@
     "limit": "9223372036854775807",
     "classic_change_trust_ops": 0
   },
+  "sightings": [
+    "stellar/wallet-backend#731"
+  ],
   "files": [
     {
       "name": "meta",

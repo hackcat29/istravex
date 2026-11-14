@@ -1,5 +1,6 @@
 {
   "id": "cap27-muxed-payment-pubnet-0001",
+  "pattern": "muxed-payment",
   "cap_ids": [
     "CAP-0027"
   ],

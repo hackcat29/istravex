@@ -1,7 +1,8 @@
 // Network driver over Stellar RPC + friendbot (public testnet).
 // Soroban transactions are simulated (prepareTransaction); meta and ledgers
 // come from getLedgers, the canonical copy.
-import { BASE_FEE, TransactionBuilder, rpc, xdr } from '@stellar/stellar-sdk';
+import { randomBytes } from 'node:crypto';
+import { BASE_FEE, Keypair, TransactionBuilder, rpc, xdr } from '@stellar/stellar-sdk';
 import { ledgerFromBatch, storeLedger, txFromLedger } from '../../lib/ledger.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -26,6 +27,10 @@ export async function rpcDriver({ name, rpcUrl, friendbotUrl, passphrase, allowH
     name,
     passphrase,
     protocolVersion,
+    deterministic: false,
+    // Public networks remember accounts, so every run needs fresh keys.
+    keypair: () => Keypair.random(),
+    bytes: (_label, n = 32) => randomBytes(n),
     async fund(kp) {
       const r = await fetch(`${friendbotUrl}?addr=${kp.publicKey()}`);
       if (!r.ok) throw new Error(`friendbot ${r.status}`);
@@ -47,7 +52,7 @@ export async function rpcDriver({ name, rpcUrl, friendbotUrl, passphrase, allowH
             ledger: res.ledger,
             closedAt: new Date(Number(res.createdAt) * 1000).toISOString(),
             envelope: res.envelopeXdr.toXDR('base64'),
-            meta: txFromLedger(lcm, sent.hash).meta,
+            ...txFromLedger(lcm, sent.hash),
           };
         }
         await sleep(1000);

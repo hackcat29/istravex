@@ -7,10 +7,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { zstdCompressSync, zstdDecompressSync } from 'node:zlib';
 import { xdr } from '@stellar/stellar-sdk';
-import { FIXTURES, ROOT, sha256 } from './fixture.mjs';
+import { CORPUS, FIXTURES, sha256 } from './fixture.mjs';
 
 export function readLedger(network, seq) {
-  const raw = zstdDecompressSync(readFileSync(join(ROOT, 'corpus', 'ledgers', network, `${seq}.xdr.zst`)));
+  const raw = zstdDecompressSync(readFileSync(join(CORPUS, 'ledgers', network, `${seq}.xdr.zst`)));
   return ledgerFromBatch(xdr.LedgerCloseMetaBatch.fromXDR(raw), seq);
 }
 
@@ -51,11 +51,11 @@ export function rewriteFixtureFile(id, name, b64) {
  * and index it. Pass `zst` to keep an upstream object byte-for-byte (data lake).
  */
 export function storeLedger(network, seq, raw, source, zst = zstdCompressSync(raw)) {
-  const dir = join(ROOT, 'corpus', 'ledgers', network);
+  const dir = join(CORPUS, 'ledgers', network);
   mkdirSync(dir, { recursive: true });
   const path = `ledgers/${network}/${seq}.xdr.zst`;
-  writeFileSync(join(ROOT, 'corpus', path), zst);
-  const indexPath = join(ROOT, 'corpus', 'ledgers', 'index.json');
+  writeFileSync(join(CORPUS, path), zst);
+  const indexPath = join(CORPUS, 'ledgers', 'index.json');
   const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, 'utf8')) : [];
   const entry = {
     network,
@@ -73,4 +73,4 @@ export function storeLedger(network, seq, raw, source, zst = zstdCompressSync(ra
   return entry;
 }
 
-export const ledgerStored = (network, seq) => existsSync(join(ROOT, 'corpus', 'ledgers', network, `${seq}.xdr.zst`));
+export const ledgerStored = (network, seq) => existsSync(join(CORPUS, 'ledgers', network, `${seq}.xdr.zst`));

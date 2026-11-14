@@ -1,0 +1,54 @@
+{
+  "id": "base-memo-non-utf8-local-0001",
+  "pattern": "memo-non-utf8",
+  "cap_ids": [],
+  "protocol_version": 30,
+  "network": "local",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "tx.memo.text",
+  "sha256": "a457bfa73fb0c3bd308af2d7f2f69d793e166e9ebdbdddbdfe52bcb29126f439",
+  "source": {
+    "kind": "generated",
+    "network_endpoint": "stellar-core://standalone",
+    "ledger": 23,
+    "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
+    "closed_at": "2100-01-01T03:40:00.000Z",
+    "generator": {
+      "core_version": "v30.0.0-dirty",
+      "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+      "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+      "protocol_version": 30,
+      "soroban_limits_factor": 10,
+      "seed": "istravex",
+      "network_passphrase": "Standalone Network ; February 2017",
+      "close_time_base": 4102444800,
+      "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+    }
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "memo_type": "text",
+    "memo_hex": "697374726176657820fffeeda080e92d2d2d2d2d2d2d2d2d2d2d2d2d",
+    "memo_bytes": 28,
+    "utf8_valid": false
+  },
+  "sightings": [
+    "stellar/js-stellar-sdk#1823"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "a457bfa73fb0c3bd308af2d7f2f69d793e166e9ebdbdddbdfe52bcb29126f439",
+      "bytes": 248
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "af84e88b1979ab15bfcdbfde2fcd6c9d3a070d86f80cf0ee7fbe11107f998e06",
+      "bytes": 32
+    }
+  ]
+}

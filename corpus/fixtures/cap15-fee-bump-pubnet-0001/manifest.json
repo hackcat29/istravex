@@ -1,5 +1,6 @@
 {
   "id": "cap15-fee-bump-pubnet-0001",
+  "pattern": "fee-bump",
   "cap_ids": [
     "CAP-0015"
   ],

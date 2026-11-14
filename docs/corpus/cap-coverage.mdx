@@ -9,7 +9,7 @@ Audited from [stellar-protocol@ced008c](https://github.com/stellar/stellar-proto
 
 - **70** CAPs are live (status Final or Implemented).
 - **40** of them change XDR: their specification diffs touch `Stellar-*.x` or define XDR types inline.
-- **4** have at least one fixture, including **3** of the XDR-changing ones.
+- **6** have at least one fixture, including **5** of the XDR-changing ones.
 
 <Tip>XDR-changing CAPs without a fixture are the priority gaps. Each one introduced a ledger pattern that SDKs and indexers have to handle. See [Contributing a fixture](/corpus/contributing).</Tip>
 
@@ -27,13 +27,13 @@ Audited from [stellar-protocol@ced008c](https://github.com/stellar/stellar-proto
 | [CAP-0021](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0021.md) | Preconditions: Generalized transaction preconditions | 19 | Stellar-ledger-entries.x, Stellar-transaction.x, Stellar-types.x | **gap** |
 | [CAP-0023](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0023.md) | Two-Part Payments with ClaimableBalanceEntry | 14 | inline | **gap** |
 | [CAP-0024](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0024.md) | Make PathPayment Symmetrical | 12 | inline | **gap** |
-| [CAP-0027](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0027.md) | First-class multiplexed accounts | 13 | inline | `cap27-muxed-payment-pubnet-0001` |
+| [CAP-0027](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0027.md) | First-class multiplexed accounts | 13 | inline | `cap27-muxed-max-id-local-0001`<br />`cap27-muxed-payment-pubnet-0001`<br />`cap46-muxed-soroban-source-local-0001` |
 | [CAP-0033](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0033.md) | Sponsored Reserve | — | inline | **gap** |
 | [CAP-0035](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0035.md) | Asset Clawback | 17 | Stellar-ledger-entries.x, Stellar-transaction.x | **gap** |
-| [CAP-0038](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0038.md) | Automated Market Makers | 18 | Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x | **gap** |
+| [CAP-0038](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0038.md) | Automated Market Makers | 18 | Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x | `cap38-pool-issuer-order-local-0001` |
 | [CAP-0040](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0040.md) | Signed-Payload: Ed25519 Signed Payload Signer for Atomic Transaction Signature Disclosure | 19 | Stellar-types.x | `cap40-signed-payload-signer-local-0001`<br />`cap40-signed-payload-signer-testnet-0001` |
 | [CAP-0042](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0042.md) | Multi-Part Transaction Sets | 20 | Stellar-ledger.x | **gap** |
-| [CAP-0046](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0046.md) | Soroban smart contract system overview | 20 | Stellar-contract-config-setting.x, Stellar-contract-env-meta.x, Stellar-contract-meta.x, Stellar-contract-spec.x, Stellar-contract.x, Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x, Stellar-types.x | **gap** |
+| [CAP-0046](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0046.md) | Soroban smart contract system overview | 20 | Stellar-contract-config-setting.x, Stellar-contract-env-meta.x, Stellar-contract-meta.x, Stellar-contract-spec.x, Stellar-contract.x, Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x, Stellar-types.x | `cap46-muxed-soroban-source-local-0001`<br />`cap46-nested-auth-local-0001`<br />`cap46-scmap-host-order-local-0001`<br />`cap46-scval-limits-synthetic-0001` |
 | [CAP-0046-01](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0046-01.md) | Soroban Runtime Environment | 20 | Stellar-contract.x | **gap** |
 | [CAP-0046-07](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0046-07.md) | Fee and resource model in smart contracts | 20 | inline | **gap** |
 | [CAP-0046-10](https://github.com/stellar/stellar-protocol/blob/ced008c3727005ca4a775f430fe6fe346c30f58f/core/cap-0046-10.md) | Smart Contract Budget Metering | 20 | Stellar-contract-config-setting.x | **gap** |

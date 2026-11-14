@@ -5,8 +5,8 @@
   },
   "live_caps": 70,
   "xdr_changing_caps": 40,
-  "covered_caps": 4,
-  "covered_xdr_caps": 3,
+  "covered_caps": 6,
+  "covered_xdr_caps": 5,
   "caps": [
     {
       "cap": "CAP-0001",
@@ -157,7 +157,9 @@
       "xdr_files": [],
       "changes_xdr": true,
       "fixtures": [
-        "cap27-muxed-payment-pubnet-0001"
+        "cap27-muxed-max-id-local-0001",
+        "cap27-muxed-payment-pubnet-0001",
+        "cap46-muxed-soroban-source-local-0001"
       ]
     },
     {
@@ -228,7 +230,9 @@
         "Stellar-transaction.x"
       ],
       "changes_xdr": true,
-      "fixtures": []
+      "fixtures": [
+        "cap38-pool-issuer-order-local-0001"
+      ]
     },
     {
       "cap": "CAP-0040",
@@ -272,7 +276,12 @@
         "Stellar-types.x"
       ],
       "changes_xdr": true,
-      "fixtures": []
+      "fixtures": [
+        "cap46-muxed-soroban-source-local-0001",
+        "cap46-nested-auth-local-0001",
+        "cap46-scmap-host-order-local-0001",
+        "cap46-scval-limits-synthetic-0001"
+      ]
     },
     {
       "cap": "CAP-0046-01",

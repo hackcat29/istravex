@@ -1,0 +1,75 @@
+{
+  "id": "base-max-length-vectors-local-0001",
+  "pattern": "max-length-vectors",
+  "cap_ids": [],
+  "protocol_version": 30,
+  "network": "local",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "envelope: tx.operations (100); envelope_signatures: signatures (20); ledger_entry: account.signers (20)",
+  "sha256": "26a6b8f85962db66d3284b4a0fba4a6cbb093b5744c9ed5372012312d3772da0",
+  "source": {
+    "kind": "generated",
+    "network_endpoint": "stellar-core://standalone",
+    "ledger": 27,
+    "tx_hash": "36be436e45fe8825b228e768d9b1e788e92c6336157ce987fccb4d0ab25e36bf",
+    "closed_at": "2100-01-01T04:20:00.000Z",
+    "generator": {
+      "core_version": "v30.0.0-dirty",
+      "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+      "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+      "protocol_version": 30,
+      "soroban_limits_factor": 10,
+      "seed": "istravex",
+      "network_passphrase": "Standalone Network ; February 2017",
+      "close_time_base": 4102444800,
+      "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
+    },
+    "related": [
+      {
+        "ledger": 29,
+        "tx_hash": "d4a2993d6104566260123ba93aef36a1423a1f9f06e50d5379db989c9f10df35",
+        "files": [
+          "envelope_signatures",
+          "ledger_entry"
+        ]
+      }
+    ]
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "operation_count": 100,
+    "signature_count": 20,
+    "signer_count": 20,
+    "master_weight": 0,
+    "thresholds": [
+      20,
+      20,
+      20
+    ],
+    "payer": "GB2NRMQHY2W4H4RU7IZNJHLZKUT7TEB2KMQ5XKEYS3BURJASDW4P7N7Z",
+    "account": "GAMFLMQ6MKN345Y7D36NHIO2T3L5JDOXXS4XA2DMSMUKRL2HQHWVTJKW"
+  },
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "26a6b8f85962db66d3284b4a0fba4a6cbb093b5744c9ed5372012312d3772da0",
+      "bytes": 5760
+    },
+    {
+      "name": "envelope_signatures",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope_signatures.xdr.b64",
+      "sha256": "521ab48b0526cd3a494373686240320fbae51867b065176b78125c526c13a4a7",
+      "bytes": 1584
+    },
+    {
+      "name": "ledger_entry",
+      "xdr_type": "LedgerEntryData",
+      "path": "ledger_entry.xdr.b64",
+      "sha256": "e2af85f94a3fa8a9833aef4303ce01b16b1d3c75b1c1d7bf72dcfeaea5c3e84c",
+      "bytes": 1016
+    }
+  ]
+}

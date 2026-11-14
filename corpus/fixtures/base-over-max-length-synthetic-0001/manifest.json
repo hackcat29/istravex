@@ -1,0 +1,40 @@
+{
+  "id": "base-over-max-length-synthetic-0001",
+  "pattern": "over-max-length",
+  "cap_ids": [],
+  "protocol_version": 30,
+  "network": "synthetic",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "operations<100> with 101 entries; memo text<28> with 29 bytes",
+  "sha256": "288937eec52763976f51a272dfc8ae2e9946a1d7c0924f34cbb97862481d2cf3",
+  "source": {
+    "kind": "synthetic",
+    "derived_from": "base-max-length-vectors-local-0001, base-memo-non-utf8-local-0001",
+    "description": "Real envelopes from the generated network, re-encoded one element past a bounded XDR array or string maximum."
+  },
+  "synthetic": true,
+  "expected_decoded": {
+    "decode_error": true
+  },
+  "sightings": [
+    "stellar/rs-stellar-xdr#598"
+  ],
+  "files": [
+    {
+      "name": "envelope_101_ops",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope_101_ops.xdr.b64",
+      "sha256": "288937eec52763976f51a272dfc8ae2e9946a1d7c0924f34cbb97862481d2cf3",
+      "bytes": 5816,
+      "expect": "decode_error"
+    },
+    {
+      "name": "envelope_memo_29",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope_memo_29.xdr.b64",
+      "sha256": "38383bb88fddfe905f9ce4f9a9f0c18d3589b4e8b29295138b61e8cd41a0143e",
+      "bytes": 252,
+      "expect": "decode_error"
+    }
+  ]
+}

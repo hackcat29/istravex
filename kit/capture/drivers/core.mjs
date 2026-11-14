@@ -2,25 +2,42 @@
 // No RPC, no Docker: transactions go to core's HTTP /tx, ledgers are closed
 // with /manualclose, entries come from the query server, and LedgerCloseMeta
 // is read straight from core's METADATA_OUTPUT_STREAM: the canonical output.
+//
+// Deterministic: every key (including the node's) is derived from `seed`, and
+// ledgers close at fixed times from CLOSE_TIME_BASE, so the same pinned binary,
+// seed and passphrase reproduce every XDR byte (kit/capture/generate.mjs --check).
+import { createHash } from 'node:crypto';
 import { execFileSync, spawn } from 'node:child_process';
 import { request } from 'node:http';
 import { closeSync, mkdirSync, openSync, readSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { Account, Keypair, Operation, SorobanDataBuilder, TransactionBuilder, xdr } from '@stellar/stellar-sdk';
+import { Account, Keypair, MuxedAccount, Operation, SorobanDataBuilder, TransactionBuilder, xdr } from '@stellar/stellar-sdk';
 import { storeLedger, txFromLedger } from '../../lib/ledger.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const STANDALONE = 'Standalone Network ; February 2017';
+/**
+ * Ledgers close at CLOSE_TIME_BASE + CLOSE_TIME_STEP × n. Under MANUAL_CLOSE
+ * stellar-core refuses a close time earlier than its own virtual clock, which
+ * jumps ahead to its next timer whenever it idles: measured at 105–299 s past
+ * the last close on 30.0.0. So the base sits far in the future
+ * (2100-01-01T00:00:00Z) and each step clears the largest jump with margin.
+ */
+export const CLOSE_TIME_BASE = 4102444800;
+export const CLOSE_TIME_STEP = 600;
 
-export async function coreDriver({ workdir, binary = 'stellar-core', protocol, httpPort = 11826, generator }) {
+/** 32 bytes derived from the seed and a label: the source of every key and payload. */
+export const derive = (seed, label) => createHash('sha256').update(`istravex:${seed}:${label}`).digest();
+
+export async function coreDriver({ workdir, binary = 'stellar-core', protocol, httpPort = 11826, generator, passphrase = STANDALONE, seed = 'istravex', name = 'local' }) {
   rmSync(workdir, { recursive: true, force: true });
   mkdirSync(workdir, { recursive: true });
-  const nodeSeed = Keypair.random().secret();
+  const nodeSeed = Keypair.fromRawEd25519Seed(derive(seed, 'node')).secret();
   writeFileSync(
     join(workdir, 'core.cfg'),
     `RUN_STANDALONE=true
 MANUAL_CLOSE=true
-NETWORK_PASSPHRASE="${STANDALONE}"
+NETWORK_PASSPHRASE="${passphrase}"
 NODE_SEED="${nodeSeed} self"
 NODE_IS_VALIDATOR=true
 UNSAFE_QUORUM=true
@@ -32,7 +49,7 @@ HTTP_QUERY_PORT=${httpPort + 1}
 QUERY_SNAPSHOT_LEDGERS=2
 BUCKET_DIR_PATH="buckets"
 METADATA_OUTPUT_STREAM="meta.xdr"
-
+${process.env.ISTRAVEX_CORE_DIAGNOSTICS ? 'ENABLE_SOROBAN_DIAGNOSTIC_EVENTS=true\n' : ''}
 [QUORUM_SET]
 THRESHOLD_PERCENT=100
 VALIDATORS=["$self"]
@@ -111,21 +128,19 @@ VALIDATORS=["$self"]
   // A bare /manualclose intermittently aborts stellar-core 30.0.0
   // (assert `t >= mVirtualNow`, util/Timer.cpp:287, via
   // ApplicationImpl::manualClose), so pass an explicit, strictly increasing
-  // closeTime. Under MANUAL_CLOSE core's virtual clock skips ahead to its next
-  // timer whenever it idles, so it runs well ahead of wall time; when it
-  // refuses a time as too early it reports its "now", and we retry with a
-  // margin past it. Close times on a generated network are therefore ahead of
-  // wall-clock time.
-  let lastCloseTime = 0;
+  // closeTime. Fixed times (CLOSE_TIME_BASE + 5 s steps) keep ledger headers,
+  // and so every hash, identical between runs.
+  let lastCloseTime = CLOSE_TIME_BASE;
   async function close() {
-    let target = Math.max(lastCloseTime + 1, Math.ceil(Date.now() / 1000) + 2);
+    let target = lastCloseTime + CLOSE_TIME_STEP;
     for (let attempt = 0; ; attempt++) {
       const r = await call(`${http}/manualclose?closeTime=${target}`);
       const reply = typeof r === 'string' ? r : JSON.stringify(r);
       if (/Manually closed ledger/.test(reply)) break;
       const now = Number(reply.match(/now=(\d+)/)?.[1]);
-      if (attempt > 4 || !now) throw new Error(`manualclose refused: ${reply.slice(0, 300)}`);
-      target = Math.max(target, now + 120);
+      if (process.env.ISTRAVEX_DRIFT) console.error(`drift: now - last close = ${now - lastCloseTime}`);
+      if (attempt > 4 || !now) throw new Error(`manualclose refused closeTime=${target}: ${reply.slice(0, 300)}`);
+      target = now + 1;
     }
     lastCloseTime = target;
     for (let i = 0; i < 100; i++) {
@@ -156,7 +171,7 @@ VALIDATORS=["$self"]
     if (!e?.entry) throw new Error('ledger entry not found');
     return xdr.LedgerEntry.fromXDR(e.entry, 'base64');
   }
-  const root = Keypair.master(STANDALONE);
+  const root = Keypair.master(passphrase);
   const accountKey = (kp) => xdr.LedgerKey.account(new xdr.LedgerKeyAccount({ accountId: kp.xdrAccountId() }));
   async function account(kp) {
     const e = await entry(accountKey(kp));
@@ -168,7 +183,7 @@ VALIDATORS=["$self"]
   }
 
   async function submitEnvelope(envelopeB64) {
-    const tx = TransactionBuilder.fromXDR(envelopeB64, STANDALONE);
+    const tx = TransactionBuilder.fromXDR(envelopeB64, passphrase);
     const hash = Buffer.from(tx.hash()).toString('hex');
     const r = await call(`${http}/tx?blob=${encodeURIComponent(envelopeB64)}`);
     if (r.status !== 'PENDING') throw new Error(`core rejected tx: ${r.status} ${r.error ?? ''}`);
@@ -180,13 +195,13 @@ VALIDATORS=["$self"]
     const code = tp.result.result.result.type;
     if (code !== 'txSuccess') throw new Error(`tx ${hash} failed: ${code} ${tp.result.result.toXDR('base64')}`);
     const batch = new xdr.LedgerCloseMetaBatch({ startSequence: seq, endSequence: seq, ledgerCloseMetas: [xdr.LedgerCloseMeta.fromXDR(raw)] });
-    storeLedger('local', seq, Buffer.from(batch.toXDR()), `stellar-core ${generator.core_version} standalone METADATA_OUTPUT_STREAM`);
+    storeLedger(name, seq, Buffer.from(batch.toXDR()), `stellar-core ${generator.core_version} standalone METADATA_OUTPUT_STREAM`);
     return {
       hash,
       ledger: seq,
       closedAt: new Date(Number(header.scpValue.closeTime) * 1000).toISOString(),
       envelope: envelopeB64,
-      meta: txFromLedger(lcm, hash).meta,
+      ...txFromLedger(lcm, hash), // result, meta, fee_meta: consensus copies
     };
   }
 
@@ -205,10 +220,18 @@ VALIDATORS=["$self"]
     // contract-data entry limit it is stored under.
     set.updatedEntry = set.updatedEntry.filter((entry) => {
       let changed = false;
+      // Size caps stored directly on the entry (contractMaxSizeBytes: the
+      // largest Wasm). The probe contract is 4 KB, above the initial 2,000.
+      for (const [k, v] of Object.entries(entry)) {
+        if (typeof v === 'number' && /MaxSizeBytes$/.test(k)) {
+          entry[k] = v * factor;
+          changed = true;
+        }
+      }
       for (const value of Object.values(entry)) {
         if (!value || typeof value !== 'object') continue;
         for (const [k, v] of Object.entries(value)) {
-          if (!/^(ledger|tx)Max/.test(k)) continue;
+          if (!/^(ledger|tx)Max|^txMemoryLimit$/.test(k)) continue;
           if (typeof v === 'bigint') value[k] = v * BigInt(factor);
           else if (typeof v === 'number') value[k] = v * factor;
           else continue;
@@ -219,7 +242,7 @@ VALIDATORS=["$self"]
     });
     const upgrade = set.toXDR('base64');
     const rootSeq = (await account(root)).sequenceNumber();
-    const lines = execFileSync(binary, ['get-settings-upgrade-txs', root.publicKey(), rootSeq, STANDALONE, '--xdr', upgrade, '--signtxs', '--add-resource-fee', '100000000'], {
+    const lines = execFileSync(binary, ['get-settings-upgrade-txs', root.publicKey(), rootSeq, passphrase, '--xdr', upgrade, '--signtxs', '--add-resource-fee', '100000000'], {
       input: root.secret() + '\n',
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'ignore'],
@@ -227,8 +250,8 @@ VALIDATORS=["$self"]
       .split('\n')
       .map((l) => l.trim())
       .filter(Boolean);
-    const key = lines.pop();
-    for (let i = 0; i < lines.length; i += 2) await submitEnvelope(lines[i]);
+    const { envelopes, key } = deterministicUpgrade(lines, rootSeq);
+    for (const env of envelopes) await submitEnvelope(env);
     await call(`${http}/upgrades?mode=set&upgradetime=1970-01-01T00:00:00Z&configupgradesetkey=${encodeURIComponent(key)}`);
     await close();
     const limits = (await call(`${http}/sorobaninfo?format=basic`)).tx;
@@ -236,35 +259,125 @@ VALIDATORS=["$self"]
     return limits;
   }
 
+  /**
+   * get-settings-upgrade-txs deploys its upgrade contract with a random salt,
+   * which would make every later ledger differ between runs. Swap in a salt
+   * derived from the seed: replace the salt and the contract ID it implies
+   * (both random 32-byte values, so a byte-level swap can't hit anything
+   * else) in each transaction and in the upgrade key, then re-sign as root.
+   */
+  function deterministicUpgrade(lines, rootSeq) {
+    const key = lines.pop();
+    const envelopes = lines.filter((_, i) => i % 2 === 0);
+    let oldSalt;
+    for (const b64 of envelopes) {
+      const env = xdr.TransactionEnvelope.fromXDR(b64, 'base64');
+      for (const op of env.v1.tx.operations) {
+        const hf = op.body.invokeHostFunctionOp?.hostFunction;
+        const create = hf?.createContract ?? hf?.createContractV2;
+        if (create) oldSalt = Buffer.from(create.contractIdPreimage.fromAddress.salt.toXDR());
+      }
+    }
+    if (!oldSalt) throw new Error('get-settings-upgrade-txs: no contract deployment found');
+    const newSalt = derive(seed, 'settings-upgrade-salt');
+    const idOf = (salt) =>
+      createHash('sha256')
+        .update(
+          xdr.HashIdPreimage.envelopeTypeContractId(
+            new xdr.HashIdPreimageContractId({
+              networkId: createHash('sha256').update(passphrase).digest(),
+              contractIdPreimage: xdr.ContractIdPreimage.contractIdPreimageFromAddress(
+                new xdr.ContractIdPreimageFromAddress({ address: xdr.ScAddress.scAddressTypeAccount(root.xdrAccountId()), salt }),
+              ),
+            }),
+          ).toXDR(),
+        )
+        .digest();
+    const swaps = [
+      [oldSalt, newSalt],
+      [idOf(oldSalt), idOf(newSalt)],
+    ];
+    const swap = (buf) => {
+      let out = Buffer.from(buf);
+      for (const [from, to] of swaps) {
+        for (let i = out.indexOf(from); i !== -1; i = out.indexOf(from, i + to.length)) to.copy(out, i);
+      }
+      return out;
+    };
+    const resigned = envelopes.map((b64) => {
+      const env = xdr.TransactionEnvelope.fromXDR(swap(Buffer.from(b64, 'base64')));
+      env.v1.signatures = [];
+      const tx = TransactionBuilder.fromXDR(env.toXDR('base64'), passphrase);
+      tx.sign(root);
+      return tx.toEnvelope().toXDR('base64');
+    });
+    return { envelopes: resigned, key: swap(Buffer.from(key, 'base64')).toString('base64') };
+  }
+
   const sorobanLimits = await raiseSorobanLimits(10);
+
+  /**
+   * Build, sign and submit one transaction.
+   *   ops      an operation or a list (up to 100)
+   *   muxedId  send from the M… form of `kp` with this 64-bit ID (a decimal string)
+   *   signers  keypairs that sign (default: `kp`)
+   *   memo     an xdr.Memo, for bytes the Memo class won't build
+   *   soroban  { readOnly, readWrite, instructions } for an explicit footprint
+   */
+  async function submit(kp, ops, { soroban, muxedId, rawMuxedSource, signers = [kp], memo, fee } = {}) {
+    const list = [ops].flat();
+    let src = await account(kp);
+    if (muxedId !== undefined) src = new MuxedAccount(src, muxedId);
+    const b = new TransactionBuilder(src, { fee: String(fee ?? 100), networkPassphrase: passphrase }).setTimeout(0);
+    for (const op of list) b.addOperation(op);
+    if (soroban) {
+      // Explicit footprint and generous resources: there is no simulator here.
+      b.setSorobanData(
+        new SorobanDataBuilder()
+          .setFootprint(soroban.readOnly ?? [], soroban.readWrite ?? [])
+          .setResources(soroban.instructions ?? 2_000_000, 30_000, 20_000)
+          .setResourceFee(50_000_000)
+          .build(),
+      );
+    }
+    let tx = b.build();
+    if (memo || rawMuxedSource !== undefined) {
+      // Shapes the SDK's builder refuses but the network accepts: memo bytes
+      // that aren't UTF-8, and a muxed source on a Soroban transaction. Set
+      // them on the raw XDR before signing.
+      const env = tx.toEnvelope();
+      if (memo) env.v1.tx.memo = memo;
+      if (rawMuxedSource !== undefined) {
+        env.v1.tx.sourceAccount = xdr.MuxedAccount.keyTypeMuxedEd25519(
+          new xdr.MuxedAccountMed25519({ id: xdr.Uint64.fromString(String(rawMuxedSource)), ed25519: kp.rawPublicKey() }),
+        );
+      }
+      tx = TransactionBuilder.fromXDR(env.toXDR('base64'), passphrase);
+    }
+    for (const s of signers) tx.sign(s);
+    return submitTx(tx);
+  }
+
   return {
     sorobanLimits,
-    name: 'local',
-    passphrase: STANDALONE,
+    name,
+    passphrase,
     protocolVersion: version,
-    async fund(kp) {
-      const tx = new TransactionBuilder(await account(root), { fee: '100', networkPassphrase: STANDALONE })
-        .addOperation(Operation.createAccount({ destination: kp.publicKey(), startingBalance: '10000' }))
+    deterministic: true,
+    keypair: (label) => Keypair.fromRawEd25519Seed(derive(seed, `key:${label}`)),
+    bytes: (label, n = 32) => derive(seed, `bytes:${label}`).subarray(0, n),
+    async fund(kp, startingBalance = '10000') {
+      const tx = new TransactionBuilder(await account(root), { fee: '100', networkPassphrase: passphrase })
+        .addOperation(Operation.createAccount({ destination: kp.publicKey(), startingBalance }))
         .setTimeout(0)
         .build();
       tx.sign(root);
       await submitTx(tx);
     },
-    async submit(kp, op, { soroban } = {}) {
-      const b = new TransactionBuilder(await account(kp), { fee: '100', networkPassphrase: STANDALONE }).addOperation(op).setTimeout(0);
-      if (soroban) {
-        // Explicit footprint and generous resources: there is no simulator here.
-        b.setSorobanData(
-          new SorobanDataBuilder()
-            .setFootprint(soroban.readOnly ?? [], soroban.readWrite ?? [])
-            .setResources(soroban.instructions ?? 2_000_000, 10_000, 10_000)
-            .setResourceFee(50_000_000)
-            .build(),
-        );
-      }
-      const tx = b.build();
-      tx.sign(kp);
-      return submitTx(tx);
+    submit,
+    async entry(key) {
+      const e = await entry(key);
+      return { b64: e.data.toXDR('base64'), lastModified: e.lastModifiedLedgerSeq };
     },
     async accountEntry(kp) {
       const e = await entry(accountKey(kp));

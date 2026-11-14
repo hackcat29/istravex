@@ -5,7 +5,10 @@
 //  3. the canonical LedgerCloseMeta for the fixture's ledger (corpus/ledgers)
 //     matches its recorded sha256, and its header protocol matches the manifest
 //  4. the fixture's transaction is found in that ledger by hash, and every XDR
-//     value in the fixture is byte-identical to the ledger's copy
+//     value in the fixture is byte-identical to the ledger's copy (a file
+//     listed under source.related comes from that other transaction)
+//
+// Synthetic fixtures have no ledger; only checks 1 and 2 apply.
 //
 // It writes corpus/results/provenance.json and exits non-zero on any failure.
 //
@@ -41,13 +44,24 @@ type file struct {
 	Bytes   int    `json:"bytes"`
 }
 
+type txRef struct {
+	Ledger uint32   `json:"ledger"`
+	TxHash string   `json:"tx_hash"`
+	Files  []string `json:"files"`
+}
+
 type manifest struct {
 	ID              string `json:"id"`
 	Network         string `json:"network"`
 	ProtocolVersion uint32 `json:"protocol_version"`
+	Synthetic       bool   `json:"synthetic"`
 	Source          struct {
-		Ledger uint32 `json:"ledger"`
-		TxHash string `json:"tx_hash"`
+		Ledger    uint32  `json:"ledger"`
+		TxHash    string  `json:"tx_hash"`
+		Related   []txRef `json:"related"`
+		Generator *struct {
+			NetworkPassphrase string `json:"network_passphrase"`
+		} `json:"generator"`
 	} `json:"source"`
 	ExpectedDecoded map[string]any `json:"expected_decoded"`
 	Files           []file         `json:"files"`
@@ -129,7 +143,7 @@ func findTx(pp string, lcm xdr.LedgerCloseMeta, hash string) (ingest.LedgerTrans
 }
 
 // ledgerCopy returns the ledger's own encoding of the value a fixture file holds.
-func ledgerCopy(f file, m manifest, tx ingest.LedgerTransaction) ([]byte, error) {
+func ledgerCopy(f file, fixtureBytes []byte, tx ingest.LedgerTransaction) ([]byte, error) {
 	switch f.XdrType {
 	case "TransactionEnvelope":
 		return tx.Envelope.MarshalBinary()
@@ -140,21 +154,36 @@ func ledgerCopy(f file, m manifest, tx ingest.LedgerTransaction) ([]byte, error)
 	case "LedgerEntryChanges":
 		return tx.FeeChanges.MarshalBinary()
 	case "LedgerEntryData":
-		// The account entry as the transaction left it.
-		account, _ := m.ExpectedDecoded["account"].(string)
+		// The entry, as the transaction left it: the last change to the same
+		// ledger key (changes are in apply order).
+		var data xdr.LedgerEntryData
+		if err := data.UnmarshalBinary(fixtureBytes); err != nil {
+			return nil, err
+		}
+		key, err := (&xdr.LedgerEntry{Data: data}).LedgerKey()
+		if err != nil {
+			return nil, err
+		}
+		want, _ := key.MarshalBinary()
 		changes, err := tx.GetChanges()
 		if err != nil {
 			return nil, err
 		}
-		// Changes are in apply order; the last one is the state the tx left.
 		var last *xdr.LedgerEntry
 		for _, c := range changes {
-			if c.Type == xdr.LedgerEntryTypeAccount && c.Post != nil && c.Post.Data.MustAccount().AccountId.Address() == account {
+			if c.Post == nil {
+				continue
+			}
+			k, err := c.Post.LedgerKey()
+			if err != nil {
+				continue
+			}
+			if got, _ := k.MarshalBinary(); bytes.Equal(got, want) {
 				last = c.Post
 			}
 		}
 		if last == nil {
-			return nil, fmt.Errorf("account %s not changed in tx", account)
+			return nil, fmt.Errorf("entry not changed by tx %s", tx.Hash.HexString())
 		}
 		return last.Data.MarshalBinary()
 	}
@@ -221,28 +250,53 @@ func verify(corpus string, schema *jsonschema.Schema, dir string, ledgers map[st
 		blobs[f.Name] = bin
 	}
 
-	li, ok := ledgers[fmt.Sprintf("%s/%d", m.Network, m.Source.Ledger)]
-	if !ok {
-		add("canonical ledger present", fmt.Errorf("no corpus/ledgers entry for %s/%d", m.Network, m.Source.Ledger))
+	if m.Synthetic {
+		rep.Ledger = "synthetic: no ledger"
 		return rep
 	}
-	rep.Ledger = li.Source
-	lcm, err := readLedger(corpus, li)
-	if !add("canonical ledger sha256", err) {
-		return rep
+	pp := passphrase[m.Network]
+	if m.Source.Generator != nil && m.Source.Generator.NetworkPassphrase != "" {
+		pp = m.Source.Generator.NetworkPassphrase
 	}
-	var perr error
-	if v := lcm.ProtocolVersion(); v != m.ProtocolVersion {
-		perr = fmt.Errorf("header says protocol %d, manifest %d", v, m.ProtocolVersion)
-	}
-	add("protocol_version matches ledger header", perr)
-
-	tx, err := findTx(passphrase[m.Network], lcm, m.Source.TxHash)
-	if !add("transaction in ledger", err) {
-		return rep
+	// The primary transaction, then any related ones, each from its ledger.
+	refs := append([]txRef{{Ledger: m.Source.Ledger, TxHash: m.Source.TxHash}}, m.Source.Related...)
+	txOf := map[string]ingest.LedgerTransaction{}
+	var primary ingest.LedgerTransaction
+	for i, ref := range refs {
+		li, ok := ledgers[fmt.Sprintf("%s/%d", m.Network, ref.Ledger)]
+		if !ok {
+			add("canonical ledger present", fmt.Errorf("no corpus/ledgers entry for %s/%d", m.Network, ref.Ledger))
+			return rep
+		}
+		if i == 0 {
+			rep.Ledger = li.Source
+		}
+		lcm, err := readLedger(corpus, li)
+		if !add(fmt.Sprintf("canonical ledger sha256 (%d)", ref.Ledger), err) {
+			return rep
+		}
+		var perr error
+		if v := lcm.ProtocolVersion(); v != m.ProtocolVersion {
+			perr = fmt.Errorf("header says protocol %d, manifest %d", v, m.ProtocolVersion)
+		}
+		add(fmt.Sprintf("protocol_version matches ledger header (%d)", ref.Ledger), perr)
+		tx, err := findTx(pp, lcm, ref.TxHash)
+		if !add("transaction in ledger: "+ref.TxHash[:12], err) {
+			return rep
+		}
+		if i == 0 {
+			primary = tx
+		}
+		for _, name := range ref.Files {
+			txOf[name] = tx
+		}
 	}
 	for _, f := range m.Files {
-		want, err := ledgerCopy(f, m, tx)
+		tx, ok := txOf[f.Name]
+		if !ok {
+			tx = primary
+		}
+		want, err := ledgerCopy(f, blobs[f.Name], tx)
 		if err == nil && !bytes.Equal(want, blobs[f.Name]) {
 			err = fmt.Errorf("bytes differ from ledger (%d vs %d B)", len(blobs[f.Name]), len(want))
 			if f.XdrType == "TransactionMeta" && equalWithoutDiagnostics(want, blobs[f.Name]) {
@@ -276,6 +330,22 @@ func main() {
 	for _, l := range idx {
 		ledgers[fmt.Sprintf("%s/%d", l.Network, l.Ledger)] = l
 	}
+
+	// The findings report validates against its schema too (the committed
+	// corpus has one; a generated copy doesn't).
+	if _, err := os.Stat(filepath.Join(corpus, "findings.json")); err != nil {
+		fmt.Println("--   no findings.json in this corpus")
+	} else if fs, err := c.Compile(filepath.Join(corpus, "findings.schema.json")); err != nil {
+		panic(err)
+	} else if raw, err := os.ReadFile(filepath.Join(corpus, "findings.json")); err != nil {
+		panic(err)
+	} else if inst, err := jsonschema.UnmarshalJSON(bytes.NewReader(raw)); err != nil {
+		panic(err)
+	} else if err := fs.Validate(inst); err != nil {
+		fmt.Printf("FAIL findings.json: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println("ok   findings.json matches findings.schema.json")
 
 	dirs, _ := filepath.Glob(filepath.Join(corpus, "fixtures", "*"))
 	sort.Strings(dirs)

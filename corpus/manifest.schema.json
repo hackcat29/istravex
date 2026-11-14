@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": [
     "id",
+    "pattern",
     "cap_ids",
     "protocol_version",
     "network",
@@ -19,15 +20,22 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^cap[0-9]+-[a-z0-9-]+-(pubnet|testnet|local)-[0-9]{4}$"
+      "pattern": "^(cap[0-9]+|base)-[a-z0-9-]+-(pubnet|testnet|local|synthetic)-[0-9]{4}$",
+      "description": "<cap>-<pattern>-<network>-<nnnn>. `base` instead of a CAP for shapes the base protocol already allowed (memo bytes, maximum-length vectors)."
+    },
+    "pattern": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "The ledger pattern the fixture exercises, e.g. muxed-payment. Runners and scorers dispatch on it."
     },
     "cap_ids": {
       "type": "array",
-      "minItems": 1,
+      "minItems": 0,
       "items": {
         "type": "string",
-        "pattern": "^CAP-[0-9]{4}$"
-      }
+        "pattern": "^CAP-[0-9]{4}(-[0-9]{2})?$"
+      },
+      "description": "CAPs whose XDR the fixture exercises; the first is primary. Empty only for base-protocol shapes (id prefix base-)."
     },
     "protocol_version": {
       "type": "integer",
@@ -37,7 +45,8 @@
       "enum": [
         "pubnet",
         "testnet",
-        "local"
+        "local",
+        "synthetic"
       ]
     },
     "xdr_type": {
@@ -52,18 +61,12 @@
     },
     "source": {
       "type": "object",
-      "required": [
-        "kind",
-        "network_endpoint",
-        "ledger",
-        "tx_hash",
-        "closed_at"
-      ],
       "properties": {
         "kind": {
           "enum": [
             "captured",
-            "generated"
+            "generated",
+            "synthetic"
           ]
         },
         "network_endpoint": {
@@ -105,9 +108,86 @@
             },
             "soroban_limits_factor": {
               "type": "integer"
+            },
+            "seed": {
+              "type": "string",
+              "description": "Key-derivation seed; with the pinned binary, regenerating with the same seed reproduces every XDR byte."
+            },
+            "network_passphrase": {
+              "type": "string"
+            },
+            "close_time_base": {
+              "type": "integer"
+            },
+            "probe_wasm_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "For synthetic fixtures: how the bytes were built and from what."
+        },
+        "derived_from": {
+          "type": "string",
+          "description": "For synthetic fixtures: the fixture whose bytes they start from, if any."
+        },
+        "network_passphrase": {
+          "type": "string"
+        },
+        "related": {
+          "type": "array",
+          "description": "Other transactions some files come from (each file listed comes from that transaction, not the primary one).",
+          "items": {
+            "type": "object",
+            "required": [
+              "ledger",
+              "tx_hash",
+              "files"
+            ],
+            "properties": {
+              "ledger": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "tx_hash": {
+                "$ref": "#/$defs/sha256"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
+      },
+      "required": [
+        "kind"
+      ],
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "synthetic"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "kind",
+          "description"
+        ]
+      },
+      "else": {
+        "required": [
+          "kind",
+          "network_endpoint",
+          "ledger",
+          "tx_hash",
+          "closed_at"
+        ]
       }
     },
     "synthetic": {
@@ -135,14 +215,14 @@
         "properties": {
           "name": {
             "type": "string",
-            "pattern": "^[a-z_]+$"
+            "pattern": "^[a-z][a-z0-9_]*$"
           },
           "xdr_type": {
             "$ref": "#/$defs/xdrType"
           },
           "path": {
             "type": "string",
-            "pattern": "^[a-z_]+\\.xdr\\.b64$"
+            "pattern": "^[a-z][a-z0-9_]*\\.xdr\\.b64$"
           },
           "sha256": {
             "$ref": "#/$defs/sha256"
@@ -150,9 +230,23 @@
           "bytes": {
             "type": "integer",
             "minimum": 1
+          },
+          "expect": {
+            "enum": [
+              "decode_error"
+            ],
+            "description": "Set when a conforming decoder must reject these bytes."
           }
         }
       }
+    },
+    "sightings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+#[0-9]+$"
+      },
+      "description": "Upstream issues or PRs this fixture reproduces, as owner/repo#number."
     }
   },
   "$defs": {
@@ -166,8 +260,41 @@
         "TransactionResult",
         "TransactionMeta",
         "LedgerEntryData",
-        "LedgerEntryChanges"
+        "LedgerEntryChanges",
+        "ScVal"
       ]
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "network": {
+            "const": "synthetic"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "synthetic": {
+            "const": true
+          },
+          "source": {
+            "properties": {
+              "kind": {
+                "const": "synthetic"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "synthetic": {
+            "const": false
+          }
+        }
+      }
+    }
+  ]
 }
