@@ -63,6 +63,13 @@ jobs:
       - name: Skip (no Cloudflare token yet)
         if: env.HAS_CLOUDFLARE != 'true'
         run: echo "::notice title=Site not deployed::Set the CLOUDFLARE_API_TOKEN secret and CLOUDFLARE_ACCOUNT_ID variable to deploy istravex.com."
+      - name: Free the custom-domain hostnames (non-Workers A/AAAA/CNAME only)
+        if: env.HAS_CLOUDFLARE == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ZONE: istravex.com
+          SITE_HOSTS: istravex.com,www.istravex.com
+        run: node deploy/site-dns.mjs
       - name: wrangler deploy
         if: env.HAS_CLOUDFLARE == 'true'
         env:
