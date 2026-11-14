@@ -73,7 +73,7 @@ type report struct {
 	Checks  []check `json:"checks"`
 }
 
-var passphrase = map[string]string{"pubnet": network.PublicNetworkPassphrase, "testnet": network.TestNetworkPassphrase}
+var passphrase = map[string]string{"pubnet": network.PublicNetworkPassphrase, "testnet": network.TestNetworkPassphrase, "local": "Standalone Network ; February 2017"}
 
 func digest(b []byte) string { s := sha256.Sum256(b); return hex.EncodeToString(s[:]) }
 

@@ -1,5 +1,105 @@
 [
   {
+    "network": "local",
+    "ledger": 3,
+    "path": "ledgers/local/3.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "d9b6029db087297e6cb6c72a6a5968f2f42b36507fa22b25b54a3ba04eb1e99c",
+    "bytes": 1676,
+    "compressed_bytes": 683
+  },
+  {
+    "network": "local",
+    "ledger": 4,
+    "path": "ledgers/local/4.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "8b79d67a0b738a9db0b2bfbf7e71edaec181352689a6049b68fb96ab99ab4d3b",
+    "bytes": 2988,
+    "compressed_bytes": 1161
+  },
+  {
+    "network": "local",
+    "ledger": 5,
+    "path": "ledgers/local/5.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "e99da45fabd59361377d468bdd6572bbc9e6b4d346de39d795c9606fb6721b51",
+    "bytes": 2352,
+    "compressed_bytes": 886
+  },
+  {
+    "network": "local",
+    "ledger": 6,
+    "path": "ledgers/local/6.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "67c3d4bd5faaee1e639169eb3e3503944afa77c27695afeecea683530bcbdf5e",
+    "bytes": 2852,
+    "compressed_bytes": 1091
+  },
+  {
+    "network": "local",
+    "ledger": 8,
+    "path": "ledgers/local/8.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "bf2cfefabdadfaa5ecda2e815fbfd14f738e6053cbc327e3d40ff923def3257a",
+    "bytes": 1912,
+    "compressed_bytes": 685
+  },
+  {
+    "network": "local",
+    "ledger": 9,
+    "path": "ledgers/local/9.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "906b0a69f1349929a6b64c340329e001032b3437ea10622af9b2c9dfe6f881e0",
+    "bytes": 1808,
+    "compressed_bytes": 716
+  },
+  {
+    "network": "local",
+    "ledger": 10,
+    "path": "ledgers/local/10.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "c3bc7bef8a80418bb120a9806dff6e1e2ea0b8ef6199301de0c3bb852a01ef32",
+    "bytes": 1912,
+    "compressed_bytes": 692
+  },
+  {
+    "network": "local",
+    "ledger": 11,
+    "path": "ledgers/local/11.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "ed58b90069423061fbb8642cce5469a7286ec7bfcfae146358eef20fe1dd7818",
+    "bytes": 1912,
+    "compressed_bytes": 687
+  },
+  {
+    "network": "local",
+    "ledger": 12,
+    "path": "ledgers/local/12.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "e8ea73a4930fb58ff4df2559ed1fe3a4ba477767350fbc00cf492794001f55b8",
+    "bytes": 2404,
+    "compressed_bytes": 1033
+  },
+  {
+    "network": "local",
+    "ledger": 13,
+    "path": "ledgers/local/13.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+    "sha256": "e233f6a7ab56b0a7b7d4cc0d85a466f435e3fbfc5637baed926b8cfaa42603c8",
+    "bytes": 2632,
+    "compressed_bytes": 910
+  },
+  {
     "network": "pubnet",
     "ledger": 65474279,
     "path": "ledgers/pubnet/65474279.xdr.zst",

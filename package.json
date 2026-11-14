@@ -20,7 +20,8 @@
     "corpus:audit": "node kit/audit/caps.mjs",
     "pilot:wallet-backend": "node kit/pilot/wallet-backend.mjs",
     "rpc": "node kit/rpc/server.mjs",
-    "test:kit": "node --test kit/rpc/server.test.mjs && cd kit/go && go test ./... && go vet ./..."
+    "test:kit": "node --test kit/rpc/server.test.mjs && cd kit/go && go test ./... && go vet ./...",
+    "corpus:generate": "node kit/capture/generate.mjs"
   },
   "dependencies": {
     "@babylonjs/core": "^9.36.0",

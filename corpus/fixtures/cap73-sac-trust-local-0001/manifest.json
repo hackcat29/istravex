@@ -1,0 +1,55 @@
+{
+  "id": "cap73-sac-trust-local-0001",
+  "cap_ids": [
+    "CAP-0073"
+  ],
+  "protocol_version": 30,
+  "network": "local",
+  "xdr_type": "TransactionMeta",
+  "xdr_path": "operations[0].changes[*].created.data.trustLine",
+  "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+  "source": {
+    "kind": "generated",
+    "network_endpoint": "stellar-core://standalone",
+    "ledger": 13,
+    "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+    "closed_at": "2026-11-14T15:38:24.000Z",
+    "generator": {
+      "core_version": "v30.0.0-dirty",
+      "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+      "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+      "protocol_version": 30,
+      "soroban_limits_factor": 10
+    },
+    "sac_contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+    "function": "trust",
+    "contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+  },
+  "expected_indexed": {
+    "trustline_created": true,
+    "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+    "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+    "limit": "9223372036854775807",
+    "classic_change_trust_ops": 0
+  },
+  "files": [
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+      "bytes": 820
+    },
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "91f3de3c323d454e369502e6b71071a6c9177a654ccca0dd59f06b12a5e11dc9",
+      "bytes": 624
+    }
+  ]
+}

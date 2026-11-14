@@ -4,48 +4,170 @@
   "title": "Istravex fixture manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "cap_ids", "protocol_version", "network", "xdr_type", "xdr_path", "sha256", "source", "synthetic", "files"],
+  "required": [
+    "id",
+    "cap_ids",
+    "protocol_version",
+    "network",
+    "xdr_type",
+    "xdr_path",
+    "sha256",
+    "source",
+    "synthetic",
+    "files"
+  ],
   "properties": {
-    "id": { "type": "string", "pattern": "^cap[0-9]+-[a-z0-9-]+-(pubnet|testnet)-[0-9]{4}$" },
-    "cap_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^CAP-[0-9]{4}$" } },
-    "protocol_version": { "type": "integer", "minimum": 1 },
-    "network": { "enum": ["pubnet", "testnet"] },
-    "xdr_type": { "$ref": "#/$defs/xdrType" },
-    "xdr_path": { "type": "string", "minLength": 1 },
-    "sha256": { "$ref": "#/$defs/sha256" },
-    "source": {
-      "type": "object",
-      "required": ["kind", "network_endpoint", "ledger", "tx_hash", "closed_at"],
-      "properties": {
-        "kind": { "enum": ["captured", "generated"] },
-        "network_endpoint": { "type": "string", "format": "uri" },
-        "ledger": { "type": "integer", "minimum": 1 },
-        "tx_hash": { "$ref": "#/$defs/sha256" },
-        "closed_at": { "type": "string", "format": "date-time" }
+    "id": {
+      "type": "string",
+      "pattern": "^cap[0-9]+-[a-z0-9-]+-(pubnet|testnet|local)-[0-9]{4}$"
+    },
+    "cap_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^CAP-[0-9]{4}$"
       }
     },
-    "synthetic": { "type": "boolean" },
-    "expected_decoded": { "type": "object" },
-    "expected_indexed": { "type": "object" },
+    "protocol_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "network": {
+      "enum": [
+        "pubnet",
+        "testnet",
+        "local"
+      ]
+    },
+    "xdr_type": {
+      "$ref": "#/$defs/xdrType"
+    },
+    "xdr_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "kind",
+        "network_endpoint",
+        "ledger",
+        "tx_hash",
+        "closed_at"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "captured",
+            "generated"
+          ]
+        },
+        "network_endpoint": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ledger": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tx_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "closed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "generator": {
+          "type": "object",
+          "description": "Present when kind is generated: the pinned stellar-core that produced the fixture (kit/capture/generate.mjs).",
+          "required": [
+            "core_version",
+            "binary_sha256",
+            "protocol_version"
+          ],
+          "properties": {
+            "core_version": {
+              "type": "string"
+            },
+            "build": {
+              "type": "string"
+            },
+            "binary_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "protocol_version": {
+              "type": "integer"
+            },
+            "soroban_limits_factor": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "expected_decoded": {
+      "type": "object"
+    },
+    "expected_indexed": {
+      "type": "object"
+    },
     "files": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["name", "xdr_type", "path", "sha256", "bytes"],
+        "required": [
+          "name",
+          "xdr_type",
+          "path",
+          "sha256",
+          "bytes"
+        ],
         "properties": {
-          "name": { "type": "string", "pattern": "^[a-z_]+$" },
-          "xdr_type": { "$ref": "#/$defs/xdrType" },
-          "path": { "type": "string", "pattern": "^[a-z_]+\\.xdr\\.b64$" },
-          "sha256": { "$ref": "#/$defs/sha256" },
-          "bytes": { "type": "integer", "minimum": 1 }
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          },
+          "xdr_type": {
+            "$ref": "#/$defs/xdrType"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^[a-z_]+\\.xdr\\.b64$"
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          }
         }
       }
     }
   },
   "$defs": {
-    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "xdrType": { "enum": ["TransactionEnvelope", "TransactionResult", "TransactionMeta", "LedgerEntryData", "LedgerEntryChanges"] }
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "xdrType": {
+      "enum": [
+        "TransactionEnvelope",
+        "TransactionResult",
+        "TransactionMeta",
+        "LedgerEntryData",
+        "LedgerEntryChanges"
+      ]
+    }
   }
 }

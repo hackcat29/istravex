@@ -45,7 +45,7 @@ type result struct {
 	Detail  []string          `json:"detail"`
 }
 
-var passphrase = map[string]string{"pubnet": network.PublicNetworkPassphrase, "testnet": network.TestNetworkPassphrase}
+var passphrase = map[string]string{"pubnet": network.PublicNetworkPassphrase, "testnet": network.TestNetworkPassphrase, "local": "Standalone Network ; February 2017"}
 
 func newValue(t string) (any, error) {
 	switch t {

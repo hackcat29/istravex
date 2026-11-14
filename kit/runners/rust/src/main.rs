@@ -141,7 +141,11 @@ fn native(m: &Manifest, dec: &BTreeMap<String, Decoded>) -> Result<Rows, String>
             let Decoded::Env(TransactionEnvelope::TxFeeBump(fb)) = get("envelope")? else {
                 return Err("not a fee-bump envelope".into());
             };
-            let pp = if m.network == "pubnet" { "Public Global Stellar Network ; September 2015" } else { "Test SDF Network ; September 2015" };
+            let pp = match m.network.as_str() {
+                "pubnet" => "Public Global Stellar Network ; September 2015",
+                "local" => "Standalone Network ; February 2017",
+                _ => "Test SDF Network ; September 2015",
+            };
             let FeeBumpTransactionInnerTx::Tx(inner) = &fb.tx.inner_tx;
             let j = get("envelope")?.json();
             let t = &j["tx_fee_bump"]["tx"];

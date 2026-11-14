@@ -10,7 +10,7 @@ import { ROOT, RESULTS, readCorpus } from '../../lib/fixture.mjs';
 const version = JSON.parse(
   readFileSync(join(ROOT, 'node_modules/@stellar/stellar-sdk/package.json'), 'utf8'),
 ).version;
-const passphrase = { pubnet: Networks.PUBLIC, testnet: Networks.TESTNET };
+const passphrase = { pubnet: Networks.PUBLIC, testnet: Networks.TESTNET, local: Networks.STANDALONE };
 
 // Native checks use the SDK's own high-level forms: its XDR-JSON output
 // (JSON.stringify of a decoded value), StrKey, MuxedAccount and Transaction.

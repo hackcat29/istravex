@@ -17,6 +17,7 @@ import { ROOT } from '../lib/fixture.mjs';
 export const PASSPHRASE = {
   pubnet: 'Public Global Stellar Network ; September 2015',
   testnet: 'Test SDF Network ; September 2015',
+  local: 'Standalone Network ; February 2017',
 };
 const CACHE_SIZE = 4;
 const MAX_LIMIT = 200;
