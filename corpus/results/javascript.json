@@ -1,0 +1,56 @@
+{
+  "sdk": "javascript",
+  "package": "@stellar/stellar-sdk",
+  "version": "17.4.0",
+  "runtime": "node 24.10.0",
+  "results": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    }
+  ],
+  "probes": [
+    {
+      "input": "1764988090084626463",
+      "number": "1764988090084626400",
+      "exact": false
+    },
+    {
+      "input": "9223372036854775807",
+      "number": "9223372036854776000",
+      "exact": false
+    }
+  ]
+}
