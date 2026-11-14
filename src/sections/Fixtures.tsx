@@ -40,18 +40,21 @@ function Json({ value, indent = 0 }: { value: unknown; indent?: number }): React
       </>
     );
   }
-  if (typeof value === 'boolean') return <span className="text-amber">{String(value)}</span>;
+  if (typeof value === 'boolean' || value === null) return <span className="text-amber">{String(value)}</span>;
+  if (typeof value === 'number') return <span className="text-lime">{value}</span>;
   return <span className="text-fg">"{String(value)}"</span>;
 }
 
 export function Fixtures() {
   const [active, setActive] = useState(0);
+  const [view, setView] = useState<'manifest' | 'xdr'>('manifest');
   const [copied, setCopied] = useState(false);
   const f = fixtures.items[active];
+  const xdrFile = `${f.primary.name}.xdr.b64`;
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(f.manifest, null, 2));
+      await navigator.clipboard.writeText(view === 'manifest' ? JSON.stringify(f.manifest, null, 2) : f.primary.b64);
       setCopied(true);
       setTimeout(() => setCopied(false), 1400);
     } catch {
@@ -84,6 +87,9 @@ export function Fixtures() {
                     </motion.span>
                   </div>
                   <h3 className="mt-4 text-[22px] font-medium tracking-tight">{it.name}</h3>
+                  <p className="mt-1 font-mono text-[12px] text-dim">
+                    {it.network} · L{it.ledger.toLocaleString('en-US')} · {it.bytes.toLocaleString('en-US')} B
+                  </p>
                   <AnimatePresence initial={false}>
                     {i === active && (
                       <motion.p
@@ -93,7 +99,10 @@ export function Fixtures() {
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden text-[15px] leading-relaxed text-mute"
                       >
-                        <span className="block pt-2">{it.expect}</span>
+                        <span className="block pt-3">{it.expect}</span>
+                        <a href={it.href} target="_blank" rel="noreferrer" className="mt-3 inline-block font-mono text-[12px] text-fg underline decoration-line-2 underline-offset-4 hover:decoration-fg">
+                          {it.tx_hash.slice(0, 12)}… ↗
+                        </a>
                       </motion.p>
                     )}
                   </AnimatePresence>
@@ -103,8 +112,21 @@ export function Fixtures() {
           </ul>
 
           <div className="card relative flex min-h-[420px] flex-col overflow-hidden">
-            <div className="flex h-12 items-center justify-between border-b border-line pl-5 pr-2">
-              <span className="font-mono text-[12px] text-mute">manifest.json</span>
+            <div className="flex h-12 items-center justify-between border-b border-line pl-2 pr-2">
+              <div role="tablist" aria-label="Fixture file" className="flex gap-1">
+                {(['manifest', 'xdr'] as const).map((v) => (
+                  <button
+                    key={v}
+                    type="button"
+                    role="tab"
+                    aria-selected={view === v}
+                    onClick={() => setView(v)}
+                    className={`h-8 rounded-md px-3 font-mono text-[12px] transition-colors ${view === v ? 'bg-ink-3 text-fg' : 'text-mute hover:text-fg'}`}
+                  >
+                    {v === 'manifest' ? 'manifest.json' : xdrFile}
+                  </button>
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={copy}
@@ -115,16 +137,14 @@ export function Fixtures() {
             </div>
             <AnimatePresence mode="wait">
               <motion.pre
-                key={f.id}
+                key={`${f.id}-${view}`}
                 initial={{ opacity: 0, filter: 'blur(6px)' }}
                 animate={{ opacity: 1, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, filter: 'blur(6px)' }}
                 transition={{ duration: 0.3 }}
-                className="flex-1 overflow-x-auto p-5 font-mono text-[12px] leading-[1.85] sm:p-6 sm:text-[13px]"
+                className={`max-h-[560px] flex-1 overflow-auto p-5 font-mono text-[12px] leading-[1.85] sm:p-6 sm:text-[13px] ${view === 'xdr' ? 'whitespace-pre-wrap break-all text-mute' : ''}`}
               >
-                <code>
-                  <Json value={f.manifest} />
-                </code>
+                <code>{view === 'manifest' ? <Json value={f.manifest} /> : f.primary.b64}</code>
               </motion.pre>
             </AnimatePresence>
           </div>
