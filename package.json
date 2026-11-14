@@ -16,7 +16,11 @@
     "corpus:replay": "node kit/replay/replay.mjs",
     "corpus:data": "node kit/site-data.mjs",
     "corpus:run": "npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay && npm run corpus:data",
-    "corpus:verify": "cd kit/go && go run ./cmd/verify ../../corpus"
+    "corpus:verify": "cd kit/go && go run ./cmd/verify ../../corpus",
+    "corpus:audit": "node kit/audit/caps.mjs",
+    "pilot:wallet-backend": "node kit/pilot/wallet-backend.mjs",
+    "rpc": "node kit/rpc/server.mjs",
+    "test:kit": "node --test kit/rpc/server.test.mjs && cd kit/go && go test ./... && go vet ./..."
   },
   "dependencies": {
     "@babylonjs/core": "^9.36.0",

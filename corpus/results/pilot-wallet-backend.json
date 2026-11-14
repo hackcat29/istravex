@@ -1,0 +1,580 @@
+{
+  "component": "stellar/wallet-backend",
+  "repo": "https://github.com/stellar/wallet-backend",
+  "ref": "3e22515a44979fdc3a558fda3991ca2b48e38cef",
+  "entrypoint": "internal/indexer.ProcessLedger via ingest.NewLedgerBackend(rpc)",
+  "runtime": "go1.26.2",
+  "results": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "network": "pubnet",
+      "ledger": 65474309,
+      "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "fee_charged",
+          "expected": "40354",
+          "observed": "40354",
+          "ok": true
+        },
+        {
+          "field": "fee debited from",
+          "expected": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "observed": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "ok": true
+        },
+        {
+          "field": "fee debit amount",
+          "expected": "40354",
+          "observed": "40354",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "network": "pubnet",
+      "ledger": 65474279,
+      "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "recipient credited",
+          "expected": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "observed": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "ok": true
+        },
+        {
+          "field": "to_muxed_id",
+          "expected": "1764988090084626463",
+          "observed": "1764988090084626463",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "cap": "CAP-0040",
+      "network": "testnet",
+      "ledger": 5727196,
+      "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "signer",
+          "expected": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+          "observed": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+          "ok": true
+        },
+        {
+          "field": "weight",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "network": "testnet",
+      "ledger": 5727199,
+      "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "trustline operation",
+          "expected": "ADD",
+          "observed": "ADD",
+          "ok": true
+        },
+        {
+          "field": "asset",
+          "expected": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+          "observed": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+          "ok": true
+        },
+        {
+          "field": "limit",
+          "expected": "9223372036854775807",
+          "observed": "9223372036854775807",
+          "ok": true
+        },
+        {
+          "field": "TRUSTLINE state change",
+          "expected": "ADD",
+          "observed": "ADD",
+          "ok": true
+        }
+      ]
+    }
+  ],
+  "lint": {
+    "tool": "istravex-lint",
+    "rules": [
+      "IX001",
+      "IX002",
+      "IX003"
+    ],
+    "findings": [
+      {
+        "rule": "IX001",
+        "file": "internal/utils/ingestion_utils.go",
+        "line": 17,
+        "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes",
+        "status": "latent",
+        "note": "utils.Memo returns MEMO_TEXT as a Go string without UTF-8 validation. Nothing outside tests calls it at this ref and no migration has a memo column, so it is not reachable today. Worth a guard before memos are stored. No upstream issue filed.",
+        "url": "https://github.com/stellar/wallet-backend/blob/3e22515a44979fdc3a558fda3991ca2b48e38cef/internal/utils/ingestion_utils.go#L17"
+      }
+    ]
+  },
+  "raw": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+        "inner_hash": "8365f77d05770513f0af7810349a7a3c11a7c9c36212dad37f2fad794984a37a",
+        "to_id": "281210015883952128",
+        "fee_charged": "40354",
+        "is_fee_bump": true,
+        "result_code": "TransactionResultCodeTxFeeBumpInnerSuccess",
+        "ledger": 65474309
+      },
+      "participants": [
+        "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+        "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+        "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+        "GDMV47YWTKKLU4J6ZDXVINMHWBBVGAXFMNJ4EHFXH4UUCQJEBORCOOIW"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "40354"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9034139"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9034139"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8097595"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8097595"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7258595"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7258595"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7572856"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7572856"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7866364"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7866364"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8887593"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8887593"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9070020"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9070020"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7371486"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7371486"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7248730"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7248730"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "6871879"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "6871879"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9298553"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "9298553"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7474225"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "7474225"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8645419"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8645419"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8381681"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "operation_id": "281210015883952129",
+          "token": "CB23WRDQWGSP6YPMY4UV5C4OW5CBTXKYN3XEATG7KJEZCXMJBYEHOUOV",
+          "amount": "8381681"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GBY4VWUNYU5IOW4O3OJPEHTYOTWHG6EHXCX4EE3R3SBWD5UTHUIZTDL3",
+          "asset": "KALE:GBDVX4VELCDSQ54KQJYTNHXAHFLBCA77ZY2USQBM4CSHTTV7DME7KALE",
+          "operation_id": "281210015883952129",
+          "operation": "UPDATE",
+          "balance": "483289048",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "operation": "UPDATE",
+          "balance": "6486011048330"
+        }
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+        "inner_hash": "9c503e8f8c1cd216cce969061f3af745895daed85824df88a53b24fdf9c2321b",
+        "to_id": "281209887034449920",
+        "fee_charged": "200",
+        "is_fee_bump": true,
+        "result_code": "TransactionResultCodeTxFeeBumpInnerSuccess",
+        "ledger": 65474279
+      },
+      "participants": [
+        "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
+        "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "200"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
+          "operation_id": "281209887034449921",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
+          "amount": "595110803"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "operation_id": "281209887034449921",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
+          "amount": "595110803",
+          "to_muxed_id": "1764988090084626463"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "595110803",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
+          "operation": "UPDATE",
+          "balance": "249462480631"
+        }
+      ]
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+        "inner_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+        "to_id": "24598119517798400",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 5727196
+      },
+      "participants": [
+        "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N"
+      ],
+      "state_changes": [
+        {
+          "category": "SIGNER",
+          "reason": "ADD",
+          "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+          "operation_id": "24598119517798401",
+          "signer": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+          "signer_weight_new": 1
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+          "operation": "UPDATE",
+          "balance": "99999999900"
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+        "inner_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+        "to_id": "24598132402774016",
+        "fee_charged": "7146",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 5727199
+      },
+      "participants": [
+        "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA"
+      ],
+      "state_changes": [
+        {
+          "category": "TRUSTLINE",
+          "reason": "ADD",
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "operation_id": "24598132402774017",
+          "token": "CAOGE33V2LEBFMHOYAXDPBIDKTGATIAJNF6FIP27TY37U7Q2CYSKLVSI",
+          "trustline_limit_new": "922337203685.4775807"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "operation_id": "24598132402774017",
+          "token": "CAOGE33V2LEBFMHOYAXDPBIDKTGATIAJNF6FIP27TY37U7Q2CYSKLVSI"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "7146"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+          "operation_id": "24598132402774017",
+          "operation": "ADD",
+          "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+          "operation": "UPDATE",
+          "balance": "99999992854"
+        }
+      ]
+    }
+  ]
+}

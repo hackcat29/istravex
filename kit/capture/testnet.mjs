@@ -95,6 +95,7 @@ const { protocolVersion } = await server.getLatestLedger();
       payload_hex: payload.toString('hex'),
       weight: 1,
     },
+    expected_indexed: { account: account.publicKey(), signer_added: P, weight: 1 },
     files: {
       ledger_entry: { xdr_type: 'LedgerEntryData', b64: entries[0].val.toXDR('base64') },
       envelope: { xdr_type: 'TransactionEnvelope', b64: res.envelopeXdr.toXDR('base64') },

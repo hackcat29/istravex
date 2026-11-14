@@ -1,0 +1,6 @@
+{
+  "IX001 internal/utils/ingestion_utils.go": {
+    "status": "latent",
+    "note": "utils.Memo returns MEMO_TEXT as a Go string without UTF-8 validation. Nothing outside tests calls it at this ref and no migration has a memo column, so it is not reachable today. Worth a guard before memos are stored. No upstream issue filed."
+  }
+}
