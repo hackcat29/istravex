@@ -5,12 +5,53 @@
   "runtime": "node 24.10.0",
   "results": [
     {
+      "fixture": "base-max-length-vectors-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-non-utf8-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-over-max-length-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -20,6 +61,17 @@
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-pool-issuer-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -29,6 +81,7 @@
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
       "detail": []
     },
     {
@@ -38,6 +91,47 @@
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scmap-host-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scval-limits-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -47,6 +141,7 @@
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
       "detail": []
     },
     {
@@ -56,6 +151,7 @@
         "reencode": "pass",
         "native": "pass"
       },
+      "failed": [],
       "detail": []
     }
   ],
@@ -66,8 +162,13 @@
       "exact": false
     },
     {
-      "input": "9223372036854775807",
-      "number": "9223372036854776000",
+      "input": "18446744073709551615",
+      "number": "18446744073709552000",
+      "exact": false
+    },
+    {
+      "input": "9007199254740993",
+      "number": "9007199254740992",
       "exact": false
     },
     {

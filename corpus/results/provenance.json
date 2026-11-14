@@ -1,6 +1,144 @@
 {
   "fixtures": [
     {
+      "fixture": "base-max-length-vectors-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope_signatures",
+          "ok": true
+        },
+        {
+          "name": "sha256 ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (27)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (27)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 36be436e45fe",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (29)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (29)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: d4a2993d6104",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope_signatures",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: ledger_entry",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "base-memo-non-utf8-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (23)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (23)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 654c0b6f251f",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "base-over-max-length-synthetic-0001",
+      "ledger_source": "synthetic: no ledger",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope_101_ops",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope_memo_29",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F0FA--65474309.xdr.zst",
       "checks": [
@@ -29,15 +167,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (65474309)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (65474309)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: ebfeab1b8fed",
           "ok": true
         },
         {
@@ -50,6 +188,52 @@
         },
         {
           "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (16)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (16)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 67bb3a6d1fab",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
           "ok": true
         }
       ]
@@ -79,15 +263,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (65474279)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (65474279)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: fff2333a20af",
           "ok": true
         },
         {
@@ -96,6 +280,60 @@
         },
         {
           "name": "matches ledger: result",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap38-pool-issuer-order-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (20)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (20)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 4b3408374108",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
           "ok": true
         }
       ]
@@ -125,15 +363,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (9)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (9)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: edcc5960494b",
           "ok": true
         },
         {
@@ -171,15 +409,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (5727196)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (5727196)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: 70b154194800",
           "ok": true
         },
         {
@@ -188,6 +426,182 @@
         },
         {
           "name": "matches ledger: envelope",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (32)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (32)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 1839fe555ee4",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-nested-auth-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (43)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (43)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: d88a72034562",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-scmap-host-order-local-0001",
+      "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (42)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (42)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: d6c1eb95d6ab",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-scval-limits-synthetic-0001",
+      "ledger_source": "synthetic: no ledger",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 vec_count_max",
+          "ok": true
+        },
+        {
+          "name": "sha256 map_count_max",
+          "ok": true
+        },
+        {
+          "name": "sha256 vec_depth_2000",
           "ok": true
         }
       ]
@@ -217,15 +631,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (13)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (13)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: d960aed699f4",
           "ok": true
         },
         {
@@ -263,15 +677,15 @@
           "ok": true
         },
         {
-          "name": "canonical ledger sha256",
+          "name": "canonical ledger sha256 (5727199)",
           "ok": true
         },
         {
-          "name": "protocol_version matches ledger header",
+          "name": "protocol_version matches ledger header (5727199)",
           "ok": true
         },
         {
-          "name": "transaction in ledger",
+          "name": "transaction in ledger: ca0d157350ba",
           "ok": true
         },
         {

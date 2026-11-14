@@ -2,12 +2,53 @@
   "package": "github.com/stellar/go-stellar-sdk",
   "results": [
     {
+      "fixture": "base-max-length-vectors-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-non-utf8-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-over-max-length-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "n/a",
+        "reencode": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "checks": {
         "decode": "pass",
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -17,6 +58,17 @@
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-pool-issuer-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -26,6 +78,7 @@
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
       "detail": []
     },
     {
@@ -35,6 +88,47 @@
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scmap-host-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scval-limits-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "native": "n/a",
+        "reencode": "n/a"
+      },
+      "failed": [],
       "detail": []
     },
     {
@@ -44,6 +138,7 @@
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
       "detail": []
     },
     {
@@ -53,6 +148,7 @@
         "native": "pass",
         "reencode": "pass"
       },
+      "failed": [],
       "detail": []
     }
   ],

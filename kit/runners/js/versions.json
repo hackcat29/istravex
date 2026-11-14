@@ -1,0 +1,9 @@
+{
+  "package": "@stellar/stellar-sdk",
+  "note": "Earlier releases run the same corpus to show each upstream fix: a check fails before the release that fixed it and passes from then on. The project's own pin (package.json) is the current row.",
+  "versions": [
+    { "version": "17.2.0", "role": "before js-stellar-sdk#1766 (fixed in 17.2.1)" },
+    { "version": "17.2.1", "role": "before js-stellar-sdk#1785 and #1789 (fixed in 17.3.0)" },
+    { "version": "17.3.0", "role": "first release with every fix" }
+  ]
+}

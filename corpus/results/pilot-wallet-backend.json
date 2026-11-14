@@ -7,6 +7,7 @@
   "results": [
     {
       "fixture": "cap15-fee-bump-pubnet-0001",
+      "pattern": "fee-bump",
       "cap": "CAP-0015",
       "network": "pubnet",
       "ledger": 65474309,
@@ -34,7 +35,37 @@
       ]
     },
     {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "pattern": "muxed-max-id",
+      "cap": "CAP-0027",
+      "network": "local",
+      "ledger": 16,
+      "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "recipient credited",
+          "expected": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "observed": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "ok": true
+        },
+        {
+          "field": "to_muxed_id",
+          "expected": "18446744073709551615",
+          "observed": "18446744073709551615",
+          "ok": true
+        },
+        {
+          "field": "participants",
+          "expected": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46,GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "observed": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46,GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap27-muxed-payment-pubnet-0001",
+      "pattern": "muxed-payment",
       "cap": "CAP-0027",
       "network": "pubnet",
       "ledger": 65474279,
@@ -57,16 +88,17 @@
     },
     {
       "fixture": "cap40-signed-payload-signer-local-0001",
+      "pattern": "signed-payload-signer",
       "cap": "CAP-0040",
       "network": "local",
       "ledger": 9,
-      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+      "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
       "verdict": "correct",
       "checks": [
         {
           "field": "signer",
-          "expected": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
-          "observed": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "expected": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
+          "observed": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
           "ok": true
         },
         {
@@ -79,6 +111,7 @@
     },
     {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "pattern": "signed-payload-signer",
       "cap": "CAP-0040",
       "network": "testnet",
       "ledger": 5727196,
@@ -100,11 +133,29 @@
       ]
     },
     {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "pattern": "muxed-soroban-source",
+      "cap": "CAP-0046",
+      "network": "local",
+      "ledger": 32,
+      "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "participants",
+          "expected": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+          "observed": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap73-sac-trust-local-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "network": "local",
       "ledger": 13,
-      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+      "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
       "verdict": "correct",
       "checks": [
         {
@@ -115,8 +166,8 @@
         },
         {
           "field": "asset",
-          "expected": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
-          "observed": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "expected": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
+          "observed": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
           "ok": true
         },
         {
@@ -135,6 +186,7 @@
     },
     {
       "fixture": "cap73-sac-trust-testnet-0001",
+      "pattern": "sac-trust",
       "cap": "CAP-0073",
       "network": "testnet",
       "ledger": 5727199,
@@ -168,6 +220,43 @@
       ]
     }
   ],
+  "datastore": {
+    "entrypoint": "internal/indexer.ProcessLedger via ingest.NewLedgerBackend(datastore, S3 endpoint_url)",
+    "results": [
+      {
+        "fixture": "cap15-fee-bump-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap27-muxed-max-id-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap27-muxed-payment-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-muxed-soroban-source-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap73-sac-trust-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap73-sac-trust-testnet-0001",
+        "verdict": "correct"
+      }
+    ]
+  },
   "lint": {
     "tool": "istravex-lint",
     "rules": [
@@ -200,6 +289,372 @@
       }
     ]
   },
+  "sightings": [
+    {
+      "issue": "stellar/wallet-backend#729",
+      "title": "handle CAP-40 signed-payload signers in ingestion",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#729",
+        "ref": "2c873353c1f0f3c9b145e25a7d009023ad104a1c"
+      },
+      "before": {
+        "ref": "2a0a84ea12523b6c92e278c0c84b443041240095",
+        "results": [
+          {
+            "fixture": "cap40-signed-payload-signer-local-0001",
+            "verdict": "dropped",
+            "failed": [
+              "records persist: expected no encoding errors, got state_change.SignerAccountID: stellar address PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA has a 68-byte key payload; the account_id column stores only 32-byte account/contract keys"
+            ]
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 156,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 256,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 300,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 344,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          }
+        ]
+      },
+      "fixtures": [
+        "cap40-signed-payload-signer-local-0001"
+      ],
+      "after": {
+        "ref": "2c873353c1f0f3c9b145e25a7d009023ad104a1c",
+        "results": [
+          {
+            "fixture": "cap40-signed-payload-signer-local-0001",
+            "verdict": "correct",
+            "failed": []
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 156,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 256,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 300,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 344,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          }
+        ]
+      },
+      "protocol": 28,
+      "replay_reproduced": true,
+      "lint_reproduced": null,
+      "reproduced": true
+    },
+    {
+      "issue": "stellar/wallet-backend#731",
+      "title": "SAC-created trustlines produce no trustline state change (CAP-0073)",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#734",
+        "ref": "c152783c054c765c8b51fd26ed313fd1ebc1c50c"
+      },
+      "before": {
+        "ref": "764a4f5bcbff5abb0949d93da37f769063013ea0",
+        "results": [
+          {
+            "fixture": "cap73-sac-trust-local-0001",
+            "verdict": "incorrect",
+            "failed": [
+              "TRUSTLINE state change: expected ADD, got —"
+            ]
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 156,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 256,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 300,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 344,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          }
+        ]
+      },
+      "fixtures": [
+        "cap73-sac-trust-local-0001"
+      ],
+      "after": {
+        "ref": "c152783c054c765c8b51fd26ed313fd1ebc1c50c",
+        "results": [
+          {
+            "fixture": "cap73-sac-trust-local-0001",
+            "verdict": "correct",
+            "failed": []
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 156,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 256,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 300,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 344,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          }
+        ]
+      },
+      "protocol": 28,
+      "replay_reproduced": true,
+      "lint_reproduced": null,
+      "reproduced": true
+    },
+    {
+      "issue": "stellar/wallet-backend#716",
+      "title": "AddressBytea truncates muxed and signed-payload addresses (Soroban participant path)",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#753",
+        "ref": "bb0b162b072583c7dabffbdee664d1c117e5ba56"
+      },
+      "before": {
+        "ref": "f8e5786d22c04adad16318f2e126728beec5aac9",
+        "results": [
+          {
+            "fixture": "cap46-muxed-soroban-source-local-0001",
+            "verdict": "dropped",
+            "failed": [
+              "records persist: expected no encoding errors, got participants GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA and MBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUAAAAAAAAAAAA4S5K encode to the same key"
+            ]
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 156,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 259,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 303,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          },
+          {
+            "rule": "IX003",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 347,
+            "message": "IX003: a muxed account's Address() is its M… form; a participant is the account: use ToAccountId().Address()"
+          }
+        ]
+      },
+      "fixtures": [
+        "cap46-muxed-soroban-source-local-0001"
+      ],
+      "lint_rules": [
+        "IX003"
+      ],
+      "after": {
+        "ref": "bb0b162b072583c7dabffbdee664d1c117e5ba56",
+        "results": [
+          {
+            "fixture": "cap46-muxed-soroban-source-local-0001",
+            "verdict": "correct",
+            "failed": []
+          }
+        ],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          }
+        ]
+      },
+      "protocol": 28,
+      "replay_reproduced": true,
+      "lint_reproduced": true,
+      "reproduced": true
+    },
+    {
+      "issue": "stellar/wallet-backend@9538b3c",
+      "title": "derive Soroban participants from executed meta, not the auth tree (unbounded recursion over authorization trees)",
+      "fixed_by": {
+        "commit": "stellar/wallet-backend@9538b3cae",
+        "ref": "9538b3caeaebfeb3d034146c0ce9643c3066cf8a"
+      },
+      "before": {
+        "ref": "666a64d426263fa6bd2a0ee61ee8dfb1f4729019",
+        "results": [],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          },
+          {
+            "rule": "IX002",
+            "file": "internal/indexer/processors/contract_operations.go",
+            "line": 53,
+            "message": "IX002: participantsFromInvocationAndSubInvocations recurses over XDR values with no depth or size limit; add a depth (or node budget) parameter and stop past a bound"
+          }
+        ]
+      },
+      "fixtures": [],
+      "lint_rules": [
+        "IX002"
+      ],
+      "after": {
+        "ref": "9538b3caeaebfeb3d034146c0ce9643c3066cf8a",
+        "results": [],
+        "lint": [
+          {
+            "rule": "IX001",
+            "file": "internal/utils/ingestion_utils.go",
+            "line": 17,
+            "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes"
+          }
+        ]
+      },
+      "protocol": 28,
+      "replay_reproduced": null,
+      "lint_reproduced": true,
+      "reproduced": true
+    }
+  ],
   "raw": [
     {
       "fixture": "cap15-fee-bump-pubnet-0001",
@@ -470,7 +925,66 @@
           "operation": "UPDATE",
           "balance": "6486011048330"
         }
-      ]
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "found": true,
+      "transaction": {
+        "hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+        "inner_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
+        "to_id": "68719480832",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 16
+      },
+      "participants": [
+        "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+        "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "operation_id": "0",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "100"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "operation_id": "68719480833",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "123456789"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "operation_id": "68719480833",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "123456789",
+          "to_muxed_id": "18446744073709551615"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GACNOTKHB4HL4JZSPILLFF7LVQ7TSD5RAYGNBEQF4JAYOG36P4KKJS46",
+          "operation": "UPDATE",
+          "balance": "99876543111"
+        },
+        {
+          "account": "GCP5GECKOTMKISH27XXXJ5BY7TG6GZWAHXBTAB2NAQCBE6CSY452LO4U",
+          "operation": "UPDATE",
+          "balance": "100123456789"
+        }
+      ],
+      "persist_errors": []
     },
     {
       "fixture": "cap27-muxed-payment-pubnet-0001",
@@ -542,14 +1056,15 @@
           "operation": "UPDATE",
           "balance": "249462480631"
         }
-      ]
+      ],
+      "persist_errors": []
     },
     {
       "fixture": "cap40-signed-payload-signer-local-0001",
       "found": true,
       "transaction": {
-        "hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
-        "inner_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+        "hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
+        "inner_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
         "to_id": "38654709760",
         "fee_charged": "100",
         "is_fee_bump": false,
@@ -557,21 +1072,21 @@
         "ledger": 9
       },
       "participants": [
-        "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC"
+        "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O"
       ],
       "state_changes": [
         {
           "category": "SIGNER",
           "reason": "ADD",
-          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
           "operation_id": "38654709761",
-          "signer": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "signer": "PCW6MCZXB5KFIDTT2OD2T2NX3HBY2DWDU5L7UZKNFEED46AB5KH74AAAAAQPKFLMEKKF64BXSJUTEBSRJBFXC7LYQO2MYCC2DOFRDG2WKMNK4QAYZA",
           "signer_weight_new": 1
         },
         {
           "category": "BALANCE",
           "reason": "DEBIT",
-          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
           "operation_id": "0",
           "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
           "amount": "100"
@@ -580,11 +1095,12 @@
       "trustline_changes": [],
       "account_changes": [
         {
-          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "account": "GDWU6G3IRLYMIXXJFZPPLGMTS6L5BKLBQMYY5HQALWHTIDOQUZZWTB4O",
           "operation": "UPDATE",
           "balance": "99999999900"
         }
-      ]
+      ],
+      "persist_errors": []
     },
     {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
@@ -626,52 +1142,88 @@
           "operation": "UPDATE",
           "balance": "99999999900"
         }
-      ]
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "found": true,
+      "transaction": {
+        "hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+        "inner_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+        "to_id": "137438957568",
+        "fee_charged": "146058",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 32
+      },
+      "participants": [
+        "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+          "operation_id": "0",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "146058"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+          "operation": "UPDATE",
+          "balance": "99999688700"
+        }
+      ],
+      "persist_errors": []
     },
     {
       "fixture": "cap73-sac-trust-local-0001",
       "found": true,
       "transaction": {
-        "hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
-        "inner_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+        "hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
+        "inner_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
         "to_id": "55834578944",
-        "fee_charged": "185234",
+        "fee_charged": "238945",
         "is_fee_bump": false,
         "result_code": "TransactionResultCodeTxSuccess",
         "ledger": 13
       },
       "participants": [
-        "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6"
+        "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX"
       ],
       "state_changes": [
         {
           "category": "TRUSTLINE",
           "reason": "ADD",
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
           "operation_id": "55834578945",
-          "token": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM",
+          "token": "CCYMG6TL3W76VQO3EJDYA6EKH6NY7OGOHXGGBEY3NGB63CY5QT6ERAUC",
           "trustline_limit_new": "922337203685.4775807"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
           "operation_id": "55834578945",
-          "token": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+          "token": "CCYMG6TL3W76VQO3EJDYA6EKH6NY7OGOHXGGBEY3NGB63CY5QT6ERAUC"
         },
         {
           "category": "BALANCE",
           "reason": "DEBIT",
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
           "operation_id": "0",
           "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
-          "amount": "185234"
+          "amount": "238945"
         }
       ],
       "trustline_changes": [
         {
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
-          "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
+          "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
           "operation_id": "55834578945",
           "operation": "ADD",
           "balance": "0",
@@ -681,11 +1233,12 @@
       ],
       "account_changes": [
         {
-          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
           "operation": "UPDATE",
-          "balance": "99999814766"
+          "balance": "99999761055"
         }
-      ]
+      ],
+      "persist_errors": []
     },
     {
       "fixture": "cap73-sac-trust-testnet-0001",
@@ -744,7 +1297,8 @@
           "operation": "UPDATE",
           "balance": "99999992854"
         }
-      ]
+      ],
+      "persist_errors": []
     }
   ]
 }
