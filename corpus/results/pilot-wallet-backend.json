@@ -56,6 +56,28 @@
       ]
     },
     {
+      "fixture": "cap40-signed-payload-signer-local-0001",
+      "cap": "CAP-0040",
+      "network": "local",
+      "ledger": 9,
+      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "signer",
+          "expected": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "observed": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "ok": true
+        },
+        {
+          "field": "weight",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
       "cap": "CAP-0040",
       "network": "testnet",
@@ -73,6 +95,40 @@
           "field": "weight",
           "expected": "1",
           "observed": "1",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "network": "local",
+      "ledger": 13,
+      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "trustline operation",
+          "expected": "ADD",
+          "observed": "ADD",
+          "ok": true
+        },
+        {
+          "field": "asset",
+          "expected": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "observed": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "ok": true
+        },
+        {
+          "field": "limit",
+          "expected": "9223372036854775807",
+          "observed": "9223372036854775807",
+          "ok": true
+        },
+        {
+          "field": "TRUSTLINE state change",
+          "expected": "ADD",
+          "observed": "ADD",
           "ok": true
         }
       ]
@@ -449,20 +505,20 @@
       ],
       "trustline_changes": [
         {
-          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
-          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
-          "operation_id": "281209887034449921",
-          "operation": "UPDATE",
-          "balance": "0",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
           "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "operation_id": "281209887034449921",
           "operation": "UPDATE",
           "balance": "595110803",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "0",
           "limit": "9223372036854775807",
           "flags": 1
         }
@@ -472,6 +528,48 @@
           "account": "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
           "operation": "UPDATE",
           "balance": "249462480631"
+        }
+      ]
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-local-0001",
+      "found": true,
+      "transaction": {
+        "hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+        "inner_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+        "to_id": "38654709760",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 9
+      },
+      "participants": [
+        "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC"
+      ],
+      "state_changes": [
+        {
+          "category": "SIGNER",
+          "reason": "ADD",
+          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "operation_id": "38654709761",
+          "signer": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "signer_weight_new": 1
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "operation_id": "0",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "operation": "UPDATE",
+          "balance": "99999999900"
         }
       ]
     },
@@ -514,6 +612,65 @@
           "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
           "operation": "UPDATE",
           "balance": "99999999900"
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "found": true,
+      "transaction": {
+        "hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+        "inner_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+        "to_id": "55834578944",
+        "fee_charged": "185234",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 13
+      },
+      "participants": [
+        "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6"
+      ],
+      "state_changes": [
+        {
+          "category": "TRUSTLINE",
+          "reason": "ADD",
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "operation_id": "55834578945",
+          "token": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM",
+          "trustline_limit_new": "922337203685.4775807"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "operation_id": "55834578945",
+          "token": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "operation_id": "0",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "185234"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "operation_id": "55834578945",
+          "operation": "ADD",
+          "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "operation": "UPDATE",
+          "balance": "99999814766"
         }
       ]
     },

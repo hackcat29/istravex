@@ -13,6 +13,18 @@ const corpus = readCorpus();
 const sdks = ['javascript', 'go', 'rust'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
 const js = sdks.find((s) => s.sdk === 'javascript');
 const replay = read('replay.json').rows;
+const provenance = read('provenance.json').fixtures;
+const pilotRaw = read('pilot-wallet-backend.json');
+const coverage = JSON.parse(readFileSync(join(ROOT, 'corpus', 'coverage.json'), 'utf8'));
+
+// Source lines around each lint finding, from the pinned checkout the pilot used.
+const wbDir = join(ROOT, '.cache', 'wallet-backend');
+const lintFindings = pilotRaw.lint.findings.map((f) => {
+  const path = join(wbDir, f.file);
+  const lines = existsSync(path) ? readFileSync(path, 'utf8').split('\n') : [];
+  const from = Math.max(0, f.line - 5);
+  return { ...f, snippet: { from: from + 1, lines: lines.slice(from, f.line + 3) } };
+});
 
 const fixtures = corpus.map(({ manifest: m, blobs }) => {
   const { files, ...rest } = m;
@@ -27,11 +39,23 @@ const fixtures = corpus.map(({ manifest: m, blobs }) => {
     files: files.map((f) => ({ name: f.name, xdr_type: f.xdr_type, sha256: f.sha256, bytes: f.bytes })),
     manifest: rest,
     primary: { name: files[0].name, xdr_type: files[0].xdr_type, b64: blobs[files[0].name] },
+    provenance: (() => {
+      const p = provenance.find((x) => x.fixture === m.id);
+      return p && { checks: p.checks.length, passed: p.checks.filter((c) => c.ok).length, ledger_source: p.ledger_source };
+    })(),
   };
 });
 
 const checks = sdks.flatMap((s) => s.results.flatMap((r) => Object.values(r.checks)));
+const provChecks = provenance.flatMap((p) => p.checks);
 const stats = {
+  provenance_checks: provChecks.length,
+  provenance_passed: provChecks.filter((c) => c.ok).length,
+  pilot_fixtures: pilotRaw.results.length,
+  pilot_correct: pilotRaw.results.filter((r) => r.verdict === 'correct').length,
+  live_caps: coverage.live_caps,
+  xdr_caps: coverage.xdr_changing_caps,
+  covered_xdr_caps: coverage.covered_xdr_caps,
   fixtures: fixtures.length,
   caps: new Set(fixtures.map((f) => f.cap)).size,
   networks: [...new Set(fixtures.map((f) => f.network))],
@@ -72,6 +96,18 @@ const out = {
   probes: js?.probes ?? [],
   replay,
   anatomy: { fixture: muxed.manifest.id, tx_hash: muxed.manifest.source.tx_hash, ledger: muxed.manifest.source.ledger, values: anatomyValues },
+  coverage: {
+    source: coverage.source,
+    xdr_caps: coverage.caps.filter((c) => c.changes_xdr).map((c) => ({ cap: c.cap, title: c.title, protocol: c.protocol_version, covered: c.fixtures.length > 0 })),
+  },
+  pilot: {
+    component: pilotRaw.component,
+    repo: pilotRaw.repo,
+    ref: pilotRaw.ref,
+    entrypoint: pilotRaw.entrypoint,
+    results: pilotRaw.results,
+    lint: { rules: pilotRaw.lint.rules, findings: lintFindings },
+  },
 };
 mkdirSync(join(ROOT, 'src', 'data'), { recursive: true });
 writeFileSync(join(ROOT, 'src', 'data', 'corpus.json'), JSON.stringify(out, null, 2) + '\n');

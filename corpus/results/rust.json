@@ -26,7 +26,25 @@
         "reencode": "pass"
       },
       "detail": [],
+      "fixture": "cap40-signed-payload-signer-local-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
       "fixture": "cap40-signed-payload-signer-testnet-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "fixture": "cap73-sac-trust-local-0001"
     },
     {
       "checks": {

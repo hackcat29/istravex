@@ -1,18 +1,26 @@
 {
   "generated_by": "kit/site-data.mjs",
   "stats": {
-    "fixtures": 4,
+    "provenance_checks": 62,
+    "provenance_passed": 62,
+    "pilot_fixtures": 6,
+    "pilot_correct": 6,
+    "live_caps": 70,
+    "xdr_caps": 40,
+    "covered_xdr_caps": 3,
+    "fixtures": 6,
     "caps": 4,
     "networks": [
       "pubnet",
+      "local",
       "testnet"
     ],
-    "bytes": 8408,
-    "sdk_checks": 36,
-    "sdk_checks_passed": 36,
-    "naive_faults": 3,
-    "reference_correct": 3,
-    "replay_cases": 3,
+    "bytes": 10348,
+    "sdk_checks": 54,
+    "sdk_checks_passed": 54,
+    "naive_faults": 4,
+    "reference_correct": 4,
+    "replay_cases": 4,
     "max_protocol": 30
   },
   "fixtures": [
@@ -78,6 +86,11 @@
         "name": "envelope",
         "xdr_type": "TransactionEnvelope",
         "b64": "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"
+      },
+      "provenance": {
+        "checks": 12,
+        "passed": 12,
+        "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F0FA--65474309.xdr.zst"
       }
     },
     {
@@ -139,6 +152,83 @@
         "name": "envelope",
         "xdr_type": "TransactionEnvelope",
         "b64": "AAAABQAAAABIs5aGToOgIJMwNgpdL1/fismZD3ICZpBg3SZ/X37iAgAAAAAAAYagAAAAAgAAAACRlo2Vdr+l+xGAWXd2v6LymIX4vUWdwq/QNNMRb+iLoQAAAG4D5w3KAAAAAQAAAAEAAAAAAAAAAAAAAABq+FAcAAAAAAAAAAEAAAAAAAAAAQAAAQAYfn9RDkoQHzt0GB0X4TfO14Hx5gkxZOORukePiFQFo4TFA5te03hjAAAAAVVTREMAAAAAO5kROA7+mIugqJAOsc/kTzZvfb6Ua+0HckD39iTfFcUAAAAAI3irkwAAAAAAAAABb+iLoQAAAEDig9oFG5Qz22A60BkJjuyuN5q3Nq/ky1czBcL77mRyEU3K/9pAP6uFr27/MnAeh5niCW0QfhnHxd878P1kVbAEAAAAAAAAAAFffuICAAAAQIeORJS1Uca0+xKNHrsysGeDSnIMf7/zx4JvcUkGK1xLxDhdMY0XWbswBNpNfgUGLBNqKL6VcNq6u8isfkujIAU="
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F118--65474279.xdr.zst"
+      }
+    },
+    {
+      "id": "cap40-signed-payload-signer-local-0001",
+      "cap": "CAP-0040",
+      "network": "local",
+      "ledger": 9,
+      "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+      "protocol_version": 30,
+      "bytes": 496,
+      "files": [
+        {
+          "name": "ledger_entry",
+          "xdr_type": "LedgerEntryData",
+          "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+          "bytes": 216
+        },
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "9b469380ac1696869964238e2d9763bc508f5294e177c90b3468d2d909304c3d",
+          "bytes": 280
+        }
+      ],
+      "manifest": {
+        "id": "cap40-signed-payload-signer-local-0001",
+        "cap_ids": [
+          "CAP-0040"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "LedgerEntryData",
+        "xdr_path": "account.signers[0].key.ed25519SignedPayload",
+        "sha256": "1ae08813602b9e3e5e1a6d46ba724a1188f5a3186cd1582afbbb67b12baabb2f",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 9,
+          "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+          "closed_at": "2026-11-14T15:27:53.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10
+          },
+          "ledger_entry_at": 9
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "signer_strkey": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "signer_ed25519": "GAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXHV3O",
+          "payload_hex": "71dc829416c333ea7fe25c822940701826a3fcdf7edeb08bac8002040e9056fc",
+          "weight": 1
+        },
+        "expected_indexed": {
+          "account": "GBNPSLOEEKHQ72QGQMO2C6S26TUHDMFAJGWM6PCTTAVYKWTAZVSR3JKC",
+          "signer_added": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+          "weight": 1
+        }
+      },
+      "primary": {
+        "name": "ledger_entry",
+        "xdr_type": "LedgerEntryData",
+        "b64": "AAAAAAAAAABa+S3EIo8P6gaDHaF6WvTocbCgSazPPFOYK4VaYM1lHQAAABdIduecAAAACAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAADHLbIPGolk3EiUh5/VaZR+MS7LOVxVhccF+rYsY9q3XMAAAAgcdyClBbDM+p/4lyCKUBwGCaj/N9+3rCLrIACBA6QVvwAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAMAAAAAAAAACQAAAABq+H35"
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
       }
     },
     {
@@ -188,12 +278,94 @@
           "signer_ed25519": "GDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQLEOP",
           "payload_hex": "349a1726c6c6f14d4e991463bd1cc9257d08150692a62a559b4136f518d35e4a",
           "weight": 1
+        },
+        "expected_indexed": {
+          "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+          "signer_added": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+          "weight": 1
         }
       },
       "primary": {
         "name": "ledger_entry",
         "xdr_type": "LedgerEntryData",
         "b64": "AAAAAAAAAADnukFQH24x7HHfbwhTPMx75j1LWKhj/ZkcCxmDVjvmXAAAABdIduecAFdj2wAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAD40tw9YVCq5Ts4FNx7x76eBsbbLTb465h6pbuW1wnpQUAAAAgNJoXJsbG8U1OmRRjvRzJJX0IFQaSpipVm0E29RjTXkoAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAMAAAAAAFdj3AAAAABq+FUo"
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "https://soroban-testnet.stellar.org#getLedgers(5727196)"
+      }
+    },
+    {
+      "id": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "network": "local",
+      "ledger": 13,
+      "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+      "protocol_version": 30,
+      "bytes": 1444,
+      "files": [
+        {
+          "name": "meta",
+          "xdr_type": "TransactionMeta",
+          "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+          "bytes": 820
+        },
+        {
+          "name": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "sha256": "91f3de3c323d454e369502e6b71071a6c9177a654ccca0dd59f06b12a5e11dc9",
+          "bytes": 624
+        }
+      ],
+      "manifest": {
+        "id": "cap73-sac-trust-local-0001",
+        "cap_ids": [
+          "CAP-0073"
+        ],
+        "protocol_version": 30,
+        "network": "local",
+        "xdr_type": "TransactionMeta",
+        "xdr_path": "operations[0].changes[*].created.data.trustLine",
+        "sha256": "aa1af9da9937869d66be2b43f0c993b3969d4e36c234abc72703b9159b426ab6",
+        "source": {
+          "kind": "generated",
+          "network_endpoint": "stellar-core://standalone",
+          "ledger": 13,
+          "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+          "closed_at": "2026-11-14T15:38:24.000Z",
+          "generator": {
+            "core_version": "v30.0.0-dirty",
+            "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+            "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
+            "protocol_version": 30,
+            "soroban_limits_factor": 10
+          },
+          "sac_contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+        },
+        "synthetic": false,
+        "expected_decoded": {
+          "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+          "function": "trust",
+          "contract": "CAN4UEDP4SVG434GAA7SQGB2KZUJWN74AC5MF5GB7YBEUD27DJD7F6VM"
+        },
+        "expected_indexed": {
+          "trustline_created": true,
+          "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+          "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+          "limit": "9223372036854775807",
+          "classic_change_trust_ops": 0
+        }
+      },
+      "primary": {
+        "name": "meta",
+        "xdr_type": "TransactionMeta",
+        "b64": "AAAABAAAAAAAAAACAAAAAwAAAA0AAAAAAAAAAIFL12NX1LGdbb4FEYhdljqB7pucgDU5zLkJQZaS5LBdAAAAF0V79xwAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAAIFL12NX1LGdbb4FEYhdljqB7pucgDU5zLkJQZaS5LBdAAAAF0V79xwAAAALAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAAAADQAAAABq+IBwAAAAAAAAAAEAAAAAAAAABQAAAAAAAAANAAAAAQAAAACBS9djV9SxnW2+BRGIXZY6ge6bnIA1Ocy5CUGWkuSwXQAAAAFJU1RYAAAAAG87bXUoY882asmmOuaL2Eh0HMzP+wXkjnKgMcPyAmJGAAAAAAAAAAB//////////wAAAAEAAAAAAAAAAAAAAAMAAAANAAAAAAAAAACBS9djV9SxnW2+BRGIXZY6ge6bnIA1Ocy5CUGWkuSwXQAAABdFe/ccAAAACwAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA0AAAAAaviAcAAAAAAAAAABAAAADQAAAAAAAAAAgUvXY1fUsZ1tvgURiF2WOoHum5yANTnMuQlBlpLksF0AAAAXRXv3HAAAAAsAAAABAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAANAAAAAGr4gHAAAAAAAAAAAwAAAAwAAAAJ4yaAuDnHkU9ykAgFPsnssJy3PhHbIa0kAVzzWGWpgtsAABALAAAAAAAAAAEAAAANAAAACeMmgLg5x5FPcpAIBT7J7LCctz4R2yGtJAFc81hlqYLbAAHYjQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAEAAAAAAAAAAA=="
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "stellar-core v30.0.0-dirty standalone METADATA_OUTPUT_STREAM"
       }
     },
     {
@@ -208,7 +380,7 @@
         {
           "name": "meta",
           "xdr_type": "TransactionMeta",
-          "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+          "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
           "bytes": 2748
         },
         {
@@ -227,7 +399,7 @@
         "network": "testnet",
         "xdr_type": "TransactionMeta",
         "xdr_path": "operations[0].changes[*].created.data.trustLine",
-        "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+        "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
         "source": {
           "kind": "captured",
           "network_endpoint": "https://soroban-testnet.stellar.org",
@@ -253,7 +425,12 @@
       "primary": {
         "name": "meta",
         "xdr_type": "TransactionMeta",
-        "b64": "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"
+        "b64": "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"
+      },
+      "provenance": {
+        "checks": 10,
+        "passed": 10,
+        "ledger_source": "https://soroban-testnet.stellar.org#getLedgers(5727199)"
       }
     }
   ],
@@ -267,6 +444,11 @@
         {
           "input": "1764988090084626463",
           "number": "1764988090084626400",
+          "exact": false
+        },
+        {
+          "input": "9223372036854775807",
+          "number": "9223372036854776000",
           "exact": false
         },
         {
@@ -295,7 +477,25 @@
           "detail": []
         },
         {
+          "fixture": "cap40-signed-payload-signer-local-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        },
+        {
           "fixture": "cap40-signed-payload-signer-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap73-sac-trust-local-0001",
           "checks": {
             "decode": "pass",
             "reencode": "pass",
@@ -339,7 +539,25 @@
           "detail": []
         },
         {
+          "fixture": "cap40-signed-payload-signer-local-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        },
+        {
           "fixture": "cap40-signed-payload-signer-testnet-0001",
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": []
+        },
+        {
+          "fixture": "cap73-sac-trust-local-0001",
           "checks": {
             "decode": "pass",
             "native": "pass",
@@ -389,7 +607,25 @@
             "reencode": "pass"
           },
           "detail": [],
+          "fixture": "cap40-signed-payload-signer-local-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
           "fixture": "cap40-signed-payload-signer-testnet-0001"
+        },
+        {
+          "checks": {
+            "decode": "pass",
+            "native": "pass",
+            "reencode": "pass"
+          },
+          "detail": [],
+          "fixture": "cap73-sac-trust-local-0001"
         },
         {
           "checks": {
@@ -407,6 +643,11 @@
     {
       "input": "1764988090084626463",
       "number": "1764988090084626400",
+      "exact": false
+    },
+    {
+      "input": "9223372036854775807",
+      "number": "9223372036854776000",
       "exact": false
     },
     {
@@ -491,6 +732,46 @@
       "diffs": []
     },
     {
+      "fixture": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "ledger": 13,
+      "network": "local",
+      "indexer": "naive",
+      "verdict": "dropped",
+      "expected": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": null,
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "ledger": 13,
+      "network": "local",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap73-sac-trust-testnet-0001",
       "cap": "CAP-0073",
       "ledger": 5727199,
@@ -547,6 +828,455 @@
       "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
       "amount": "595110803",
       "signatures": "1"
+    }
+  },
+  "coverage": {
+    "source": {
+      "repo": "https://github.com/stellar/stellar-protocol",
+      "ref": "ced008c3727005ca4a775f430fe6fe346c30f58f"
+    },
+    "xdr_caps": [
+      {
+        "cap": "CAP-0001",
+        "title": "Bump Sequence",
+        "protocol": 10,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0003",
+        "title": "Asset-backed offers",
+        "protocol": 10,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0006",
+        "title": "Add ManageBuyOffer Operation",
+        "protocol": 11,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0015",
+        "title": "Fee-Bump Transactions",
+        "protocol": 13,
+        "covered": true
+      },
+      {
+        "cap": "CAP-0018",
+        "title": "Fine-Grained Control of Authorization",
+        "protocol": 13,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0019",
+        "title": "Future-upgradable TransactionEnvelope type",
+        "protocol": 13,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0020",
+        "title": "Bucket Initial Entries",
+        "protocol": 11,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0021",
+        "title": "Preconditions: Generalized transaction preconditions",
+        "protocol": 19,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0023",
+        "title": "Two-Part Payments with ClaimableBalanceEntry",
+        "protocol": 14,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0024",
+        "title": "Make PathPayment Symmetrical",
+        "protocol": 12,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0027",
+        "title": "First-class multiplexed accounts",
+        "protocol": 13,
+        "covered": true
+      },
+      {
+        "cap": "CAP-0033",
+        "title": "Sponsored Reserve",
+        "protocol": null,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0035",
+        "title": "Asset Clawback",
+        "protocol": 17,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0038",
+        "title": "Automated Market Makers",
+        "protocol": 18,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0040",
+        "title": "Signed-Payload: Ed25519 Signed Payload Signer for Atomic Transaction Signature Disclosure",
+        "protocol": 19,
+        "covered": true
+      },
+      {
+        "cap": "CAP-0042",
+        "title": "Multi-Part Transaction Sets",
+        "protocol": 20,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0046",
+        "title": "Soroban smart contract system overview",
+        "protocol": 20,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0046-01",
+        "title": "Soroban Runtime Environment",
+        "protocol": 20,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0046-07",
+        "title": "Fee and resource model in smart contracts",
+        "protocol": 20,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0046-10",
+        "title": "Smart Contract Budget Metering",
+        "protocol": 20,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0054",
+        "title": "Soroban refined VM instantiation cost model",
+        "protocol": 21,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0058",
+        "title": "Constructors for Soroban contracts",
+        "protocol": 22,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0059",
+        "title": "Host functions for BLS12-381",
+        "protocol": 22,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0062",
+        "title": "Soroban Live State Prioritization",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0063",
+        "title": "Parallelism-friendly Transaction Scheduling",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0066",
+        "title": "Soroban In-memory Read Resource",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0067",
+        "title": "Unified Asset Events",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0068",
+        "title": "Host function for getting  executable for `Address`",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0070",
+        "title": "Configurable SCP Timing Parameters",
+        "protocol": 23,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0071",
+        "title": "Authentication delegation and address-bound Soroban credentials",
+        "protocol": 27,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0074",
+        "title": "Host functions for BN254",
+        "protocol": 25,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0075",
+        "title": "Cryptographic Primitives for Poseidon/Poseidon2 Hash Functions",
+        "protocol": 25,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0077",
+        "title": "Freeze Ledger Entries via Network Configuration",
+        "protocol": 26,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0080",
+        "title": "Host functions for efficient ZK BN254 use cases",
+        "protocol": 26,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0083",
+        "title": "Allow validators to vote to drop the transaction set from the current ledger",
+        "protocol": 28,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0084",
+        "title": "Muxed Contract Addresses",
+        "protocol": 30,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0085",
+        "title": "Externally managed contract executables",
+        "protocol": 28,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0086",
+        "title": "Host functions for sparse Symbol-keyed map creation and unpacking",
+        "protocol": 28,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0087",
+        "title": "Host functions for ML-DSA signature verification",
+        "protocol": 30,
+        "covered": false
+      },
+      {
+        "cap": "CAP-0088",
+        "title": "Millisecond-Resolution Close Times",
+        "protocol": 30,
+        "covered": false
+      }
+    ]
+  },
+  "pilot": {
+    "component": "stellar/wallet-backend",
+    "repo": "https://github.com/stellar/wallet-backend",
+    "ref": "3e22515a44979fdc3a558fda3991ca2b48e38cef",
+    "entrypoint": "internal/indexer.ProcessLedger via ingest.NewLedgerBackend(rpc)",
+    "results": [
+      {
+        "fixture": "cap15-fee-bump-pubnet-0001",
+        "cap": "CAP-0015",
+        "network": "pubnet",
+        "ledger": 65474309,
+        "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "fee_charged",
+            "expected": "40354",
+            "observed": "40354",
+            "ok": true
+          },
+          {
+            "field": "fee debited from",
+            "expected": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+            "observed": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+            "ok": true
+          },
+          {
+            "field": "fee debit amount",
+            "expected": "40354",
+            "observed": "40354",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap27-muxed-payment-pubnet-0001",
+        "cap": "CAP-0027",
+        "network": "pubnet",
+        "ledger": 65474279,
+        "tx_hash": "fff2333a20af37c71d0bbe8360dd0476a81e41d2be63eb114a0b7e8e68c21395",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "recipient credited",
+            "expected": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+            "observed": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+            "ok": true
+          },
+          {
+            "field": "to_muxed_id",
+            "expected": "1764988090084626463",
+            "observed": "1764988090084626463",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-local-0001",
+        "cap": "CAP-0040",
+        "network": "local",
+        "ledger": 9,
+        "tx_hash": "4eef78cd7026883a46c99d1d893b0f54b56f9b7b661d620c3e6622094fcff9f8",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "signer",
+            "expected": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+            "observed": "PAOLNSB4NISZG4JCKIPH6VNGKH4MJOZM4VYVMFY4C7VNRMMPNLOXGAAAAAQHDXECSQLMGM7KP7RFZARJIBYBQJVD7TPX5XVQROWIAAQEB2IFN7FGAE",
+            "ok": true
+          },
+          {
+            "field": "weight",
+            "expected": "1",
+            "observed": "1",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap40-signed-payload-signer-testnet-0001",
+        "cap": "CAP-0040",
+        "network": "testnet",
+        "ledger": 5727196,
+        "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "signer",
+            "expected": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+            "observed": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+            "ok": true
+          },
+          {
+            "field": "weight",
+            "expected": "1",
+            "observed": "1",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap73-sac-trust-local-0001",
+        "cap": "CAP-0073",
+        "network": "local",
+        "ledger": 13,
+        "tx_hash": "72bf2212d8ed9095b7a8ab2e5957189781c456227b144320d1b6bbbeecd79600",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "trustline operation",
+            "expected": "ADD",
+            "observed": "ADD",
+            "ok": true
+          },
+          {
+            "field": "asset",
+            "expected": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+            "observed": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+            "ok": true
+          },
+          {
+            "field": "limit",
+            "expected": "9223372036854775807",
+            "observed": "9223372036854775807",
+            "ok": true
+          },
+          {
+            "field": "TRUSTLINE state change",
+            "expected": "ADD",
+            "observed": "ADD",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap73-sac-trust-testnet-0001",
+        "cap": "CAP-0073",
+        "network": "testnet",
+        "ledger": 5727199,
+        "tx_hash": "ca0d157350ba4c10b24f4466d25d003797659bfa2a369fe65a72da86c0f38b64",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "trustline operation",
+            "expected": "ADD",
+            "observed": "ADD",
+            "ok": true
+          },
+          {
+            "field": "asset",
+            "expected": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+            "observed": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+            "ok": true
+          },
+          {
+            "field": "limit",
+            "expected": "9223372036854775807",
+            "observed": "9223372036854775807",
+            "ok": true
+          },
+          {
+            "field": "TRUSTLINE state change",
+            "expected": "ADD",
+            "observed": "ADD",
+            "ok": true
+          }
+        ]
+      }
+    ],
+    "lint": {
+      "rules": [
+        "IX001",
+        "IX002",
+        "IX003"
+      ],
+      "findings": [
+        {
+          "rule": "IX001",
+          "file": "internal/utils/ingestion_utils.go",
+          "line": 17,
+          "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes",
+          "status": "latent",
+          "note": "utils.Memo returns MEMO_TEXT as a Go string without UTF-8 validation. Nothing outside tests calls it at this ref and no migration has a memo column, so it is not reachable today. Worth a guard before memos are stored. No upstream issue filed.",
+          "url": "https://github.com/stellar/wallet-backend/blob/3e22515a44979fdc3a558fda3991ca2b48e38cef/internal/utils/ingestion_utils.go#L17",
+          "snippet": {
+            "from": 13,
+            "lines": [
+              "\tswitch memoType {",
+              "\tcase xdr.MemoTypeMemoNone:",
+              "\t\treturn nil, memoType.String()",
+              "\tcase xdr.MemoTypeMemoText:",
+              "\t\tif text, ok := memo.GetText(); ok {",
+              "\t\t\treturn &text, memoType.String()",
+              "\t\t}",
+              "\tcase xdr.MemoTypeMemoId:"
+            ]
+          }
+        }
+      ]
     }
   }
 }

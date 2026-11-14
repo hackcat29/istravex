@@ -26,7 +26,7 @@ XDR-changing CAPs without a fixture are the priority gaps: each one introduced a
 | CAP-0033 | Sponsored Reserve | — | inline | **gap** |
 | CAP-0035 | Asset Clawback | 17 | Stellar-ledger-entries.x, Stellar-transaction.x | **gap** |
 | CAP-0038 | Automated Market Makers | 18 | Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x | **gap** |
-| CAP-0040 | Signed-Payload: Ed25519 Signed Payload Signer for Atomic Transaction Signature Disclosure | 19 | Stellar-types.x | `cap40-signed-payload-signer-testnet-0001` |
+| CAP-0040 | Signed-Payload: Ed25519 Signed Payload Signer for Atomic Transaction Signature Disclosure | 19 | Stellar-types.x | `cap40-signed-payload-signer-local-0001`<br>`cap40-signed-payload-signer-testnet-0001` |
 | CAP-0042 | Multi-Part Transaction Sets | 20 | Stellar-ledger.x | **gap** |
 | CAP-0046 | Soroban smart contract system overview | 20 | Stellar-contract-config-setting.x, Stellar-contract-env-meta.x, Stellar-contract-meta.x, Stellar-contract-spec.x, Stellar-contract.x, Stellar-ledger-entries.x, Stellar-ledger.x, Stellar-transaction.x, Stellar-types.x | **gap** |
 | CAP-0046-01 | Soroban Runtime Environment | 20 | Stellar-contract.x | **gap** |
@@ -82,7 +82,7 @@ XDR-changing CAPs without a fixture are the priority gaps: each one introduced a
 | CAP-0069 | String/Bytes conversion host functions | 23 | — | **gap** |
 | CAP-0071-01 | Authentication delegation for custom accounts | 27 | — | **gap** |
 | CAP-0071-02 | Address-bound Soroban address credentials | 27 | — | **gap** |
-| CAP-0073 | Allow SAC to create G-account balances | 26 | — | `cap73-sac-trust-testnet-0001` |
+| CAP-0073 | Allow SAC to create G-account balances | 26 | — | `cap73-sac-trust-local-0001`<br>`cap73-sac-trust-testnet-0001` |
 | CAP-0076 | P23 State Archival bug remediation | 24 | — | **gap** |
 | CAP-0078 | Host functions for performing limited TTL extensions | 26 | — | **gap** |
 | CAP-0079 | Host functions for muxed address strkey conversions | 26 | — | **gap** |

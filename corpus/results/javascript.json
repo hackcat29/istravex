@@ -23,7 +23,25 @@
       "detail": []
     },
     {
+      "fixture": "cap40-signed-payload-signer-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    },
+    {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -45,6 +63,11 @@
     {
       "input": "1764988090084626463",
       "number": "1764988090084626400",
+      "exact": false
+    },
+    {
+      "input": "9223372036854775807",
+      "number": "9223372036854776000",
       "exact": false
     },
     {

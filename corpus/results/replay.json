@@ -75,6 +75,46 @@
       "diffs": []
     },
     {
+      "fixture": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "ledger": 13,
+      "network": "local",
+      "indexer": "naive",
+      "verdict": "dropped",
+      "expected": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": null,
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "cap": "CAP-0073",
+      "ledger": 13,
+      "network": "local",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": {
+        "trustline_created": true,
+        "account": "GCAUXV3DK7KLDHLNXYCRDCC5SY5ID3U3TSADKOOMXEEUDFUS4SYF2PY6",
+        "asset": "ISTX:GBXTW3LVFBR46NTKZGTDVZUL3BEHIHGMZ75QLZEOOKQDDQ7SAJREMHC7",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap73-sac-trust-testnet-0001",
       "cap": "CAP-0073",
       "ledger": 5727199,
