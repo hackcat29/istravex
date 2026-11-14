@@ -1,0 +1,43 @@
+{
+  "id": "cap40-signed-payload-signer-testnet-0001",
+  "cap_ids": [
+    "CAP-0040"
+  ],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "LedgerEntryData",
+  "xdr_path": "account.signers[0].key.ed25519SignedPayload",
+  "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://soroban-testnet.stellar.org",
+    "ledger": 5727196,
+    "tx_hash": "70b1541948003725da367db63b7f4778f19ce96b3aea237c93f5eb24da5157e1",
+    "closed_at": "2026-11-14T12:33:44.000Z",
+    "ledger_entry_at": 5727196
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
+    "signer_strkey": "PDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQKAAAAAQDJGQXE3DMN4KNJ2MRIY55DTESK7IICUDJFJRKKWNUCNXVDDJV4SWTCI",
+    "signer_ed25519": "GDRUW4HVQVBKXFHM4BJXD3Y67J4BWG3MWTN6HLTB5KLO4W24E6SQLEOP",
+    "payload_hex": "349a1726c6c6f14d4e991463bd1cc9257d08150692a62a559b4136f518d35e4a",
+    "weight": 1
+  },
+  "files": [
+    {
+      "name": "ledger_entry",
+      "xdr_type": "LedgerEntryData",
+      "path": "ledger_entry.xdr.b64",
+      "sha256": "fba87ee2b9a5ef45f723f4da6b27656a7545ed7cbc8eff16baa68174a43da884",
+      "bytes": 216
+    },
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "48eec5fc26eb4de5daa6c71a8fdb813be9e5476c9c2bf5058fab983d0ae8bdb7",
+      "bytes": 280
+    }
+  ]
+}
