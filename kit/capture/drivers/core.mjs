@@ -19,12 +19,15 @@ export const STANDALONE = 'Standalone Network ; February 2017';
 /**
  * Ledgers close at CLOSE_TIME_BASE + CLOSE_TIME_STEP × n. Under MANUAL_CLOSE
  * stellar-core refuses a close time earlier than its own virtual clock, which
- * jumps ahead to its next timer whenever it idles: measured at 105–299 s past
- * the last close on 30.0.0. So the base sits far in the future
- * (2100-01-01T00:00:00Z) and each step clears the largest jump with margin.
+ * jumps ahead to its next timer whenever it idles, by an amount that depends
+ * on the machine: 105–299 s past the last close on an M-series Mac, about
+ * 5,000 s on a GitHub Actions runner. So the base sits far in the future
+ * (2100-01-01T00:00:00Z) and each step is 30 days, hundreds of times the
+ * largest jump seen. Transactions carry no time bounds, so only ledger
+ * headers see these times.
  */
 export const CLOSE_TIME_BASE = 4102444800;
-export const CLOSE_TIME_STEP = 600;
+export const CLOSE_TIME_STEP = 30 * 24 * 3600;
 
 /** 32 bytes derived from the seed and a label: the source of every key and payload. */
 export const derive = (seed, label) => createHash('sha256').update(`istravex:${seed}:${label}`).digest();
@@ -132,15 +135,14 @@ VALIDATORS=["$self"]
   // and so every hash, identical between runs.
   let lastCloseTime = CLOSE_TIME_BASE;
   async function close() {
-    let target = lastCloseTime + CLOSE_TIME_STEP;
-    for (let attempt = 0; ; attempt++) {
-      const r = await call(`${http}/manualclose?closeTime=${target}`);
-      const reply = typeof r === 'string' ? r : JSON.stringify(r);
-      if (/Manually closed ledger/.test(reply)) break;
+    const target = lastCloseTime + CLOSE_TIME_STEP;
+    const r = await call(`${http}/manualclose?closeTime=${target}`);
+    const reply = typeof r === 'string' ? r : JSON.stringify(r);
+    if (!/Manually closed ledger/.test(reply)) {
+      // Never fall back to core's clock: that would make the output depend on
+      // the machine. A refusal here means CLOSE_TIME_STEP is too small.
       const now = Number(reply.match(/now=(\d+)/)?.[1]);
-      if (process.env.ISTRAVEX_DRIFT) console.error(`drift: now - last close = ${now - lastCloseTime}`);
-      if (attempt > 4 || !now) throw new Error(`manualclose refused closeTime=${target}: ${reply.slice(0, 300)}`);
-      target = now + 1;
+      throw new Error(`manualclose refused closeTime=${target} (core's clock is ${now - lastCloseTime} s past the last close; CLOSE_TIME_STEP is ${CLOSE_TIME_STEP} s): ${reply.slice(0, 300)}`);
     }
     lastCloseTime = target;
     for (let i = 0; i < 100; i++) {

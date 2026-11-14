@@ -200,7 +200,7 @@ export const kit = {
       docs: `${DOCS_URL}/tools/lint`,
       n: '04',
       title: 'Go linter & guide',
-      body: 'Three go/analysis rules: clean on wallet-backend main, firing on the code its upstream fixes removed. And a hardening guide whose first version was reviewed by a Stellar Core engineer.',
+      body: 'Three go/analysis rules: clean on wallet-backend main, firing on the code its upstream fixes removed. And a hardening guide reviewed by a Stellar Core engineer.',
     },
     {
       id: 'pilot',

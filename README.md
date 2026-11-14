@@ -18,7 +18,7 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | Findings | 15 in [`corpus/findings.json`](corpus/findings.json), 10 reproduced, every failure mapped to an upstream issue ([report](https://docs.istravex.com/project/findings)) |
 | stellar-core goldens | all three SDKs round-trip 15,306/15,306 `LedgerCloseMeta` frames from core's `--check-lcm` data |
 | CAP audit | 70 live CAPs, 40 change XDR, 5 of those covered ([coverage](https://docs.istravex.com/corpus/cap-coverage)) |
-| Guide | [Indexer hardening guide](https://docs.istravex.com/guide/overview): v1.0 reviewed and confirmed by a Stellar Core engineer; [field-by-field table](https://docs.istravex.com/guide/validated-fields) checked against the corpus |
+| Guide | [Indexer hardening guide](https://docs.istravex.com/guide/overview): reviewed and confirmed by a Stellar Core engineer; [field-by-field table](https://docs.istravex.com/guide/validated-fields) checked against the corpus |
 
 ## Kit
 

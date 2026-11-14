@@ -8,13 +8,13 @@
   "network": "local",
   "xdr_type": "LedgerEntryData",
   "xdr_path": "account.signers[0].key.ed25519SignedPayload",
-  "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
+  "sha256": "640b6db82a7049150fdbb151b8836ffcd7981ab50a7dc60c11644a34c7ffee83",
   "source": {
     "kind": "generated",
     "network_endpoint": "stellar-core://standalone",
     "ledger": 9,
     "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
-    "closed_at": "2100-01-01T01:20:00.000Z",
+    "closed_at": "2100-08-29T00:00:00.000Z",
     "generator": {
       "core_version": "v30.0.0-dirty",
       "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
@@ -24,6 +24,7 @@
       "seed": "istravex",
       "network_passphrase": "Standalone Network ; February 2017",
       "close_time_base": 4102444800,
+      "close_time_step": 2592000,
       "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
     },
     "ledger_entry_at": 9
@@ -49,7 +50,7 @@
       "name": "ledger_entry",
       "xdr_type": "LedgerEntryData",
       "path": "ledger_entry.xdr.b64",
-      "sha256": "06db74e343bdb20c5d2b50102c506996ae8d72fd71d70097bbce39b05c0b298b",
+      "sha256": "640b6db82a7049150fdbb151b8836ffcd7981ab50a7dc60c11644a34c7ffee83",
       "bytes": 216
     },
     {

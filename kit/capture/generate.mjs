@@ -74,7 +74,7 @@ if (out === COMMITTED && (opt.passphrase !== 'standalone' || opt.seed !== 'istra
 }
 // Every corpus helper reads ISTRAVEX_CORPUS when it is first imported.
 process.env.ISTRAVEX_CORPUS = out;
-const { coreDriver, CLOSE_TIME_BASE } = await import('./drivers/core.mjs');
+const { coreDriver, CLOSE_TIME_BASE, CLOSE_TIME_STEP } = await import('./drivers/core.mjs');
 const { runScenarios, PROBE_WASM } = await import('./scenarios.mjs');
 const { sameUpToChangeOrder } = await import('../lib/canonical.mjs');
 
@@ -142,6 +142,7 @@ const d = await coreDriver({
     seed: opt.seed,
     network_passphrase: passphrase,
     close_time_base: CLOSE_TIME_BASE,
+    close_time_step: CLOSE_TIME_STEP,
     probe_wasm_sha256: createHash('sha256').update(readFileSync(PROBE_WASM)).digest('hex'),
   },
 });

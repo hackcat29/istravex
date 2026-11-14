@@ -12,7 +12,7 @@
     "network_endpoint": "stellar-core://standalone",
     "ledger": 23,
     "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
-    "closed_at": "2100-01-01T03:40:00.000Z",
+    "closed_at": "2101-10-23T00:00:00.000Z",
     "generator": {
       "core_version": "v30.0.0-dirty",
       "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
@@ -22,6 +22,7 @@
       "seed": "istravex",
       "network_passphrase": "Standalone Network ; February 2017",
       "close_time_base": 4102444800,
+      "close_time_step": 2592000,
       "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
     }
   },

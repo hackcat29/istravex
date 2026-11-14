@@ -31,7 +31,7 @@
 - Upstream pilot: stellar/wallet-backend @ 3e22515 indexes 8/8 fixtures correctly over RPC and over the data lake; wallet-backend#729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes; istravex-lint finds 1 latent IX001 (unused memo helper) on main, and IX003/IX002 on the pre-fix commits
 - Findings: 15 in corpus/findings.json (https://api.istravex.com/v1/findings), each with severity, upstream issue, corpus entry and the checks it explains
 - CAP audit: 70 live CAPs, 40 change XDR, 5 covered
-- Hardening guide: https://docs.istravex.com/guide/overview (v1.0 reviewed and confirmed by a Stellar Core engineer; v1.1 pages awaiting review); field-by-field table at https://docs.istravex.com/guide/validated-fields
+- Hardening guide: https://docs.istravex.com/guide/overview (reviewed and confirmed by a Stellar Core engineer); field-by-field table at https://docs.istravex.com/guide/validated-fields
 - stellar-core goldens: all three SDKs round-trip 15,306/15,306 LedgerCloseMeta frames from core's --check-lcm data (v30.0.0)
 - Docs: https://docs.istravex.com
 - Guides: https://docs.istravex.com/guides/sdk-conformance (SDK), https://docs.istravex.com/guides/indexer-ci (indexer CI), https://docs.istravex.com/guides/fixtures-in-tests (app tests), https://docs.istravex.com/guides/hosted-api (API)

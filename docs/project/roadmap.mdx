@@ -46,7 +46,7 @@ The SCF RFP lists a check for each deliverable. Each one runs in CI.
 | Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
 | Replay harness | The reference adapter reproduces wallet-backend #729, #731 and #716 on pre-fix commits and passes on the fixed ones | [Before and after each upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix): all three, plus 9538b3c |
 | Linter | Flags seeded violations; runs clean on current wallet-backend | The [action self-test](/operations/ci) (six seeded findings) and the [pilot](/pilots/wallet-backend#lint) (one triaged latent finding, no live ones) |
-| Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; v1.0 reviewed 14 November 2026, v1.1 pages awaiting review |
+| Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; v1.0 reviewed 14 November, v1.1 on 15 November 2026 |
 | Conformance runner | Reproduces js-stellar-sdk #1766, #1785 and #1789 on pre-fix tags | [Earlier JavaScript releases](/tools/sdk-runners#earlier-javascript-releases): 17.2.0 and 17.2.1 fail, 17.3.0 and 17.4.0 pass |
 | Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs` |
 
