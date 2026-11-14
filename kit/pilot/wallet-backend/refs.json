@@ -1,0 +1,66 @@
+{
+  "repo": "https://github.com/stellar/wallet-backend",
+  "current": {
+    "ref": "3e22515a44979fdc3a558fda3991ca2b48e38cef",
+    "label": "main @ 2026-11-12"
+  },
+  "sightings": [
+    {
+      "issue": "stellar/wallet-backend#729",
+      "title": "handle CAP-40 signed-payload signers in ingestion",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#729",
+        "ref": "2c873353c1f0f3c9b145e25a7d009023ad104a1c"
+      },
+      "before": "2a0a84ea12523b6c92e278c0c84b443041240095",
+      "fixtures": [
+        "cap40-signed-payload-signer-local-0001"
+      ]
+    },
+    {
+      "issue": "stellar/wallet-backend#731",
+      "title": "SAC-created trustlines produce no trustline state change (CAP-0073)",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#734",
+        "ref": "c152783c054c765c8b51fd26ed313fd1ebc1c50c"
+      },
+      "before": "764a4f5bcbff5abb0949d93da37f769063013ea0",
+      "fixtures": [
+        "cap73-sac-trust-local-0001"
+      ]
+    },
+    {
+      "issue": "stellar/wallet-backend#716",
+      "title": "AddressBytea truncates muxed and signed-payload addresses (Soroban participant path)",
+      "fixed_by": {
+        "pr": "stellar/wallet-backend#753",
+        "ref": "bb0b162b072583c7dabffbdee664d1c117e5ba56"
+      },
+      "before": "f8e5786d22c04adad16318f2e126728beec5aac9",
+      "fixtures": [
+        "cap46-muxed-soroban-source-local-0001"
+      ],
+      "lint_rules": [
+        "IX003"
+      ]
+    },
+    {
+      "issue": "stellar/wallet-backend@9538b3c",
+      "title": "derive Soroban participants from executed meta, not the auth tree (unbounded recursion over authorization trees)",
+      "fixed_by": {
+        "commit": "stellar/wallet-backend@9538b3cae",
+        "ref": "9538b3caeaebfeb3d034146c0ce9643c3066cf8a"
+      },
+      "before": "666a64d426263fa6bd2a0ee61ee8dfb1f4729019",
+      "fixtures": [],
+      "lint_rules": [
+        "IX002"
+      ]
+    }
+  ],
+  "sightings_corpus": {
+    "protocol": 28,
+    "dir": ".cache/corpus-p28",
+    "why": "The commits before these fixes use go-stellar-sdk 0.7.3, which predates protocol 29 and can't decode a protocol 29 ledger header (StellarValueType 3). They ran against protocol 28 networks, so the sightings replay a protocol 28 copy of the same scenarios, generated deterministically by the same pinned stellar-core: node kit/capture/generate.mjs --protocol 28 --out .cache/corpus-p28"
+  }
+}

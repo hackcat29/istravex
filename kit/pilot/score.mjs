@@ -9,12 +9,12 @@ const check = (field, expected, observed) => ({ field, expected: String(expected
 
 const scorers = {
   // Payment to a muxed account: recipient credited, with the full muxed ID.
-  'CAP-0027'(e, out) {
+  'muxed-payment'(e, out) {
     const credit = out.state_changes.find((s) => s.category === 'BALANCE' && s.reason === 'CREDIT' && s.account === e.recipient);
     return { primary: credit, checks: [check('recipient credited', e.recipient, credit?.account), check('to_muxed_id', e.recipient_muxed_id, credit?.to_muxed_id)] };
   },
   // Fee-bump: fee charged as in the result, debited from the fee-bump payer.
-  'CAP-0015'(e, out) {
+  'fee-bump'(e, out) {
     const fee = out.state_changes.find((s) => s.category === 'BALANCE' && s.reason === 'DEBIT' && s.operation_id === '0');
     return {
       primary: fee,
@@ -26,12 +26,12 @@ const scorers = {
     };
   },
   // Signed-payload signer: signer recorded with its full P-strkey and weight.
-  'CAP-0040'(e, out) {
+  'signed-payload-signer'(e, out) {
     const s = out.state_changes.find((x) => x.category === 'SIGNER' && x.reason === 'ADD' && x.account === e.account);
     return { primary: s, checks: [check('signer', e.signer_added, s?.signer), check('weight', e.weight, s?.signer_weight_new)] };
   },
   // SAC trust(): trustline created for the account with an i64::MAX limit.
-  'CAP-0073'(e, out) {
+  'sac-trust'(e, out) {
     const tl = out.trustline_changes.find((t) => t.account === e.account && t.asset === e.asset);
     const sc = out.state_changes.find((x) => x.category === 'TRUSTLINE' && x.account === e.account);
     return {
@@ -44,13 +44,33 @@ const scorers = {
       ],
     };
   },
+  // Muxed source, maximum muxed destination ID: credited with the full ID,
+  // and participants are accounts (G…), never M-addresses.
+  'muxed-max-id'(e, out) {
+    const credit = out.state_changes.find((s) => s.category === 'BALANCE' && s.reason === 'CREDIT' && s.account === e.recipient);
+    return {
+      primary: credit,
+      checks: [
+        check('recipient credited', e.recipient, credit?.account),
+        check('to_muxed_id', e.recipient_muxed_id, credit?.to_muxed_id),
+        check('participants', e.participants.join(','), [...out.participants].sort().join(',')),
+      ],
+    };
+  },
+  // A Soroban operation from a muxed source (wallet-backend#716): the
+  // participant is the base account, not the M-address.
+  'muxed-soroban-source'(e, out) {
+    return { primary: out.transaction, checks: [check('participants', e.participants.join(','), [...out.participants].sort().join(','))] };
+  },
 };
 
 export function score(manifest, out) {
-  const cap = manifest.cap_ids[0];
-  const base = { fixture: manifest.id, cap, network: manifest.network, ledger: manifest.source.ledger, tx_hash: manifest.source.tx_hash };
+  const cap = manifest.cap_ids[0] ?? 'base';
+  const base = { fixture: manifest.id, pattern: manifest.pattern, cap, network: manifest.network, ledger: manifest.source.ledger, tx_hash: manifest.source.tx_hash };
   if (!out?.found) return { ...base, verdict: 'dropped', checks: [check('transaction indexed', manifest.source.tx_hash, out?.error ?? 'not found')] };
-  const { primary, checks } = scorers[cap](manifest.expected_indexed, out);
+  // A record persistence can't encode halts ingestion at this ledger: nothing is stored.
+  if (out.persist_errors?.length) return { ...base, verdict: 'dropped', checks: [check('records persist', 'no encoding errors', out.persist_errors.join('; '))] };
+  const { primary, checks } = scorers[manifest.pattern](manifest.expected_indexed, out);
   const verdict = !primary ? 'dropped' : checks.every((c) => c.ok) ? 'correct' : 'incorrect';
   return { ...base, verdict, checks };
 }

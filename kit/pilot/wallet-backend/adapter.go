@@ -9,23 +9,31 @@
 // getLedgers, then runs indexer.ProcessLedger, the same per-ledger function
 // live ingestion calls, and prints what the indexer produced for the fixture's
 // transaction as JSON. Nothing is written to a database; the output is exactly
-// what ingestion would hand to persistence.
+// what ingestion would hand to persistence. It also runs every column encoder
+// persistence would run (each field's driver.Valuer, and the participants'
+// AddressBytea keys): a value that can't be encoded, or two participants that
+// encode to the same key, halts real ingestion, so they're reported as
+// persist_errors.
 //
 //	go run -tags istravex_pilot ./istravex_pilot < requests.json
 package main
 
 import (
 	"context"
+	"database/sql/driver"
 	"encoding/json"
 	"fmt"
 	"os"
+	"reflect"
 	"sort"
+	"time"
 
 	"github.com/alitto/pond/v2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stellar/go-stellar-sdk/ingest/ledgerbackend"
 
 	"github.com/stellar/wallet-backend/internal/indexer"
+	"github.com/stellar/wallet-backend/internal/indexer/types"
 	"github.com/stellar/wallet-backend/internal/ingest"
 	"github.com/stellar/wallet-backend/internal/metrics"
 )
@@ -36,6 +44,10 @@ type request struct {
 	Passphrase string `json:"passphrase"`
 	Ledger     uint32 `json:"ledger"`
 	TxHash     string `json:"tx_hash"`
+	// Datastore mode: read the ledger from a data lake through wallet-backend's
+	// S3 datastore backend instead of RPC (kit/datalake/lake.mjs serve).
+	BucketPath  string `json:"bucket_path,omitempty"`
+	EndpointURL string `json:"endpoint_url,omitempty"`
 }
 
 // All 64-bit integers are emitted as JSON strings: consumers in JavaScript
@@ -90,16 +102,63 @@ type output struct {
 	StateChanges []stateChange `json:"state_changes"`
 	Trustlines   []trustline   `json:"trustline_changes"`
 	Accounts     []account     `json:"account_changes"`
+	// Encoding failures persistence would hit; any one halts ingestion at this ledger.
+	PersistErrors []string `json:"persist_errors"`
+}
+
+// encodeErrors calls Value() on every field of v that implements driver.Valuer,
+// as a database COPY would, and returns the errors.
+func encodeErrors(label string, v any) []string {
+	var errs []string
+	rv := reflect.ValueOf(v)
+	for rv.Kind() == reflect.Pointer {
+		if rv.IsNil() {
+			return nil
+		}
+		rv = rv.Elem()
+	}
+	if rv.Kind() != reflect.Struct {
+		return nil
+	}
+	valuer := reflect.TypeOf((*driver.Valuer)(nil)).Elem()
+	for i := 0; i < rv.NumField(); i++ {
+		f := rv.Field(i)
+		if !rv.Type().Field(i).IsExported() {
+			continue
+		}
+		var val driver.Valuer
+		switch {
+		case f.Type().Implements(valuer):
+			val, _ = f.Interface().(driver.Valuer)
+		case f.CanAddr() && f.Addr().Type().Implements(valuer):
+			val, _ = f.Addr().Interface().(driver.Valuer)
+		}
+		if val == nil {
+			continue
+		}
+		if _, err := val.Value(); err != nil {
+			errs = append(errs, fmt.Sprintf("%s.%s: %v", label, rv.Type().Field(i).Name, err))
+		}
+	}
+	return errs
 }
 
 func run(ctx context.Context, req request) output {
-	out := output{Fixture: req.Fixture, Participants: []string{}, StateChanges: []stateChange{}, Trustlines: []trustline{}, Accounts: []account{}}
-	backend, err := ingest.NewLedgerBackend(ctx, ingest.Configs{
+	out := output{Fixture: req.Fixture, Participants: []string{}, StateChanges: []stateChange{}, Trustlines: []trustline{}, Accounts: []account{}, PersistErrors: []string{}}
+	cfg := ingest.Configs{
 		LedgerBackendType: ingest.LedgerBackendTypeRPC,
 		RPCURL:            req.RPCURL,
 		GetLedgersLimit:   1,
 		NetworkPassphrase: req.Passphrase,
-	})
+	}
+	if req.BucketPath != "" {
+		cfg.LedgerBackendType = ingest.LedgerBackendTypeDatastore
+		cfg.Datastore = ingest.DatastoreConfig{
+			BucketPath: req.BucketPath, EndpointURL: req.EndpointURL, Region: "us-east-1",
+			BufferSize: 1, NumWorkers: 1, RetryLimit: 1, RetryWait: time.Second,
+		}
+	}
+	backend, err := ingest.NewLedgerBackend(ctx, cfg)
 	if err != nil {
 		out.Error = err.Error()
 		return out
@@ -146,6 +205,21 @@ func run(ctx context.Context, req request) output {
 		out.Participants = append(out.Participants, p)
 	}
 	sort.Strings(out.Participants)
+	// Participants are stored as AddressBytea keys: each must encode, and no
+	// two may encode to the same key (a duplicate primary key halts the COPY).
+	keys := map[string]string{}
+	for _, p := range out.Participants {
+		k, err := types.AddressBytea(p).Value()
+		if err != nil {
+			out.PersistErrors = append(out.PersistErrors, fmt.Sprintf("participant %s: %v", p, err))
+			continue
+		}
+		key := fmt.Sprint(k)
+		if other, dup := keys[key]; dup {
+			out.PersistErrors = append(out.PersistErrors, fmt.Sprintf("participants %s and %s encode to the same key", other, p))
+		}
+		keys[key] = p
+	}
 	sort.Slice(out.Trustlines, func(i, j int) bool { return out.Trustlines[i].Account < out.Trustlines[j].Account })
 
 	// Operation IDs of this transaction (TOID: tx id + op index).
@@ -159,6 +233,7 @@ func run(ctx context.Context, req request) output {
 		if sc.ToID != toID {
 			continue
 		}
+		out.PersistErrors = append(out.PersistErrors, encodeErrors("state_change", sc)...)
 		s := stateChange{
 			Category:    string(sc.StateChangeCategory),
 			Reason:      string(sc.StateChangeReason),

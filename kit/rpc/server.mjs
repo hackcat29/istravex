@@ -4,15 +4,19 @@
 // corpus with no network, credentials or funds.
 //
 // Methods: getHealth, getNetwork, getLatestLedger, getLedgers.
-// Ledgers are decompressed on demand; at most CACHE_SIZE stay in memory.
+// Memory is bounded whatever the corpus size: ledgers are decompressed on
+// demand, at most CACHE_SIZE stay decoded, and a getLedgers page stops at
+// MAX_RESPONSE_BYTES of metadata (at least one ledger), so clients page on
+// with the cursor. kit/rpc/memory.test.mjs holds it to that.
 //
 //   node kit/rpc/server.mjs --network pubnet --port 8000
 import { createServer } from 'node:http';
+import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { zstdDecompressSync } from 'node:zlib';
 import { xdr } from '@stellar/stellar-sdk';
-import { ROOT } from '../lib/fixture.mjs';
+import { CORPUS } from '../lib/fixture.mjs';
 
 export const PASSPHRASE = {
   pubnet: 'Public Global Stellar Network ; September 2015',
@@ -20,6 +24,7 @@ export const PASSPHRASE = {
   local: 'Standalone Network ; February 2017',
 };
 const CACHE_SIZE = 4;
+export const MAX_RESPONSE_BYTES = 16 * 1024 * 1024;
 const MAX_LIMIT = 200;
 const DEFAULT_LIMIT = 5;
 
@@ -30,8 +35,52 @@ class RpcError extends Error {
   }
 }
 
+// The SDK's own XDR reader, for decoding a prefix of a buffer.
+const { Reader } = createRequire(createRequire(import.meta.url).resolve('@stellar/stellar-sdk'))('@stellar/js-xdr');
+
+/**
+ * What getLedgers needs from a stored LedgerCloseMetaBatch, without decoding
+ * the whole ledger (a pubnet ledger is ~1.4 MB of XDR and many times that as
+ * objects): the header is read from its offset, and for a one-ledger batch the
+ * LedgerCloseMeta bytes are the batch minus its 12-byte prefix. Anything else
+ * falls back to a full decode.
+ */
+export function headerOnly(raw, seq) {
+  const r = new Reader(raw);
+  const start = r.readUint32();
+  const end = r.readUint32();
+  const count = r.readUint32();
+  if (start === seq && end === seq && count === 1) {
+    const version = r.readInt32();
+    if (version >= 1) xdr.LedgerCloseMetaExt.schema._read(r, {});
+    const from = r.offset;
+    const header = xdr.LedgerHeaderHistoryEntry.schema._read(r, {});
+    if (header.header.ledgerSeq === seq) {
+      return {
+        hash: Buffer.from(header.hash.toXDR ? header.hash.toXDR() : header.hash).toString('hex'),
+        sequence: seq,
+        ledgerCloseTime: String(header.header.scpValue.closeTime),
+        headerXdr: raw.subarray(from, r.offset).toString('base64'),
+        metadataXdr: raw.subarray(12).toString('base64'),
+        protocolVersion: header.header.ledgerVersion,
+      };
+    }
+  }
+  const batch = xdr.LedgerCloseMetaBatch.fromXDR(raw);
+  const lcm = batch.ledgerCloseMetas.find((m) => (m.v2 ?? m.v1 ?? m.v0).ledgerHeader.header.ledgerSeq === seq);
+  const h = (lcm.v2 ?? lcm.v1 ?? lcm.v0).ledgerHeader;
+  return {
+    hash: h.hash.toXDR('hex'),
+    sequence: seq,
+    ledgerCloseTime: String(h.header.scpValue.closeTime),
+    headerXdr: h.toXDR('base64'),
+    metadataXdr: lcm.toXDR('base64'),
+    protocolVersion: h.header.ledgerVersion,
+  };
+}
+
 /** Index of the ledgers available for one network, plus a bounded decode cache. */
-export function openLedgerStore(network, corpusDir = join(ROOT, 'corpus')) {
+export function openLedgerStore(network, corpusDir = CORPUS) {
   const index = JSON.parse(readFileSync(join(corpusDir, 'ledgers', 'index.json'), 'utf8'))
     .filter((l) => l.network === network)
     .sort((a, b) => a.ledger - b.ledger);
@@ -46,17 +95,7 @@ export function openLedgerStore(network, corpusDir = join(ROOT, 'corpus')) {
       return hit;
     }
     const raw = zstdDecompressSync(readFileSync(join(corpusDir, entry.path)));
-    const batch = xdr.LedgerCloseMetaBatch.fromXDR(raw);
-    const lcm = batch.ledgerCloseMetas.find((m) => (m.v2 ?? m.v1 ?? m.v0).ledgerHeader.header.ledgerSeq === entry.ledger);
-    const header = (lcm.v2 ?? lcm.v1 ?? lcm.v0).ledgerHeader;
-    const info = {
-      hash: header.hash.toXDR('hex'),
-      sequence: entry.ledger,
-      ledgerCloseTime: String(header.header.scpValue.closeTime),
-      headerXdr: header.toXDR('base64'),
-      metadataXdr: lcm.toXDR('base64'),
-      protocolVersion: header.header.ledgerVersion,
-    };
+    const info = { ...headerOnly(raw, entry.ledger) };
     cache.set(entry.ledger, info);
     if (cache.size > CACHE_SIZE) cache.delete(cache.keys().next().value);
     return info;
@@ -67,8 +106,23 @@ export function openLedgerStore(network, corpusDir = join(ROOT, 'corpus')) {
     index,
     oldest: () => load(index[0]),
     latest: () => load(index[index.length - 1]),
-    /** Ledgers with sequence >= start, ascending, up to limit (the corpus may be sparse). */
-    from: (start, limit) => index.filter((e) => e.ledger >= start).slice(0, limit).map(load),
+    /**
+     * Ledgers with sequence >= start, ascending (the corpus may be sparse), up
+     * to limit ledgers or MAX_RESPONSE_BYTES of metadata, whichever comes first.
+     */
+    from(start, limit) {
+      const out = [];
+      let bytes = 0;
+      for (const e of index) {
+        if (e.ledger < start) continue;
+        if (out.length === limit) break;
+        const info = load(e);
+        if (out.length && bytes + info.metadataXdr.length > MAX_RESPONSE_BYTES) break;
+        bytes += info.metadataXdr.length;
+        out.push(info);
+      }
+      return out;
+    },
   };
 }
 
