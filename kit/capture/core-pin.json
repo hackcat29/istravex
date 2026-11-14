@@ -1,6 +1,17 @@
 {
   "version": "v30.0.0",
+  "commit": "0e49751aa9ddf892302cca02cea7f3f5d97df9f1",
   "protocol": 30,
-  "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
-  "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65"
+  "builds": {
+    "darwin-arm64": {
+      "source": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
+      "install": "brew install stellar-core",
+      "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65"
+    },
+    "linux-x64": {
+      "source": "SDF apt.stellar.org noble stellar-core_30.0.0-3642.0e49751aa.noble_amd64.deb, deb sha256 2c1eb74aa1dcf1c4799feeb91cfaf3eb50667232308910165e6b7f8ddff19c30",
+      "install": "apt-get install stellar-core=30.0.0-3642.0e49751aa.noble (apt.stellar.org, noble stable)",
+      "binary_sha256": "dd24eb86d322ca58345bcaa04dfe6bd5922f74fe49e4725cd36b92bc22ac3eac"
+    }
+  }
 }

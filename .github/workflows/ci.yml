@@ -12,7 +12,7 @@ permissions:
 jobs:
   kit:
     name: Corpus, runners and replay
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -34,6 +34,8 @@ jobs:
         run: npm run test:kit
       - name: SDK conformance
         run: npm run corpus:js && npm run corpus:go && npm run corpus:rust
+      - name: stellar-core golden LedgerCloseMeta (--check-lcm data) in all three SDKs
+        run: node kit/goldens/fetch.mjs && npm run corpus:goldens
       - name: Replay
         run: npm run corpus:replay
       - name: All results green
@@ -41,9 +43,40 @@ jobs:
       - name: Site data is up to date
         run: npm run corpus:data && git diff --exit-code -- src/data/corpus.json ':(exclude)corpus/results'
 
+  generate:
+    name: Generate on pinned stellar-core
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: kit/runners/rust
+      - run: npm ci
+      - name: Install stellar-core 30.0.0 (SDF apt, pinned)
+        run: |
+          curl -fsSL https://apt.stellar.org/SDF.asc | sudo gpg --dearmor -o /usr/share/keyrings/sdf.gpg
+          echo "deb [signed-by=/usr/share/keyrings/sdf.gpg] https://apt.stellar.org noble stable" | sudo tee /etc/apt/sources.list.d/sdf.list
+          sudo apt-get update -q
+          sudo apt-get install -y -q stellar-core=30.0.0-3642.0e49751aa.noble
+      - name: Regenerate local fixtures (binary checked against core-pin.json)
+        run: npm run corpus:generate -- --force
+      - name: Verify and run the regenerated corpus
+        run: npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay
+      - name: All green (goldens are covered by the kit job)
+        run: SKIP_GOLDENS=1 node kit/check-results.mjs
+
   pilot:
     name: Upstream pilot (wallet-backend)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -60,7 +93,7 @@ jobs:
 
   site:
     name: Site build and e2e
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
