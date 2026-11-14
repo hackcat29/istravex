@@ -58,7 +58,7 @@ flowchart LR
 | **Linter** | Three `go/analysis` rules: unvalidated fields used as if checked (IX001), walks with no depth or size limit (IX002), participants or fees from the envelope (IX003). A GitHub Action and a reusable workflow. | Flags all six seeded violations; clean on current wallet-backend apart from one triaged latent finding; flags the code #753 and 9538b3c fixed, on the commits before them. |
 | **Hardening guide** | Nine rules, a field-by-field table of what stellar-core validates and passes through, recommended limits with sources, SEP-0023 address handling, a checklist. Exports to Docusaurus for developers.stellar.org. | The field table is generated from one file and CI checks it against every manifest. Reviewed and confirmed by a Stellar Core engineer (version 1.0 on 14 November, version 1.1 on 15 November 2026). |
 | **Conformance runner** | JavaScript, Go and Rust in CI, named checks per pattern, plus four JavaScript releases. | js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789; 17.3.0 and 17.4.0 pass. |
-| **Findings report** | 15 findings with severity, affected versions, the minimal corpus entry and the checks each explains; served at `/v1/findings`. | CI fails on any reproduced failure that no finding explains. Three new findings are drafted and ready to file. |
+| **Findings report** | 15 findings with severity, affected versions, the minimal corpus entry and the checks each explains; served at `/v1/findings`. | CI fails on any reproduced failure that no finding explains. Three new findings are filed upstream: stellar-core#5507 and #5508, js-stellar-sdk#1906. |
 
 ### Evidence of reproducing a listed sighting
 

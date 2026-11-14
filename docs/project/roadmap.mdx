@@ -55,7 +55,7 @@ The SCF RFP lists a check for each deliverable. Each one runs in CI.
 In rough order of value:
 
 - **Coverage.** 5 of 40 XDR-changing CAPs have fixtures today. Target for the maintenance window: 12, starting with live-state archival and restoration (CAP-0062, CAP-0066), unified events (CAP-0067), claimable balances (CAP-0023) and clawback (CAP-0035).
-- **File the to-file findings.** Three drafts in [findings](/project/findings#not-yet-filed): two for stellar-core, one for js-stellar-sdk.
+- **Follow the three issues filed from this work** ([findings](/project/findings#filed-from-this-work)): stellar-core#5507 and #5508, js-stellar-sdk#1906. Add regression checks as fixes land.
 - **stellar-etl.** Now that the corpus exports in the [data-lake layout](/tools/data-lake), replay it through stellar-etl, whose open issues (#454 lossy amounts, #460 effects missing since protocol 23) are likely sources of new findings.
 - **More SDKs.** Python (`stellar-sdk`) and Java runners, and release matrices for Go and Rust like JavaScript's.
 - **More pilots.** Horizon's ingestion and at least one third-party explorer.

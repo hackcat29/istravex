@@ -1800,8 +1800,8 @@
                       "affected": "30.0.0 (Homebrew darwin-arm64 build; observed on standalone networks)",
                       "fixed_in": null,
                       "severity": "low",
-                      "status": "to-file",
-                      "issue": null,
+                      "status": "open-upstream",
+                      "issue": "stellar/stellar-core#5507",
                       "cap_ids": [],
                       "fixtures": [
                         "cap38-pool-issuer-order-local-0001"
@@ -1809,8 +1809,7 @@
                       "checks": [],
                       "reproduced": true,
                       "summary": "Two runs of the same pinned binary on identical input (same keys, transactions and close times) produce identical ledger headers, transaction sets and result…",
-                      "evidence": "node kit/capture/generate.mjs --check: consensus bytes identical; 2–3 meta files per run differ only in change order, e.g. the changeTrust pool-share operati…",
-                      "draft": "Title: Order of LedgerEntryChange entries within an operation's meta differs between runs\n\nstellar-core 30.0.0 (Homebrew, darwin-arm64), RUN_STANDALONE + MAN…"
+                      "evidence": "Three generations of the same corpus (node kit/capture/generate.mjs --out …) give identical ledger headers for ledger 20 and three different orders of the po…"
                     },
                     {
                       "id": "ISTRAVEX-F-0011",
@@ -1819,8 +1818,8 @@
                       "affected": "30.0.0",
                       "fixed_in": null,
                       "severity": "low",
-                      "status": "to-file",
-                      "issue": null,
+                      "status": "open-upstream",
+                      "issue": "stellar/stellar-core#5508",
                       "cap_ids": [
                         "CAP-0046"
                       ],
@@ -1828,18 +1827,17 @@
                       "checks": [],
                       "reproduced": true,
                       "summary": "The upgrade contract is deployed with a random salt, so its contract ID, the upgrade key and every later ledger hash differ between otherwise identical runs.…",
-                      "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade().",
-                      "draft": "Title: get-settings-upgrade-txs: accept a salt for reproducible test networks\n\n`stellar-core get-settings-upgrade-txs` deploys the upgrade contract with a ra…"
+                      "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade()."
                     },
                     {
                       "id": "ISTRAVEX-F-0012",
-                      "title": "TransactionBuilder refuses a muxed source on every Soroban transaction",
+                      "title": "TransactionBuilder refuses a muxed source or memo on every Soroban transaction",
                       "component": "stellar/js-stellar-sdk",
                       "affected": "17.4.0",
                       "fixed_in": null,
                       "severity": "low",
-                      "status": "to-file",
-                      "issue": null,
+                      "status": "open-upstream",
+                      "issue": "stellar/js-stellar-sdk#1906",
                       "cap_ids": [
                         "CAP-0046",
                         "CAP-0027"
@@ -1849,9 +1847,8 @@
                       ],
                       "checks": [],
                       "reproduced": true,
-                      "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" for any Soroban transaction. stellar-core rejects a muxed source only on I…",
-                      "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource).",
-                      "draft": "Title: TransactionBuilder rejects a muxed source on ExtendFootprintTtl / RestoreFootprint\n\nBuilding a transaction whose source is an M-address with a single …"
+                      "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" (and refuses a muxed operation source or any memo) for every Soroban trans…",
+                      "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource)."
                     },
                     {
                       "id": "ISTRAVEX-F-0013",

@@ -23,9 +23,15 @@ Every failure the kit produces on purpose maps to a finding, and CI enforces it 
 
 <Severity />
 
-## Not yet filed
+## Filed from this work
 
-Three findings are **to-file**: F-0010 and F-0011 (stellar-core) and F-0012 (js-stellar-sdk). Each carries the issue text in `findings.json`, ready to file, and will be updated with its link once it is. They're low severity: they affect test infrastructure and SDK ergonomics, not ingestion correctness.
+Three findings are new, found while building the kit, and filed upstream on 15 November 2026:
+
+- **F-0010**, [stellar-core#5507](https://github.com/stellar/stellar-core/issues/5507): the order of ledger entry changes inside an operation's meta differs between runs on identical input. Three generations of the same corpus give three orders for one operation, with identical ledger headers.
+- **F-0011**, [stellar-core#5508](https://github.com/stellar/stellar-core/issues/5508): `get-settings-upgrade-txs` uses a random salt, so standalone networks can't be reproduced without rewriting and re-signing its transactions.
+- **F-0012**, [js-stellar-sdk#1906](https://github.com/stellar/js-stellar-sdk/issues/1906): `TransactionBuilder` refuses a muxed source or a memo on every Soroban transaction; stellar-core refuses them only on `InvokeHostFunction`.
+
+They're low severity: they affect reproducibility and SDK ergonomics, not ingestion correctness.
 
 ## Notes behind the findings
 

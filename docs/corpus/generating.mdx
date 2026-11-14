@@ -111,15 +111,15 @@ Getting a standalone core to behave turned up a few behaviours worth knowing if 
     The full `ConfigUpgradeSet` is about 4 KB, larger than the 2,000-byte contract-data entry limit it is stored under on a fresh network. The driver uploads only the settings it changes.
   </Accordion>
   <Accordion title="get-settings-upgrade-txs uses a random salt">
-    The upgrade contract's salt, and so its ID, the upgrade key and every later ledger, differ between runs. The driver swaps in a salt derived from the seed (and the contract ID it implies) in all three transactions and the key, then re-signs them as the root account ([F-0011](/project/findings)).
+    The upgrade contract's salt, and so its ID, the upgrade key and every later ledger, differ between runs. The driver swaps in a salt derived from the seed (and the contract ID it implies) in all three transactions and the key, then re-signs them as the root account ([F-0011](/project/findings), filed as [stellar-core#5508](https://github.com/stellar/stellar-core/issues/5508)).
   </Accordion>
   <Accordion title="Change order inside operation meta isn't stable">
-    Two runs with identical input produce identical consensus data, but some operations list their ledger entry changes in a different order ([F-0010](/project/findings)). `--check` compares metadata order-insensitively, and reports when it had to.
+    Two runs with identical input produce identical consensus data, but some operations list their ledger entry changes in a different order ([F-0010](/project/findings), filed as [stellar-core#5507](https://github.com/stellar/stellar-core/issues/5507)). `--check` compares metadata order-insensitively, and reports when it had to.
   </Accordion>
   <Accordion title="20 signatures across 100 operations">
     A 100-operation transaction from an account whose thresholds need all 20 signers failed with `opBAD_AUTH` at operation 49. The max-length fixture uses two transactions instead: one with 100 operations, one with 20 signatures.
   </Accordion>
   <Accordion title="The JavaScript SDK won't build some valid transactions">
-    `TransactionBuilder` refuses a muxed source on any Soroban transaction, and the `Memo` class re-encodes text through JavaScript strings. stellar-core accepts both a muxed source on `ExtendFootprintTtl` and any 28 memo bytes, so the driver sets them on the raw XDR before signing ([F-0012](/project/findings)).
+    `TransactionBuilder` refuses a muxed source on any Soroban transaction, and the `Memo` class re-encodes text through JavaScript strings. stellar-core accepts both a muxed source on `ExtendFootprintTtl` and any 28 memo bytes, so the driver sets them on the raw XDR before signing ([F-0012](/project/findings), filed as [js-stellar-sdk#1906](https://github.com/stellar/js-stellar-sdk/issues/1906)).
   </Accordion>
 </AccordionGroup>

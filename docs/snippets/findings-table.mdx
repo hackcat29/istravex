@@ -11,9 +11,9 @@
 | F-0007 | scValToNative silently drops map entries whose keys collide | `stellar/js-stellar-sdk` | medium | fixed-upstream | [js-stellar-sdk#1789](https://github.com/stellar/js-stellar-sdk/issues/1789) | yes |
 | F-0008 | XDR string .value getters are lossy for bytes that aren't UTF-8 | `stellar/js-stellar-sdk` | info | fixed-upstream | [js-stellar-sdk#1823](https://github.com/stellar/js-stellar-sdk/issues/1823) | — |
 | F-0009 | Decoders reserve capacity from untrusted length prefixes and ignore vector maximums | `stellar/rs-stellar-xdr` | medium | fixed-upstream | [rs-stellar-xdr#598](https://github.com/stellar/rs-stellar-xdr/issues/598) | — |
-| F-0010 | Operation meta lists its ledger entry changes in a different order on different runs | `stellar/stellar-core` | low | to-file | — | yes |
-| F-0011 | get-settings-upgrade-txs uses a random salt, so standalone networks can't be reproduced | `stellar/stellar-core` | low | to-file | — | yes |
-| F-0012 | TransactionBuilder refuses a muxed source on every Soroban transaction | `stellar/js-stellar-sdk` | low | to-file | — | yes |
+| F-0010 | Operation meta lists its ledger entry changes in a different order on different runs | `stellar/stellar-core` | low | open-upstream | [stellar-core#5507](https://github.com/stellar/stellar-core/issues/5507) | yes |
+| F-0011 | get-settings-upgrade-txs uses a random salt, so standalone networks can't be reproduced | `stellar/stellar-core` | low | open-upstream | [stellar-core#5508](https://github.com/stellar/stellar-core/issues/5508) | yes |
+| F-0012 | TransactionBuilder refuses a muxed source or memo on every Soroban transaction | `stellar/js-stellar-sdk` | low | open-upstream | [js-stellar-sdk#1906](https://github.com/stellar/js-stellar-sdk/issues/1906) | yes |
 | F-0013 | Memo text returned as a Go string without UTF-8 validation | `stellar/wallet-backend` | low | latent | — | — |
 | F-0014 | Fee-processing changes over-count Soroban fees | `stellar/stellar-core` | info | by-design | — | — |
 | F-0015 | Diagnostic events differ between RPC nodes for the same ledger | `stellar/stellar-rpc` | info | by-design | — | — |

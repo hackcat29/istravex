@@ -2962,8 +2962,8 @@
         "affected": "30.0.0 (Homebrew darwin-arm64 build; observed on standalone networks)",
         "fixed_in": null,
         "severity": "low",
-        "status": "to-file",
-        "issue": null,
+        "status": "open-upstream",
+        "issue": "stellar/stellar-core#5507",
         "cap_ids": [],
         "fixtures": [
           "cap38-pool-issuer-order-local-0001"
@@ -2971,8 +2971,7 @@
         "checks": [],
         "reproduced": true,
         "summary": "Two runs of the same pinned binary on identical input (same keys, transactions and close times) produce identical ledger headers, transaction sets and results, but the LedgerEntryChange entries inside some operations' changes come out in a different order. Anything that hashes or byte-compares meta from two producers (data lake objects from two captive cores, RPC nodes) can disagree on a ledger both closed identically.",
-        "evidence": "node kit/capture/generate.mjs --check: consensus bytes identical; 2–3 meta files per run differ only in change order, e.g. the changeTrust pool-share operation (operations[2].changes: CREATED trustline vs STATE account first) and the first Soroban settings-upgrade transaction. kit/lib/canonical.mjs compares order-insensitively.",
-        "draft": "Title: Order of LedgerEntryChange entries within an operation's meta differs between runs\n\nstellar-core 30.0.0 (Homebrew, darwin-arm64), RUN_STANDALONE + MANUAL_CLOSE with explicit close times.\n\nRunning the same scenario twice from new-db (same node seed, same transactions, same close times) gives byte-identical ledger headers, tx sets and results, but LedgerCloseMeta differs: within some operations' `changes`, entries for different keys come out in a different order (e.g. a changeTrust on a pool share: CREATED trustline first in one run, STATE account first in the other). Meta isn't consensus data, but downstream systems compare it byte for byte (data lake objects, RPC nodes, golden files). Is the order meant to be stable? If so, it looks like iteration over an unordered container.\n\nReproduce: github.com/hackcat29/istravex, node kit/capture/generate.mjs --check (needs stellar-core 30.0.0)."
+        "evidence": "Three generations of the same corpus (node kit/capture/generate.mjs --out …) give identical ledger headers for ledger 20 and three different orders of the pool-share changeTrust operation's eight changes; the first Soroban settings-upgrade transaction shows the same. --check compares metadata order-insensitively (kit/lib/canonical.mjs) and reports when it had to."
       },
       {
         "id": "ISTRAVEX-F-0011",
@@ -2981,8 +2980,8 @@
         "affected": "30.0.0",
         "fixed_in": null,
         "severity": "low",
-        "status": "to-file",
-        "issue": null,
+        "status": "open-upstream",
+        "issue": "stellar/stellar-core#5508",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -2990,18 +2989,17 @@
         "checks": [],
         "reproduced": true,
         "summary": "The upgrade contract is deployed with a random salt, so its contract ID, the upgrade key and every later ledger hash differ between otherwise identical runs. The generator swaps in a seeded salt and re-signs the three transactions.",
-        "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade().",
-        "draft": "Title: get-settings-upgrade-txs: accept a salt for reproducible test networks\n\n`stellar-core get-settings-upgrade-txs` deploys the upgrade contract with a random salt. Test harnesses that need byte-reproducible standalone networks (golden files, fixture generators) have to rewrite the salt, the derived contract ID and the upgrade key, then re-sign. An optional --salt (or a salt derived from the source account and sequence number) would make the output deterministic."
+        "evidence": "kit/capture/drivers/core.mjs, deterministicUpgrade()."
       },
       {
         "id": "ISTRAVEX-F-0012",
-        "title": "TransactionBuilder refuses a muxed source on every Soroban transaction",
+        "title": "TransactionBuilder refuses a muxed source or memo on every Soroban transaction",
         "component": "stellar/js-stellar-sdk",
         "affected": "17.4.0",
         "fixed_in": null,
         "severity": "low",
-        "status": "to-file",
-        "issue": null,
+        "status": "open-upstream",
+        "issue": "stellar/js-stellar-sdk#1906",
         "cap_ids": [
           "CAP-0046",
           "CAP-0027"
@@ -3011,9 +3009,8 @@
         ],
         "checks": [],
         "reproduced": true,
-        "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" for any Soroban transaction. stellar-core rejects a muxed source only on InvokeHostFunction; ExtendFootprintTtl and RestoreFootprint accept one, and the fixture is such a transaction, accepted by stellar-core 30.0.0. Decoding it works; building it doesn't.",
-        "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource).",
-        "draft": "Title: TransactionBuilder rejects a muxed source on ExtendFootprintTtl / RestoreFootprint\n\nBuilding a transaction whose source is an M-address with a single ExtendFootprintTtl operation throws \"Soroban transactions cannot use a muxed source account; use the base account\". stellar-core accepts it (it rejects a muxed source only for InvokeHostFunction, from protocol 25), so the SDK can decode transactions it can't build. Real example: github.com/hackcat29/istravex corpus/fixtures/cap46-muxed-soroban-source-local-0001. Suggest limiting the check to InvokeHostFunction."
+        "summary": "TransactionBuilder throws \"Soroban transactions cannot use a muxed source account\" (and refuses a muxed operation source or any memo) for every Soroban transaction. stellar-core rejects them only when the single operation is InvokeHostFunction (TransactionFrame::validateSorobanMemo, v30.0.0), so ExtendFootprintTtl and RestoreFootprint with a muxed source or a memo are valid; the fixture is one, accepted by stellar-core 30.0.0. The SDK decodes it but can't build it.",
+        "evidence": "The generator sets the muxed source on the raw XDR to build the fixture (kit/capture/drivers/core.mjs, rawMuxedSource)."
       },
       {
         "id": "ISTRAVEX-F-0013",
