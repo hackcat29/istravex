@@ -1,63 +1,69 @@
 # Istravex
 
-The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This repo holds the project site and a working prototype of the kit: a real XDR corpus, capture scripts, conformance runners in JavaScript, Go and Rust, and an offline replay harness.
+The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This repository holds the kit as built so far, and the project site that reports its results.
 
-## Corpus and results (real data)
+[![CI](https://github.com/hackcat29/istravex/actions/workflows/ci.yml/badge.svg)](https://github.com/hackcat29/istravex/actions/workflows/ci.yml)
+
+## Results
 
 | | |
 |---|---|
-| Fixtures | 4, captured from Stellar pubnet and testnet ([corpus/](corpus/)) |
-| SDK checks | 36/36 pass: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 |
-| Replay | the naive indexer fails 3/3 cases; the reference indexer gets 3/3 correct |
-| Precision | muxed ID `1764988090084626463` (mainnet) becomes `1764988090084626400` through `Number()` |
-| Fee meta | the Soroban fee-bump debits 46,340 stroops, but the charge is 40,354 after the refund; index from `TransactionResult.feeCharged` |
+| Corpus | 6 fixtures for CAP-0015, 0027, 0040 and 0073: 2 captured on mainnet, 2 on testnet, 2 generated on a pinned stellar-core ([corpus/](corpus/)) |
+| Provenance | 62/62 checks. Every fixture is byte-identical to the canonical `LedgerCloseMeta` of its ledger (SDF data lake, RPC, or core's own meta stream) |
+| SDK conformance | 54/54: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 |
+| Replay | the naive envelope-based indexer is wrong on 4/4 cases; the metadata-based reference indexer is right on 4/4 |
+| Upstream pilot | `stellar/wallet-backend` @ `3e22515`: 6/6 fixtures indexed correctly; 1 lint finding, triaged as latent |
+| CAP audit | 70 live CAPs, 40 change XDR, 3 of those covered ([docs/cap-coverage.md](docs/cap-coverage.md)) |
+| Guide | [docs/indexer-hardening-guide.md](docs/indexer-hardening-guide.md), pending review by a Stellar Core or platform engineer |
+
+## Kit
+
+| Path | What |
+|---|---|
+| `corpus/` | Fixtures (`manifest.json` + base64 XDR), the canonical ledgers they came from, the JSON Schema, the CAP audit, and results |
+| `kit/capture/` | `mainnet.mjs` (Horizon + data lake), `testnet.mjs` (RPC), `generate.mjs` (pinned standalone stellar-core); the drivers share `scenarios.mjs` |
+| `kit/go/cmd/verify` | Provenance: schema, sha256, protocol version, and byte equality against the canonical ledger |
+| `kit/runners/js`, `kit/go/cmd/conformance`, `kit/runners/rust` | SDK runners: decode, byte-exact re-encode, native conversions |
+| `kit/rpc/` | Mock Stellar RPC (`getHealth`, `getNetwork`, `getLatestLedger`, `getLedgers`) serving the corpus offline |
+| `kit/replay/` | Naive and reference indexers scored against `expected_indexed` |
+| `kit/pilot/` | wallet-backend adapter: its own RPC ledger backend + `indexer.ProcessLedger`, scored, plus lint with reviewed triage |
+| `kit/go/lint`, `kit/go/cmd/istravex-lint` | `go/analysis` rules IX001–IX003 |
+| `kit/audit/` | CAP coverage audit from a pinned stellar-protocol checkout |
 
 ```bash
-npm run corpus:capture   # re-fetch pinned mainnet txs; create fresh testnet cases
-npm run corpus:run       # JS, Go and Rust runners, then replay, then src/data/corpus.json
+npm ci
+npm run corpus:run            # verify → JS/Go/Rust runners → replay → site data
+npm run pilot:wallet-backend  # upstream pilot (clones wallet-backend into .cache/)
+npm run corpus:audit          # CAP coverage audit (clones stellar-protocol into .cache/)
+npm run test:kit              # mock RPC + linter tests
+npm run rpc -- --network pubnet --port 8000   # serve the corpus to your own indexer
+
+# capture / generate (network or pinned core required)
+npm run corpus:capture        # mainnet (pinned hashes) + testnet + canonical ledgers
+npm run corpus:generate       # standalone stellar-core 30.0.0, pinned by binary sha256
 ```
 
-The runners need Node 20+, Go 1.24+ and a stable Rust toolchain. Results land in `corpus/results/`.
+Requirements: Node 24, Go 1.25, a stable Rust toolchain. `corpus:generate` also needs stellar-core 30.0.0 (`brew install stellar-core`); the binary is checked against `kit/capture/core-pin.json`.
+
+Lint your own indexer:
+
+```bash
+go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@latest ./...
+```
 
 ## Site
 
 ```bash
-npm install
 npm run dev        # http://localhost:5173
-npm run build      # typecheck + production build → dist/
-npm run test:e2e   # Playwright, desktop + mobile (builds and serves on :4173)
+npm run build
+npm run test:e2e   # Playwright, desktop + mobile (needs: npx playwright install chromium)
 ```
-
-The e2e suite needs Playwright's full Chromium: `npx playwright install chromium`.
-
-## Where things live
 
 | Path | What |
 |---|---|
-| `src/content.ts` | **Every word on the page.** Numbers and XDR values are derived from `src/data/corpus.json`. |
-| `src/data/corpus.json` | Generated by `kit/site-data.mjs`; do not edit by hand. |
-| `corpus/` | Fixtures (`manifest.json` + base64 XDR) and runner results. |
-| `kit/capture/` | Mainnet (Horizon) and testnet (RPC + friendbot) capture. |
-| `kit/runners/{js,go,rust}` | Conformance runners: decode, byte-exact re-encode, native checks. |
-| `kit/replay/` | Naive and reference indexers scored against `expected_indexed`. |
-| `src/sections/*` | One file per page section, in page order (see `App.tsx`). |
-| `src/scenes/*` | GPU scenes. Each exports `create…(ctx, opts) → SceneHandle`. |
-| `src/components/SceneMount.tsx` | Lazy-loads a scene near the viewport, pauses it offscreen, disposes it on unmount. |
-| `public/proposal.md`, `public/llms.txt` | Full proposal and an agent-readable summary. |
+| `src/content.ts` | Every word on the page; numbers and XDR come from `src/data/corpus.json` |
+| `src/data/corpus.json` | Generated by `kit/site-data.mjs`; do not edit by hand |
+| `src/sections/*` | One file per section, in page order |
+| `src/scenes/*` | Three.js WebGPU (hero), Babylon.js WebGPU (anatomy), TypeGPU (CTA), each with a WebGL2 or Canvas 2D fallback |
 
-## Scenes
-
-| Section | Library | Fallback |
-|---|---|---|
-| Hero | Three.js `WebGPURenderer` + TSL | WebGL2 (automatic) |
-| Fixture anatomy | Babylon.js `WebGPUEngine` | Babylon WebGL2 `Engine` |
-| Closing CTA | TypeGPU compute + render pipelines | Canvas 2D |
-
-Each scene's host element reports `data-backend` (`webgpu` / `webgl2` / `canvas2d`) and `data-state` (`idle` / `ready` / `failed`). If a scene fails, the page still works.
-
-## Design rules
-
-- No gradients, no italic or serif display type: solid colors and Geist / Geist Mono only.
-- No taglines, eyebrows or helper text. If a section needs one to make sense, change the layout.
-- Respect `prefers-reduced-motion`. Scenes render a still frame, and reveals are skipped.
-- Mobile first. Keep a 16px gutter and no horizontal scroll (the e2e suite checks this).
+Design rules: solid colours only, no gradients, no italic or serif display type, no taglines or helper text, `prefers-reduced-motion` respected, no horizontal scroll on mobile.

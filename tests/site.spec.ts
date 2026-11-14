@@ -58,6 +58,8 @@ test('hero stats and fixtures come from the corpus', async ({ page }) => {
   const s = corpus.stats;
   await page.goto('/');
   await expect(page.locator('#top')).toContainText(`${s.sdk_checks_passed}/${s.sdk_checks}`);
+  await expect(page.locator('#top')).toContainText(`${s.provenance_passed}/${s.provenance_checks}`);
+  await expect(page.locator('#top')).toContainText(`${s.pilot_correct}/${s.pilot_fixtures}`);
   await page.locator('#fixtures').scrollIntoViewIfNeeded();
   await page.getByRole('tab', { name: /xdr\.b64/ }).click();
   await expect(page.locator('#fixtures pre')).toContainText(corpus.fixtures[0].primary.b64.slice(0, 40));
@@ -76,6 +78,15 @@ test('mobile menu opens and navigates', async ({ page, isMobile }) => {
   await page.locator('#mobile-menu').getByRole('link', { name: 'Milestones' }).click();
   await expect(page.locator('#mobile-menu')).toHaveCount(0);
   await expect(page.locator('#milestones')).toBeInViewport();
+});
+
+test('kit cards show the real audit, lint finding and pilot', async ({ page }) => {
+  await page.goto('/#kit');
+  const covered = corpus.coverage.xdr_caps.filter((c) => c.covered).length;
+  await expect(page.locator('#kit-corpus')).toContainText(`${covered}/${corpus.coverage.xdr_caps.length}`);
+  const f = corpus.pilot.lint.findings[0];
+  await expect(page.locator('#kit-linter')).toContainText(`${f.file.split('/').pop()}:${f.line}`);
+  await expect(page.locator('#kit-pilot')).toContainText(`wallet-backend@${corpus.pilot.ref.slice(0, 7)}`);
 });
 
 test('agent-readable files are served', async ({ request }) => {
