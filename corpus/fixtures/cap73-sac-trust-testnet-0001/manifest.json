@@ -7,7 +7,7 @@
   "network": "testnet",
   "xdr_type": "TransactionMeta",
   "xdr_path": "operations[0].changes[*].created.data.trustLine",
-  "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+  "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
   "source": {
     "kind": "captured",
     "network_endpoint": "https://soroban-testnet.stellar.org",
@@ -34,7 +34,7 @@
       "name": "meta",
       "xdr_type": "TransactionMeta",
       "path": "meta.xdr.b64",
-      "sha256": "1c7a3c9936e12750512cf52343b97739a090fb77f1ebcf88476bf584b555eb8e",
+      "sha256": "d8f029dd58098fb0c037c02fb6cf2fa0f521b3a23b105906df47b8099707e988",
       "bytes": 2748
     },
     {

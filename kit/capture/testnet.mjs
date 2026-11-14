@@ -16,6 +16,7 @@ import {
   xdr,
 } from '@stellar/stellar-sdk';
 import { writeFixture } from '../lib/fixture.mjs';
+import { ledgerFromBatch, txFromLedger } from '../lib/ledger.mjs';
 
 const RPC_URL = 'https://soroban-testnet.stellar.org';
 const server = new rpc.Server(RPC_URL);
@@ -52,6 +53,19 @@ const source = (res) => ({
   tx_hash: res.hash,
   closed_at: new Date(Number(res.createdAt) * 1000).toISOString(),
 });
+
+/** Canonical meta from getLedgers (getTransaction's copy carries node-local diagnostics). */
+async function canonicalMeta(res) {
+  const r = await fetch(RPC_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getLedgers', params: { startLedger: res.ledger, pagination: { limit: 1 } } }),
+  });
+  const l = (await r.json()).result.ledgers[0];
+  const lcm = xdr.LedgerCloseMeta.fromXDR(l.metadataXdr, 'base64');
+  const batch = new xdr.LedgerCloseMetaBatch({ startSequence: res.ledger, endSequence: res.ledger, ledgerCloseMetas: [lcm] });
+  return txFromLedger(ledgerFromBatch(batch, res.ledger), res.hash).meta;
+}
 
 const { protocolVersion } = await server.getLatestLedger();
 
@@ -105,7 +119,7 @@ const { protocolVersion } = await server.getLatestLedger();
     }),
     { soroban: true },
   );
-  const meta = res.resultMetaXdr.toXDR('base64');
+  const meta = await canonicalMeta(res);
   if (!meta.length) throw new Error('no meta');
   writeFixture({
     id: 'cap73-sac-trust-testnet-0001',

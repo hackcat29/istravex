@@ -1,0 +1,196 @@
+{
+  "fixtures": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F0FA--65474309.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F118--65474279.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "ledger_source": "https://soroban-testnet.stellar.org#getLedgers(5727196)",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: ledger_entry",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "ledger_source": "https://soroban-testnet.stellar.org#getLedgers(5727199)",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        }
+      ]
+    }
+  ]
+}

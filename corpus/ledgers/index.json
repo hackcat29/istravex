@@ -1,0 +1,42 @@
+[
+  {
+    "network": "pubnet",
+    "ledger": 65474279,
+    "path": "ledgers/pubnet/65474279.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F118--65474279.xdr.zst",
+    "sha256": "430d225846e9ad36780e7b9bf36f73bc2088c522878ee8c8214f49ac0a77a141",
+    "bytes": 1420656,
+    "compressed_bytes": 116613
+  },
+  {
+    "network": "pubnet",
+    "ledger": 65474309,
+    "path": "ledgers/pubnet/65474309.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC18F9FF--65472000-65535999/FC18F0FA--65474309.xdr.zst",
+    "sha256": "e64086eebeb5db34e7f879bcb09527e2b48c4ab59fc971dafa92c596c7fd462c",
+    "bytes": 1638156,
+    "compressed_bytes": 126802
+  },
+  {
+    "network": "testnet",
+    "ledger": 5727196,
+    "path": "ledgers/testnet/5727196.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://soroban-testnet.stellar.org#getLedgers(5727196)",
+    "sha256": "cac799d6e80f0e5c6414932a8c3016a83360248298776050bdc7935c86dce7cf",
+    "bytes": 382464,
+    "compressed_bytes": 31250
+  },
+  {
+    "network": "testnet",
+    "ledger": 5727199,
+    "path": "ledgers/testnet/5727199.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://soroban-testnet.stellar.org#getLedgers(5727199)",
+    "sha256": "92242430d394e6f4b96fb26ddbee7228972fed07a62f5a9c7660ba9cc87ccd89",
+    "bytes": 158128,
+    "compressed_bytes": 21449
+  }
+]
