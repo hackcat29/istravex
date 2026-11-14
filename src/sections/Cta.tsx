@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { cta, footer, PROPOSAL_URL, REPO_URL, RFP_URL } from '../content';
+import { cta, docs, footer, PROPOSAL_URL, REPO_URL, RFP_URL } from '../content';
 import { SceneMount } from '../components/SceneMount';
 import { Button, Logo, Title } from '../components/ui';
 import type { SceneContext } from '../scenes/types';
@@ -37,8 +37,11 @@ export function Footer() {
             <Logo className="size-6" /> Istravex
           </a>
           <p>{footer.note}</p>
-          <ul className="flex gap-5 font-mono text-[12px]">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[12px]">
             <li><a className="hover:text-fg" href={REPO_URL} target="_blank" rel="noreferrer">GitHub</a></li>
+            {docs.map((d) => (
+              <li key={d.href}><a className="hover:text-fg" href={d.href} target="_blank" rel="noreferrer">{d.label}</a></li>
+            ))}
             <li><a className="hover:text-fg" href={PROPOSAL_URL}>proposal.md</a></li>
             <li><a className="hover:text-fg" href="/llms.txt">llms.txt</a></li>
             <li><a className="hover:text-fg" href={RFP_URL} target="_blank" rel="noreferrer">SCF</a></li>

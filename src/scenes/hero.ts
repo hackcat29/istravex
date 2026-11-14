@@ -27,18 +27,17 @@ type Cube = {
 };
 
 export interface HeroOptions {
+  /** Verdicts to cycle through as fixtures cross the ring (the real replay + pilot results). */
+  verdicts?: Verdict[];
   onVerdict?: (v: Verdict) => void;
-}
-
-function pickVerdict(): Verdict {
-  const r = Math.random();
-  return r < 0.8 ? 'correct' : r < 0.92 ? 'incorrect' : 'dropped';
 }
 
 export async function createHeroScene(
   { canvas, reducedMotion }: SceneContext,
-  { onVerdict }: HeroOptions = {},
+  { verdicts = ['correct'], onVerdict }: HeroOptions = {},
 ): Promise<SceneHandle> {
+  let next = Math.floor(Math.random() * verdicts.length);
+  const pickVerdict = (): Verdict => verdicts[next++ % verdicts.length];
   const renderer = new THREE.WebGPURenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(INK, 0);

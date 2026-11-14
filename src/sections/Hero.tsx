@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { useCallback } from 'react';
-import { hero, heroStats, RFP_URL } from '../content';
+import { hero, heroStats, heroVerdicts, RFP_URL } from '../content';
 import { SceneMount } from '../components/SceneMount';
 import { Button, Title } from '../components/ui';
 import type { SceneContext } from '../scenes/types';
@@ -8,7 +8,7 @@ import type { SceneContext } from '../scenes/types';
 export function Hero() {
   const reduce = useReducedMotion();
   const load = useCallback(
-    (ctx: SceneContext) => import('../scenes/hero').then((m) => m.createHeroScene(ctx)),
+    (ctx: SceneContext) => import('../scenes/hero').then((m) => m.createHeroScene(ctx, { verdicts: heroVerdicts })),
     [],
   );
 

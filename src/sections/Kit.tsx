@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { corpus, kit, lintCode, lintRules, type Verdict } from '../content';
+import { corpus, kit, lintFindings, lintRules, pilotRef, type Verdict } from '../content';
 import { Reveal, Title, VerdictMark } from '../components/ui';
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -63,43 +63,58 @@ function Card({
   );
 }
 
-/* ── 01 Corpus: real CAP coverage; a scan passes over the audit list ─── */
-const caps = ['CAP-0015', 'CAP-0023', 'CAP-0027', 'CAP-0033', 'CAP-0035', 'CAP-0038', 'CAP-0040', 'CAP-0046', 'CAP-0067', 'CAP-0073'];
-const covered = new Set(corpus.fixtures.map((f) => f.cap));
+/* ── 01 Corpus: the CAP audit. One cell per XDR-changing live CAP ────── */
+const xdrCaps = corpus.coverage.xdr_caps;
 const sample = corpus.fixtures.find((f) => f.cap === 'CAP-0027')!.manifest;
 const manifestLines: [string, string][] = [
   ['id', `"${sample.id}"`],
   ['cap_ids', JSON.stringify(sample.cap_ids)],
   ['protocol_version', String(sample.protocol_version)],
-  ['network', `"${sample.network}"`],
   ['sha256', `"${sample.sha256.slice(0, 16)}…"`],
-  ['synthetic', String(sample.synthetic)],
 ];
 
 function CorpusVisual() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-15% 0px' });
   const reduce = useReducedMotion();
-  const [scan, setScan] = useState(-1);
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const id = setInterval(() => setScan((n) => (n >= caps.length + 3 ? 0 : n + 1)), 360);
-    return () => clearInterval(id);
-  }, [inView, reduce]);
+  const [hover, setHover] = useState<number | null>(null);
+  const h = hover !== null ? xdrCaps[hover] : null;
+  const coveredCount = xdrCaps.filter((c) => c.covered).length;
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7">
-      <div className="flex flex-wrap gap-1.5" aria-label={`${covered.size} of ${caps.length} audited CAPs have fixtures`}>
-        {caps.map((c, i) => (
-          <span
-            key={c}
-            className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-colors duration-300 ${covered.has(c) ? 'border-lime bg-lime text-ink' : i === scan ? 'border-fg text-fg' : 'border-line text-dim'}`}
-          >
-            {c}
-          </span>
-        ))}
+      <div>
+        <div className="grid grid-cols-[repeat(20,minmax(0,1fr))] gap-[3px]" role="list" aria-label={`${coveredCount} of ${xdrCaps.length} XDR-changing CAPs have fixtures`}>
+          {xdrCaps.map((c, i) => (
+            <motion.button
+              key={c.cap}
+              type="button"
+              role="listitem"
+              aria-label={`${c.cap} ${c.title}: ${c.covered ? 'covered' : 'gap'}`}
+              onMouseEnter={() => setHover(i)}
+              onMouseLeave={() => setHover(null)}
+              onFocus={() => setHover(i)}
+              onBlur={() => setHover(null)}
+              initial={reduce ? false : { opacity: 0, scale: 0.4 }}
+              animate={inView ? { opacity: 1, scale: 1 } : undefined}
+              transition={{ delay: 0.15 + i * 0.015, duration: 0.4, ease }}
+              className={`aspect-square rounded-[2px] border transition-colors ${c.covered ? 'border-lime bg-lime' : hover === i ? 'border-fg bg-ink-3' : 'border-line bg-ink-2'}`}
+            />
+          ))}
+        </div>
+        <p className="mt-3 h-4 truncate font-mono text-[11.5px] text-mute">
+          {h ? (
+            <>
+              <span className={h.covered ? 'text-lime' : 'text-fg'}>{h.cap}</span> · {h.title}
+            </>
+          ) : (
+            <>
+              <span className="text-lime">{coveredCount}</span>/{xdrCaps.length} XDR-changing CAPs
+            </>
+          )}
+        </p>
       </div>
-      <pre className="mt-6 overflow-hidden font-mono text-[11.5px] leading-[1.85] sm:text-[12.5px]">
+      <pre className="mt-5 overflow-hidden font-mono text-[11.5px] leading-[1.85] sm:text-[12.5px]">
         <span className="text-dim">{'{'}</span>
         {manifestLines.map(([k, v], i) => (
           <motion.div
@@ -111,7 +126,7 @@ function CorpusVisual() {
           >
             <span className="text-mute">"{k}"</span>
             <span className="text-dim">: </span>
-            <span className={v === 'false' ? 'text-amber' : /^\d+$/.test(v) ? 'text-lime' : 'text-fg'}>{v}</span>
+            <span className={/^\d+$/.test(v) ? 'text-lime' : 'text-fg'}>{v}</span>
           </motion.div>
         ))}
         <span className="text-dim">{'}'}</span>
@@ -257,94 +272,100 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-/* ── 04 Linter: three rules, hover a rule to find its line ────────────── */
+/* ── 04 Linter: the real finding in wallet-backend, at its real line ─── */
 function LintVisual() {
   const [rule, setRule] = useState<number | null>(null);
+  const f = lintFindings[0];
+  const counts = lintRules.map((r) => lintFindings.filter((x) => x.rule === r.id).length);
   return (
     <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
-      <pre className="overflow-hidden font-mono text-[10.5px] leading-[1.75] sm:text-[11.5px]">
-        {lintCode.map((line, i) => {
-          const r = lintRules.findIndex((lr) => lr.line === i + 1);
-          const hot = r >= 0 && (rule === null || rule === r);
-          return (
-            <div key={i} className={`flex gap-3 transition-opacity duration-300 ${rule !== null && rule !== r ? 'opacity-35' : ''}`}>
-              <span className="w-4 shrink-0 text-right text-dim">{i + 1}</span>
-              <span className={`whitespace-pre ${r >= 0 ? 'underline decoration-wavy underline-offset-4' : ''} ${hot ? 'decoration-coral text-fg' : 'decoration-transparent text-mute'}`}>
-                {line}
-              </span>
-            </div>
-          );
-        })}
-      </pre>
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {lintRules.map((lr, i) => (
-          <button
-            key={lr.id}
-            type="button"
-            onMouseEnter={() => setRule(i)}
-            onMouseLeave={() => setRule(null)}
-            onFocus={() => setRule(i)}
-            onBlur={() => setRule(null)}
-            onClick={() => setRule((cur) => (cur === i ? null : i))}
-            title={lr.label}
-            aria-pressed={rule === i}
-            className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-colors ${rule === i ? 'border-coral bg-coral text-ink' : 'border-line text-mute hover:text-fg'}`}
-          >
-            {lr.id}
-          </button>
-        ))}
+      {f ? (
+        <pre className="overflow-hidden font-mono text-[10.5px] leading-[1.75] sm:text-[11px]">
+          {f.snippet.lines.map((line, i) => {
+            const n = f.snippet.from + i;
+            const hot = n === f.line;
+            return (
+              <div key={n} className={`flex gap-3 transition-opacity duration-300 ${rule !== null && lintRules[rule].id !== f.rule ? 'opacity-35' : ''}`}>
+                <span className="w-5 shrink-0 text-right text-dim">{n}</span>
+                <span className={`whitespace-pre ${hot ? 'text-fg underline decoration-coral decoration-wavy underline-offset-4' : 'text-mute'}`}>{line.replace(/\t/g, '  ')}</span>
+              </div>
+            );
+          })}
+        </pre>
+      ) : (
+        <p className="font-mono text-[12px] text-mute">No findings.</p>
+      )}
+      <div>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {lintRules.map((lr, i) => (
+            <button
+              key={lr.id}
+              type="button"
+              onMouseEnter={() => setRule(i)}
+              onMouseLeave={() => setRule(null)}
+              onFocus={() => setRule(i)}
+              onBlur={() => setRule(null)}
+              onClick={() => setRule((cur) => (cur === i ? null : i))}
+              aria-pressed={rule === i}
+              className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-colors ${rule === i ? 'border-coral bg-coral text-ink' : counts[i] ? 'border-line-2 text-fg' : 'border-line text-dim hover:text-fg'}`}
+            >
+              {lr.id} · {counts[i]}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 h-4 truncate font-mono text-[11px] text-mute">
+          {rule !== null ? (
+            lintRules[rule].label
+          ) : f ? (
+            <a href={f.url} target="_blank" rel="noreferrer" className="hover:text-fg">
+              {f.file.split('/').pop()}:{f.line} · {f.status} ↗
+            </a>
+          ) : null}
+        </p>
       </div>
-      <p className="mt-2 h-4 font-mono text-[11px] text-mute">{rule !== null ? lintRules[rule].label : ''}</p>
     </div>
   );
 }
 
-/* ── 05 Pilot: a real replay finding, flipping expected ↔ observed ──── */
-const finding = corpus.replay.find((r) => r.indexer === 'naive' && r.verdict === 'dropped')!;
-function PilotVisual() {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { margin: '-15% 0px' });
-  const [observed, setObserved] = useState(false);
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const id = setInterval(() => setObserved((o) => !o), 2600);
-    return () => clearInterval(id);
-  }, [inView, reduce]);
+/* ── 05 Pilot: wallet-backend's verdict per fixture; pick one to see checks ── */
+const pilotResults = corpus.pilot.results;
+const capName: Record<string, string> = { 'CAP-0015': 'Fee-bump', 'CAP-0027': 'Muxed ID', 'CAP-0040': 'Signer', 'CAP-0073': 'SAC trust' };
+const netTag: Record<string, string> = { pubnet: 'main', testnet: 'test', local: 'core' };
 
-  const f = finding;
-  const rows: [string, string][] = [
-    ['indexer', `${f.indexer} (replay)`],
-    ['fixture', f.fixture],
-    ['ledger', `${f.network} L${f.ledger.toLocaleString('en-US')}`],
-    ['verdict', f.verdict],
-  ];
+function PilotVisual() {
+  const [pick, setPick] = useState(0);
+  const r = pilotResults[pick];
   return (
-    <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
-      <dl className="space-y-2 font-mono text-[11.5px] sm:text-[12px]">
-        {rows.map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-3 border-b border-line pb-2">
-            <dt className="text-dim">{k}</dt>
-            <dd className={`truncate ${k === 'verdict' ? 'text-coral' : 'text-fg'}`}>{v}</dd>
+    <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
+      <div className="grid grid-cols-2 gap-1.5">
+        {pilotResults.map((x, i) => (
+          <button
+            key={x.fixture}
+            type="button"
+            onClick={() => setPick(i)}
+            aria-pressed={pick === i}
+            className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left font-mono text-[11px] transition-colors ${pick === i ? 'border-fg text-fg' : 'border-line text-mute hover:text-fg'}`}
+          >
+            <VerdictMark v={x.verdict as Verdict} />
+            <span className="truncate">
+              {capName[x.cap] ?? x.cap} <span className="text-dim">{netTag[x.network] ?? x.network}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+      <dl className="mt-3 space-y-1.5 font-mono text-[11px]">
+        {r.checks.slice(0, 3).map((c) => (
+          <div key={c.field} className="flex justify-between gap-3 border-b border-line pb-1.5">
+            <dt className="shrink-0 text-dim">{c.field}</dt>
+            <dd className={`truncate ${c.ok ? 'text-fg' : 'text-coral'}`} title={c.observed}>
+              {c.observed.length > 20 ? `${c.observed.slice(0, 8)}…${c.observed.slice(-6)}` : c.observed}
+            </dd>
           </div>
         ))}
       </dl>
-      <button
-        type="button"
-        onClick={() => setObserved((o) => !o)}
-        className="mt-4 grid grid-cols-2 overflow-hidden rounded-lg border border-line text-left font-mono text-[11.5px]"
-        aria-label="Toggle expected and observed"
-      >
-        {(['expected', 'observed'] as const).map((side) => {
-          const on = (side === 'observed') === observed;
-          return (
-            <span key={side} className={`relative px-3 py-3 transition-colors duration-500 ${on ? (side === 'observed' ? 'bg-coral text-ink' : 'bg-lime text-ink') : 'text-dim'}`}>
-              <span className="block uppercase tracking-[0.08em]">{side}</span>
-              <span className="mt-1 block">{side === 'expected' ? 'trustline created' : 'no record'}</span>
-            </span>
-          );
-        })}
-      </button>
+      <a href={`${corpus.pilot.repo}/tree/${corpus.pilot.ref}`} target="_blank" rel="noreferrer" className="mt-2 block truncate font-mono text-[11px] text-mute hover:text-fg">
+        wallet-backend@{pilotRef} ↗
+      </a>
     </div>
   );
 }

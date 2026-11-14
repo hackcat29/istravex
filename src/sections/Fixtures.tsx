@@ -89,6 +89,7 @@ export function Fixtures() {
                   <h3 className="mt-4 text-[22px] font-medium tracking-tight">{it.name}</h3>
                   <p className="mt-1 font-mono text-[12px] text-dim">
                     {it.network} · L{it.ledger.toLocaleString('en-US')} · {it.bytes.toLocaleString('en-US')} B
+                    {it.provenance && it.provenance.passed === it.provenance.checks ? ' · ledger-verified' : ''}
                   </p>
                   <AnimatePresence initial={false}>
                     {i === active && (
@@ -100,9 +101,13 @@ export function Fixtures() {
                         className="overflow-hidden text-[15px] leading-relaxed text-mute"
                       >
                         <span className="block pt-3">{it.expect}</span>
-                        <a href={it.href} target="_blank" rel="noreferrer" className="mt-3 inline-block font-mono text-[12px] text-fg underline decoration-line-2 underline-offset-4 hover:decoration-fg">
-                          {it.tx_hash.slice(0, 12)}… ↗
-                        </a>
+                        {it.href ? (
+                          <a href={it.href} target="_blank" rel="noreferrer" className="mt-3 inline-block font-mono text-[12px] text-fg underline decoration-line-2 underline-offset-4 hover:decoration-fg">
+                            {it.tx_hash.slice(0, 12)}… ↗
+                          </a>
+                        ) : (
+                          <span className="mt-3 block font-mono text-[12px] text-mute">{it.generator}</span>
+                        )}
                       </motion.p>
                     )}
                   </AnimatePresence>

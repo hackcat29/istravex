@@ -13,17 +13,21 @@ export const REPO_URL = 'https://github.com/hackcat29/istravex';
 
 type Fixture = (typeof corpus.fixtures)[number];
 type ReplayRow = (typeof corpus.replay)[number];
-const byCap = (cap: string) => corpus.fixtures.find((f) => f.cap === cap) as Fixture;
+// Prefer public-network fixtures for the page's examples: they link to an explorer.
+const networkRank = { pubnet: 0, testnet: 1, local: 2 } as Record<string, number>;
+const byCap = (cap: string) =>
+  corpus.fixtures.filter((f) => f.cap === cap).sort((a, b) => networkRank[a.network] - networkRank[b.network])[0] as Fixture;
 const replayOf = (cap: string, indexer: 'naive' | 'reference') =>
-  corpus.replay.find((r) => r.cap === cap && r.indexer === indexer) as ReplayRow;
+  corpus.replay.find((r) => r.cap === cap && r.indexer === indexer && r.fixture === byCap(cap).id) as ReplayRow;
 const obs = (r: ReplayRow) => (r.observed ?? {}) as unknown as Record<string, string | boolean | null>;
 const exp = (f: Fixture) => f.manifest.expected_decoded as unknown as Record<string, string>;
 
 /** G…/M…/P… addresses shortened for tables; numbers are never shortened. */
 export const short = (s: string) => (s.length > 14 ? `${s.slice(0, 4)}…${s.slice(-4)}` : s);
 export const grouped = (s: string) => BigInt(s).toLocaleString('en-US');
+/** Explorer link for a public-network transaction; generated (local) fixtures have none. */
 export const explorerTx = (f: { network: string; tx_hash: string }) =>
-  `https://stellar.expert/explorer/${f.network === 'pubnet' ? 'public' : 'testnet'}/tx/${f.tx_hash}`;
+  f.network === 'local' ? '' : `https://stellar.expert/explorer/${f.network === 'pubnet' ? 'public' : 'testnet'}/tx/${f.tx_hash}`;
 
 export const RFP_URL = 'https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track';
 export const PROPOSAL_URL = '/proposal.md';
@@ -46,11 +50,18 @@ export const hero = {
 const st = corpus.stats;
 const protocols = [...new Set(corpus.fixtures.map((f) => f.protocol_version))].sort();
 export const heroStats = [
-  { value: String(st.fixtures), label: 'Real fixtures' },
+  { value: String(st.fixtures), label: 'Fixtures' },
   { value: `${st.sdk_checks_passed}/${st.sdk_checks}`, label: 'SDK checks' },
-  { value: `${st.naive_faults}/${st.replay_cases}`, label: 'Indexer faults caught' },
-  { value: protocols.join('–'), label: 'Protocol' },
+  { value: `${st.provenance_passed}/${st.provenance_checks}`, label: 'Ledger-verified' },
+  { value: `${st.pilot_correct}/${st.pilot_fixtures}`, label: 'wallet-backend pilot' },
 ];
+export const protocolRange = protocols.join('–');
+
+/** Verdicts the hero stream cycles through: every real replay and pilot result. */
+export const heroVerdicts = [
+  ...corpus.replay.map((r) => r.verdict),
+  ...corpus.pilot.results.map((r) => r.verdict),
+] as Verdict[];
 
 export type Verdict = 'correct' | 'incorrect' | 'dropped';
 export const verdictLabel: Record<Verdict, string> = {
@@ -153,6 +164,9 @@ export const problem: { title: string[]; cases: ProblemCase[] } = {
   ],
 };
 
+const pilot = corpus.pilot;
+export const pilotRef = pilot.ref.slice(0, 7);
+
 export const kit = {
   title: ['Five parts.', 'One shared corpus.'],
   parts: [
@@ -160,13 +174,13 @@ export const kit = {
       id: 'corpus',
       n: '01',
       title: 'Corpus & CAP audit',
-      body: 'Versioned XDR fixtures tied to the CAP and protocol that introduced them. Captured ledgers and pinned stellar-core recipes; anything hand-authored is marked synthetic.',
+      body: `${st.fixtures} fixtures, each tied to its CAP and verified byte-for-byte against the ledger that closed it. ${st.covered_xdr_caps} of ${st.xdr_caps} XDR-changing CAPs covered so far.`,
     },
     {
       id: 'replay',
       n: '02',
       title: 'Offline replay harness',
-      body: 'A mock getLedgers endpoint feeds fixed sequences through your ingestion pipeline. No network, no credentials, bounded memory.',
+      body: 'A mock getLedgers RPC serves the corpus to any indexer. No network, no credentials, bounded memory.',
     },
     {
       id: 'runner',
@@ -178,39 +192,24 @@ export const kit = {
       id: 'linter',
       n: '04',
       title: 'Go linter & guide',
-      body: 'Three ingestion rules, plus a hardening guide reviewed by a Stellar Core or platform engineer.',
+      body: 'Three go/analysis rules, calibrated on wallet-backend, and a hardening guide pending engineering review.',
     },
     {
       id: 'pilot',
       n: '05',
       title: 'Upstream pilot',
-      body: 'The corpus runs against wallet-backend. Every confirmed finding ships with a fixture, a CAP and an upstream issue.',
+      body: `wallet-backend's own ingestion, fed by the mock RPC: ${st.pilot_correct} of ${st.pilot_fixtures} fixtures indexed correctly.`,
     },
   ],
 };
 
 export const lintRules = [
-  { id: 'IX001', line: 3, label: 'Trusts memo text Core never validated' },
-  { id: 'IX002', line: 6, label: 'Recursion with no depth limit' },
-  { id: 'IX003', line: 9, label: 'Participants read from the envelope' },
+  { id: 'IX001', label: 'Memo text not UTF-8 validated' },
+  { id: 'IX002', label: 'Recursion with no depth limit' },
+  { id: 'IX003', label: 'Fee data from the envelope' },
 ] as const;
+export const lintFindings = pilot.lint.findings;
 
-export const lintCode = [
-  'func ingest(tx ingest.LedgerTransaction) error {',
-  '  env := tx.Envelope',
-  '  memo := env.Memo().MustText()',
-  '  ops := env.Operations()',
-  '  for _, op := range ops {',
-  '    walk(op.Body, 0)',
-  '  }',
-  '  // who was affected?',
-  '  who := env.SourceAccount()',
-  '  return store(memo, who, ops)',
-  '}',
-];
-
-export const sdks = ['JavaScript', 'Go', 'Rust'] as const;
-export const checks = ['decode', 're-encode', 'native'] as const;
 
 /** XDR tree of the real muxed-payment fixture, rendered in 3D by the anatomy scene. */
 export type XdrNode = {
@@ -263,7 +262,10 @@ const fixtureCopy: Record<string, { name: string; expect: string }> = {
 
 export const fixtures = {
   title: 'Fixtures',
-  items: corpus.fixtures.map((f) => ({ ...f, ...fixtureCopy[f.cap], href: explorerTx(f) })),
+  items: corpus.fixtures.map((f) => {
+    const g = (f.manifest.source as { generator?: { core_version: string; binary_sha256: string } }).generator;
+    return { ...f, ...fixtureCopy[f.cap], href: explorerTx(f), generator: g ? `stellar-core ${g.core_version} · ${g.binary_sha256.slice(0, 12)}` : '' };
+  }),
 };
 
 export const milestones = {
@@ -306,6 +308,11 @@ export const cta = {
   secondary: { label: 'RFP Track', href: RFP_URL },
 };
 
+export const docs = [
+  { href: `${REPO_URL}/blob/main/docs/indexer-hardening-guide.md`, label: 'Hardening guide' },
+  { href: `${REPO_URL}/blob/main/docs/cap-coverage.md`, label: 'CAP coverage' },
+];
+
 export const footer = {
-  note: 'Fixtures and results are real: captured from Stellar pubnet and testnet, run through the kit.',
+  note: 'Every number here comes from the corpus and kit in the repository.',
 };
