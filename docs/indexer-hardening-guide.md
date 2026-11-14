@@ -64,7 +64,9 @@ Muxed IDs (`uint64`), amounts, balances and limits (`int64`), sequence numbers a
 
 ## 9. Compare only consensus data
 
-`TransactionMeta` can carry **diagnostic events**: node-local data that is not covered by consensus. The CAP-0073 fixture's meta from one RPC node's `getTransaction` and from another's `getLedgers` differed in one value only, a `core_metrics` `invoke_time_nsecs` event (188,866 vs 126,592 ns). Do not index, hash or compare diagnostic events across nodes. The corpus takes fixture meta from the canonical ledger for this reason (`kit/capture/canonicalize.mjs`, checked by `kit/go/cmd/verify`).
+`TransactionMeta` can carry **diagnostic events**: node-local data that is not covered by consensus. The CAP-0073 fixture's meta from one RPC node's `getTransaction` and from another's `getLedgers` differed in one value only, a `core_metrics` `invoke_time_nsecs` event (188,866 vs 126,592 ns). The same is true of whole ledgers: re-fetching testnet ledgers 5727196 and 5727199 from the same RPC endpoint a few hours later returned `LedgerCloseMeta` with different sha256 hashes, because a different node behind the load balancer answered. The mainnet data-lake objects stayed byte-identical.
+
+Do not index, hash or compare diagnostic events across nodes. Treat a captured ledger as a snapshot and pin it. The corpus does both: fixture meta comes from the stored canonical ledger (`kit/capture/canonicalize.mjs`, checked by `kit/go/cmd/verify`), and stored ledgers are not overwritten unless `--refresh` is passed.
 
 ---
 

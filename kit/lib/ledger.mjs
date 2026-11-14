@@ -2,9 +2,10 @@
 // consensus copies out of it. Fixture meta must come from here, not from
 // getTransaction: TransactionMeta carries node-local diagnostic events (e.g.
 // core_metrics invoke_time_nsecs) that differ between RPC nodes.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { zstdDecompressSync } from 'node:zlib';
+import { zstdCompressSync, zstdDecompressSync } from 'node:zlib';
 import { xdr } from '@stellar/stellar-sdk';
 import { FIXTURES, ROOT, sha256 } from './fixture.mjs';
 
@@ -44,3 +45,32 @@ export function rewriteFixtureFile(id, name, b64) {
   writeFileSync(join(dir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   return f;
 }
+
+/**
+ * Store a LedgerCloseMetaBatch (raw XDR) as corpus/ledgers/<network>/<seq>.xdr.zst
+ * and index it. Pass `zst` to keep an upstream object byte-for-byte (data lake).
+ */
+export function storeLedger(network, seq, raw, source, zst = zstdCompressSync(raw)) {
+  const dir = join(ROOT, 'corpus', 'ledgers', network);
+  mkdirSync(dir, { recursive: true });
+  const path = `ledgers/${network}/${seq}.xdr.zst`;
+  writeFileSync(join(ROOT, 'corpus', path), zst);
+  const indexPath = join(ROOT, 'corpus', 'ledgers', 'index.json');
+  const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, 'utf8')) : [];
+  const entry = {
+    network,
+    ledger: seq,
+    path,
+    xdr_type: 'LedgerCloseMetaBatch',
+    source,
+    sha256: createHash('sha256').update(raw).digest('hex'),
+    bytes: raw.length,
+    compressed_bytes: zst.length,
+  };
+  const next = index.filter((e) => !(e.network === network && e.ledger === seq)).concat(entry);
+  next.sort((a, b) => a.network.localeCompare(b.network) || a.ledger - b.ledger);
+  writeFileSync(indexPath, JSON.stringify(next, null, 2) + '\n');
+  return entry;
+}
+
+export const ledgerStored = (network, seq) => existsSync(join(ROOT, 'corpus', 'ledgers', network, `${seq}.xdr.zst`));

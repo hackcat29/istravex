@@ -3,17 +3,14 @@
 //   testnet — Stellar RPC getLedgers, wrapped in the same LedgerCloseMetaBatch format
 // Stored as corpus/ledgers/<network>/<seq>.xdr.zst (zstd, data-lake layout).
 //   node kit/capture/ledgers.mjs
-import { createHash } from 'node:crypto';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { zstdCompressSync, zstdDecompressSync } from 'node:zlib';
+import { zstdDecompressSync } from 'node:zlib';
 import { xdr } from '@stellar/stellar-sdk';
-import { ROOT, readCorpus } from '../lib/fixture.mjs';
+import { readCorpus } from '../lib/fixture.mjs';
+import { ledgerStored, storeLedger } from '../lib/ledger.mjs';
 
 const LAKE = 'https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet';
 const TESTNET_RPC = 'https://soroban-testnet.stellar.org';
 const PER_PARTITION = 64000;
-const sha = (b) => createHash('sha256').update(b).digest('hex');
 const rev = (n) => (0xffffffff - n).toString(16).toUpperCase().padStart(8, '0');
 
 export function lakeUrl(seq) {
@@ -41,31 +38,25 @@ async function testnet(seq) {
   const lcm = xdr.LedgerCloseMeta.fromXDR(l.metadataXdr, 'base64');
   const batch = new xdr.LedgerCloseMetaBatch({ startSequence: seq, endSequence: seq, ledgerCloseMetas: [lcm] });
   const raw = Buffer.from(batch.toXDR());
-  return { zst: zstdCompressSync(raw), raw, source: `${TESTNET_RPC}#getLedgers(${seq})` };
+  return { raw, source: `${TESTNET_RPC}#getLedgers(${seq})` };
 }
 
-const index = [];
+// Stored ledgers are pinned snapshots and are not overwritten unless --refresh
+// is passed. RPC-served LedgerCloseMeta is not byte-stable: node-local
+// diagnostic events differ between the RPC nodes behind one endpoint, so a
+// re-fetch of the same testnet ledger can hash differently. Local (generated)
+// ledgers are stored by kit/capture/generate.mjs and cannot be re-fetched.
+const refresh = process.argv.includes('--refresh');
 const seen = new Set();
 for (const { manifest: m } of readCorpus()) {
   const key = `${m.network}/${m.source.ledger}`;
-  if (seen.has(key)) continue;
+  if (m.network === 'local' || seen.has(key)) continue;
   seen.add(key);
+  if (!refresh && ledgerStored(m.network, m.source.ledger)) {
+    console.log(`${key}: pinned`);
+    continue;
+  }
   const got = m.network === 'pubnet' ? await pubnet(m.source.ledger) : await testnet(m.source.ledger);
-  const dir = join(ROOT, 'corpus', 'ledgers', m.network);
-  mkdirSync(dir, { recursive: true });
-  const path = `ledgers/${m.network}/${m.source.ledger}.xdr.zst`;
-  writeFileSync(join(ROOT, 'corpus', path), got.zst);
-  index.push({
-    network: m.network,
-    ledger: m.source.ledger,
-    path,
-    xdr_type: 'LedgerCloseMetaBatch',
-    source: got.source,
-    sha256: sha(got.raw),
-    bytes: got.raw.length,
-    compressed_bytes: got.zst.length,
-  });
-  console.log(`${key}: ${got.raw.length} B (${got.zst.length} B zstd)`);
+  storeLedger(m.network, m.source.ledger, got.raw, got.source, got.zst);
+  console.log(`${key}: ${got.raw.length} B`);
 }
-index.sort((a, b) => a.network.localeCompare(b.network) || a.ledger - b.ledger);
-writeFileSync(join(ROOT, 'corpus', 'ledgers', 'index.json'), JSON.stringify(index, null, 2) + '\n');
