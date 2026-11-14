@@ -1,0 +1,721 @@
+{
+  "source": {
+    "repo": "https://github.com/stellar/stellar-protocol",
+    "ref": "ced008c3727005ca4a775f430fe6fe346c30f58f"
+  },
+  "live_caps": 70,
+  "xdr_changing_caps": 40,
+  "covered_caps": 4,
+  "covered_xdr_caps": 3,
+  "caps": [
+    {
+      "cap": "CAP-0001",
+      "title": "Bump Sequence",
+      "status": "Final",
+      "protocol_version": 10,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0002",
+      "title": "Transaction level signature verification",
+      "status": "Final",
+      "protocol_version": 10,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0003",
+      "title": "Asset-backed offers",
+      "status": "Final",
+      "protocol_version": 10,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0004",
+      "title": "Improved Rounding for Cross Offer",
+      "status": "Final",
+      "protocol_version": 10,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0005",
+      "title": "Throttling and transaction pricing improvements",
+      "status": "Final",
+      "protocol_version": 11,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0006",
+      "title": "Add ManageBuyOffer Operation",
+      "status": "Final",
+      "protocol_version": 11,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0015",
+      "title": "Fee-Bump Transactions",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": [
+        "cap15-fee-bump-pubnet-0001"
+      ]
+    },
+    {
+      "cap": "CAP-0018",
+      "title": "Fine-Grained Control of Authorization",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0019",
+      "title": "Future-upgradable TransactionEnvelope type",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0020",
+      "title": "Bucket Initial Entries",
+      "status": "Final",
+      "protocol_version": 11,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0021",
+      "title": "Preconditions: Generalized transaction preconditions",
+      "status": "Final",
+      "protocol_version": 19,
+      "xdr_files": [
+        "Stellar-ledger-entries.x",
+        "Stellar-transaction.x",
+        "Stellar-types.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0023",
+      "title": "Two-Part Payments with ClaimableBalanceEntry",
+      "status": "Final",
+      "protocol_version": 14,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0024",
+      "title": "Make PathPayment Symmetrical",
+      "status": "Final",
+      "protocol_version": 12,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0025",
+      "title": "Remove Bucket Shadowing",
+      "status": "Final",
+      "protocol_version": 12,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0026",
+      "title": "Disable Inflation Mechanism",
+      "status": "Final",
+      "protocol_version": 12,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0027",
+      "title": "First-class multiplexed accounts",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": [
+        "cap27-muxed-payment-pubnet-0001"
+      ]
+    },
+    {
+      "cap": "CAP-0028",
+      "title": "Clear pre-auth transaction signer on failed transactions",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0029",
+      "title": "AllowTrust when not AUTH_REQUIRED",
+      "status": "Final",
+      "protocol_version": 16,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0030",
+      "title": "Remove NO_ISSUER Operation Results",
+      "status": "Final",
+      "protocol_version": 13,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0033",
+      "title": "Sponsored Reserve",
+      "status": "Final",
+      "protocol_version": null,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0034",
+      "title": "Preserve Transaction-Set/Close-Time Affinity During Nomination",
+      "status": "Final",
+      "protocol_version": 14,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0035",
+      "title": "Asset Clawback",
+      "status": "Final",
+      "protocol_version": 17,
+      "xdr_files": [
+        "Stellar-ledger-entries.x",
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0038",
+      "title": "Automated Market Makers",
+      "status": "Final",
+      "protocol_version": 18,
+      "xdr_files": [
+        "Stellar-ledger-entries.x",
+        "Stellar-ledger.x",
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0040",
+      "title": "Signed-Payload: Ed25519 Signed Payload Signer for Atomic Transaction Signature Disclosure",
+      "status": "Final",
+      "protocol_version": 19,
+      "xdr_files": [
+        "Stellar-types.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": [
+        "cap40-signed-payload-signer-testnet-0001"
+      ]
+    },
+    {
+      "cap": "CAP-0042",
+      "title": "Multi-Part Transaction Sets",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [
+        "Stellar-ledger.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046",
+      "title": "Soroban smart contract system overview",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x",
+        "Stellar-contract-env-meta.x",
+        "Stellar-contract-meta.x",
+        "Stellar-contract-spec.x",
+        "Stellar-contract.x",
+        "Stellar-ledger-entries.x",
+        "Stellar-ledger.x",
+        "Stellar-transaction.x",
+        "Stellar-types.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-01",
+      "title": "Soroban Runtime Environment",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [
+        "Stellar-contract.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-02",
+      "title": "Smart Contract Lifecycle",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-03",
+      "title": "Smart Contract Host Functions",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-05",
+      "title": "Smart Contract Data",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-06",
+      "title": "Smart Contract Standardized Asset (Stellar Asset Contract)",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-07",
+      "title": "Fee and resource model in smart contracts",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-08",
+      "title": "Smart Contract Events",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-09",
+      "title": "Network Configuration Ledger Entries",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-10",
+      "title": "Smart Contract Budget Metering",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-11",
+      "title": "Soroban Authorization Framework",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0046-12",
+      "title": "Soroban State Archival Interface",
+      "status": "Final",
+      "protocol_version": 20,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0051",
+      "title": "Smart Contract Host Functionality: Secp256r1 Verification",
+      "status": "Final",
+      "protocol_version": 21,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0053",
+      "title": "Separate host functions to extend the TTL for contract instance and contract code",
+      "status": "Final",
+      "protocol_version": 21,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0054",
+      "title": "Soroban refined VM instantiation cost model",
+      "status": "Final",
+      "protocol_version": 21,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x",
+        "Stellar-ledger-entries.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0055",
+      "title": "Soroban streamlined linking",
+      "status": "Final",
+      "protocol_version": 21,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0056",
+      "title": "Soroban intra-transaction module caching",
+      "status": "Final",
+      "protocol_version": 21,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0058",
+      "title": "Constructors for Soroban contracts",
+      "status": "Final",
+      "protocol_version": 22,
+      "xdr_files": [
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0059",
+      "title": "Host functions for BLS12-381",
+      "status": "Final",
+      "protocol_version": 22,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0062",
+      "title": "Soroban Live State Prioritization",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0063",
+      "title": "Parallelism-friendly Transaction Scheduling",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x",
+        "Stellar-ledger.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0065",
+      "title": "Reusable module cache",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0066",
+      "title": "Soroban In-memory Read Resource",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x",
+        "Stellar-ledger.x",
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0067",
+      "title": "Unified Asset Events",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [
+        "Stellar-contract.x",
+        "Stellar-ledger.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0068",
+      "title": "Host function for getting  executable for `Address`",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0069",
+      "title": "String/Bytes conversion host functions",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0070",
+      "title": "Configurable SCP Timing Parameters",
+      "status": "Final",
+      "protocol_version": 23,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0071",
+      "title": "Authentication delegation and address-bound Soroban credentials",
+      "status": "Final",
+      "protocol_version": 27,
+      "xdr_files": [
+        "Stellar-ledger-entries.x",
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0071-01",
+      "title": "Authentication delegation for custom accounts",
+      "status": "Final",
+      "protocol_version": 27,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0071-02",
+      "title": "Address-bound Soroban address credentials",
+      "status": "Final",
+      "protocol_version": 27,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0073",
+      "title": "Allow SAC to create G-account balances",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": [
+        "cap73-sac-trust-testnet-0001"
+      ]
+    },
+    {
+      "cap": "CAP-0074",
+      "title": "Host functions for BN254",
+      "status": "Final",
+      "protocol_version": 25,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0075",
+      "title": "Cryptographic Primitives for Poseidon/Poseidon2 Hash Functions",
+      "status": "Final",
+      "protocol_version": 25,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0076",
+      "title": "P23 State Archival bug remediation",
+      "status": "Final",
+      "protocol_version": 24,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0077",
+      "title": "Freeze Ledger Entries via Network Configuration",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x",
+        "Stellar-transaction.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0078",
+      "title": "Host functions for performing limited TTL extensions",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0079",
+      "title": "Host functions for muxed address strkey conversions",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0080",
+      "title": "Host functions for efficient ZK BN254 use cases",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0082",
+      "title": "Checked 256-bit integer arithmetic host functions",
+      "status": "Final",
+      "protocol_version": 26,
+      "xdr_files": [],
+      "changes_xdr": false,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0083",
+      "title": "Allow validators to vote to drop the transaction set from the current ledger",
+      "status": "Final",
+      "protocol_version": 28,
+      "xdr_files": [
+        "Stellar-ledger.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0084",
+      "title": "Muxed Contract Addresses",
+      "status": "Implemented",
+      "protocol_version": 30,
+      "xdr_files": [
+        "Stellar-contract.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0085",
+      "title": "Externally managed contract executables",
+      "status": "Final",
+      "protocol_version": 28,
+      "xdr_files": [
+        "Stellar-contract.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0086",
+      "title": "Host functions for sparse Symbol-keyed map creation and unpacking",
+      "status": "Final",
+      "protocol_version": 28,
+      "xdr_files": [],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0087",
+      "title": "Host functions for ML-DSA signature verification",
+      "status": "Implemented",
+      "protocol_version": 30,
+      "xdr_files": [
+        "Stellar-contract-config-setting.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    },
+    {
+      "cap": "CAP-0088",
+      "title": "Millisecond-Resolution Close Times",
+      "status": "Implemented",
+      "protocol_version": 30,
+      "xdr_files": [
+        "Stellar-ledger.x",
+        "Stellar-types.x"
+      ],
+      "changes_xdr": true,
+      "fixtures": []
+    }
+  ]
+}
