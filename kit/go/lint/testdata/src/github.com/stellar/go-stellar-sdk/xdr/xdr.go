@@ -19,3 +19,20 @@ type ScVal struct{ Vec **ScVec }
 type ScVec []ScVal
 
 type TransactionResult struct{ FeeCharged int64 }
+
+type Uint64 uint64
+
+type AccountId struct{}
+
+func (a AccountId) Address() string { return "" }
+
+type MuxedAccountMed25519 struct{ Id Uint64 }
+
+func (m MuxedAccount) Address() string              { return "" }
+func (m *MuxedAccount) GetAddress() (string, error) { return "", nil }
+func (m MuxedAccount) GetId() (uint64, error)       { return 0, nil }
+func (m MuxedAccount) ToAccountId() AccountId       { return AccountId{} }
+
+type SorobanAuthorizedInvocation struct {
+	SubInvocations []SorobanAuthorizedInvocation
+}

@@ -25,3 +25,17 @@ func storeMemoChecked(env xdr.TransactionEnvelope) string {
 func storeMemoIgnored(env xdr.TransactionEnvelope) string {
 	return env.Memo().MustText() //ixlint:ignore IX001 stored as bytea
 }
+
+func muxedIDFloat(m xdr.MuxedAccount) float64 {
+	id, _ := m.GetId()
+	return float64(id) // want `IX001: muxed IDs use the full uint64 range`
+}
+
+func muxedIDField(m xdr.MuxedAccountMed25519) int64 {
+	return int64(m.Id) // want `IX001: muxed IDs use the full uint64 range`
+}
+
+func muxedIDKept(m xdr.MuxedAccount) uint64 {
+	id, _ := m.GetId()
+	return id
+}

@@ -37,3 +37,16 @@ func feeCharged(env xdr.TransactionEnvelope, r xdr.TransactionResult) int64 {
 	}
 	return int64(env.Fee())
 }
+
+func participants(env xdr.TransactionEnvelope) []string {
+	src := env.SourceAccount()
+	return []string{src.Address()} // want `IX003: a muxed account's Address\(\) is its M… form`
+}
+
+func participantsBase(env xdr.TransactionEnvelope) []string {
+	src := env.SourceAccount()
+	return []string{src.ToAccountId().Address()}
+}
+
+// Displaying or storing the muxed address itself is fine.
+func displayAddress(m xdr.MuxedAccount) string { return m.Address() }

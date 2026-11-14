@@ -2,9 +2,12 @@
 // the Stellar XDR packages (github.com/stellar/go-stellar-sdk/xdr and the
 // older github.com/stellar/go/xdr).
 //
-//	IX001 memo text read without UTF-8 validation
-//	IX002 recursion over recursive XDR values without a depth guard
-//	IX003 fee payer or fee read from the envelope
+//	IX001 unvalidated fields used as if validated: memo text without a UTF-8
+//	      check, muxed IDs converted to a type that can't hold every uint64
+//	IX002 walks over recursive XDR values (ScVal, authorization trees) with no
+//	      depth or size limit, recursive or with an explicit work list
+//	IX003 participants or fees from the envelope: a muxed account's M… form
+//	      as a participant, the inner source or the bid as the fee
 //
 // Suppress a finding with a `//ixlint:ignore IX00n reason` comment on the line
 // above or at the end of the reported line.
