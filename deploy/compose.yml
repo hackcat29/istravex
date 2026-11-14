@@ -1,4 +1,4 @@
-# Production stack on the Contabo VPS, deployed by .github/workflows/deploy.yml
+# API + mock RPC on the Contabo VPS, deployed by .github/workflows/deploy.yml
 # into /opt/istravex. TAG is the git commit being deployed (written to .env).
 name: istravex
 
@@ -26,7 +26,6 @@ services:
       - "443:443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./site:/srv/site:ro
       - caddy_data:/data
       - caddy_config:/config
     logging: *logging

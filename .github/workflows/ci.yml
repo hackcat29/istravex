@@ -153,6 +153,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run build
+      - name: Cloudflare Worker config is valid (no upload)
+        run: npx wrangler deploy --dry-run
+      - name: dist/ carries the Cloudflare headers file
+        run: test -s dist/_headers
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - if: failure()

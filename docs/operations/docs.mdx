@@ -41,10 +41,10 @@ mint broken-links   # check every internal link
   <Step title="Custom domain">
     Under **Custom domain setup**, add `docs.istravex.com`. Add the two TXT records the dashboard shows (`_acme-challenge.docs` and `_cf-custom-hostname.docs`) first, wait for both to verify, then add:
 
-    | Type | Name | Value |
-    |---|---|---|
-    | CNAME | `docs` | `cname.mintlify.builders` |
+    | Type | Name | Value | Proxy |
+    |---|---|---|---|
+    | CNAME | `docs` | `cname.mintlify.builders` | DNS only |
 
-    If the domain has CAA records, include `0 issue "letsencrypt.org"`.
+    The `istravex.com` zone is on Cloudflare: add all three records there, with the proxy off (grey cloud), since Mintlify issues the certificate. If the zone has CAA records, include `0 issue "letsencrypt.org"`.
   </Step>
 </Steps>

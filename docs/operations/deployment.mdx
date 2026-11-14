@@ -1,103 +1,108 @@
 ---
 title: Production deployment
-description: How istravex.com, api.istravex.com and rpc.istravex.com are deployed to a VPS by GitHub Actions.
+description: How istravex.com, api.istravex.com and rpc.istravex.com are deployed by GitHub Actions.
 ---
 
-Production is one VPS running Docker Compose, deployed by GitHub Actions after CI passes on `main`. There's no manual step in the normal path: merge to `main`, and a few minutes later the site, API and RPC are running that commit.
+Production is split by what each part needs. The site is static, so it lives on Cloudflare's edge. The API and mock RPC are a small Node service, so they run on a VPS. Both are deployed by one GitHub Actions workflow after CI passes on `main`: merge, and a few minutes later everything is running that commit.
 
 ## What runs where
 
 ```mermaid
 flowchart LR
-  user([Browser / indexer]) -->|HTTPS| caddy
+  browser([Browser]) -->|istravex.com| cf[Cloudflare<br/>Workers static assets]
+  client([Indexer / curl]) -->|api.istravex.com<br/>rpc.istravex.com| caddy
   subgraph VPS
-    caddy[Caddy<br/>TLS, compression, headers]
-    caddy -->|istravex.com| site[(Static site<br/>/opt/istravex/site)]
-    caddy -->|api.istravex.com| api[istravex-api<br/>Node 24]
-    caddy -->|rpc.istravex.com| api
+    caddy[Caddy<br/>TLS, compression, headers] --> api[istravex-api<br/>Node 24]
   end
-  docs([docs.istravex.com]) -.->|Mintlify| mintlify[(Mintlify)]
+  reader([Reader]) -->|docs.istravex.com| mintlify[Mintlify]
 ```
 
-| Host | Served by |
-|---|---|
-| `istravex.com` | Caddy, static files from `npm run build` |
-| `www.istravex.com` | Redirect to `istravex.com` |
-| `api.istravex.com` | Caddy → `istravex-api` container |
-| `rpc.istravex.com` | Caddy → `istravex-api`, path rewritten to `/rpc/…` |
-| `docs.istravex.com` | Mintlify, from `docs/` in this repository |
+| Host | Served by | Deployed by |
+|---|---|---|
+| `istravex.com`, `www.istravex.com` | Cloudflare Workers static assets (`wrangler.jsonc`) | `wrangler deploy` in the Deploy workflow |
+| `api.istravex.com` | Caddy → `istravex-api` container on the VPS | Deploy workflow, over SSH |
+| `rpc.istravex.com` | Same container; Caddy rewrites the path to `/rpc/…` | Deploy workflow, over SSH |
+| `docs.istravex.com` | Mintlify, from `docs/` | Mintlify's GitHub app, on push |
 
-Caddy obtains and renews TLS certificates automatically. The stack is defined in `deploy/compose.yml` and `deploy/Caddyfile`.
+The DNS zone is on Cloudflare. The site's records are created by Cloudflare when the Worker's custom domains are attached; `api` and `rpc` are created by the workflow (`deploy/dns.mjs`) as **DNS-only** records, so Caddy terminates TLS itself and sees real client addresses for rate limiting.
+
+## The site on Cloudflare
+
+`wrangler.jsonc` deploys `dist/` as static assets with no Worker script:
+
+- `not_found_handling: single-page-application`, so every path serves the app;
+- custom domains `istravex.com` and `www.istravex.com`, with `workers.dev` and preview URLs off;
+- `public/_headers` (copied into `dist/`) sets HSTS, `nosniff`, a referrer policy, `X-Frame-Options: DENY`, and a one-year immutable cache on Vite's fingerprinted `/assets/*`. Everything else revalidates on every request.
+
+CI runs `wrangler deploy --dry-run` on every push, so a broken config fails before merge.
 
 ## The pipeline
 
-`.github/workflows/deploy.yml` runs when the CI workflow completes successfully on `main`, or manually from the Actions tab.
+`.github/workflows/deploy.yml` runs when CI completes successfully on `main`, or manually from the Actions tab. Its three jobs run in parallel where they can.
 
 <Steps>
-  <Step title="Build the API image">
+  <Step title="Site → Cloudflare">
+    `npm run build`, validate with `wrangler deploy --dry-run`, then `wrangler deploy --message <commit>`. The first deploy attaches the custom domains, replacing any placeholder records at those names. A smoke test fetches `https://istravex.com/`.
+  </Step>
+  <Step title="API image → GHCR">
     Built from the `Dockerfile` and pushed to `ghcr.io/hackcat29/istravex-api`, tagged with the commit SHA and `latest`.
   </Step>
-  <Step title="Build the site">
-    `npm run build`, uploaded as a workflow artifact.
-  </Step>
-  <Step title="Ship">
-    Over SSH (strict host-key checking against a pinned `known_hosts`), rsync the site to `/opt/istravex/site` and the stack files to `/opt/istravex`.
-  </Step>
-  <Step title="Start">
-    `deploy/remote.sh` runs on the server. It installs Docker if it's missing, writes the image tag to `.env`, logs in to GHCR with the workflow's short-lived token, pulls, and runs `docker compose up -d --wait`, which only returns once the API's health check passes.
-  </Step>
-  <Step title="Smoke test">
-    The workflow checks that `https://api.istravex.com/v1/health` reports the commit just deployed, that the site responds, and that the RPC reports healthy. Any failure fails the deploy.
+  <Step title="API → VPS">
+    Upserts the `api` and `rpc` DNS records, then over SSH (strict host-key checking against a pinned `known_hosts`) copies `deploy/` to `/opt/istravex` and runs `deploy/remote.sh`. That script installs Docker if it's missing, logs in to GHCR with the workflow's short-lived token, pulls the image for this commit, and runs `docker compose up -d --wait`, which only returns once the API's health check passes. A smoke test then requires `https://api.istravex.com/v1/health` to report the commit just deployed, and the RPC to report healthy.
   </Step>
 </Steps>
 
-Deploys are serialised (`concurrency: deploy-production`), so two merges in quick succession deploy in order.
+Deploys are serialised (`concurrency: deploy-production`), so two merges in quick succession deploy in order. Each part is skipped, not failed, until it's configured.
 
 ## One-time setup
 
 <Steps>
-  <Step title="DNS">
-    Point the four web hosts at the VPS:
+  <Step title="Cloudflare API token">
+    In the Cloudflare dashboard, **My Profile → API Tokens → Create Token**, start from the **Edit Cloudflare Workers** template, add **Zone → DNS → Edit**, and limit it to your account and the `istravex.com` zone. Store it in GitHub:
 
-    | Type | Name | Value |
-    |---|---|---|
-    | A | `istravex.com` | VPS IPv4 |
-    | A | `www`, `api`, `rpc` | VPS IPv4 |
-    | AAAA | `istravex.com`, `www`, `api`, `rpc` | VPS IPv6 (optional) |
+    ```bash
+    gh secret set CLOUDFLARE_API_TOKEN --repo hackcat29/istravex
+    gh variable set CLOUDFLARE_ACCOUNT_ID --repo hackcat29/istravex --body <account id>
+    ```
 
-    `docs` is a CNAME to Mintlify; see [Docs](/operations/docs).
+    `npx wrangler whoami` prints the account ID.
   </Step>
-  <Step title="Firewall">
-    Allow inbound 22 (SSH), 80 and 443 (TCP), and 443/UDP for HTTP/3, in the VPS provider's firewall. Alternatively set the repository variable `CONFIGURE_UFW=true` and `remote.sh` configures `ufw` on the server.
-  </Step>
-  <Step title="Deploy key">
-    Generate a key pair just for deploys and authorise it on the server:
+  <Step title="VPS access">
+    Generate a key just for deploys, authorise it on the server, and pin the host keys:
 
     ```bash
     ssh-keygen -t ed25519 -N '' -C istravex-deploy -f istravex-deploy
     ssh-copy-id -i istravex-deploy.pub root@<VPS IPv4>
     ssh-keyscan -t ed25519,ecdsa,rsa <VPS IPv4> > known_hosts
     ```
+
+    Compare the scanned fingerprints (`ssh-keygen -lf known_hosts`) with the server's own (`ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub`, from the provider's console) before trusting them.
   </Step>
   <Step title="Repository secrets and variables">
-    In **Settings → Secrets and variables → Actions**:
-
     | Kind | Name | Value |
     |---|---|---|
     | Secret | `VPS_HOST` | VPS IPv4 |
     | Secret | `VPS_USER` | `root`, or a sudo-capable user |
-    | Secret | `VPS_SSH_KEY` | Contents of `istravex-deploy` (the private key) |
+    | Secret | `VPS_SSH_KEY` | The private key `istravex-deploy` |
     | Secret | `VPS_KNOWN_HOSTS` | Contents of `known_hosts` |
+    | Variable | `VPS_IPV6` | VPS IPv6 (optional; adds AAAA records) |
     | Variable | `DEPLOY_ENABLED` | `true` |
 
-    Then delete the private key from your machine. The deploy job is skipped until `DEPLOY_ENABLED` is `true`, so the pipeline is safe to merge before the server is ready.
+    Then delete the private key from your machine.
   </Step>
-  <Step title="Package visibility">
-    After the first deploy, make the `istravex-api` package public in GitHub (**Packages → istravex-api → Package settings**) if you want others to `docker pull` it. The server pulls with a token either way.
+  <Step title="Firewall">
+    Allow inbound 22, 80 and 443 (TCP) and 443/UDP in the VPS provider's firewall, or set the variable `CONFIGURE_UFW=true` and `remote.sh` configures `ufw`.
+  </Step>
+  <Step title="Docs domain">
+    See [Docs](/operations/docs#publishing). In Cloudflare, keep the `docs` CNAME **DNS-only**: Mintlify issues its own certificate.
   </Step>
 </Steps>
 
 ## Operating it
+
+**Site.** `npx wrangler deployments list` shows recent deploys; `npx wrangler rollback` returns to the previous one instantly.
+
+**API.**
 
 ```bash
 ssh root@<VPS IPv4>
@@ -107,10 +112,10 @@ docker compose logs -f api        # JSON request logs
 docker compose logs -f caddy      # TLS and proxy logs
 ```
 
-**Roll back** by re-running the Deploy workflow on an earlier commit (Actions → Deploy → Run workflow), or on the server:
+Roll back by re-running the Deploy workflow on an earlier commit, or on the server:
 
 ```bash
 echo "TAG=<earlier sha>" > .env && docker compose up -d --wait
 ```
 
-**Resources.** The API holds the corpus metadata in memory and decompresses at most four ledgers at a time; it runs comfortably in under 200 MB. Container logs rotate at 5 × 10 MB.
+**Resources.** The API holds corpus metadata in memory and decompresses at most four ledgers at a time; it runs comfortably in under 200 MB. Container logs rotate at 5 × 10 MB.

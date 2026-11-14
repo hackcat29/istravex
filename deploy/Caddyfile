@@ -1,5 +1,9 @@
+# The VPS serves the API and the mock RPC. The site (istravex.com) is on
+# Cloudflare Workers static assets (wrangler.jsonc); docs are on Mintlify.
+#
 # TLS certificates are obtained and renewed automatically (Let's Encrypt /
-# ZeroSSL) once DNS for each name points at this server.
+# ZeroSSL). Keep api and rpc DNS-only (grey cloud) in Cloudflare so Caddy
+# sees clients directly and can complete ACME challenges.
 {
 	admin off
 }
@@ -12,23 +16,6 @@
 		Permissions-Policy "camera=(), microphone=(), geolocation=()"
 		-Server
 	}
-}
-
-# The site: a static build of src/ (npm run build).
-istravex.com {
-	import security
-	root * /srv/site
-	encode zstd gzip
-	@hashed path /assets/*
-	header @hashed Cache-Control "public, max-age=31536000, immutable"
-	@pages not path /assets/*
-	header @pages Cache-Control "public, max-age=300"
-	try_files {path} /index.html
-	file_server
-}
-
-www.istravex.com {
-	redir https://istravex.com{uri} permanent
 }
 
 # Read API: corpus, ledgers, results (server/openapi.json).

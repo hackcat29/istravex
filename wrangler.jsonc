@@ -1,0 +1,24 @@
+{
+  // istravex.com: the static site (npm run build → dist/) on Cloudflare
+  // Workers static assets. No Worker script: Cloudflare serves the files.
+  // Deployed by .github/workflows/deploy.yml with `wrangler deploy`.
+  // The API and RPC are not here; they run on the VPS (deploy/).
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "istravex",
+  "compatibility_date": "2026-11-14",
+  "assets": {
+    "directory": "./dist",
+    // The site is a single page; unknown paths get index.html.
+    "not_found_handling": "single-page-application",
+    "html_handling": "auto-trailing-slash"
+  },
+  // Served only on the custom domains (the istravex.com zone must be on
+  // Cloudflare). Cloudflare creates the DNS records and certificates.
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "istravex.com", "custom_domain": true },
+    { "pattern": "www.istravex.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

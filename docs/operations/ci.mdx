@@ -13,7 +13,7 @@ description: What runs on every push, and the templates for running Istravex in 
 | **Generate on pinned stellar-core** | Installs SDF's stellar-core 30.0.0 package, regenerates the local fixtures from scratch, then verifies and runs them |
 | **API tests and container** | The API's tests pass, including the check that every OpenAPI path is served; the image builds and answers correctly while running read-only and unprivileged |
 | **Upstream pilot** | wallet-backend's own ingestion, at its pinned commit, indexes every fixture correctly, and every lint finding on it is triaged |
-| **Site build and e2e** | The site builds and the Playwright suite passes on desktop and mobile |
+| **Site build and e2e** | The site builds, `wrangler deploy --dry-run` accepts the Cloudflare config, and the Playwright suite passes on desktop and mobile |
 
 `node kit/check-results.mjs` is the gate inside the kit jobs. It checks results by substance (every check passed, every frame exact, every verdict correct) rather than diffing result files, which record machine-specific runtime versions.
 
