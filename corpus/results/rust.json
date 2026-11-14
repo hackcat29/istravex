@@ -1,0 +1,44 @@
+{
+  "package": "stellar-xdr",
+  "results": [
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "fixture": "cap15-fee-bump-pubnet-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "fixture": "cap27-muxed-payment-pubnet-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "fixture": "cap40-signed-payload-signer-testnet-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "fixture": "cap73-sac-trust-testnet-0001"
+    }
+  ],
+  "runtime": "rustc 1.94.1 (e408947bf 2026-03-25)",
+  "sdk": "rust",
+  "version": "30.0.0"
+}
