@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kit:
+    name: Corpus, runners and replay
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: kit/runners/rust
+      - run: npm ci
+      - name: Provenance (schema, sha256, canonical ledgers)
+        run: npm run corpus:verify
+      - name: Unit tests (mock RPC, linter)
+        run: npm run test:kit
+      - name: SDK conformance
+        run: npm run corpus:js && npm run corpus:go && npm run corpus:rust
+      - name: Replay
+        run: npm run corpus:replay
+      - name: All results green
+        run: node kit/check-results.mjs
+      - name: Site data is up to date
+        run: npm run corpus:data && git diff --exit-code -- src/data/corpus.json ':(exclude)corpus/results'
+
+  pilot:
+    name: Upstream pilot (wallet-backend)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+      - run: npm ci
+      - run: npm run pilot:wallet-backend
+      - run: node kit/check-results.mjs
+
+  site:
+    name: Site build and e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: test-results

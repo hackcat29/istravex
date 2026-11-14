@@ -17,14 +17,7 @@ const provenance = read('provenance.json').fixtures;
 const pilotRaw = read('pilot-wallet-backend.json');
 const coverage = JSON.parse(readFileSync(join(ROOT, 'corpus', 'coverage.json'), 'utf8'));
 
-// Source lines around each lint finding, from the pinned checkout the pilot used.
-const wbDir = join(ROOT, '.cache', 'wallet-backend');
-const lintFindings = pilotRaw.lint.findings.map((f) => {
-  const path = join(wbDir, f.file);
-  const lines = existsSync(path) ? readFileSync(path, 'utf8').split('\n') : [];
-  const from = Math.max(0, f.line - 5);
-  return { ...f, snippet: { from: from + 1, lines: lines.slice(from, f.line + 3) } };
-});
+const lintFindings = pilotRaw.lint.findings; // each carries its source snippet
 
 const fixtures = corpus.map(({ manifest: m, blobs }) => {
   const { files, ...rest } = m;
@@ -92,7 +85,8 @@ const out = {
   generated_by: 'kit/site-data.mjs',
   stats,
   fixtures,
-  sdks: sdks.map(({ results, ...meta }) => ({ ...meta, results })),
+  // runtime is omitted: it varies by machine and the site does not show it.
+  sdks: sdks.map(({ results, runtime, ...meta }) => ({ ...meta, results })),
   probes: js?.probes ?? [],
   replay,
   anatomy: { fixture: muxed.manifest.id, tx_hash: muxed.manifest.source.tx_hash, ledger: muxed.manifest.source.ledger, values: anatomyValues },

@@ -439,7 +439,6 @@
       "sdk": "javascript",
       "package": "@stellar/stellar-sdk",
       "version": "17.4.0",
-      "runtime": "node 24.10.0",
       "probes": [
         {
           "input": "1764988090084626463",
@@ -516,7 +515,6 @@
     },
     {
       "package": "github.com/stellar/go-stellar-sdk",
-      "runtime": "go1.26.2",
       "sdk": "go",
       "version": "0.9.0",
       "results": [
@@ -578,7 +576,6 @@
     },
     {
       "package": "stellar-xdr",
-      "runtime": "rustc 1.94.1 (e408947bf 2026-03-25)",
       "sdk": "rust",
       "version": "30.0.0",
       "results": [

@@ -94,7 +94,11 @@ for (const analyzers of Object.values(lintJson)) {
       if (seen.has(key)) continue;
       seen.add(key);
       const t = triage[`${rule} ${file}`] ?? { status: 'untriaged', note: '' };
-      findings.push({ rule, file, line: Number(line), message: it.message, ...t, url: `${REPO}/blob/${REF}/${file}#L${line}` });
+      // Keep the source lines with the finding, so reports need no checkout.
+      const src = readFileSync(join(DIR, file), 'utf8').split('\n');
+      const from = Math.max(0, Number(line) - 5);
+      const snippet = { from: from + 1, lines: src.slice(from, Number(line) + 3) };
+      findings.push({ rule, file, line: Number(line), message: it.message, ...t, url: `${REPO}/blob/${REF}/${file}#L${line}`, snippet });
     }
   }
 }

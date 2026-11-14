@@ -183,7 +183,20 @@
         "message": "IX001: memo text is not UTF-8 validated by stellar-core; check utf8.ValidString or store the raw bytes",
         "status": "latent",
         "note": "utils.Memo returns MEMO_TEXT as a Go string without UTF-8 validation. Nothing outside tests calls it at this ref and no migration has a memo column, so it is not reachable today. Worth a guard before memos are stored. No upstream issue filed.",
-        "url": "https://github.com/stellar/wallet-backend/blob/3e22515a44979fdc3a558fda3991ca2b48e38cef/internal/utils/ingestion_utils.go#L17"
+        "url": "https://github.com/stellar/wallet-backend/blob/3e22515a44979fdc3a558fda3991ca2b48e38cef/internal/utils/ingestion_utils.go#L17",
+        "snippet": {
+          "from": 13,
+          "lines": [
+            "\tswitch memoType {",
+            "\tcase xdr.MemoTypeMemoNone:",
+            "\t\treturn nil, memoType.String()",
+            "\tcase xdr.MemoTypeMemoText:",
+            "\t\tif text, ok := memo.GetText(); ok {",
+            "\t\t\treturn &text, memoType.String()",
+            "\t\t}",
+            "\tcase xdr.MemoTypeMemoId:"
+          ]
+        }
       }
     ]
   },
@@ -505,20 +518,20 @@
       ],
       "trustline_changes": [
         {
-          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
-          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
-          "operation_id": "281209887034449921",
-          "operation": "UPDATE",
-          "balance": "595110803",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
           "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "operation_id": "281209887034449921",
           "operation": "UPDATE",
           "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "595110803",
           "limit": "9223372036854775807",
           "flags": 1
         }
