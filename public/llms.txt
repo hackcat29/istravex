@@ -1,11 +1,23 @@
 # Istravex
 
-> Open-source XDR conformance and replay kit for Stellar. Checks that SDKs decode and re-encode XDR faithfully, and that indexers store the right records for the right accounts, using a shared, versioned corpus of rare but valid Stellar XDR. Proposed for Stellar Community Fund (SCF) #46, RFP 2. Status: proposal; not yet released.
+> Open-source XDR conformance and replay kit for Stellar. Checks that SDKs decode and re-encode XDR faithfully, and that indexers store the right records for the right accounts, using a shared, versioned corpus of rare but valid Stellar XDR. Proposed for Stellar Community Fund (SCF) #46, RFP 2. Status: proposed for funding; a working prototype (corpus, runners, replay) is in the repository.
 
 ## Docs
 
+- [Repository](https://github.com/hackcat29/istravex): site, corpus, capture scripts, runners, replay harness
+- [Corpus format](https://github.com/hackcat29/istravex/tree/main/corpus): manifest schema and fixtures
 - [Full proposal (Markdown)](/proposal.md): scope, problem, deliverables, draft manifest, milestones, maintenance
 - [SCF RFP Track](https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track): official RFP scope
+
+## Corpus today (real data)
+
+- 4 fixtures, all captured from live networks (synthetic: false):
+  - cap27-muxed-payment-pubnet-0001: mainnet ledger 65474279; USDC payment to muxed ID 1764988090084626463 (above 2^53; JavaScript Number() reads 1764988090084626400)
+  - cap15-fee-bump-pubnet-0001: mainnet ledger 65474309; fee source differs from inner source; fee charged 40354 stroops vs 46340 debited in fee meta before the Soroban refund
+  - cap40-signed-payload-signer-testnet-0001: testnet account LedgerEntryData with an ed25519 signed-payload signer
+  - cap73-sac-trust-testnet-0001: testnet trustline created by SAC trust(), with no changeTrust op
+- SDK conformance: @stellar/stellar-sdk 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0 pass 36/36 checks (decode, byte-exact re-encode, native)
+- Replay: the naive envelope-based indexer fails 3/3 cases (incorrect, incorrect, dropped); the metadata-based reference indexer gets 3/3 correct
 
 ## Deliverables
 
