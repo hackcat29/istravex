@@ -36,7 +36,11 @@ const version = execFileSync(binary, ['version'], { encoding: 'utf8', stderr: 'i
 const pin = JSON.parse(readFileSync(join(ROOT, 'kit', 'capture', 'core-pin.json'), 'utf8'));
 const platform = `${process.platform}-${process.arch}`;
 const build = pin.builds[platform];
-const pinnedOk = build && sha === build.binary_sha256 && version.startsWith(pin.version);
+// Builds print their version differently: Homebrew "v30.0.0-dirty", SDF's apt
+// package "stellar-core 30.0.0 (0e49751…)". The binary hash is the real pin;
+// the version is a sanity check on the bare number.
+const bare = (v) => v.match(/v?(\d+\.\d+\.\d+)/)?.[1];
+const pinnedOk = build && sha === build.binary_sha256 && bare(version) === bare(pin.version);
 if (!pinnedOk && !process.argv.includes('--allow-unpinned')) {
   console.error(
     build
