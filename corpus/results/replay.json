@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "ledger": 65474309,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+      },
+      "observed": {
+        "fee_charged": "46341",
+        "fee_paid_by": "GDMV47YWTKKLU4J6ZDXVINMHWBBVGAXFMNJ4EHFXH4UUCQJEBORCOOIW"
+      },
+      "diffs": [
+        "fee_charged",
+        "fee_paid_by"
+      ]
+    },
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "cap": "CAP-0015",
+      "ledger": 65474309,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+      },
+      "observed": {
+        "fee_charged": "40354",
+        "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+        "feeMetaDebit": "46340"
+      },
+      "diffs": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "ledger": 65474279,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "observed": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626400"
+      },
+      "diffs": [
+        "recipient_muxed_id"
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "cap": "CAP-0027",
+      "ledger": 65474279,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "observed": {
+        "recipient": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+        "recipient_muxed_id": "1764988090084626463"
+      },
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "ledger": 5727199,
+      "network": "testnet",
+      "indexer": "naive",
+      "verdict": "dropped",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": null,
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "cap": "CAP-0073",
+      "ledger": 5727199,
+      "network": "testnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": {
+        "trustline_created": true,
+        "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
+        "asset": "ISTX:GBDG6T24DZEUY2P4U74BT6TTYFHDWIZ3A7D3JREMSWHKUNFZPRTKQDLO",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "diffs": []
+    }
+  ]
+}
