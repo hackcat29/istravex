@@ -6,6 +6,7 @@ import { Anatomy } from './sections/Anatomy';
 import { Fixtures } from './sections/Fixtures';
 import { Milestones } from './sections/Milestones';
 import { OpenSource } from './sections/OpenSource';
+import { Cta, Footer } from './sections/Cta';
 
 export default function App() {
   return (
@@ -22,7 +23,9 @@ export default function App() {
         <Fixtures />
         <Milestones />
         <OpenSource />
+        <Cta />
       </main>
+      <Footer />
     </>
   );
 }
