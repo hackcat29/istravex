@@ -1,0 +1,53 @@
+{
+  "id": "cap15-fee-bump-pubnet-0001",
+  "cap_ids": [
+    "CAP-0015"
+  ],
+  "protocol_version": 29,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "feeBump.tx.feeSource",
+  "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 65474309,
+    "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+    "closed_at": "2026-11-14T11:59:47Z"
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "tx_hash": "ebfeab1b8fedae07fb94ade40d0dad8ebda6781dbfb3c182996f13aba33239fd",
+    "inner_tx_hash": "8365f77d05770513f0af7810349a7a3c11a7c9c36212dad37f2fad794984a37a",
+    "fee_source": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+    "inner_source": "GDMV47YWTKKLU4J6ZDXVINMHWBBVGAXFMNJ4EHFXH4UUCQJEBORCOOIW",
+    "max_fee": "46341"
+  },
+  "expected_indexed": {
+    "fee_charged": "40354",
+    "fee_paid_by": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW"
+  },
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "f0a3937aa34c17f62a2b9143377e3e30cae77dff173041f21d737643e8529087",
+      "bytes": 3656
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "e5f351e74d8d2a8145bb3633f51fd6e1098ad382e7a0759d1f79847b8c6996cd",
+      "bytes": 112
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "8e46c61596d206f51f38b2439599558e2aba4c4fdecccdedc32f7097892e0c95",
+      "bytes": 300
+    }
+  ]
+}
