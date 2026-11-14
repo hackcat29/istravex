@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { nav, PROPOSAL_URL } from '../content';
-import { Arrow, Logo } from '../components/ui';
+import { nav, navCta, REPO_URL } from '../content';
+import { Arrow, GitHubMark, Logo } from '../components/ui';
 
 export function Nav() {
   const { scrollY } = useScroll();
@@ -40,10 +40,19 @@ export function Nav() {
           </ul>
           <div className="flex items-center gap-2">
             <a
-              href={PROPOSAL_URL}
+              href={REPO_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Istravex on GitHub"
+              className="hidden size-9 place-items-center rounded-full text-mute transition-colors hover:bg-ink-3 hover:text-fg sm:grid"
+            >
+              <GitHubMark className="size-[18px]" />
+            </a>
+            <a
+              href={navCta.href}
               className="hidden h-9 items-center gap-2 rounded-full bg-fg px-4 text-[14px] font-medium text-ink transition-colors hover:bg-lime sm:inline-flex"
             >
-              Proposal <Arrow className="size-3.5" />
+              {navCta.label} <Arrow className="size-3.5" />
             </a>
             <button
               type="button"
@@ -70,7 +79,7 @@ export function Nav() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <ul className="wrap flex flex-col pt-6">
-              {[...nav, { href: PROPOSAL_URL, label: 'Proposal' }].map((l, i) => (
+              {[navCta, ...nav, { href: REPO_URL, label: 'GitHub' }].map((l, i) => (
                 <motion.li
                   key={l.href}
                   initial={{ opacity: 0, y: 16 }}

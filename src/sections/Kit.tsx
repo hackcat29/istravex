@@ -1,7 +1,7 @@
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { corpus, kit, lintFindings, lintRules, pilotRef, type Verdict } from '../content';
-import { Reveal, Title, VerdictMark } from '../components/ui';
+import { Arrow, Reveal, Title, VerdictMark } from '../components/ui';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -56,6 +56,12 @@ function Card({
           <div>
             <h3 className="text-[20px] font-medium tracking-tight">{part.title}</h3>
             <p className="mt-2 max-w-[52ch] text-[15px] leading-relaxed text-mute">{part.body}</p>
+            <a
+              href={part.docs}
+              className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-medium text-fg transition-colors hover:text-lime"
+            >
+              Docs <Arrow className="size-3.5" />
+            </a>
           </div>
         </div>
       </article>

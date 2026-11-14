@@ -33,19 +33,22 @@ export const explorerTx = (f: { network: string; tx_hash: string }) =>
 export const RFP_URL = 'https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track';
 export const PROPOSAL_URL = '/proposal.md';
 
+export const QUICKSTART_URL = `${DOCS_URL}/quickstart`;
+
+/** Top navigation: where people go next, not a table of contents for this page. */
 export const nav = [
-  { href: '#problem', label: 'Problem' },
-  { href: '#kit', label: 'Kit' },
-  { href: '#anatomy', label: 'Fixture' },
-  { href: '#milestones', label: 'Milestones' },
-  { href: '#open-source', label: 'Open source' },
+  { href: DOCS_URL, label: 'Docs' },
+  { href: `${DOCS_URL}/guide/overview`, label: 'Hardening guide' },
+  { href: `${DOCS_URL}/api-reference/introduction`, label: 'API' },
+  { href: PROPOSAL_URL, label: 'Proposal' },
 ] as const;
+export const navCta = { label: 'Get started', href: QUICKSTART_URL };
 
 export const hero = {
   badge: 'SCF #46 · RFP 2',
   title: ['The XDR conformance', 'and replay kit', 'for Stellar.'],
-  primary: { label: 'Read the proposal', href: PROPOSAL_URL },
-  secondary: { label: 'See the kit', href: '#kit' },
+  primary: { label: 'Get started', href: QUICKSTART_URL },
+  secondary: { label: 'Read the proposal', href: PROPOSAL_URL },
 };
 
 const st = corpus.stats;
@@ -173,30 +176,35 @@ export const kit = {
   parts: [
     {
       id: 'corpus',
+      docs: `${DOCS_URL}/corpus/overview`,
       n: '01',
       title: 'Corpus & CAP audit',
       body: `${st.fixtures} fixtures, each tied to its CAP and verified byte-for-byte against the ledger that closed it. ${st.covered_xdr_caps} of ${st.xdr_caps} XDR-changing CAPs covered so far.`,
     },
     {
       id: 'replay',
+      docs: `${DOCS_URL}/tools/mock-rpc`,
       n: '02',
       title: 'Offline replay harness',
       body: 'A mock getLedgers RPC serves the corpus to any indexer. No network, no credentials, bounded memory.',
     },
     {
       id: 'runner',
+      docs: `${DOCS_URL}/tools/sdk-runners`,
       n: '03',
       title: 'Cross-SDK runner',
       body: 'Pinned JavaScript, Go and Rust adapters decode, re-encode byte-for-byte, and exercise native conversions where precision leaks.',
     },
     {
       id: 'linter',
+      docs: `${DOCS_URL}/tools/lint`,
       n: '04',
       title: 'Go linter & guide',
       body: 'Three go/analysis rules, calibrated on wallet-backend, and a hardening guide reviewed by a Stellar Core engineer.',
     },
     {
       id: 'pilot',
+      docs: `${DOCS_URL}/pilots/wallet-backend`,
       n: '05',
       title: 'Upstream pilot',
       body: `wallet-backend's own ingestion, fed by the mock RPC: ${st.pilot_correct} of ${st.pilot_fixtures} fixtures indexed correctly.`,
@@ -305,8 +313,8 @@ export const openSource = {
 
 export const cta = {
   title: ['Fix it once.', 'Test it everywhere.'],
-  primary: { label: 'Read the proposal', href: PROPOSAL_URL },
-  secondary: { label: 'RFP Track', href: RFP_URL },
+  primary: { label: 'Get started', href: QUICKSTART_URL },
+  secondary: { label: 'View on GitHub', href: REPO_URL },
 };
 
 export const docs = [

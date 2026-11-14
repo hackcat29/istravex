@@ -86,13 +86,23 @@ test('anatomy field picker updates the detail panel', async ({ page }) => {
   await expect(page.locator('#anatomy h3')).toHaveText('amount');
 });
 
-test('mobile menu opens and navigates', async ({ page, isMobile }) => {
+test('mobile menu opens and links to the docs', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'mobile only');
   await page.goto('/');
   await page.getByRole('button', { name: 'Open menu' }).click();
-  await page.locator('#mobile-menu').getByRole('link', { name: 'Milestones' }).click();
-  await expect(page.locator('#mobile-menu')).toHaveCount(0);
-  await expect(page.locator('#milestones')).toBeInViewport();
+  const menu = page.locator('#mobile-menu');
+  await expect(menu.getByRole('link', { name: 'Get started' })).toHaveAttribute('href', 'https://docs.istravex.com/quickstart');
+  await expect(menu.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', 'https://docs.istravex.com');
+  await page.getByRole('button', { name: 'Close menu' }).click();
+  await expect(menu).toHaveCount(0);
+});
+
+test('nav and kit cards link to the docs', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#top').getByRole('link', { name: 'Get started' })).toHaveAttribute('href', 'https://docs.istravex.com/quickstart');
+  for (const [part, path] of [['corpus', 'corpus/overview'], ['replay', 'tools/mock-rpc'], ['linter', 'tools/lint']]) {
+    await expect(page.locator(`#kit-${part}`).getByRole('link', { name: 'Docs' })).toHaveAttribute('href', `https://docs.istravex.com/${path}`);
+  }
 });
 
 test('kit cards show the real audit, lint finding and pilot', async ({ page }) => {
