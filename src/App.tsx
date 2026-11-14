@@ -3,6 +3,9 @@ import { Hero } from './sections/Hero';
 import { Problem } from './sections/Problem';
 import { Kit } from './sections/Kit';
 import { Anatomy } from './sections/Anatomy';
+import { Fixtures } from './sections/Fixtures';
+import { Milestones } from './sections/Milestones';
+import { OpenSource } from './sections/OpenSource';
 
 export default function App() {
   return (
@@ -16,6 +19,9 @@ export default function App() {
         <Problem />
         <Kit />
         <Anatomy />
+        <Fixtures />
+        <Milestones />
+        <OpenSource />
       </main>
     </>
   );
