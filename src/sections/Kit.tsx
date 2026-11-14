@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { checks, kit, lintCode, lintRules, sdks, type Verdict } from '../content';
+import { corpus, kit, lintCode, lintRules, type Verdict } from '../content';
 import { Reveal, Title, VerdictMark } from '../components/ui';
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -63,52 +63,55 @@ function Card({
   );
 }
 
-/* ── 01 Corpus: manifest types itself, CAP chips light in sequence ──────── */
+/* ── 01 Corpus: real CAP coverage; a scan passes over the audit list ─── */
 const caps = ['CAP-0015', 'CAP-0023', 'CAP-0027', 'CAP-0033', 'CAP-0035', 'CAP-0038', 'CAP-0040', 'CAP-0046', 'CAP-0067', 'CAP-0073'];
+const covered = new Set(corpus.fixtures.map((f) => f.cap));
+const sample = corpus.fixtures.find((f) => f.cap === 'CAP-0027')!.manifest;
 const manifestLines: [string, string][] = [
-  ['id', '"muxed-payment-recipient-0001"'],
-  ['cap_ids', '["CAP-0027"]'],
-  ['xdr_type', '"TransactionEnvelope"'],
-  ['source', '"captured ledger"'],
-  ['synthetic', 'false'],
+  ['id', `"${sample.id}"`],
+  ['cap_ids', JSON.stringify(sample.cap_ids)],
+  ['protocol_version', String(sample.protocol_version)],
+  ['network', `"${sample.network}"`],
+  ['sha256', `"${sample.sha256.slice(0, 16)}…"`],
+  ['synthetic', String(sample.synthetic)],
 ];
 
 function CorpusVisual() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-15% 0px' });
   const reduce = useReducedMotion();
-  const [lit, setLit] = useState(reduce ? caps.length : 0);
+  const [scan, setScan] = useState(-1);
   useEffect(() => {
     if (!inView || reduce) return;
-    const id = setInterval(() => setLit((n) => (n >= caps.length + 6 ? 0 : n + 1)), 420);
+    const id = setInterval(() => setScan((n) => (n >= caps.length + 3 ? 0 : n + 1)), 360);
     return () => clearInterval(id);
   }, [inView, reduce]);
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7">
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5" aria-label={`${covered.size} of ${caps.length} audited CAPs have fixtures`}>
         {caps.map((c, i) => (
           <span
             key={c}
-            className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-all duration-500 ${i < lit ? 'border-lime bg-lime text-ink' : 'border-line text-dim'}`}
+            className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-colors duration-300 ${covered.has(c) ? 'border-lime bg-lime text-ink' : i === scan ? 'border-fg text-fg' : 'border-line text-dim'}`}
           >
             {c}
           </span>
         ))}
       </div>
-      <pre className="mt-6 overflow-hidden font-mono text-[12px] leading-[1.9] sm:text-[13px]">
+      <pre className="mt-6 overflow-hidden font-mono text-[11.5px] leading-[1.85] sm:text-[12.5px]">
         <span className="text-dim">{'{'}</span>
         {manifestLines.map(([k, v], i) => (
           <motion.div
             key={k}
             initial={reduce ? false : { opacity: 0, x: -8 }}
             animate={inView ? { opacity: 1, x: 0 } : undefined}
-            transition={{ delay: 0.3 + i * 0.12, duration: 0.6, ease }}
-            className="pl-4"
+            transition={{ delay: 0.3 + i * 0.1, duration: 0.6, ease }}
+            className="truncate pl-4"
           >
             <span className="text-mute">"{k}"</span>
             <span className="text-dim">: </span>
-            <span className={v === 'false' ? 'text-amber' : 'text-fg'}>{v}</span>
+            <span className={v === 'false' ? 'text-amber' : /^\d+$/.test(v) ? 'text-lime' : 'text-fg'}>{v}</span>
           </motion.div>
         ))}
         <span className="text-dim">{'}'}</span>
@@ -119,22 +122,24 @@ function CorpusVisual() {
 
 /* ── 02 Replay: ledgers pass through stages and resolve to verdicts ─────── */
 const stages = ['getLedgers', 'adapter', 'compare'];
-const replaySeq: Verdict[] = ['correct', 'correct', 'incorrect', 'correct', 'dropped', 'correct', 'correct', 'correct'];
+const replayRows = corpus.replay;
 
 function ReplayVisual() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { margin: '-15% 0px' });
   const reduce = useReducedMotion();
-  const [tick, setTick] = useState(0);
+  const [tick, setTick] = useState(reduce ? replayRows.length - 1 : 0);
   useEffect(() => {
     if (!inView || reduce) return;
-    const id = setInterval(() => setTick((t) => t + 1), 900);
+    const id = setInterval(() => setTick((t) => t + 1), 1100);
     return () => clearInterval(id);
   }, [inView, reduce]);
-  const log = Array.from({ length: 5 }, (_, i) => {
+  const log = Array.from({ length: 4 }, (_, i) => {
     const n = tick - i;
-    return n < 0 ? null : { seq: 51_204_310 + n, v: replaySeq[n % replaySeq.length] };
-  }).filter(Boolean) as { seq: number; v: Verdict }[];
+    if (n < 0) return null;
+    const r = replayRows[n % replayRows.length];
+    return { key: n, ledger: r.ledger, indexer: r.indexer, cap: r.cap, v: r.verdict as Verdict };
+  }).filter(Boolean) as { key: number; ledger: number; indexer: string; cap: string; v: Verdict }[];
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between gap-6 p-6 sm:p-7">
@@ -151,14 +156,16 @@ function ReplayVisual() {
       <ul className="space-y-1.5 font-mono text-[12px] sm:text-[13px]">
         {log.map((r, i) => (
           <motion.li
-            key={r.seq}
+            key={r.key}
             layout
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1 - i * 0.17, y: 0 }}
             transition={{ duration: 0.45, ease }}
             className="flex items-center justify-between rounded-md border border-line bg-ink-2 px-3 py-2"
           >
-            <span className="text-mute">ledger {r.seq.toLocaleString('en-US')}</span>
+            <span className="truncate text-mute">
+              <span className="text-fg">{r.indexer}</span> · L{r.ledger.toLocaleString('en-US')}
+            </span>
             <span className="flex items-center gap-2">
               <VerdictMark v={r.v} />
               <span className={r.v === 'incorrect' ? 'text-coral' : r.v === 'dropped' ? 'text-mute' : 'text-fg'}>{r.v}</span>
@@ -170,54 +177,70 @@ function ReplayVisual() {
   );
 }
 
-/* ── 03 Runner: SDK × check matrix sweeps; hover/tap any cell ─────────── */
+/* ── 03 Runner: real SDK × check results; hover/tap any cell ─────────── */
+const checkKeys = ['decode', 'reencode', 'native'] as const;
+const checkLabel = { decode: 'decode', reencode: 're-encode', native: 'native' };
+const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Rust' };
+const pkgShort = (p: string) => p.split('/').pop()!;
+const cells = checkKeys.flatMap((c) =>
+  corpus.sdks.map((s) => {
+    const pass = s.results.filter((r) => (r.checks as Record<string, string>)[c] === 'pass').length;
+    return { check: c, sdk: s, pass, total: s.results.length };
+  }),
+);
+
 function RunnerVisual() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { margin: '-15% 0px' });
   const reduce = useReducedMotion();
-  const total = sdks.length * checks.length;
+  const total = cells.length;
   const [sweep, setSweep] = useState(reduce ? total : 0);
   const [focus, setFocus] = useState<number | null>(null);
   useEffect(() => {
     if (!inView || reduce) return;
-    const id = setInterval(() => setSweep((s) => (s > total + 4 ? 0 : s + 1)), 380);
+    const id = setInterval(() => setSweep((s) => (s > total + 6 ? 0 : s + 1)), 380);
     return () => clearInterval(id);
   }, [inView, reduce, total]);
   const shown = focus ?? Math.min(sweep, total) - 1;
+  const cell = shown >= 0 ? cells[shown] : null;
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7">
       <div className="grid grid-cols-[72px_repeat(3,1fr)] gap-1.5 font-mono text-[11px]">
         <span />
-        {sdks.map((s) => (
-          <span key={s} className="pb-1 text-center text-mute">{s === 'JavaScript' ? 'JS' : s}</span>
+        {corpus.sdks.map((s) => (
+          <span key={s.sdk} className="pb-1 text-center text-mute">{sdkLabel[s.sdk]}</span>
         ))}
-        {checks.map((c, row) => (
-          <Row key={c} label={c}>
-            {sdks.map((s, col) => {
-              const i = row * sdks.length + col;
+        {checkKeys.map((c, row) => (
+          <Row key={c} label={checkLabel[c]}>
+            {corpus.sdks.map((s, col) => {
+              const i = row * corpus.sdks.length + col;
+              const x = cells[i];
+              const ok = x.pass === x.total;
               const done = i < sweep;
               return (
                 <button
-                  key={s}
+                  key={s.sdk}
                   type="button"
-                  aria-label={`${s} ${c}`}
+                  aria-label={`${s.package} ${s.version} ${checkLabel[c]}: ${x.pass} of ${x.total} fixtures pass`}
                   onMouseEnter={() => setFocus(i)}
                   onMouseLeave={() => setFocus(null)}
                   onFocus={() => setFocus(i)}
                   onBlur={() => setFocus(null)}
                   onClick={() => setFocus(i)}
-                  className={`aspect-[1.6] rounded-md border transition-all duration-300 ${focus === i ? 'border-fg bg-fg' : done ? 'border-lime bg-lime' : 'border-line bg-ink-2'}`}
-                />
+                  className={`grid aspect-[1.6] place-items-center rounded-md border text-[11px] transition-all duration-300 ${focus === i ? 'border-fg bg-fg text-ink' : done ? (ok ? 'border-lime bg-lime text-ink' : 'border-coral bg-coral text-ink') : 'border-line bg-ink-2 text-transparent'}`}
+                >
+                  {x.pass}/{x.total}
+                </button>
               );
             })}
           </Row>
         ))}
       </div>
-      <p className="mt-5 h-5 font-mono text-[12px] text-mute">
-        {shown >= 0 && (
+      <p className="mt-5 h-5 truncate font-mono text-[12px] text-mute">
+        {cell && (
           <>
-            <span className="text-fg">{sdks[shown % sdks.length]}</span> · {checks[Math.floor(shown / sdks.length)]}
+            <span className="text-fg">{pkgShort(cell.sdk.package)}</span> {cell.sdk.version} · {checkLabel[cell.check]}
           </>
         )}
       </p>
@@ -276,7 +299,8 @@ function LintVisual() {
   );
 }
 
-/* ── 05 Pilot: a finding card that flips between expected and observed ── */
+/* ── 05 Pilot: a real replay finding, flipping expected ↔ observed ──── */
+const finding = corpus.replay.find((r) => r.indexer === 'naive' && r.verdict === 'dropped')!;
 function PilotVisual() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -288,11 +312,12 @@ function PilotVisual() {
     return () => clearInterval(id);
   }, [inView, reduce]);
 
+  const f = finding;
   const rows: [string, string][] = [
-    ['component', 'wallet-backend'],
-    ['fixture', 'cap73-sac-trustline-0001'],
-    ['cap', 'CAP-0073'],
-    ['severity', 'high'],
+    ['indexer', `${f.indexer} (replay)`],
+    ['fixture', f.fixture],
+    ['ledger', `${f.network} L${f.ledger.toLocaleString('en-US')}`],
+    ['verdict', f.verdict],
   ];
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
@@ -300,7 +325,7 @@ function PilotVisual() {
         {rows.map(([k, v]) => (
           <div key={k} className="flex justify-between gap-3 border-b border-line pb-2">
             <dt className="text-dim">{k}</dt>
-            <dd className={`truncate ${k === 'severity' ? 'text-coral' : 'text-fg'}`}>{v}</dd>
+            <dd className={`truncate ${k === 'verdict' ? 'text-coral' : 'text-fg'}`}>{v}</dd>
           </div>
         ))}
       </dl>
