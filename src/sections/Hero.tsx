@@ -1,27 +1,14 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { hero, RFP_URL, type Verdict, verdictLabel } from '../content';
+import { useCallback } from 'react';
+import { hero, heroStats, RFP_URL } from '../content';
 import { SceneMount } from '../components/SceneMount';
-import { Button, Title, VerdictMark } from '../components/ui';
+import { Button, Title } from '../components/ui';
 import type { SceneContext } from '../scenes/types';
-
-const verdicts: Verdict[] = ['correct', 'incorrect', 'dropped'];
 
 export function Hero() {
   const reduce = useReducedMotion();
-  const counts = useRef<Record<Verdict, number>>({ correct: 0, incorrect: 0, dropped: 0 });
-  const [shown, setShown] = useState(counts.current);
-
-  useEffect(() => {
-    const id = setInterval(() => setShown({ ...counts.current }), 220);
-    return () => clearInterval(id);
-  }, []);
-
   const load = useCallback(
-    (ctx: SceneContext) =>
-      import('../scenes/hero').then((m) =>
-        m.createHeroScene(ctx, { onVerdict: (v) => void counts.current[v]++ }),
-      ),
+    (ctx: SceneContext) => import('../scenes/hero').then((m) => m.createHeroScene(ctx)),
     [],
   );
 
@@ -33,7 +20,7 @@ export function Hero() {
         className="absolute inset-0 max-lg:opacity-75"
       />
 
-      <div className="wrap relative z-10 flex min-h-[100svh] flex-col pb-8 pt-28 sm:pt-32 lg:max-h-[1000px] lg:justify-center lg:pb-24 lg:pt-16">
+      <div className="wrap relative z-10 flex min-h-[100svh] flex-col pb-8 pt-28 sm:pt-32 lg:justify-center lg:pb-16 lg:pt-28">
         <motion.a
           href={RFP_URL}
           target="_blank"
@@ -50,7 +37,7 @@ export function Hero() {
         <Title
           as="h1"
           lines={hero.title}
-          className="h-display max-w-[13ch] text-[clamp(2.9rem,13.4vw,7.4rem)] lg:text-[clamp(2.9rem,8.4vw,7.4rem)]"
+          className="h-display max-w-[13ch] text-[clamp(2.9rem,13.4vw,7.4rem)] lg:text-[clamp(2.9rem,7.2vw,6.6rem)]"
         />
 
         <motion.div
@@ -65,15 +52,19 @@ export function Hero() {
           </Button>
         </motion.div>
 
-        <dl className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[12px] sm:gap-x-10 lg:absolute lg:bottom-10 lg:right-0 lg:mt-0 lg:w-[60%] lg:justify-center">
-          {verdicts.map((v) => (
-            <div key={v} className="flex items-center gap-2.5">
-              <VerdictMark v={v} />
-              <dt className="uppercase tracking-[0.08em] text-mute">{verdictLabel[v]}</dt>
-              <dd className="min-w-[4ch] tabular-nums text-fg">{shown[v].toLocaleString()}</dd>
+        <motion.dl
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.7 }}
+          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:gap-12 lg:mt-12"
+        >
+          {heroStats.map((s) => (
+            <div key={s.label} className="flex flex-col-reverse gap-1.5">
+              <dt className="font-mono text-[11px] uppercase tracking-[0.08em] text-mute">{s.label}</dt>
+              <dd className="text-[28px] font-medium leading-none tracking-tight tabular-nums sm:text-[32px]">{s.value}</dd>
             </div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   );
