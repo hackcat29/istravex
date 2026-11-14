@@ -1,0 +1,30 @@
+# Istravex
+
+> Open-source XDR conformance and replay kit for Stellar. Checks that SDKs decode and re-encode XDR faithfully, and that indexers store the right records for the right accounts, using a shared, versioned corpus of rare but valid Stellar XDR. Proposed for Stellar Community Fund (SCF) #46, RFP 2. Status: proposal; not yet released.
+
+## Docs
+
+- [Full proposal (Markdown)](/proposal.md): scope, problem, deliverables, draft manifest, milestones, maintenance
+- [SCF RFP Track](https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track): official RFP scope
+
+## Deliverables
+
+1. Versioned XDR corpus + CAP coverage audit (captured ledgers and pinned stellar-core recipes; synthetic entries labelled; checked against `--check-lcm` goldens where available)
+2. Offline indexer replay harness (mock Stellar RPC `getLedgers`, reference adapter for `wallet-backend`; verdicts: correct, incorrect, dropped)
+3. Cross-SDK conformance runner (pinned JavaScript, Go, Rust adapters; decode, byte-for-byte re-encode, native conversion checks; wide integers kept at full precision)
+4. Go linter (3 rules: trusting Core pass-through fields; unbounded recursive XDR; participants derived from the envelope instead of ledger meta) + indexer-hardening guide
+5. Upstream pilot against `wallet-backend` with a triaged findings report
+
+## Manifest fields
+
+id, cap_ids, protocol_version, network, xdr_type, xdr_path, sha256, source, synthetic, expected_decoded, expected_indexed. Wide integers are decimal strings.
+
+## Milestones
+
+1. Corpus and reference replay
+2. Conformance and linting
+3. Upstream pilot and public release
+
+## Commitments (proposed)
+
+Apache 2.0; named maintainer for 6 months after launch, through the first protocol upgrade after delivery; no usage telemetry.
