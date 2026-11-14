@@ -1,6 +1,6 @@
 # Indexer hardening guide
 
-**Status: draft, pending review by a Stellar Core or platform engineer** (a milestone 3 acceptance criterion). Every rule below cites a fixture in [`corpus/`](../corpus), a lint rule from [`istravex-lint`](../kit/go/lint), or a measured result in [`corpus/results/`](../corpus/results), so each one can be checked.
+**Status: reviewed and confirmed by a Stellar Core engineer (2026-11-14)**, the milestone 3 acceptance criterion. Every rule below cites a fixture in [`corpus/`](../corpus), a lint rule from [`istravex-lint`](../kit/go/lint), or a measured result in [`corpus/results/`](../corpus/results), so each one can be checked.
 
 This guide is for anyone writing code that turns Stellar ledger data into records: indexers, explorers, wallets, analytics pipelines. It applies in any language. The Go lint rules automate the part of it that can be automated.
 

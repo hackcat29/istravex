@@ -192,7 +192,7 @@ export const kit = {
       id: 'linter',
       n: '04',
       title: 'Go linter & guide',
-      body: 'Three go/analysis rules, calibrated on wallet-backend, and a hardening guide pending engineering review.',
+      body: 'Three go/analysis rules, calibrated on wallet-backend, and a hardening guide reviewed by a Stellar Core engineer.',
     },
     {
       id: 'pilot',

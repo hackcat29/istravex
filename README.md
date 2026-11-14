@@ -14,7 +14,7 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | Replay | the naive envelope-based indexer is wrong on 4/4 cases; the metadata-based reference indexer is right on 4/4 |
 | Upstream pilot | `stellar/wallet-backend` @ `3e22515`: 6/6 fixtures indexed correctly; 1 lint finding, triaged as latent |
 | CAP audit | 70 live CAPs, 40 change XDR, 3 of those covered ([docs/cap-coverage.md](docs/cap-coverage.md)) |
-| Guide | [docs/indexer-hardening-guide.md](docs/indexer-hardening-guide.md), pending review by a Stellar Core or platform engineer |
+| Guide | [docs/indexer-hardening-guide.md](docs/indexer-hardening-guide.md), reviewed and confirmed by a Stellar Core engineer |
 
 ## Kit
 

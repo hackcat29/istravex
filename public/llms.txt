@@ -22,7 +22,7 @@
 - Replay: the naive indexer is wrong on 4/4 cases; the reference indexer is right on 4/4
 - Upstream pilot: stellar/wallet-backend @ 3e22515 indexes 6/6 fixtures correctly; istravex-lint finds 1 latent IX001 (unused memo helper)
 - CAP audit: 70 live CAPs, 40 change XDR, 3 covered
-- Hardening guide: https://github.com/hackcat29/istravex/blob/main/docs/indexer-hardening-guide.md (pending engineering review)
+- Hardening guide: https://github.com/hackcat29/istravex/blob/main/docs/indexer-hardening-guide.md (reviewed and confirmed by a Stellar Core engineer)
 
 ## Deliverables
 
