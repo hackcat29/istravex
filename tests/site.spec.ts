@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import corpus from '../src/data/corpus.json' with { type: 'json' };
 
 const SECTIONS = ['problem', 'kit', 'anatomy', 'fixtures', 'milestones', 'open-source', 'cta'];
 
@@ -46,10 +47,20 @@ test('scenes fall back when WebGPU is unavailable', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('muxed ID loss is computed live', async ({ page }) => {
+test('problem tab shows the real muxed ID and its Number() corruption', async ({ page }) => {
+  const id = corpus.anatomy.values.id;
   await page.goto('/#problem');
-  await expect(page.locator('#problem')).toContainText('9223372036854775807');
-  await expect(page.locator('#problem')).toContainText(String(Number('9223372036854775807')));
+  await expect(page.locator('#problem')).toContainText(id);
+  await expect(page.locator('#problem')).toContainText(String(Number(id)));
+});
+
+test('hero stats and fixtures come from the corpus', async ({ page }) => {
+  const s = corpus.stats;
+  await page.goto('/');
+  await expect(page.locator('#top')).toContainText(`${s.sdk_checks_passed}/${s.sdk_checks}`);
+  await page.locator('#fixtures').scrollIntoViewIfNeeded();
+  await page.getByRole('tab', { name: /xdr\.b64/ }).click();
+  await expect(page.locator('#fixtures pre')).toContainText(corpus.fixtures[0].primary.b64.slice(0, 40));
 });
 
 test('anatomy field picker updates the detail panel', async ({ page }) => {
