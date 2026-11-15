@@ -2,7 +2,7 @@
   "id": "base-over-max-length-synthetic-0001",
   "pattern": "over-max-length",
   "cap_ids": [],
-  "protocol_version": 30,
+  "protocol_version": 29,
   "network": "synthetic",
   "xdr_type": "TransactionEnvelope",
   "xdr_path": "operations<100> with 101 entries; memo text<28> with 29 bytes",

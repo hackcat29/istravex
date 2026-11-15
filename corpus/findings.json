@@ -16,6 +16,7 @@
       "severity": "high",
       "status": "fixed-upstream",
       "issue": "stellar/wallet-backend#729",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0040"
       ],
@@ -38,6 +39,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/wallet-backend#731",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0073"
       ],
@@ -60,6 +62,7 @@
       "severity": "high",
       "status": "fixed-upstream",
       "issue": "stellar/wallet-backend#716",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0046",
         "CAP-0027"
@@ -84,6 +87,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/wallet-backend@9538b3cae",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0046"
       ],
@@ -106,6 +110,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/js-stellar-sdk#1766",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0038",
         "CAP-0046"
@@ -133,6 +138,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/js-stellar-sdk#1785",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0027"
       ],
@@ -156,6 +162,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/js-stellar-sdk#1789",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0046"
       ],
@@ -178,6 +185,7 @@
       "severity": "info",
       "status": "fixed-upstream",
       "issue": "stellar/js-stellar-sdk#1823",
+      "disclosure": "already-public",
       "cap_ids": [],
       "fixtures": [
         "base-memo-non-utf8-local-0001"
@@ -196,6 +204,7 @@
       "severity": "medium",
       "status": "fixed-upstream",
       "issue": "stellar/rs-stellar-xdr#598",
+      "disclosure": "already-public",
       "cap_ids": [
         "CAP-0046"
       ],
@@ -217,6 +226,7 @@
       "severity": "low",
       "status": "open-upstream",
       "issue": "stellar/stellar-core#5507",
+      "disclosure": "public-issue",
       "cap_ids": [],
       "fixtures": [
         "cap38-pool-issuer-order-local-0001"
@@ -235,6 +245,7 @@
       "severity": "low",
       "status": "open-upstream",
       "issue": "stellar/stellar-core#5508",
+      "disclosure": "public-issue",
       "cap_ids": [
         "CAP-0046"
       ],
@@ -253,6 +264,7 @@
       "severity": "low",
       "status": "open-upstream",
       "issue": "stellar/js-stellar-sdk#1906",
+      "disclosure": "public-issue",
       "cap_ids": [
         "CAP-0046",
         "CAP-0027"
@@ -274,6 +286,7 @@
       "severity": "low",
       "status": "latent",
       "issue": null,
+      "disclosure": "not-disclosed",
       "cap_ids": [],
       "fixtures": [
         "base-memo-non-utf8-local-0001"
@@ -294,6 +307,7 @@
       "severity": "info",
       "status": "by-design",
       "issue": null,
+      "disclosure": "not-disclosed",
       "cap_ids": [
         "CAP-0046"
       ],
@@ -314,6 +328,7 @@
       "severity": "info",
       "status": "by-design",
       "issue": null,
+      "disclosure": "not-disclosed",
       "cap_ids": [
         "CAP-0046"
       ],

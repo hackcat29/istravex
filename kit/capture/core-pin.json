@@ -1,7 +1,9 @@
 {
   "version": "v30.0.0",
   "commit": "0e49751aa9ddf892302cca02cea7f3f5d97df9f1",
-  "protocol": 30,
+  "protocol": 29,
+  "max_protocol": 30,
+  "protocol_note": "The committed corpus is generated at mainnet's protocol (29, on stellar-core 30.0.0 as of November 2026). The binary also supports 30, the next upgrade: CI generates and runs that set too (--protocol 30).",
   "builds": {
     "darwin-arm64": {
       "source": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",

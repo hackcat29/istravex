@@ -4,7 +4,7 @@
   "cap_ids": [
     "CAP-0046"
   ],
-  "protocol_version": 30,
+  "protocol_version": 29,
   "network": "synthetic",
   "xdr_type": "ScVal",
   "xdr_path": "ScVal: vec and map length prefixes of 2^32 - 1 with no elements; a vec nested 2,000 deep",

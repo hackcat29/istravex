@@ -4,11 +4,11 @@
   "cap_ids": [
     "CAP-0073"
   ],
-  "protocol_version": 30,
+  "protocol_version": 29,
   "network": "local",
   "xdr_type": "TransactionMeta",
   "xdr_path": "operations[0].changes[*].created.data.trustLine",
-  "sha256": "d5a7dd35e96ee4b44060f0a4228d34080fe2689915de72010b4c6e08f5cd995f",
+  "sha256": "5ebd47ed86eb6e38bbf0958c9500f0fca501a2b5707581309329ffcee141570c",
   "source": {
     "kind": "generated",
     "network_endpoint": "stellar-core://standalone",
@@ -19,7 +19,7 @@
       "core_version": "v30.0.0-dirty",
       "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
       "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "soroban_limits_factor": 10,
       "seed": "istravex",
       "network_passphrase": "Standalone Network ; February 2017",
@@ -50,7 +50,7 @@
       "name": "meta",
       "xdr_type": "TransactionMeta",
       "path": "meta.xdr.b64",
-      "sha256": "d5a7dd35e96ee4b44060f0a4228d34080fe2689915de72010b4c6e08f5cd995f",
+      "sha256": "5ebd47ed86eb6e38bbf0958c9500f0fca501a2b5707581309329ffcee141570c",
       "bytes": 820
     },
     {

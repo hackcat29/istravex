@@ -43,7 +43,7 @@
       "network": "local",
       "ledger": 27,
       "tx_hash": "36be436e45fe8825b228e768d9b1e788e92c6336157ce987fccb4d0ab25e36bf",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 8360,
       "files": [
         {
@@ -69,7 +69,7 @@
         "id": "base-max-length-vectors-local-0001",
         "pattern": "max-length-vectors",
         "cap_ids": [],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "envelope: tx.operations (100); envelope_signatures: signatures (20); ledger_entry: account.signers (20)",
@@ -84,7 +84,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -137,7 +137,7 @@
       "network": "local",
       "ledger": 23,
       "tx_hash": "654c0b6f251f0d74a3923eb88b00f3e10c0c0bd9246f089f913c80f21e4f3571",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 280,
       "files": [
         {
@@ -157,7 +157,7 @@
         "id": "base-memo-non-utf8-local-0001",
         "pattern": "memo-non-utf8",
         "cap_ids": [],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "tx.memo.text",
@@ -172,7 +172,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -211,7 +211,7 @@
       "network": "synthetic",
       "ledger": 0,
       "tx_hash": "",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 6068,
       "files": [
         {
@@ -231,7 +231,7 @@
         "id": "base-over-max-length-synthetic-0001",
         "pattern": "over-max-length",
         "cap_ids": [],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "synthetic",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "operations<100> with 101 entries; memo text<28> with 29 bytes",
@@ -340,7 +340,7 @@
       "network": "local",
       "ledger": 16,
       "tx_hash": "67bb3a6d1fab6789afc6342c80d4200a2e72e6acd2bedd38be0528ea5ef8b8ce",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 1008,
       "files": [
         {
@@ -362,7 +362,7 @@
         "cap_ids": [
           "CAP-0027"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "tx.sourceAccount, tx.operations[0].body.paymentOp.destination",
@@ -377,7 +377,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -497,7 +497,7 @@
       "network": "local",
       "ledger": 20,
       "tx_hash": "4b340837410808773f6e39173c171cac57896b6a828560d37cdca5a0577822cf",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 2760,
       "files": [
         {
@@ -515,7 +515,7 @@
         {
           "name": "meta",
           "xdr_type": "TransactionMeta",
-          "sha256": "fb6699c6a13fa31280b74e6cd3622efcfed9e35deb77364e7d105df74b89603b",
+          "sha256": "0fcc1eacf638bfccb41bb90a0d238fe0a3d107388b055d2e9986f722e3efa707",
           "bytes": 2264
         }
       ],
@@ -525,7 +525,7 @@
         "cap_ids": [
           "CAP-0038"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "tx.operations[2].body.changeTrustOp.line.liquidityPool.constantProduct",
@@ -540,7 +540,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -581,7 +581,7 @@
       "network": "local",
       "ledger": 9,
       "tx_hash": "edcc5960494b6895ecd61e59947d704e585e16d44710496715bac8543dd191e4",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 496,
       "files": [
         {
@@ -603,7 +603,7 @@
         "cap_ids": [
           "CAP-0040"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "LedgerEntryData",
         "xdr_path": "account.signers[0].key.ed25519SignedPayload",
@@ -618,7 +618,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -735,7 +735,7 @@
       "network": "local",
       "ledger": 32,
       "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 716,
       "files": [
         {
@@ -758,7 +758,7 @@
           "CAP-0046",
           "CAP-0027"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "tx.sourceAccount (muxed), tx.operations[0].body.extendFootprintTtlOp",
@@ -773,7 +773,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -817,7 +817,7 @@
       "network": "local",
       "ledger": 43,
       "tx_hash": "d88a72034562f8b3ca35ec28dfc0583d50cb07cf96db8ede9cf76f88a44e8e3b",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 2508,
       "files": [
         {
@@ -839,7 +839,7 @@
         "cap_ids": [
           "CAP-0046"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionEnvelope",
         "xdr_path": "tx.operations[0].body.invokeHostFunctionOp.auth[0].rootInvocation",
@@ -854,7 +854,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -892,7 +892,7 @@
       "network": "local",
       "ledger": 42,
       "tx_hash": "d6c1eb95d6aba725a0abc6d0d932e59b0589ae86f7af2d6ec341b2fd29702347",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 1736,
       "files": [
         {
@@ -920,7 +920,7 @@
         "cap_ids": [
           "CAP-0046"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "LedgerEntryData",
         "xdr_path": "contractData.val (an scvMap)",
@@ -935,7 +935,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -994,7 +994,7 @@
       "network": "synthetic",
       "ledger": 0,
       "tx_hash": "",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 24028,
       "files": [
         {
@@ -1022,7 +1022,7 @@
         "cap_ids": [
           "CAP-0046"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "synthetic",
         "xdr_type": "ScVal",
         "xdr_path": "ScVal: vec and map length prefixes of 2^32 - 1 with no elements; a vec nested 2,000 deep",
@@ -1060,13 +1060,13 @@
       "network": "local",
       "ledger": 13,
       "tx_hash": "d960aed699f4f9a5169b85f81dcb49bd952560927209ba8c39cb46af859ba6fd",
-      "protocol_version": 30,
+      "protocol_version": 29,
       "bytes": 1444,
       "files": [
         {
           "name": "meta",
           "xdr_type": "TransactionMeta",
-          "sha256": "d5a7dd35e96ee4b44060f0a4228d34080fe2689915de72010b4c6e08f5cd995f",
+          "sha256": "5ebd47ed86eb6e38bbf0958c9500f0fca501a2b5707581309329ffcee141570c",
           "bytes": 820
         },
         {
@@ -1082,11 +1082,11 @@
         "cap_ids": [
           "CAP-0073"
         ],
-        "protocol_version": 30,
+        "protocol_version": 29,
         "network": "local",
         "xdr_type": "TransactionMeta",
         "xdr_path": "operations[0].changes[*].created.data.trustLine",
-        "sha256": "d5a7dd35e96ee4b44060f0a4228d34080fe2689915de72010b4c6e08f5cd995f",
+        "sha256": "5ebd47ed86eb6e38bbf0958c9500f0fca501a2b5707581309329ffcee141570c",
         "source": {
           "kind": "generated",
           "network_endpoint": "stellar-core://standalone",
@@ -1097,7 +1097,7 @@
             "core_version": "v30.0.0-dirty",
             "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
             "binary_sha256": "dea4ce413a369bcf9846111adcd4a307e6c860dad60d1ea93d35eea605d38f65",
-            "protocol_version": 30,
+            "protocol_version": 29,
             "soroban_limits_factor": 10,
             "seed": "istravex",
             "network_passphrase": "Standalone Network ; February 2017",
@@ -1127,7 +1127,7 @@
       "primary": {
         "name": "meta",
         "xdr_type": "TransactionMeta",
-        "b64": "AAAABAAAAAAAAAACAAAAAwAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAAAADQAAAAD2YPMAAAAAAAAAAAEAAAAAAAAABQAAAAAAAAANAAAAAQAAAAD50PoQ0Wgn9ifxJMriod/buwvbnH8ak8TbIJ7rsM4ZFwAAAAFJU1RYAAAAAAU8fW4feO8PFGkwxRR/oXewxTZFmmmEEXfS4wtNp8NcAAAAAAAAAAB//////////wAAAAEAAAAAAAAAAAAAAAMAAAANAAAAAAAAAAD50PoQ0Wgn9ifxJMriod/buwvbnH8ak8TbIJ7rsM4ZFwAAABdFe/ccAAAACwAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA0AAAAA9mDzAAAAAAAAAAABAAAADQAAAAAAAAAA+dD6ENFoJ/Yn8STK4qHf27sL25x/GpPE2yCe67DOGRcAAAAXRXv3HAAAAAsAAAABAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAANAAAAAPZg8wAAAAAAAAAAAwAAAAwAAAAJN9+4Bq0VewxF54W7AgGiILdV9ZK6Aj4EfmUKeYsqKd8AABALAAAAAAAAAAEAAAANAAAACTffuAatFXsMReeFuwIBoiC3VfWSugI+BH5lCnmLKinfAAHYjQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAEAAAAAAAAAAA=="
+        "b64": "AAAABAAAAAAAAAACAAAAAwAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAF0V79xwAAAALAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAAAADQAAAAD2YPMAAAAAAAAAAAEAAAAAAAAABQAAAAMAAAANAAAAAAAAAAD50PoQ0Wgn9ifxJMriod/buwvbnH8ak8TbIJ7rsM4ZFwAAABdFe/ccAAAACwAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAAAAA0AAAAA9mDzAAAAAAAAAAABAAAADQAAAAAAAAAA+dD6ENFoJ/Yn8STK4qHf27sL25x/GpPE2yCe67DOGRcAAAAXRXv3HAAAAAsAAAABAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAANAAAAAPZg8wAAAAAAAAAAAAAAAA0AAAABAAAAAPnQ+hDRaCf2J/EkyuKh39u7C9ucfxqTxNsgnuuwzhkXAAAAAUlTVFgAAAAABTx9bh947w8UaTDFFH+hd7DFNkWaaYQRd9LjC02nw1wAAAAAAAAAAH//////////AAAAAQAAAAAAAAAAAAAAAwAAAAwAAAAJN9+4Bq0VewxF54W7AgGiILdV9ZK6Aj4EfmUKeYsqKd8AABALAAAAAAAAAAEAAAANAAAACTffuAatFXsMReeFuwIBoiC3VfWSugI+BH5lCnmLKinfAAHYjQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAEAAAAAAAAAAA=="
       },
       "provenance": {
         "checks": 10,
@@ -2763,6 +2763,7 @@
         "severity": "high",
         "status": "fixed-upstream",
         "issue": "stellar/wallet-backend#729",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0040"
         ],
@@ -2785,6 +2786,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/wallet-backend#731",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0073"
         ],
@@ -2807,6 +2809,7 @@
         "severity": "high",
         "status": "fixed-upstream",
         "issue": "stellar/wallet-backend#716",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0046",
           "CAP-0027"
@@ -2831,6 +2834,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/wallet-backend@9538b3cae",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -2853,6 +2857,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/js-stellar-sdk#1766",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0038",
           "CAP-0046"
@@ -2880,6 +2885,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/js-stellar-sdk#1785",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0027"
         ],
@@ -2903,6 +2909,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/js-stellar-sdk#1789",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -2925,6 +2932,7 @@
         "severity": "info",
         "status": "fixed-upstream",
         "issue": "stellar/js-stellar-sdk#1823",
+        "disclosure": "already-public",
         "cap_ids": [],
         "fixtures": [
           "base-memo-non-utf8-local-0001"
@@ -2943,6 +2951,7 @@
         "severity": "medium",
         "status": "fixed-upstream",
         "issue": "stellar/rs-stellar-xdr#598",
+        "disclosure": "already-public",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -2964,6 +2973,7 @@
         "severity": "low",
         "status": "open-upstream",
         "issue": "stellar/stellar-core#5507",
+        "disclosure": "public-issue",
         "cap_ids": [],
         "fixtures": [
           "cap38-pool-issuer-order-local-0001"
@@ -2982,6 +2992,7 @@
         "severity": "low",
         "status": "open-upstream",
         "issue": "stellar/stellar-core#5508",
+        "disclosure": "public-issue",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -3000,6 +3011,7 @@
         "severity": "low",
         "status": "open-upstream",
         "issue": "stellar/js-stellar-sdk#1906",
+        "disclosure": "public-issue",
         "cap_ids": [
           "CAP-0046",
           "CAP-0027"
@@ -3021,6 +3033,7 @@
         "severity": "low",
         "status": "latent",
         "issue": null,
+        "disclosure": "not-disclosed",
         "cap_ids": [],
         "fixtures": [
           "base-memo-non-utf8-local-0001"
@@ -3041,6 +3054,7 @@
         "severity": "info",
         "status": "by-design",
         "issue": null,
+        "disclosure": "not-disclosed",
         "cap_ids": [
           "CAP-0046"
         ],
@@ -3061,6 +3075,7 @@
         "severity": "info",
         "status": "by-design",
         "issue": null,
+        "disclosure": "not-disclosed",
         "cap_ids": [
           "CAP-0046"
         ],

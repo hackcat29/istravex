@@ -28,7 +28,7 @@ const USAGE = `usage: node kit/capture/generate.mjs [options]
   --out <dir>           write a corpus to <dir> instead of corpus/
   --passphrase <name>   standalone (default), testnet or pubnet; anything but standalone needs --out
   --seed <string>       key-derivation seed (default: istravex, the committed corpus)
-  --protocol <n>        upgrade the network to protocol n instead of the pinned one (needs --out);
+  --protocol <n>        upgrade the network to protocol n instead of mainnet's (the pin's protocol; needs --out);
                         scenarios that need a later protocol are skipped
   --allow-unpinned      run with a stellar-core that does not match kit/capture/core-pin.json`;
 
@@ -123,8 +123,8 @@ if (!pinnedOk && !opt['allow-unpinned']) {
 }
 
 const protocol = opt.protocol ? Number(opt.protocol) : pin.protocol;
-if (!(protocol >= 20 && protocol <= pin.protocol)) {
-  console.error(`--protocol must be between 20 and ${pin.protocol}`);
+if (!(protocol >= 20 && protocol <= (pin.max_protocol ?? pin.protocol))) {
+  console.error(`--protocol must be between 20 and ${pin.max_protocol ?? pin.protocol}`);
   process.exit(2);
 }
 const d = await coreDriver({

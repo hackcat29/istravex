@@ -1,0 +1,79 @@
+name: Mainnet scan
+
+# Search mainnet history for the corpus's patterns, straight from SDF's public
+# data lake (kit/go/cmd/mainnet-scan). It runs here rather than on a laptop
+# because the runners sit close to the data. Run it by hand; the merged
+# candidates are an artifact, and kit/capture/mainnet.mjs turns the chosen ones
+# into fixtures pinned by transaction hash.
+
+on:
+  workflow_dispatch:
+    inputs:
+      to_ledger:
+        description: Last ledger to scan (blank = the latest closed)
+        required: false
+      ledgers:
+        description: How many ledgers back from it, split over 16 shards
+        required: true
+        default: '400000'
+
+permissions:
+  contents: read
+
+jobs:
+  range:
+    runs-on: ubuntu-24.04
+    outputs:
+      to: ${{ steps.r.outputs.to }}
+    steps:
+      - id: r
+        run: |
+          to="${{ inputs.to_ledger }}"
+          if [ -z "$to" ]; then to=$(curl -fsS https://horizon.stellar.org/ | jq -r .history_latest_ledger); fi
+          echo "to=$to" >> "$GITHUB_OUTPUT"
+
+  scan:
+    needs: range
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - name: Scan this shard
+        working-directory: kit/go
+        run: |
+          to=${{ needs.range.outputs.to }}; total=${{ inputs.ledgers }}; per=$(( (total + 15) / 16 ))
+          last=$(( to - ${{ matrix.shard }} * per )); first=$(( last - per + 1 ))
+          echo "ledgers $first–$last"
+          go run ./cmd/mainnet-scan -from "$first" -to "$last" -workers 96 > "$RUNNER_TEMP/candidates-${{ matrix.shard }}.jsonl"
+          wc -l "$RUNNER_TEMP/candidates-${{ matrix.shard }}.jsonl"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: candidates-${{ matrix.shard }}
+          path: ${{ runner.temp }}/candidates-${{ matrix.shard }}.jsonl
+
+  merge:
+    needs: scan
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: candidates-*
+          merge-multiple: true
+          path: shards
+      - name: Merge and summarise
+        run: |
+          cat shards/*.jsonl | sort -u > candidates.jsonl
+          echo "### Candidates by pattern" >> "$GITHUB_STEP_SUMMARY"
+          jq -r .pattern candidates.jsonl | sort | uniq -c | sort -rn | sed 's/^/    /' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mainnet-candidates
+          path: candidates.jsonl

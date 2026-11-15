@@ -37,7 +37,8 @@
           "fixtures",
           "checks",
           "reproduced",
-          "summary"
+          "summary",
+          "disclosure"
         ],
         "properties": {
           "id": {
@@ -124,6 +125,16 @@
           "draft": {
             "type": "string",
             "description": "For status to-file: the issue text, ready to file"
+          },
+          "disclosure": {
+            "enum": [
+              "already-public",
+              "public-issue",
+              "private-then-public",
+              "private-embargoed",
+              "not-disclosed"
+            ],
+            "description": "How the finding was disclosed (SECURITY.md): already public upstream when reproduced; filed as a public issue (low severity, not exploitable); reported privately first, then published; still under private embargo (kept out of the public report); or not disclosed (latent or by design)."
           }
         },
         "allOf": [

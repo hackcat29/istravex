@@ -92,6 +92,15 @@ jobs:
           npm run corpus:generate
           npm run corpus:verify && npm run corpus:js && npm run corpus:go && npm run corpus:rust && npm run corpus:replay
           SKIP_GOLDENS=1 node kit/check-results.mjs
+      - name: The next protocol (30) generates reproducibly and passes every runner
+        if: matrix.passphrase == 'standalone'
+        run: |
+          node kit/capture/generate.mjs --check --protocol 30
+          node kit/capture/generate.mjs --protocol 30 --out "$RUNNER_TEMP/p30"
+          (cd kit/go && go run ./cmd/verify "$RUNNER_TEMP/p30" && go run ./cmd/conformance "$RUNNER_TEMP/p30")
+          ISTRAVEX_CORPUS="$RUNNER_TEMP/p30" node kit/runners/js/run.mjs
+          (cd kit/runners/rust && cargo run --release -q -- "$RUNNER_TEMP/p30")
+          ISTRAVEX_CORPUS="$RUNNER_TEMP/p30" node kit/check-results.mjs --runners-only
       - name: Generate under the ${{ matrix.passphrase }} passphrase and run it
         if: matrix.passphrase != 'standalone'
         run: |
