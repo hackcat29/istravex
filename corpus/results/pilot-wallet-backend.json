@@ -6,6 +6,29 @@
   "runtime": "go1.26.2",
   "results": [
     {
+      "fixture": "base-max-amount-local-0001",
+      "pattern": "max-amount",
+      "cap": "base",
+      "network": "local",
+      "ledger": 27,
+      "tx_hash": "b5d8ef9dcbba21b99a8748a7844f883737768b804cc60b5a83db0fd82ac2b30f",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "recipient credited",
+          "expected": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+          "observed": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+          "ok": true
+        },
+        {
+          "field": "amount",
+          "expected": "9223372036854775807",
+          "observed": "9223372036854775807",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "pattern": "fee-bump",
       "cap": "CAP-0015",
@@ -87,6 +110,29 @@
       ]
     },
     {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "pattern": "muxed-payment",
+      "cap": "CAP-0027",
+      "network": "pubnet",
+      "ledger": 65119800,
+      "tx_hash": "1a5e418524e95dd36932533636d96763d28719763bada5a5c31198e1acc01aa7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "recipient credited",
+          "expected": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+          "observed": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+          "ok": true
+        },
+        {
+          "field": "to_muxed_id",
+          "expected": "18067157809773112502",
+          "observed": "18067157809773112502",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap40-signed-payload-signer-local-0001",
       "pattern": "signed-payload-signer",
       "cap": "CAP-0040",
@@ -137,8 +183,8 @@
       "pattern": "muxed-soroban-source",
       "cap": "CAP-0046",
       "network": "local",
-      "ledger": 32,
-      "tx_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
+      "ledger": 36,
+      "tx_hash": "824c77366a53e333c88b0d24745075d1e3a24b27a822311d756ed056a66382f9",
       "verdict": "correct",
       "checks": [
         {
@@ -168,6 +214,41 @@
           "field": "asset",
           "expected": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
           "observed": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
+          "ok": true
+        },
+        {
+          "field": "limit",
+          "expected": "9223372036854775807",
+          "observed": "9223372036854775807",
+          "ok": true
+        },
+        {
+          "field": "TRUSTLINE state change",
+          "expected": "ADD",
+          "observed": "ADD",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "pattern": "sac-trust",
+      "cap": "CAP-0073",
+      "network": "pubnet",
+      "ledger": 65212685,
+      "tx_hash": "f4075df2bd9deeadc1cae476e7e13dd9f835618ea66c760c2257c686b9b915d4",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "trustline operation",
+          "expected": "ADD",
+          "observed": "ADD",
+          "ok": true
+        },
+        {
+          "field": "asset",
+          "expected": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "observed": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "ok": true
         },
         {
@@ -224,6 +305,10 @@
     "entrypoint": "internal/indexer.ProcessLedger via ingest.NewLedgerBackend(datastore, S3 endpoint_url)",
     "results": [
       {
+        "fixture": "base-max-amount-local-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap15-fee-bump-pubnet-0001",
         "verdict": "correct"
       },
@@ -233,6 +318,10 @@
       },
       {
         "fixture": "cap27-muxed-payment-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap27-muxed-payment-pubnet-0002",
         "verdict": "correct"
       },
       {
@@ -249,6 +338,10 @@
       },
       {
         "fixture": "cap73-sac-trust-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap73-sac-trust-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -657,6 +750,68 @@
   ],
   "raw": [
     {
+      "fixture": "base-max-amount-local-0001",
+      "found": true,
+      "transaction": {
+        "hash": "b5d8ef9dcbba21b99a8748a7844f883737768b804cc60b5a83db0fd82ac2b30f",
+        "inner_hash": "b5d8ef9dcbba21b99a8748a7844f883737768b804cc60b5a83db0fd82ac2b30f",
+        "to_id": "115964121088",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 27
+      },
+      "participants": [
+        "GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+        "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+          "operation_id": "0",
+          "token": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+          "amount": "100"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "MINT",
+          "account": "GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+          "operation_id": "115964121089",
+          "token": "CD27SZN4BMX5OMON6FMD3FMOSXFOHBRBJXLVR6WPLJMZAWX5VBEILSMK",
+          "amount": "9223372036854775807"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+          "operation_id": "115964121089",
+          "token": "CD27SZN4BMX5OMON6FMD3FMOSXFOHBRBJXLVR6WPLJMZAWX5VBEILSMK",
+          "amount": "9223372036854775807"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+          "asset": "ISTX:GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+          "operation_id": "115964121089",
+          "operation": "UPDATE",
+          "balance": "9223372036854775807",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+          "operation": "UPDATE",
+          "balance": "99999999900"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "found": true,
       "transaction": {
@@ -1032,20 +1187,20 @@
       ],
       "trustline_changes": [
         {
-          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
-          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
-          "operation_id": "281209887034449921",
-          "operation": "UPDATE",
-          "balance": "0",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
           "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "operation_id": "281209887034449921",
           "operation": "UPDATE",
           "balance": "595110803",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "0",
           "limit": "9223372036854775807",
           "flags": 1
         }
@@ -1055,6 +1210,79 @@
           "account": "GBELHFUGJ2B2AIETGA3AUXJPL7PYVSMZB5ZAEZUQMDOSM727P3RAFVUS",
           "operation": "UPDATE",
           "balance": "249462480631"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "found": true,
+      "transaction": {
+        "hash": "1a5e418524e95dd36932533636d96763d28719763bada5a5c31198e1acc01aa7",
+        "inner_hash": "85e63b9d6c302e8b94d59cd69b8364927d1d0edd5eb40b6c362d9f08a4d6ac14",
+        "to_id": "279687411324293120",
+        "fee_charged": "200",
+        "is_fee_bump": true,
+        "result_code": "TransactionResultCodeTxFeeBumpInnerSuccess",
+        "ledger": 65119800
+      },
+      "participants": [
+        "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+        "GC3BA7UQFMWXQDUP2IFGTAYBF7WBBHN2MBRBWRSMXXTMQF36OV37AUY4",
+        "GCZGSFPITKVJPJERJIVLCQK5YIHYTDXCY45ZHU3IRCUC53SXSCAL44JV"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCZGSFPITKVJPJERJIVLCQK5YIHYTDXCY45ZHU3IRCUC53SXSCAL44JV",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "200"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GC3BA7UQFMWXQDUP2IFGTAYBF7WBBHN2MBRBWRSMXXTMQF36OV37AUY4",
+          "operation_id": "279687411324293121",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
+          "amount": "700000000"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+          "operation_id": "279687411324293121",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
+          "amount": "700000000",
+          "to_muxed_id": "18067157809773112502"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "279687411324293121",
+          "operation": "UPDATE",
+          "balance": "700000000",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GC3BA7UQFMWXQDUP2IFGTAYBF7WBBHN2MBRBWRSMXXTMQF36OV37AUY4",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "279687411324293121",
+          "operation": "UPDATE",
+          "balance": "76220",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GCZGSFPITKVJPJERJIVLCQK5YIHYTDXCY45ZHU3IRCUC53SXSCAL44JV",
+          "operation": "UPDATE",
+          "balance": "12609265027620"
         }
       ],
       "persist_errors": []
@@ -1149,13 +1377,13 @@
       "fixture": "cap46-muxed-soroban-source-local-0001",
       "found": true,
       "transaction": {
-        "hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
-        "inner_hash": "1839fe555ee4dceca7482b0a14d3009ca4b23af08ef47dd0b3f195355496ce44",
-        "to_id": "137438957568",
+        "hash": "824c77366a53e333c88b0d24745075d1e3a24b27a822311d756ed056a66382f9",
+        "inner_hash": "824c77366a53e333c88b0d24745075d1e3a24b27a822311d756ed056a66382f9",
+        "to_id": "154618826752",
         "fee_charged": "146058",
         "is_fee_bump": false,
         "result_code": "TransactionResultCodeTxSuccess",
-        "ledger": 32
+        "ledger": 36
       },
       "participants": [
         "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA"
@@ -1236,6 +1464,66 @@
           "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
           "operation": "UPDATE",
           "balance": "99999761055"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "f4075df2bd9deeadc1cae476e7e13dd9f835618ea66c760c2257c686b9b915d4",
+        "inner_hash": "f4075df2bd9deeadc1cae476e7e13dd9f835618ea66c760c2257c686b9b915d4",
+        "to_id": "280086349361364992",
+        "fee_charged": "7246",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 65212685
+      },
+      "participants": [
+        "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ"
+      ],
+      "state_changes": [
+        {
+          "category": "TRUSTLINE",
+          "reason": "ADD",
+          "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+          "operation_id": "280086349361364993",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
+          "trustline_limit_new": "922337203685.4775807"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+          "operation_id": "280086349361364993",
+          "token": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "7246"
+        }
+      ],
+      "trustline_changes": [
+        {
+          "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "280086349361364993",
+          "operation": "ADD",
+          "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        }
+      ],
+      "account_changes": [
+        {
+          "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+          "operation": "UPDATE",
+          "balance": "9999986475"
         }
       ],
       "persist_errors": []

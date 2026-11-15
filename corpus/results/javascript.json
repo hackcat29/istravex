@@ -5,7 +5,27 @@
   "runtime": "node 24.10.0",
   "results": [
     {
+      "fixture": "base-max-amount-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-max-length-vectors-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-max-length-vectors-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -65,6 +85,16 @@
       "detail": []
     },
     {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap38-pool-issuer-order-local-0001",
       "checks": {
         "decode": "pass",
@@ -115,6 +145,16 @@
       "detail": []
     },
     {
+      "fixture": "cap46-nested-auth-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap46-scmap-host-order-local-0001",
       "checks": {
         "decode": "pass",
@@ -145,6 +185,16 @@
       "detail": []
     },
     {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap73-sac-trust-testnet-0001",
       "checks": {
         "decode": "pass",
@@ -159,6 +209,11 @@
     {
       "input": "1764988090084626463",
       "number": "1764988090084626400",
+      "exact": false
+    },
+    {
+      "input": "18067157809773112502",
+      "number": "18067157809773113000",
       "exact": false
     },
     {

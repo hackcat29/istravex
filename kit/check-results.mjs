@@ -23,13 +23,22 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 for (const p of read('provenance.json').fixtures) {
   for (const c of p.checks) if (!c.ok) failures.push(`provenance ${p.fixture}: ${c.name}: ${c.detail}`);
 }
-for (const sdk of ['javascript', 'go', 'rust']) {
+// The current pin of every SDK passes everything, except checks that a finding
+// explains as a known bug with no fixed release yet (open upstream, or fixed
+// on the default branch but unreleased).
+const openUpstream = (key) => {
+  const f = explained.get(key);
+  return f?.status === 'open-upstream' || (f?.status === 'fixed-upstream' && /unreleased/.test(f.fixed_in ?? ''));
+};
+for (const sdk of ['javascript', 'go', 'rust', 'python', 'java']) {
+  if (['python', 'java'].includes(sdk) && runnersOnly && !existsSync(join(RESULTS, `${sdk}.json`))) continue;
   const r = read(`${sdk}.json`);
   const seen = new Set(r.results.map((x) => x.fixture));
   for (const id of fixtures) if (!seen.has(id)) failures.push(`${sdk}: no result for ${id}`);
   for (const x of r.results) {
+    const known = (x.failed ?? []).filter((c) => openUpstream(`${sdk}:${x.fixture}:${c}`));
     for (const [k, v] of Object.entries(x.checks)) {
-      const ok = v === 'pass' || (v === 'n/a' && negative.has(x.fixture) && k !== 'decode');
+      const ok = v === 'pass' || (v === 'n/a' && negative.has(x.fixture) && k !== 'decode') || (k === 'native' && v === 'fail' && known.length && known.length === x.failed.length);
       if (!ok) failures.push(`${sdk} ${x.fixture} ${k}: ${v}: ${x.detail.join('; ')}`);
     }
   }
@@ -42,6 +51,13 @@ if (runnersOnly) {
   }
   console.log(`runners green: ${fixtures.length} fixtures in ${CORPUS}`);
   process.exit(0);
+}
+
+// Findings that claim a failing check on a current SDK pin must be right.
+for (const sdk of ['python', 'java']) {
+  if (!existsSync(join(RESULTS, `${sdk}.json`))) continue;
+  const failing = new Set(read(`${sdk}.json`).results.flatMap((x) => (x.failed ?? []).map((c) => `${sdk}:${x.fixture}:${c}`)));
+  for (const key of explained.keys()) if (key.startsWith(`${sdk}:`) && !failing.has(key)) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
 }
 
 // The JavaScript matrix: earlier releases may fail, but only on checks a
@@ -99,6 +115,21 @@ if (existsSync(join(RESULTS, 'pilot-wallet-backend.json'))) {
 }
 // The guide's field-by-field table agrees with the corpus manifests.
 for (const p of checkFields()) failures.push(`guide field table: ${p}`);
+
+// stellar-etl: every failing check is explained by a finding, and every check
+// a finding claims really fails.
+if (existsSync(join(RESULTS, 'pilot-stellar-etl.json'))) {
+  const etl = read('pilot-stellar-etl.json');
+  const failing = new Set();
+  for (const r of etl.results) {
+    for (const c of r.checks.filter((x) => !x.ok)) {
+      const key = `pilot-stellar-etl:${r.fixture}:${slug(c.field)}`;
+      failing.add(key);
+      if (!explained.has(key)) failures.push(`stellar-etl ${r.fixture}: ${c.field} fails and no finding explains it`);
+    }
+  }
+  for (const key of explained.keys()) if (key.startsWith('pilot-stellar-etl:') && !failing.has(key)) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
+} else failures.push('pilot-stellar-etl.json missing (node kit/pilot/stellar-etl.mjs)');
 
 for (const f of findings) {
   if (['fixed-upstream', 'open-upstream'].includes(f.status) && !f.issue) failures.push(`finding ${f.id}: ${f.status} without an upstream issue`);

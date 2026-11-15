@@ -1,0 +1,212 @@
+{
+  "sdk": "python",
+  "package": "stellar-sdk",
+  "version": "17.0.1",
+  "runtime": "python 3.13.18",
+  "results": [
+    {
+      "fixture": "base-max-amount-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-max-length-vectors-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-max-length-vectors-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-non-utf8-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-over-max-length-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-pool-issuer-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scmap-host-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "fail"
+      },
+      "failed": [
+        "native_keeps_every_entry"
+      ],
+      "detail": [
+        "native_keeps_every_entry: expected all entries or an error, got 9 of 10 entries, no error"
+      ]
+    },
+    {
+      "fixture": "cap46-scval-limits-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    }
+  ]
+}

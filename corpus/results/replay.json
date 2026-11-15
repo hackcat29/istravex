@@ -1,6 +1,48 @@
 {
   "rows": [
     {
+      "fixture": "base-max-amount-local-0001",
+      "pattern": "max-amount",
+      "cap": "base",
+      "ledger": 27,
+      "network": "local",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "recipient": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+        "asset": "ISTX:GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+        "amount_stroops": "9223372036854775807"
+      },
+      "observed": {
+        "recipient": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+        "asset": "ISTX:GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+        "amount_stroops": "9223372036854776000"
+      },
+      "diffs": [
+        "amount_stroops"
+      ]
+    },
+    {
+      "fixture": "base-max-amount-local-0001",
+      "pattern": "max-amount",
+      "cap": "base",
+      "ledger": 27,
+      "network": "local",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "recipient": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+        "asset": "ISTX:GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+        "amount_stroops": "9223372036854775807"
+      },
+      "observed": {
+        "recipient": "GAQSHWLSZCVXSVSB65VNFQRDJQYFIK7FLHPASQVBKC6HNTWPV4UA64LN",
+        "asset": "ISTX:GAPSBQIYGCRKBPLO6PVFDKDLUETSABNMACF75Z2WKCAIZ62XOGBPXMC7",
+        "amount_stroops": "9223372036854775807"
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
       "pattern": "fee-bump",
       "cap": "CAP-0015",
@@ -134,10 +176,48 @@
       "diffs": []
     },
     {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "pattern": "muxed-payment",
+      "cap": "CAP-0027",
+      "ledger": 65119800,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "incorrect",
+      "expected": {
+        "recipient": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+        "recipient_muxed_id": "18067157809773112502"
+      },
+      "observed": {
+        "recipient": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+        "recipient_muxed_id": "18067157809773113000"
+      },
+      "diffs": [
+        "recipient_muxed_id"
+      ]
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "pattern": "muxed-payment",
+      "cap": "CAP-0027",
+      "ledger": 65119800,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "recipient": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+        "recipient_muxed_id": "18067157809773112502"
+      },
+      "observed": {
+        "recipient": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+        "recipient_muxed_id": "18067157809773112502"
+      },
+      "diffs": []
+    },
+    {
       "fixture": "cap46-muxed-soroban-source-local-0001",
       "pattern": "muxed-soroban-source",
       "cap": "CAP-0046",
-      "ledger": 32,
+      "ledger": 36,
       "network": "local",
       "indexer": "naive",
       "verdict": "incorrect",
@@ -159,7 +239,7 @@
       "fixture": "cap46-muxed-soroban-source-local-0001",
       "pattern": "muxed-soroban-source",
       "cap": "CAP-0046",
-      "ledger": 32,
+      "ledger": 36,
       "network": "local",
       "indexer": "reference",
       "verdict": "correct",
@@ -212,6 +292,48 @@
         "trustline_created": true,
         "account": "GD45B6QQ2FUCP5RH6ESMVYVB37N3WC63TR7RVE6E3MQJ525QZYMROHJX",
         "asset": "ISTX:GACTY7LOD54O6DYUNEYMKFD7UF33BRJWIWNGTBARO7JOGC2NU7BVYRNV",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "pattern": "sac-trust",
+      "cap": "CAP-0073",
+      "ledger": 65212685,
+      "network": "pubnet",
+      "indexer": "naive",
+      "verdict": "dropped",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+        "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": null,
+      "diffs": []
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "pattern": "sac-trust",
+      "cap": "CAP-0073",
+      "ledger": 65212685,
+      "network": "pubnet",
+      "indexer": "reference",
+      "verdict": "correct",
+      "expected": {
+        "trustline_created": true,
+        "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+        "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+        "limit": "9223372036854775807",
+        "classic_change_trust_ops": 0
+      },
+      "observed": {
+        "trustline_created": true,
+        "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+        "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
         "limit": "9223372036854775807",
         "classic_change_trust_ops": 0
       },

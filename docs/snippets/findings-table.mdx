@@ -17,3 +17,7 @@
 | F-0013 | Memo text returned as a Go string without UTF-8 validation | `stellar/wallet-backend` | low | latent | — | — |
 | F-0014 | Fee-processing changes over-count Soroban fees | `stellar/stellar-core` | info | by-design | — | — |
 | F-0015 | Diagnostic events differ between RPC nodes for the same ledger | `stellar/stellar-rpc` | info | by-design | — | — |
+| F-0016 | Amounts above 2^53 stroops lose precision in stellar-etl's operation and balance rows | `stellar/stellar-etl` | medium | open-upstream | [stellar-etl#454](https://github.com/stellar/stellar-etl/issues/454) | yes |
+| F-0017 | A trustline created by SAC trust() produces no trustline_created effect in stellar-etl | `stellar/stellar-etl` | medium | open-upstream | [stellar-etl#460](https://github.com/stellar/stellar-etl/issues/460) | yes |
+| F-0018 | Python stellar-sdk's scval.to_native silently drops map entries whose keys collide | `StellarCN/py-stellar-base` | medium | open-upstream | [py-stellar-base#1250](https://github.com/StellarCN/py-stellar-base/issues/1250) | yes |
+| F-0019 | java-stellar-sdk orders asset issuers by strkey text and rejects a valid pool share | `lightsail-network/java-stellar-sdk` | medium | fixed-upstream | [java-stellar-sdk#832](https://github.com/lightsail-network/java-stellar-sdk/issues/832) | yes |

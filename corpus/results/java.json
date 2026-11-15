@@ -1,0 +1,216 @@
+{
+  "sdk": "java",
+  "package": "network.lightsail:stellar-sdk",
+  "version": "6.0.0",
+  "runtime": "java 17.0.18",
+  "results": [
+    {
+      "fixture": "base-max-amount-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-max-length-vectors-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-max-length-vectors-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-non-utf8-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-over-max-length-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap15-fee-bump-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-max-id-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap27-muxed-payment-pubnet-0002",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-pool-issuer-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "fail"
+      },
+      "failed": [
+        "decode_pool_share_op",
+        "asset_compare",
+        "pool_id"
+      ],
+      "detail": [
+        "decode_pool_share_op: expected ISTX:GBF6JWNKEDNGHKVI535HQLOTOO3RB4EZH7RBOKHLPI65PNBG2FNV3XOU/ISTX:GB7WP4OBKSRDJXOPXBCMDNQVKDBVE547GVQV2DQHKFB6WHPKT6NZNL7P, got threw: java.lang.IllegalArgumentException: Assets are not in lexicographic order",
+        "asset_compare: expected -1, got 1",
+        "pool_id: expected 77891130140a586989d66fbeef5bb088abf42012381c635a55300e6a3958ab90, got threw: java.lang.IllegalArgumentException: Assets are not in lexicographic order"
+      ]
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-muxed-soroban-source-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-nested-auth-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scmap-host-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-scval-limits-synthetic-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "n/a",
+        "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap73-sac-trust-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    }
+  ]
+}

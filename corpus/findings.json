@@ -337,6 +337,103 @@
       "reproduced": null,
       "summary": "The same transaction's meta differed in one diagnostic value (core_metrics invoke_time_nsecs, 188,866 vs 126,592 ns) between two nodes. Diagnostic events are node-local and not consensus data; fixtures re-source meta from canonical ledgers for this reason.",
       "evidence": "kit/capture/canonicalize.mjs; the verifier explains a diagnostic-only difference when it sees one."
+    },
+    {
+      "id": "ISTRAVEX-F-0016",
+      "title": "Amounts above 2^53 stroops lose precision in stellar-etl's operation and balance rows",
+      "component": "stellar/stellar-etl",
+      "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+      "fixed_in": null,
+      "severity": "medium",
+      "status": "open-upstream",
+      "issue": "stellar/stellar-etl#454",
+      "disclosure": "already-public",
+      "cap_ids": [],
+      "fixtures": [
+        "base-max-amount-local-0001"
+      ],
+      "checks": [
+        "pilot-stellar-etl:base-max-amount-local-0001:operation-amount",
+        "pilot-stellar-etl:base-max-amount-local-0001:trustline-balance"
+      ],
+      "reproduced": true,
+      "summary": "A payment of i64::MAX stroops (922,337,203,685.4775807 units) is exported as amount 922337203685.4775 in the operation row and the trustline balance: float64 columns. The account_credited effect keeps the exact string. Any amount above 900,719,925.4740992 units is rounded the same way.",
+      "evidence": "kit/pilot/stellar-etl.mjs runs stellar-etl's own transforms over the fixture's canonical ledger: operation details.amount and trustline balance come out 9223372036854775000 stroops, 807 short."
+    },
+    {
+      "id": "ISTRAVEX-F-0017",
+      "title": "A trustline created by SAC trust() produces no trustline_created effect in stellar-etl",
+      "component": "stellar/stellar-etl",
+      "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+      "fixed_in": null,
+      "severity": "medium",
+      "status": "open-upstream",
+      "issue": "stellar/stellar-etl#460",
+      "disclosure": "already-public",
+      "cap_ids": [
+        "CAP-0073"
+      ],
+      "fixtures": [
+        "cap73-sac-trust-pubnet-0001",
+        "cap73-sac-trust-local-0001",
+        "cap73-sac-trust-testnet-0001"
+      ],
+      "checks": [
+        "pilot-stellar-etl:cap73-sac-trust-pubnet-0001:trustline-created-effect",
+        "pilot-stellar-etl:cap73-sac-trust-local-0001:trustline-created-effect",
+        "pilot-stellar-etl:cap73-sac-trust-testnet-0001:trustline-created-effect"
+      ],
+      "reproduced": true,
+      "summary": "The trustline row is exported from the ledger entry change, but the effects transform emits nothing for the SAC trust() call, so consumers of effects under-count trustlines created through contracts. Horizon derives the effect.",
+      "evidence": "kit/pilot/stellar-etl.mjs: on all three CAP-0073 fixtures, including a real mainnet USDC trust() (ledger 65,212,685), TransformEffect returns no effects for the transaction; TransformTrustline returns the trustline with its i64::MAX limit. Horizon records the trustline_created effect for the same mainnet transaction."
+    },
+    {
+      "id": "ISTRAVEX-F-0018",
+      "title": "Python stellar-sdk's scval.to_native silently drops map entries whose keys collide",
+      "component": "StellarCN/py-stellar-base",
+      "affected": "stellar-sdk 17.0.1 (latest)",
+      "fixed_in": null,
+      "severity": "medium",
+      "status": "open-upstream",
+      "issue": "StellarCN/py-stellar-base#1250",
+      "disclosure": "already-public",
+      "cap_ids": [
+        "CAP-0046"
+      ],
+      "fixtures": [
+        "cap46-scmap-host-order-local-0001"
+      ],
+      "checks": [
+        "python:cap46-scmap-host-order-local-0001:native_keeps_every_entry"
+      ],
+      "reproduced": true,
+      "summary": "String \"b\" and symbol \"b\" are distinct ScMap keys that both become the Python key 'b'; to_native keeps the last and drops the string entry with no error. The fixture's real 10-entry map comes back with 9. The JavaScript SDK had the same bug (js-stellar-sdk#1789, fixed in 17.3.0); the Python fix is open as StellarCN/py-stellar-base#1252.",
+      "evidence": "kit/runners/python/run.py on stellar-sdk 17.0.1: native_keeps_every_entry fails, 9 of 10 entries, no error. Minimal: a two-entry map {string \"b\": 1, symbol \"b\": 2} converts to {'b': 2}."
+    },
+    {
+      "id": "ISTRAVEX-F-0019",
+      "title": "java-stellar-sdk orders asset issuers by strkey text and rejects a valid pool share",
+      "component": "lightsail-network/java-stellar-sdk",
+      "affected": "6.0.0 (latest release, 2026-10-28)",
+      "fixed_in": "lightsail-network/java-stellar-sdk#832 on master (2026-11-05), unreleased",
+      "severity": "medium",
+      "status": "fixed-upstream",
+      "issue": "lightsail-network/java-stellar-sdk#832",
+      "disclosure": "already-public",
+      "cap_ids": [
+        "CAP-0038"
+      ],
+      "fixtures": [
+        "cap38-pool-issuer-order-local-0001"
+      ],
+      "checks": [
+        "java:cap38-pool-issuer-order-local-0001:decode_pool_share_op",
+        "java:cap38-pool-issuer-order-local-0001:asset_compare",
+        "java:cap38-pool-issuer-order-local-0001:pool_id"
+      ],
+      "reproduced": true,
+      "summary": "The same bug as js-stellar-sdk#1766: Asset.compareTo orders same-code assets by their issuers' strkey text, so Transaction.fromEnvelopeXdr throws \"Assets are not in lexicographic order\" on a valid pool-share changeTrust, and the pool ID can't be computed. Fixed on master by #832, which compares the decoded key bytes, but not in any release.",
+      "evidence": "kit/runners/java/Run.java on 6.0.0: decode_pool_share_op, asset_compare and pool_id fail on the generated pool-share fixture, which stellar-core accepted."
     }
   ]
 }

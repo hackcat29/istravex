@@ -11,7 +11,8 @@ import { fieldTable } from './guide/fields.mjs';
 const read = (f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8'));
 const json = (v) => JSON.parse(JSON.stringify(v));
 const corpus = readCorpus();
-const sdks = ['javascript', 'go', 'rust'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
+const sdks = ['javascript', 'go', 'rust', 'python', 'java'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
+const etl = existsSync(join(RESULTS, 'pilot-stellar-etl.json')) ? read('pilot-stellar-etl.json') : null;
 const js = sdks.find((s) => s.sdk === 'javascript');
 const replay = read('replay.json').rows;
 const provenance = read('provenance.json').fixtures;
@@ -49,6 +50,8 @@ const fixtures = corpus.map(({ manifest: m, blobs }) => {
 
 // 'n/a' marks checks that don't apply (re-encoding bytes a decoder must reject).
 const checks = sdks.flatMap((s) => s.results.flatMap((r) => Object.values(r.checks))).filter((c) => c !== 'n/a');
+// Checks that fail on a current pin because of a known upstream bug (a finding explains them).
+const knownFailing = sdks.flatMap((s) => s.results.filter((r) => r.failed?.length).map((r) => ({ sdk: s.sdk, fixture: r.fixture, failed: r.failed })));
 const provChecks = provenance.flatMap((p) => p.checks);
 const stats = {
   golden_files: goldens[0].files,
@@ -58,6 +61,10 @@ const stats = {
   provenance_passed: provChecks.filter((c) => c.ok).length,
   pilot_fixtures: pilotRaw.results.length,
   pilot_correct: pilotRaw.results.filter((r) => r.verdict === 'correct').length,
+  etl_fixtures: etl?.results.length ?? 0,
+  etl_correct: etl?.results.filter((r) => r.verdict === 'correct').length ?? 0,
+  mainnet_fixtures: corpus.filter(({ manifest: m }) => m.network === 'pubnet').length,
+  sdk_count: sdks.length,
   live_caps: coverage.live_caps,
   xdr_caps: coverage.xdr_changing_caps,
   covered_xdr_caps: coverage.covered_xdr_caps,
@@ -141,6 +148,8 @@ const out = {
     versions: matrix.versions.map((v) => ({ version: v.version, role: v.role, failed: v.results.filter((r) => r.failed.length).map((r) => ({ fixture: r.fixture, checks: r.failed })) })),
   },
   findings: findingsReport,
+  etl: etl && { component: etl.component, repo: etl.repo, ref: etl.ref, results: etl.results.map(({ fixture, verdict }) => ({ fixture, verdict })) },
+  known_failing: knownFailing,
 };
 mkdirSync(join(ROOT, 'src', 'data'), { recursive: true });
 writeFileSync(join(ROOT, 'src', 'data', 'corpus.json'), JSON.stringify(out, null, 2) + '\n');
@@ -174,12 +183,13 @@ snippet(
   'numbers',
   `| What | Result |
 |---|---|
-| Fixtures | **${stats.fixtures}** across ${stats.caps} CAPs and ${stats.patterns} patterns (${stats.networks.join(', ')}; ${stats.synthetic} synthetic) |
+| Fixtures | **${stats.fixtures}** across ${stats.caps} CAPs and ${stats.patterns} patterns: ${stats.mainnet_fixtures} from mainnet, ${stats.synthetic} synthetic (${stats.networks.join(', ')}) |
 | Provenance | **${stats.provenance_passed}/${stats.provenance_checks}** checks, byte-identical to canonical ledgers |
-| SDK conformance | **${stats.sdk_checks_passed}/${stats.sdk_checks}** checks across JavaScript, Go and Rust |
+| SDK conformance | **${stats.sdk_checks_passed}/${stats.sdk_checks}** checks across JavaScript, Go, Rust, Python and Java; every failure is a known upstream bug |
 | stellar-core goldens | **${stats.golden_exact.toLocaleString('en-US')}/${stats.golden_frames.toLocaleString('en-US')}** LedgerCloseMeta frames round-trip in every SDK |
 | Replay | naive indexer wrong on **${stats.naive_faults}/${stats.replay_cases}**; reference indexer right on **${stats.reference_correct}/${stats.replay_cases}** |
 | wallet-backend pilot | **${stats.pilot_correct}/${stats.pilot_fixtures}** fixtures indexed correctly, over RPC and the data lake |
+| stellar-etl pilot | **${stats.etl_correct}/${stats.etl_fixtures}** correct; the rest reproduce its open issues #454 and #460 |
 | Upstream sightings | **${stats.sightings_reproduced}/${stats.sightings}** reproduced: wrong before the fix, right after |
 | JavaScript releases | **${stats.js_releases}** run; every failure maps to a finding |
 | Findings | **${stats.findings}**, ${stats.findings_reproduced} reproduced by the kit |
@@ -264,6 +274,14 @@ ${findingsReport.findings
   .join('\n')}`,
 );
 snippet('field-table', fieldTable());
+if (etl) {
+  snippet(
+    'etl-table',
+    `| Fixture | Verdict | Checks |
+|---|---|---|
+${etl.results.map((r) => `| ${code(r.fixture)} | ${r.verdict} | ${r.checks.map((c) => `${c.ok ? '✓' : '✗'} ${c.field}${c.ok ? '' : `: expected ${code(c.expected)}, got ${code(c.observed)}`}`).join('<br />')} |`).join('\n')}`,
+  );
+}
 snippet(
   'severity-scale',
   `| Severity | Meaning |
