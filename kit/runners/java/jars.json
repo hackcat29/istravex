@@ -1,0 +1,11 @@
+{
+  "note": "java-stellar-sdk and the libraries it needs offline (decoding, strkeys, hashing). Fetched from Maven Central and checked by sha256.",
+  "sdk_version": "6.0.0",
+  "jars": [
+    { "path": "network/lightsail/stellar-sdk/6.0.0/stellar-sdk-6.0.0.jar", "sha256": "d13e24aa87eaddf4c54296d1af97ae7cc010290b308ad4876ccb94a99ac55be9" },
+    { "path": "com/google/code/gson/gson/2.15.0/gson-2.15.0.jar", "sha256": "96d3dd843dc2911de01cdabcd50064cb9e860353102a0a78c96fd833d396fc7d" },
+    { "path": "org/bouncycastle/bcprov-jdk18on/1.86/bcprov-jdk18on-1.86.jar", "sha256": "2af190b300cbb0b35e248ccf5f4a06b6072030aeb3da7a98ec73abe5b4cb371f" },
+    { "path": "commons-codec/commons-codec/1.23.0/commons-codec-1.23.0.jar", "sha256": "47504a3ce71d73a1b0af07675546b8d8c5af87f82ef12b6381f9eb3c17dd5a5b" },
+    { "path": "com/moandjiezana/toml/toml4j/0.7.2/toml4j-0.7.2.jar", "sha256": "f5475e63e7e89e5db62223489aec7a56bd303543772077a17c2cb54c19ca3a20" }
+  ]
+}
