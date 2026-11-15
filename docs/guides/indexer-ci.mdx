@@ -39,7 +39,7 @@ They're independent. Start with whichever fits. Lint is a five-line change; repl
         id: ixlint
         with:
           packages: ./internal/ingest/...
-          version: v1.1.0           # pin the analyzers; default is v1.1.0
+          version: v1.2.0           # pin the analyzers; default is v1.2.0
       - run: echo "istravex-lint found ${{ steps.ixlint.outputs.findings }} issue(s)"
         if: always()
     ```
@@ -48,7 +48,7 @@ They're independent. Start with whichever fits. Lint is a five-line change; repl
     No GitHub Actions dependency. Works in any CI.
 
     ```bash
-    go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@v1.1.0 ./...
+    go run github.com/hackcat29/istravex/kit/go/cmd/istravex-lint@v1.2.0 ./...
     ```
   </Tab>
 </Tabs>

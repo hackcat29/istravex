@@ -11,8 +11,8 @@ inputs:
     description: Directory containing the Go module.
     default: .
   version:
-    description: istravex module version (a tag such as v1.1.0, or latest).
-    default: v1.1.0
+    description: istravex module version (a tag such as v1.2.0, or latest).
+    default: v1.2.0
   go-version-file:
     description: Passed to actions/setup-go. Leave empty to use the module's go.mod.
     default: ''

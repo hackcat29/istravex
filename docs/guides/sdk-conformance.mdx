@@ -20,7 +20,7 @@ You have two options, and for CI you want the first.
     Pin a release so your tests only change when you decide they should. The fixtures are about 100 KB.
 
     ```bash
-    git clone --depth 1 --branch v1.1.0 --filter=blob:none --sparse \
+    git clone --depth 1 --branch v1.2.0 --filter=blob:none --sparse \
       https://github.com/hackcat29/istravex tests/istravex
     git -C tests/istravex sparse-checkout set corpus/fixtures
     ```
