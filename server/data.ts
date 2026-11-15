@@ -54,7 +54,7 @@ export function loadCorpus(dir: string): Corpus {
 function summarize(fixtures: Corpus['fixtures'], results: Map<string, unknown>, coverage: unknown): Record<string, unknown> {
   type Checked = { results: { checks: Record<string, string> }[] };
   // 'n/a' marks checks that don't apply (re-encoding bytes a decoder must reject).
-  const sdk = ['javascript', 'go', 'rust']
+  const sdk = ['javascript', 'go', 'rust', 'python', 'java']
     .flatMap((s) => ((results.get(s) as Checked | undefined)?.results ?? []).flatMap((r) => Object.values(r.checks)))
     .filter((c) => c !== 'n/a');
   const prov = ((results.get('provenance') as { fixtures: { checks: { ok: boolean }[] }[] } | undefined)?.fixtures ?? []).flatMap((p) => p.checks);

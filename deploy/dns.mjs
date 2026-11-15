@@ -1,5 +1,8 @@
 // Upsert the VPS's DNS records in Cloudflare: api and rpc → the VPS, DNS-only
 // (grey cloud) so the VPS's nginx terminates TLS and sees client addresses directly.
+// Also pins docs → Mintlify (cname.mintlify.builders) as DNS-only: Mintlify
+// requires it, and a proxied record puts the zone's own security rules (bot
+// checks, WAF) in front of the docs, which answer some visitors with 403.
 // Idempotent; run by .github/workflows/deploy.yml before the API deploy.
 //
 //   CLOUDFLARE_API_TOKEN  needs Zone:Read and DNS:Edit on the zone
@@ -56,5 +59,26 @@ for (const host of HOSTS) {
       await cf(`/zones/${z.id}/dns_records/${r.id}`, { method: 'DELETE' });
       console.log(`deleted extra ${type} ${name} → ${r.content}`);
     }
+  }
+}
+
+// docs.<zone> → Mintlify, DNS-only. Only the CNAME is touched; Mintlify's
+// verification TXT records live at other names.
+{
+  const name = `docs.${zone}`;
+  const want = { type: 'CNAME', name, content: 'cname.mintlify.builders', proxied: false, ttl: 1, comment: 'Istravex docs on Mintlify (managed by deploy/dns.mjs)' };
+  const existing = (await cf(`/zones/${z.id}/dns_records?name=${encodeURIComponent(name)}&per_page=100`)).filter((r) => ['CNAME', 'A', 'AAAA'].includes(r.type));
+  const cname = existing.find((r) => r.type === 'CNAME');
+  if (!cname) {
+    if (existing.length) console.log(`left ${existing.map((r) => r.type).join(', ')} at ${name} alone (not a CNAME; set the docs record by hand)`);
+    else {
+      await cf(`/zones/${z.id}/dns_records`, { method: 'POST', body: JSON.stringify(want) });
+      console.log(`created CNAME ${name} → ${want.content} (DNS only)`);
+    }
+  } else if (cname.content !== want.content || cname.proxied !== false) {
+    await cf(`/zones/${z.id}/dns_records/${cname.id}`, { method: 'PUT', body: JSON.stringify(want) });
+    console.log(`updated CNAME ${name} → ${want.content} (DNS only; was ${cname.proxied ? 'proxied' : 'DNS only'} → ${cname.content})`);
+  } else {
+    console.log(`ok      CNAME ${name} → ${want.content} (DNS only)`);
   }
 }

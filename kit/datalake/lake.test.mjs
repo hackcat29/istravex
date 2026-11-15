@@ -19,7 +19,8 @@ test('export writes the config and the stored objects byte for byte; the endpoin
   const root = mkdtempSync(join(tmpdir(), 'istravex-lake-'));
   try {
     const written = exportLake(join(root, 'istravex'), { networks: ['pubnet'] });
-    assert.equal(written.pubnet, 2);
+    const pubnet = JSON.parse(readFileSync(join(ROOT, 'corpus', 'ledgers', 'index.json'), 'utf8')).filter((l) => l.network === 'pubnet');
+    assert.equal(written.pubnet, pubnet.length);
     const config = JSON.parse(readFileSync(join(root, 'istravex', 'pubnet', '.config.json'), 'utf8'));
     assert.deepEqual(config, {
       networkPassphrase: 'Public Global Stellar Network ; September 2015',

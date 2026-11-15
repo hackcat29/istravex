@@ -31,7 +31,15 @@ const fixtureDirs = readdirSync(resolve(corpusDir, 'fixtures'), { withFileTypes:
 test('stats summarise the committed results', async () => {
   const j = await json(app.request('/v1/stats'));
   assert.equal(j.fixtures, fixtureDirs.length);
-  assert.equal(j.sdk_checks.passed, j.sdk_checks.total);
+  // SDK checks fail only where a finding explains it (bugs open upstream, or fixed but unreleased).
+  const findings: { checks: string[] }[] = JSON.parse(readFileSync(resolve(corpusDir, 'findings.json'), 'utf8')).findings;
+  const explained = new Set(findings.flatMap((f) => f.checks.map((c) => c.split(':').slice(0, 2).join(':'))));
+  const failing = ['javascript', 'go', 'rust', 'python', 'java'].flatMap((sdk) => {
+    const r: { results: { fixture: string; checks: Record<string, string> }[] } = JSON.parse(readFileSync(resolve(corpusDir, 'results', `${sdk}.json`), 'utf8'));
+    return r.results.flatMap((x) => Object.values(x.checks).filter((c) => c === 'fail').map(() => `${sdk}:${x.fixture}`));
+  });
+  assert.equal(j.sdk_checks.total - j.sdk_checks.passed, failing.length);
+  for (const f of failing) assert.ok(explained.has(f), `unexplained SDK failure ${f}`);
   assert.equal(j.provenance_checks.passed, j.provenance_checks.total);
   assert.equal(j.golden_frames.exact, j.golden_frames.total);
 });
@@ -90,10 +98,12 @@ test('findings are served as committed, and synthetic fixtures list without a le
 });
 
 test('RPC replays the corpus over JSON-RPC', async () => {
+  const index: { network: string; ledger: number }[] = JSON.parse(readFileSync(resolve(corpusDir, 'ledgers', 'index.json'), 'utf8'));
+  const oldest = Math.min(...index.filter((l) => l.network === 'pubnet').map((l) => l.ledger));
   const health = await json(rpc('pubnet', { jsonrpc: '2.0', id: 1, method: 'getHealth' }));
-  assert.equal(health.result.oldestLedger, 65474279);
-  const got = await json(rpc('pubnet', { jsonrpc: '2.0', id: 2, method: 'getLedgers', params: { startLedger: 65474279, pagination: { limit: 1 } } }));
-  assert.equal(got.result.ledgers[0].sequence, 65474279);
+  assert.equal(health.result.oldestLedger, oldest);
+  const got = await json(rpc('pubnet', { jsonrpc: '2.0', id: 2, method: 'getLedgers', params: { startLedger: oldest, pagination: { limit: 1 } } }));
+  assert.equal(got.result.ledgers[0].sequence, oldest);
   const batch = await json(rpc('local', [{ jsonrpc: '2.0', id: 1, method: 'getNetwork' }, { jsonrpc: '2.0', id: 2, method: 'nope' }]));
   assert.equal(batch[0].result.passphrase, 'Standalone Network ; February 2017');
   assert.equal(batch[1].error.code, -32601);

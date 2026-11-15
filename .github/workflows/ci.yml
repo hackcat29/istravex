@@ -36,6 +36,10 @@ jobs:
         run: npm run corpus:js && npm run corpus:go && npm run corpus:rust
       - name: JavaScript SDK release matrix (upstream fixes fail before, pass after)
         run: npm run corpus:js-matrix
+      - name: Python SDK (stellar-sdk, pinned in kit/runners/python/requirements.txt)
+        run: npm run setup:python && npm run corpus:python
+      - name: Java SDK (java-stellar-sdk; jars from Maven Central, sha256-pinned)
+        run: java -version && npm run corpus:java
       - name: stellar-core golden LedgerCloseMeta (--check-lcm data) in all three SDKs
         run: node kit/goldens/fetch.mjs && npm run corpus:goldens
       - name: Replay
@@ -178,7 +182,7 @@ jobs:
         run: test "${{ steps.bad.outcome }}" = failure && test "${{ steps.bad.outputs.findings }}" = 6
 
   pilot:
-    name: Upstream pilot (wallet-backend)
+    name: Upstream pilots (wallet-backend, stellar-etl)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -200,6 +204,8 @@ jobs:
           sudo apt-get install -y -q stellar-core=30.0.0-3642.0e49751aa.noble
       - name: wallet-backend at main (RPC and data lake), and before and after each upstream fix
         run: npm run pilot:wallet-backend
+      - name: stellar-etl, its latest release, through its own transforms
+        run: npm run pilot:stellar-etl
       - run: node kit/check-results.mjs
 
   site:
