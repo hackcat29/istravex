@@ -1,0 +1,6 @@
+{
+  "repo": "https://github.com/stellar/stellar-etl",
+  "ref": "v2.8.34",
+  "commit": "2b24ec89d",
+  "note": "Latest release (2026-11-11). Built with the Go toolchain its go.mod asks for (GOTOOLCHAIN=auto)."
+}
