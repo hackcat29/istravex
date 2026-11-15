@@ -28,7 +28,7 @@ The jobs run in parallel, so a push is green as fast as the slowest one. Measure
 | Upstream pilot | about 4 minutes: wallet-backend builds at main and at seven other commits |
 | Everything else | under 2 minutes each |
 
-So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 15 fixtures and 44 ledgers.
+So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 20 fixtures and 58 ledgers.
 
 `node kit/check-results.mjs` is the gate inside the kit jobs. It checks results by substance (every check passed, every frame exact, every verdict correct) rather than diffing result files, which record machine-specific runtime versions.
 

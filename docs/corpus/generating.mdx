@@ -3,7 +3,7 @@ title: Generating on stellar-core
 description: Building fixtures on a pinned, standalone stellar-core, reproducibly, with no external network, keys or funds.
 ---
 
-`kit/capture/generate.mjs` builds the corpus's generated fixtures on a private network: a standalone stellar-core started just for this, upgraded to the pinned protocol, driven over its own HTTP interface, and shut down afterwards. No RPC, no Docker, no friendbot, no internet.
+`kit/capture/generate.mjs` builds the corpus's generated fixtures on a private network: a standalone stellar-core started just for this, upgraded to the pinned protocol (29, mainnet's), driven over its own HTTP interface, and shut down afterwards. No RPC, no Docker, no friendbot, no internet.
 
 ```bash
 npm run corpus:generate          # the committed fixtures (and the synthetic ones built from them)
@@ -16,7 +16,7 @@ Run it twice and you get the same bytes. Every key, the node's included, is deri
 
 ```bash
 node kit/capture/generate.mjs --check
-# regeneration matches: 9 fixtures, 40 ledgers; consensus bytes identical, metadata byte-identical
+# regeneration matches: 10 fixtures, 44 ledgers; consensus bytes identical, metadata byte-identical
 ```
 
 Consensus data (ledger headers, transaction sets, results, every envelope and ledger entry) must match byte for byte. Metadata may differ in one way only: stellar-core 30.0.0 doesn't keep the order of the entries within an operation's changes stable between runs ([finding F-0010](/project/findings)). The check compares metadata with each change list sorted (`kit/lib/canonical.mjs`) and says when it had to.
@@ -27,7 +27,7 @@ Consensus data (ledger headers, transaction sets, results, every envelope and le
 | `--check` | Regenerate into a temporary directory and compare with the committed corpus; with another passphrase, seed or protocol, compare two fresh generations. Exits 1 on any difference. |
 | `--out <dir>` | Write a complete corpus (fixtures, ledgers, schema) somewhere else. |
 | `--passphrase testnet\|pubnet` | Sign everything for that network instead of the standalone one. |
-| `--protocol <n>` | Upgrade to protocol *n* instead of the pinned one; scenarios that need a later protocol are skipped. |
+| `--protocol <n>` | Upgrade to protocol *n* (up to 30) instead of the pinned 29; scenarios that need a later protocol are skipped. CI also generates, verifies and runs the corpus at 30, the next protocol. |
 | `--seed <string>` | Derive different keys. |
 
 **Any passphrase.** The committed fixtures use the standalone network's passphrase. `--passphrase testnet` or `pubnet` builds the same scenarios exactly as they'd be signed for those networks: every signature, transaction hash and contract ID changes, and CI generates, verifies and runs all three on every push.
@@ -78,6 +78,7 @@ Before starting, the generator hashes the binary on your `PATH` (or `$STELLAR_CO
 | Soroban operation, muxed source | `cap46-muxed-soroban-source-local-0001` | An `ExtendFootprintTtl` from an `M…` source |
 | Map keys in host order | `cap46-scmap-host-order-local-0001` | A 10-entry map with mixed-type keys, two of which print the same, stored as contract data |
 | Nested authorization | `cap46-nested-auth-local-0001` | A six-level authorization tree, one level per contract |
+| The largest amount | `base-max-amount-local-0001` | A payment of i64::MAX stroops (922,337,203,685.4775807 units) and the trustline that receives it |
 
 The CAP-0040 and CAP-0073 scenarios also run on public testnet (`kit/capture/testnet.mjs`), which is where the `-testnet-` fixtures come from. `kit/capture/synthetic.mjs` then builds the two synthetic fixtures from these generated ones.
 
@@ -105,7 +106,7 @@ Getting a standalone core to behave turned up a few behaviours worth knowing if 
     Core's HTTP servers close the socket after every response, and the query server matches header names case-sensitively: it answers `400` to `content-type` and `200` to `Content-Type`. Node's `fetch()` pools connections and lowercases headers, so it fails against both. The driver uses `node:http` with one connection per request.
   </Accordion>
   <Accordion title="A bare /manualclose can abort core, and its clock jumps">
-    Without a close time, `/manualclose` intermittently trips an assertion (`t >= mVirtualNow`, `util/Timer.cpp:287`) and core exits. So the driver always passes a close time. Under `MANUAL_CLOSE`, core's virtual clock jumps ahead to its next timer whenever it idles, measured at 105 to 299 seconds past the last close, and core refuses a close time earlier than its clock. The driver closes at fixed times from 2100-01-01 in 600-second steps, which always clear the jump and make every ledger header reproducible.
+    Without a close time, `/manualclose` intermittently trips an assertion (`t >= mVirtualNow`, `util/Timer.cpp:287`) and core exits. So the driver always passes a close time. Under `MANUAL_CLOSE`, core's virtual clock jumps ahead to its next timer whenever it idles, measured at 105 to 299 seconds past the last close, and core refuses a close time earlier than its clock. On a loaded CI runner the jump reached about 5,000 seconds. The driver closes at fixed times from 2100-01-01 in 30-day steps, which always clear the jump and make every ledger header reproducible, and it fails outright if core still refuses a close rather than falling back to core's clock.
   </Accordion>
   <Accordion title="The first settings upgrade is too big for the starting limits">
     The full `ConfigUpgradeSet` is about 4 KB, larger than the 2,000-byte contract-data entry limit it is stored under on a fresh network. The driver uploads only the settings it changes.

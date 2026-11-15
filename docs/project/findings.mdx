@@ -59,7 +59,7 @@ They're low severity: they affect reproducibility and SDK ergonomics, not ingest
     JavaScript, Go and Rust pass all 54 fixture checks and round-trip all 15,306 golden frames byte for byte. The risk isn't in the SDKs' decoding. It's in what applications do with the values next. → [SDK runners](/tools/sdk-runners)
   </Accordion>
   <Accordion title="wallet-backend already does it right">
-    SDF's wallet-backend indexes all eight fixtures it reads correctly, over RPC and over the data lake. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
+    SDF's wallet-backend indexes all eleven fixtures it reads correctly, over RPC and over the data lake. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
   </Accordion>
   <Accordion title="stellar-core 30.0.0 standalone quirks">
     A bare `/manualclose` can abort core on a timer assertion; the HTTP query server matches header names case-sensitively and closes every connection; the first Soroban settings upgrade is larger than the starting limit it's stored under. All have workarounds. → [Generating](/corpus/generating#stellar-core-quirks-it-works-around)

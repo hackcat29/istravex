@@ -193,7 +193,7 @@ export const kit = {
       docs: `${DOCS_URL}/tools/sdk-runners`,
       n: '03',
       title: 'Cross-SDK runner',
-      body: `Pinned JavaScript, Go and Rust adapters decode, re-encode byte-for-byte, and exercise native conversions where precision leaks. ${st.js_releases} JavaScript releases show each upstream fix landing.`,
+      body: `Pinned JavaScript, Go, Rust, Python and Java adapters decode, re-encode byte-for-byte, and exercise native conversions where precision leaks. The red cells are real bugs, reported upstream. ${st.js_releases} JavaScript releases show each fix landing.`,
     },
     {
       id: 'linter',
@@ -207,7 +207,7 @@ export const kit = {
       docs: `${DOCS_URL}/pilots/wallet-backend`,
       n: '05',
       title: 'Upstream pilot',
-      body: `wallet-backend's own ingestion, fed by the mock RPC and the data lake: ${st.pilot_correct} of ${st.pilot_fixtures} fixtures indexed correctly. Its upstream bugs reproduce on the commits before their fixes: ${st.sightings_reproduced} of ${st.sightings}.`,
+      body: `wallet-backend's own ingestion, fed by the mock RPC and the data lake: ${st.pilot_correct} of ${st.pilot_fixtures} fixtures correct, and its upstream bugs reproduce before their fixes (${st.sightings_reproduced} of ${st.sightings}). stellar-etl: ${st.etl_correct} of ${st.etl_fixtures}, the rest its open issues.`,
     },
   ],
 };

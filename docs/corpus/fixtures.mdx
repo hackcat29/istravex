@@ -117,6 +117,25 @@ A transaction with 100 operations, the maximum; an account with 20 signers, the 
 
 **What it asserts.** Every count, and every byte, round-trips.
 
+## From mainnet
+
+Four fixtures were found by the [mainnet scan](/corpus/capturing#finding-the-transactions) and captured by pinned hash, with expectations from Horizon where it has them:
+
+- **`cap27-muxed-payment-pubnet-0002`**: a payment to muxed ID 18,067,157,809,773,112,502, which is above 2⁶³. Through `int64` it's negative; through a double it's 18067157809773113000.
+- **`cap73-sac-trust-pubnet-0001`**: a USDC trustline created by the SAC's `trust()` on mainnet. Horizon records the `trustline_created` effect; stellar-etl doesn't ([F-0017](/project/findings)).
+- **`cap46-nested-auth-pubnet-0001`**: an authorization tree four levels deep with 12 invocations. Horizon doesn't expose authorization trees, so the depth and count are the scanner's, and all five runners agree.
+- **`base-max-length-vectors-pubnet-0001`**: a transaction with 100 operations, and one with 20 signatures.
+
+## The largest amount
+
+`base-max-amount-local-0001` · base protocol · generated
+
+A payment of i64::MAX stroops: 922,337,203,685.4775807 units of an asset.
+
+**What goes wrong.** A double holds stroops exactly only to 2⁵³ (900,719,925.4740992 units). Above that, a float column stores a different amount: stellar-etl writes `922337203685.4775` ([#454](https://github.com/stellar/stellar-etl/issues/454)).
+
+**What it asserts.** The amount, in units and in stroops, survives decoding, re-encoding and indexing.
+
 ## Synthetic: one past the maximum
 
 `base-over-max-length-synthetic-0001` · base protocol · synthetic

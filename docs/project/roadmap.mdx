@@ -1,15 +1,15 @@
 ---
 title: Roadmap
-description: The three proposal milestones, where each stands, and what comes after.
+description: "The three built milestones, and the funded plan: budget, tranches and deliverables."
 ---
 
-Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2) as three milestones, each shippable on its own. All three are built.
+Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three milestones the RFP describes are built; the award would fund [six months of new work](#the-funded-plan).
 
 ## Milestone 1 · Corpus and reference replay <Badge color="green">Done</Badge>
 
 | Deliverable | Where |
 |---|---|
-| Starter corpus | [15 fixtures, 6 CAPs, 13 patterns](/corpus/fixtures): 13 verified against canonical ledgers, 2 synthetic |
+| Starter corpus | [20 fixtures, 6 CAPs, 14 patterns](/corpus/fixtures): 6 from mainnet, 18 verified against canonical ledgers, 2 synthetic |
 | Fixture generator | [Pinned stellar-core generator](/corpus/generating): byte-reproducible, any passphrase, run in CI on every push |
 | Manifest schema | [`corpus/manifest.schema.json`](/corpus/manifest) |
 | Reference adapter | [Mock RPC](/tools/mock-rpc), [data lake](/tools/data-lake) and [replay](/tools/replay); the wallet-backend adapter |
@@ -20,18 +20,18 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2) as three mil
 
 | Deliverable | Where |
 |---|---|
-| JS, Go and Rust in CI | [SDK runners](/tools/sdk-runners) plus [stellar-core goldens](/corpus/goldens) |
+| Five SDKs in CI | [SDK runners](/tools/sdk-runners) for JavaScript, Go, Rust, Python and Java, plus [stellar-core goldens](/corpus/goldens) |
 | Per-fixture results matrix | `corpus/results/`, the [API](/api-reference/introduction), and the site |
 | Go linter, three rules | [istravex-lint](/tools/lint) |
 
-**Acceptance:** all three SDKs run the shared corpus in CI; the linter flags all three rules and passes the clean reference. Both hold.
+**Acceptance:** every SDK runs the shared corpus in CI; the linter flags all three rules and passes the clean reference. Both hold.
 
 ## Milestone 3 · Upstream pilot and release <Badge color="green">Done</Badge>
 
 | Deliverable | Where |
 |---|---|
-| wallet-backend findings | [wallet-backend pilot](/pilots/wallet-backend), [findings report](/project/findings) |
-| Reviewed guide | [Hardening guide](/guide/overview), reviewed by a Stellar Core engineer |
+| Upstream pilots | [wallet-backend](/pilots/wallet-backend) (11/11) and [stellar-etl](/pilots/stellar-etl) (7/11, the rest its open issues), [findings report](/project/findings) |
+| Reviewed guide | [Hardening guide](/guide/overview), reviewed by a Stellar Core engineer; an independent SDF review is part of tranche 2 |
 | Tagged release | `v1.0.0`, then `v1.1.0` on GitHub |
 | CI templates | [Reusable workflow and action](/operations/ci#in-your-repository) |
 
@@ -43,20 +43,35 @@ The SCF RFP lists a check for each deliverable. Each one runs in CI.
 
 | Deliverable | Reviewer check | Where it's checked |
 |---|---|---|
-| Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
+| Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture; four more SDKs alongside) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
 | Replay harness | The reference adapter reproduces wallet-backend #729, #731 and #716 on pre-fix commits and passes on the fixed ones | [Before and after each upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix): all three, plus 9538b3c |
 | Linter | Flags seeded violations; runs clean on current wallet-backend | The [action self-test](/operations/ci) (six seeded findings) and the [pilot](/pilots/wallet-backend#lint) (one triaged latent finding, no live ones) |
 | Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; v1.0 reviewed 14 November, v1.1 on 15 November 2026 |
 | Conformance runner | Reproduces js-stellar-sdk #1766, #1785 and #1789 on pre-fix tags | [Earlier JavaScript releases](/tools/sdk-runners#earlier-javascript-releases): 17.2.0 and 17.2.1 fail, 17.3.0 and 17.4.0 pass |
-| Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs` |
+| Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs`; stellar-etl, Python and Java failures map to their open upstream issues |
 
-## Next
+## The funded plan
 
-In rough order of value:
+What's above is built and isn't part of the request. The award would fund six months of new work: **$90,000 in XLM**, 1,180 engineering hours at $75 an hour plus $1,500 of infrastructure.
 
-- **Coverage.** 5 of 40 XDR-changing CAPs have fixtures today. Target for the maintenance window: 12, starting with live-state archival and restoration (CAP-0062, CAP-0066), unified events (CAP-0067), claimable balances (CAP-0023) and clawback (CAP-0035).
-- **Follow the three issues filed from this work** ([findings](/project/findings#filed-from-this-work)): stellar-core#5507 and #5508, js-stellar-sdk#1906. Add regression checks as fixes land.
-- **stellar-etl.** Now that the corpus exports in the [data-lake layout](/tools/data-lake), replay it through stellar-etl, whose open issues (#454 lossy amounts, #460 effects missing since protocol 23) are likely sources of new findings.
-- **More SDKs.** Python (`stellar-sdk`) and Java runners, and release matrices for Go and Rust like JavaScript's.
-- **More pilots.** Horizon's ingestion and at least one third-party explorer.
-- **Protocol upgrades.** Re-pin core, regenerate, and publish results within two weeks of each protocol release ([how](/project/maintenance#on-a-protocol-upgrade)).
+| Work | Hours | Cost |
+|---|---|---|
+| CAP coverage from 5 to 12 of 40, starting with state archival (CAP-0062, CAP-0066), unified events (CAP-0067), claimable balances (CAP-0023) and clawback (CAP-0035) | 260 | $19,500 |
+| Mainnet capture: a scheduled scan, a mainnet fixture for every pattern mainnet has, a monthly rare-pattern report | 140 | $10,500 |
+| Swift, Dart and PHP runners; release matrices for Go, Rust, Python and Java | 200 | $15,000 |
+| Pilots: Horizon's ingestion processors and one community indexer | 160 | $12,000 |
+| Lint rules IX004 (amounts through floats), IX005 (effects from operations, not metadata), IX006 (unbounded strkey and memo decoding) | 100 | $7,500 |
+| Guide v2, an independent SDF review, a pull request to developers.stellar.org | 80 | $6,000 |
+| The next protocol upgrade, end to end | 120 | $9,000 |
+| Maintenance: triage, upstream follow-up, dependency updates, releases | 120 | $9,000 |
+| Infrastructure | | $1,500 |
+| **Total** | **1,180** | **$90,000** |
+
+| Tranche | Share | Amount | Due | Deliverables |
+|---|---|---|---|---|
+| T0 · Award | 10% | $9,000 | On award | The plan as GitHub milestones; the mainnet scan running weekly |
+| T1 · MVP | 20% | $18,000 | Month 2 | CAPs 5 → 8; a mainnet fixture for every pattern mainnet has; the first rare-pattern report; the Swift runner; IX004 |
+| T2 · Testnet (public beta) | 30% | $27,000 | Month 4 | CAPs 8 → 12; Dart and PHP runners; every SDK's release matrix; the Horizon pilot; IX005 and IX006; guide v2 reviewed by SDF and proposed to developers.stellar.org |
+| T3 · Mainnet (production) | 40% | $36,000 | Month 6 | The next protocol upgrade end to end; the community-indexer pilot; every open finding followed up; v2.0.0; a six-month maintenance report |
+
+Meanwhile, the issues filed from this work ([findings](/project/findings#filed-from-this-work)) get regression checks as their fixes land, and every protocol release is covered within two weeks of its mainnet vote ([how](/project/maintenance#on-a-protocol-upgrade)).

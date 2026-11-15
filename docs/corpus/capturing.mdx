@@ -15,7 +15,29 @@ npm run corpus:capture   # mainnet + testnet + canonical ledgers
 
 For each hash it fetches the transaction, its ledger and its operations from Horizon, writes the XDR, and fills `expected_decoded` and `expected_indexed` from **Horizon's JSON**. That separation matters: Horizon is a different codebase from the SDKs under test, so a runner that agrees with the fixture is agreeing with an independent reading of the ledger.
 
-To add a mainnet case, add its hash to the script and read its expectations from Horizon's response.
+To add a mainnet case, add its hash to the script and read its expectations from Horizon's response. Where Horizon doesn't expose a value (authorization trees, for one), the manifest's `source.expected_from` says where it came from, and all five runners must agree with it.
+
+### Finding the transactions
+
+Rare shapes are rare: you can't page through Horizon looking for a four-level authorization tree. `kit/go/cmd/mainnet-scan` reads mainnet history straight from SDF's public data lake and reports every successful transaction that matches a corpus pattern:
+
+```bash
+cd kit/go && go run ./cmd/mainnet-scan -from 65400000 -to 65410000 > candidates.jsonl
+```
+
+It needs no keys, no Horizon and no disk: ledgers are streamed and decoded in memory. A laptop is far from the data, so the [**Mainnet scan**](https://github.com/hackcat29/istravex/actions/workflows/mainnet-scan.yml) workflow runs it in 16 shards on GitHub's runners and publishes the merged candidates as an artifact.
+
+The first scan read 400,000 ledgers (about 23 days, ending at ledger 65,483,590):
+
+| Pattern | Candidates on mainnet | In the corpus |
+|---|---|---|
+| 100 operations in one transaction; 20 signatures | 122,485; 17,268 | [`base-max-length-vectors-pubnet-0001`](/corpus/fixtures) |
+| Payments to muxed IDs above 2⁵³ (49,976 above 2⁶³) | 100,999 | [`cap27-muxed-payment-pubnet-0002`](/corpus/fixtures): ID 18,067,157,809,773,112,502 |
+| Authorization trees at least three deep (1,358 four deep) | 63,778 | [`cap46-nested-auth-pubnet-0001`](/corpus/fixtures): depth 4, 12 invocations |
+| SAC `trust()` calls (CAP-0073) | 5 | [`cap73-sac-trust-pubnet-0001`](/corpus/fixtures): a USDC trustline |
+| Memo text that isn't UTF-8, signed-payload signers, Soroban operations from a muxed source, pool issuers out of text order, maps with colliding or mixed keys | 0 | Generated on [pinned stellar-core](/corpus/generating) |
+
+So the corpus takes mainnet data wherever mainnet has it, and generates the rest at mainnet's protocol. Re-run the scan to look further back, or for patterns added later.
 
 ## Testnet
 

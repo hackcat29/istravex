@@ -1,0 +1,36 @@
+---
+title: stellar-etl pilot
+description: SDF's data-warehouse pipeline over the corpus, through its own transforms, and the two open issues it reproduces.
+---
+
+import Etl from '/snippets/etl-table.mdx';
+
+[stellar/stellar-etl](https://github.com/stellar/stellar-etl) turns ledgers into the rows behind SDF's BigQuery dataset (Hubble). It's the second SDF pipeline the kit runs, after [wallet-backend](/pilots/wallet-backend).
+
+## How it works
+
+stellar-etl's exports read Galexie files from a GCS datastore, and that's the only datastore it supports. So the pilot does what the wallet-backend pilot does: a small adapter, [`kit/pilot/stellar-etl/adapter.go`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/stellar-etl/adapter.go), is copied into a checkout of the latest release (v2.8.34) and runs the same transforms each export runs, on each fixture's canonical ledger read from `corpus/ledgers`:
+
+| Export | Transform |
+|---|---|
+| `export_transactions` | `TransformTransaction` |
+| `export_operations` | `TransformOperation` |
+| `export_effects` | `TransformEffect` |
+| `export_ledger_entry_changes` | `TransformSigners`, `TransformTrustline` |
+
+The rows are scored against each fixture's `expected_indexed` by [`kit/pilot/score-etl.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/score-etl.mjs). stellar-etl writes 64-bit integers as JSON numbers (`to_muxed_id` can be 2⁶⁴ − 1), so the driver parses them with a reviver that keeps each number's source text: nothing is rounded on our side.
+
+```bash
+npm run pilot:stellar-etl   # → corpus/results/pilot-stellar-etl.json
+```
+
+## Results
+
+<Etl />
+
+stellar-etl gets the fee-bump, every muxed ID (exactly, up to 2⁶⁴ − 1), the full `P…` signer and the muxed Soroban source right. It gets two things wrong, both already open upstream:
+
+- **[#454](https://github.com/stellar/stellar-etl/issues/454), amounts as float64.** A payment of i64::MAX stroops comes out as `922337203685.4775` in the operation row and the trustline balance, 807 stroops short. The `account_credited` effect keeps the exact string. Any amount above 900,719,925.4740992 units is rounded the same way. ([F-0016](/project/findings))
+- **[#460](https://github.com/stellar/stellar-etl/issues/460), no effect for SAC `trust()`.** The trustline row is there, but no `trustline_created` effect, on all three CAP-0073 fixtures, including a real mainnet USDC `trust()`, for which Horizon does record the effect. ([F-0017](/project/findings))
+
+Every failing check maps to a finding, and `kit/check-results.mjs` fails if a new one doesn't, or if a finding claims a failure that no longer happens. When stellar-etl fixes either issue, the pilot shows it on the next run.

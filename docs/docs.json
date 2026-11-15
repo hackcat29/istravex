@@ -116,6 +116,7 @@
             "group": "Pilots",
             "pages": [
               "pilots/wallet-backend",
+              "pilots/stellar-etl",
               "pilots/your-indexer"
             ]
           }
@@ -220,6 +221,7 @@
             "group": "Project",
             "pages": [
               "project/findings",
+              "project/security",
               "project/roadmap",
               "project/maintenance",
               "project/faq",

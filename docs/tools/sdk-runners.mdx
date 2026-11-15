@@ -1,12 +1,12 @@
 ---
 title: SDK runners
-description: The same three checks, in JavaScript, Go and Rust, against every fixture.
+description: The same checks, in JavaScript, Go, Rust, Python and Java, against every fixture.
 ---
 
 import Sdks from '/snippets/sdk-table.mdx';
 import Matrix from '/snippets/js-matrix-table.mdx';
 
-Each official SDK family gets a runner that reads the corpus and checks every fixture three ways.
+Each SDK gets a runner that reads the corpus and checks every fixture three ways: JavaScript (`@stellar/stellar-sdk`), Go (`go-stellar-sdk`), Rust (`stellar-xdr`), Python (`stellar-sdk`) and Java (`java-stellar-sdk`). The RFP asks for at least the first three; Python and Java are there because the same bugs travel between SDKs, and they did.
 
 | Check | Question it answers |
 |---|---|
@@ -23,6 +23,15 @@ Each native check has a name (`muxed_id`, `pool_id`, `native_keeps_every_entry`�
 ## Results
 
 <Sdks />
+
+## Bugs the current releases still have
+
+Two checks fail on the newest releases, and both are bugs the JavaScript SDK has already fixed:
+
+- **Python, stellar-sdk 17.0.1:** `scval.to_native` turns string `"b"` and symbol `"b"` into one dict key and drops an entry with no error, the same as [js-stellar-sdk#1789](https://github.com/stellar/js-stellar-sdk/issues/1789). It's open upstream as [StellarCN/py-stellar-base#1250](https://github.com/StellarCN/py-stellar-base/issues/1250), with a fix in review. ([F-0018](/project/findings))
+- **Java, java-stellar-sdk 6.0.0:** `Asset.compareTo` orders issuers by strkey text, so decoding the valid pool-share trustline throws, the same as [js-stellar-sdk#1766](https://github.com/stellar/js-stellar-sdk/pull/1766). It's fixed on master by [#832](https://github.com/lightsail-network/java-stellar-sdk/pull/832) but not yet released. ([F-0019](/project/findings))
+
+`kit/check-results.mjs` allows a failure on a current release only when a finding explains it as a known bug with no fixed release yet, and fails if the finding's claim stops being true. When the fixes ship, the pins move and the cells turn green.
 
 The goldens column is the [stellar-core goldens](/corpus/goldens) check: 15,306 frames from core's own test suite, decoded and re-encoded byte for byte. Re-encode and native counts leave out the synthetic fixtures, where they don't apply.
 
@@ -47,6 +56,8 @@ The releases are listed in `kit/runners/js/versions.json`; `kit/check-results.mj
 npm run corpus:js     # @stellar/stellar-sdk   → corpus/results/javascript.json
 npm run corpus:go     # go-stellar-sdk         → corpus/results/go.json
 npm run corpus:rust   # stellar-xdr (Rust)     → corpus/results/rust.json
+npm run setup:python && npm run corpus:python   # stellar-sdk (Python) → corpus/results/python.json
+npm run corpus:java   # java-stellar-sdk; jars sha256-pinned from Maven Central → corpus/results/java.json
 ```
 
 Each result file records the SDK, its exact version, the runtime, and per fixture every check with the differing fields if a check fails.
@@ -82,4 +93,4 @@ All are off. See [Keep 64-bit integers exact](/guide/wide-integers).
 
 ## Adding an SDK
 
-A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the named native checks for the fixture's `pattern`, pass files marked `expect: decode_error` only when they fail to decode, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. Python and Java runners are on the [roadmap](/project/roadmap).
+A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the named native checks for the fixture's `pattern`, pass files marked `expect: decode_error` only when they fail to decode, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. The Python runner (`kit/runners/python/run.py`) is about 300 lines; the Java one (`kit/runners/java/Run.java`) is a single source file run with `java Run.java`, no build tool.

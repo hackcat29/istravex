@@ -15,7 +15,7 @@ A transaction envelope is what someone submitted. By the time it's in a ledger, 
 
 ## Measured
 
-The [replay harness](/tools/replay)'s naive indexer reads effects and participants from the envelope. It gets all six indexed cases wrong: the muxed IDs and the fee-bump are incorrect, the participants include `M…` addresses, both SAC trustlines are dropped. The reference indexer reads metadata and gets all six right. So does today's [wallet-backend](/pilots/wallet-backend), on all eight fixtures it indexes, and the commits before its September fixes get exactly these cases wrong.
+The [replay harness](/tools/replay)'s naive indexer reads effects and participants from the envelope. It gets all nine indexed cases wrong: the muxed IDs, the largest amount and the fee-bump are incorrect, the participants include `M…` addresses, and the SAC trustlines (one of them a real mainnet USDC `trust()`) are dropped. The reference indexer reads metadata and gets all nine right. So does today's [wallet-backend](/pilots/wallet-backend), on all eleven fixtures it indexes, and the commits before its September fixes get exactly these cases wrong.
 
 ## Participants are accounts
 

@@ -11,7 +11,7 @@
 
 ## Corpus and results (real data)
 
-- 15 fixtures across 6 CAPs and 13 patterns: 2 mainnet, 2 testnet, 9 generated on a pinned stellar-core, 2 synthetic (labelled; bytes a decoder must refuse):
+- 20 fixtures across 6 CAPs and 14 patterns: 6 mainnet (4 found by scanning 400,000 mainnet ledgers), 2 testnet, 10 generated on a pinned stellar-core at mainnet's protocol 29, 2 synthetic (labelled; bytes a decoder must refuse):
   - cap27-muxed-payment-pubnet-0001: mainnet ledger 65474279; USDC payment to muxed ID 1764988090084626463 (above 2^53; JavaScript Number() reads 1764988090084626400)
   - cap15-fee-bump-pubnet-0001: mainnet ledger 65474309; fee source differs from inner source; fee charged 40354 stroops vs 46340 debited in fee changes before the Soroban refund
   - cap40-signed-payload-signer-{testnet,local}-0001: ed25519 signed-payload signer (account LedgerEntryData); reproduces wallet-backend#729
@@ -24,16 +24,19 @@
   - base-memo-non-utf8-local-0001: 28-byte memo text that isn't UTF-8
   - base-max-length-vectors-local-0001: 100 operations, 20 signatures, 20 signers
   - base-over-max-length-synthetic-0001, cap46-scval-limits-synthetic-0001: 101 operations, 29-byte memo, 2^32-1 length prefixes, 2,000-deep ScVal
+  - cap27-muxed-payment-pubnet-0002 (muxed ID above 2^63), cap73-sac-trust-pubnet-0001 (mainnet USDC trust() via SAC), cap46-nested-auth-pubnet-0001 (auth tree depth 4), base-max-length-vectors-pubnet-0001: from mainnet
+  - base-max-amount-local-0001: a payment of i64::MAX stroops; reproduces stellar-etl#454
   - generation on standalone stellar-core 30.0.0 is byte-reproducible (seeded keys, fixed close times), for any network passphrase
-- Provenance: 152/152 checks; every non-synthetic fixture is byte-identical to the canonical LedgerCloseMeta of its ledger
-- SDK conformance: @stellar/stellar-sdk 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0 pass 123/123 checks; js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789
-- Replay: the naive indexer is wrong on 6/6 cases; the reference indexer is right on 6/6; ledgers served over mock RPC getLedgers or the Galexie data-lake layout (filesystem or S3)
-- Upstream pilot: stellar/wallet-backend @ 3e22515 indexes 8/8 fixtures correctly over RPC and over the data lake; wallet-backend#729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes; istravex-lint finds 1 latent IX001 (unused memo helper) on main, and IX003/IX002 on the pre-fix commits
-- Findings: 15 in corpus/findings.json (https://api.istravex.com/v1/findings), each with severity, upstream issue, corpus entry and the checks it explains
+- Provenance: 205/205 checks; every non-synthetic fixture is byte-identical to the canonical LedgerCloseMeta of its ledger
+- SDK conformance: 278/280 checks across @stellar/stellar-sdk 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0, Python stellar-sdk 17.0.1 and java-stellar-sdk 6.0.0; the two failures are known upstream bugs (StellarCN/py-stellar-base#1250, lightsail-network/java-stellar-sdk#832); js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789
+- Replay: the naive indexer is wrong on 9/9 cases; the reference indexer is right on 9/9; ledgers served over mock RPC getLedgers or the Galexie data-lake layout (filesystem or S3)
+- Upstream pilots: stellar-etl v2.8.34 gets 7/11 right and reproduces its open issues #454 (float amounts) and #460 (no SAC trust() effect); stellar/wallet-backend @ 3e22515 indexes 11/11 fixtures correctly over RPC and over the data lake; wallet-backend#729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes; istravex-lint finds 1 latent IX001 (unused memo helper) on main, and IX003/IX002 on the pre-fix commits
+- Findings: 19 in corpus/findings.json (https://api.istravex.com/v1/findings), each with severity, upstream issue, corpus entry and the checks it explains
 - CAP audit: 70 live CAPs, 40 change XDR, 5 covered
 - Hardening guide: https://docs.istravex.com/guide/overview (reviewed and confirmed by a Stellar Core engineer); field-by-field table at https://docs.istravex.com/guide/validated-fields
 - stellar-core goldens: all three SDKs round-trip 15,306/15,306 LedgerCloseMeta frames from core's --check-lcm data (v30.0.0)
 - Docs: https://docs.istravex.com
+- Security policy: https://github.com/hackcat29/istravex/blob/main/SECURITY.md (private vulnerability reporting; exploitable findings disclosed privately first via SDF's bug bounty)
 - Guides: https://docs.istravex.com/guides/sdk-conformance (SDK), https://docs.istravex.com/guides/indexer-ci (indexer CI), https://docs.istravex.com/guides/fixtures-in-tests (app tests), https://docs.istravex.com/guides/hosted-api (API)
 - API: https://api.istravex.com (OpenAPI: https://api.istravex.com/openapi.json)
 - Mock Stellar RPC: https://rpc.istravex.com/{pubnet,testnet,local}

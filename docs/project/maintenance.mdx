@@ -10,7 +10,8 @@ Istravex is Apache 2.0 licensed and open by default. Code, corpus, results and d
 | | |
 |---|---|
 | **License** | Apache 2.0 |
-| **Maintainer** | A named maintainer for at least six months after launch |
+| **Maintainer** | Tomiwa Adeyemi ([@hackcat29](https://github.com/hackcat29)), for at least six months after launch |
+| **Security** | [Security policy](/project/security): private reporting, and private disclosure first for anything exploitable |
 | **Protocol upgrades** | At least one protocol upgrade covered end to end |
 | **User tracking** | None of Istravex's own. No cookies, analytics or request logs on the site, the API or the RPC; the tools collect nothing. See [what each host sees](#user-tracking). |
 
@@ -37,10 +38,10 @@ The next one is protocol 31. Every step below is a command, and CI fails until t
     Update `kit/capture/core-pin.json` with the new version, commit and per-platform binary hashes, and the CI job's apt package version.
   </Step>
   <Step title="Bump the SDKs">
-    Move the JS, Go and Rust runners to the SDK releases for the new protocol.
+    Move the JavaScript, Go, Rust, Python and Java runners to the SDK releases for the new protocol.
   </Step>
   <Step title="Regenerate and re-run">
-    `npm run corpus:generate`, `node kit/goldens/fetch.mjs`, `npm run corpus:run`, `npm run pilot:wallet-backend`. The goldens move with the core pin; the probe contract moves to the soroban-sdk for the new protocol. `npm run corpus:generate-check` must pass on both platforms.
+    `npm run corpus:generate`, `node kit/goldens/fetch.mjs`, `npm run corpus:run`, `npm run pilot:wallet-backend`, `npm run pilot:stellar-etl`, and a [mainnet scan](/corpus/capturing#finding-the-transactions) for the new protocol's patterns. The goldens move with the core pin; the probe contract moves to the soroban-sdk for the new protocol. `npm run corpus:generate-check` must pass on both platforms.
   </Step>
   <Step title="Triage">
     Any check that fails on a current pin is a finding: severity, the minimal fixture, an upstream issue, an entry in `corpus/findings.json`. `kit/check-results.mjs` stays red until it's there.
@@ -50,8 +51,23 @@ The next one is protocol 31. Every step below is a command, and CI fails until t
   </Step>
 </Steps>
 
+## Where we post
+
+Every release, new finding and monthly rare-pattern report goes out on all of these:
+
+| Channel | What goes there |
+|---|---|
+| [GitHub releases](https://github.com/hackcat29/istravex/releases) and [Discussions](https://github.com/hackcat29/istravex/discussions) | Release notes; questions, fixture proposals and pilot reports |
+| Stellar's developer Discord | Releases, findings, and calls for indexers to pilot, in the SCF and developer channels |
+| Stellar Nigeria | Workshops on running the kit against your own indexer |
+| [Changelog](/project/changelog) | Every release of the kit, corpus and API |
+| X, Bluesky, Mastodon, Matrix | Release and report announcements |
+| Upstream issue trackers | Every finding, filed where the code lives ([findings](/project/findings)) |
+
 ## Getting involved
 
+- **Ask** in [GitHub Discussions](https://github.com/hackcat29/istravex/discussions).
+- **Report a vulnerability** privately, never as an issue. See the [security policy](/project/security).
 - **Report** a wrong fixture, a lint false positive, or a broken page as a [GitHub issue](https://github.com/hackcat29/istravex/issues).
 - **Contribute** a fixture for an uncovered CAP. See [Contributing a fixture](/corpus/contributing).
 - **Run a pilot** on your indexer and share what you find. See [Replaying into your indexer](/pilots/your-indexer).

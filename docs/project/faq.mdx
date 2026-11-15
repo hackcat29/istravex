@@ -7,7 +7,7 @@ description: Short answers to the questions people ask first.
   <Accordion title="Isn't this what stellar-core's tests already do?">
     Core's tests check that core produces the right ledger. Istravex checks what happens *after*: whether SDKs decode it exactly, and whether indexers store what it means. It also uses core's [golden ledgers](/corpus/goldens) directly, as a second corpus.
   </Accordion>
-  <Accordion title="Why only fifteen fixtures?">
+  <Accordion title="Why only twenty fixtures?">
     Each one is real (or, for the two synthetic ones, labelled as built), verified byte for byte against its ledger, and discriminates: a known-wrong indexer or SDK release fails it and a known-right one passes. Ten of them reproduce a bug that was reported upstream. A thousand fixtures that everything passes would test nothing. Breadth comes from the 15,306 golden frames; the corpus is for targeted patterns, and it's [growing](/project/roadmap).
   </Accordion>
   <Accordion title="Do I need Go and Rust to use it?">

@@ -3,6 +3,30 @@ title: Changelog
 description: Releases of the kit, corpus and API.
 ---
 
+<Update label="v1.2.0" description="15 November 2026">
+  Mainnet-first, five SDKs, a second upstream indexer, and a security policy.
+
+  **Mainnet**
+  - Generated fixtures are built at protocol 29, mainnet's; CI also generates, verifies and runs the whole corpus at protocol 30
+  - [`mainnet-scan`](/corpus/capturing#finding-the-transactions) searches SDF's public data lake for every corpus pattern; its first run covered 400,000 ledgers
+  - Four new mainnet fixtures from it: a muxed ID above 2⁶³, a USDC trustline created through the SAC, a depth-4 authorization tree, and the 100-operation and 20-signature transactions
+  - A new pattern, the largest amount (i64::MAX stroops): 20 fixtures across 14 patterns, 6 of them from mainnet
+
+  **Conformance**
+  - Python `stellar-sdk` 17.0.1 and `java-stellar-sdk` 6.0.0 join JavaScript, Go and Rust: 278/280 checks. The two failures are known upstream bugs, py-stellar-base#1250 and java-stellar-sdk#832
+
+  **Pilots**
+  - [stellar-etl](/pilots/stellar-etl) v2.8.34, through its own transforms: 7/11 correct. The four misses are its open issues #454 (float amounts) and #460 (no effect for a SAC `trust()`), reproduced on mainnet data too
+  - wallet-backend: 11/11
+
+  **Findings and security**
+  - 19 findings, 14 reproduced; each records how it was disclosed
+  - A [security policy](/project/security): private vulnerability reporting, and private disclosure first for exploitable findings
+
+  **Docs**
+  - The docs domain is DNS-only, as Mintlify requires (it returned 403 while proxied)
+</Update>
+
 <Update label="v1.1.0" description="15 November 2026">
   Against the SCF RFP's reviewer checks: every check now runs in CI. See the [roadmap](/project/roadmap#against-the-rfps-reviewer-checks).
 

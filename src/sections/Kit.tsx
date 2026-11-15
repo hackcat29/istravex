@@ -201,7 +201,7 @@ function ReplayVisual() {
 /* ── 03 Runner: real SDK × check results; hover/tap any cell ─────────── */
 const checkKeys = ['decode', 'reencode', 'native'] as const;
 const checkLabel = { decode: 'decode', reencode: 're-encode', native: 'native' };
-const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Rust' };
+const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Rust', python: 'Py', java: 'Java' };
 const pkgShort = (p: string) => p.split('/').pop()!;
 const cells = checkKeys.flatMap((c) =>
   corpus.sdks.map((s) => {
@@ -229,7 +229,7 @@ function RunnerVisual() {
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7">
-      <div className="grid grid-cols-[72px_repeat(3,1fr)] gap-1.5 font-mono text-[11px]">
+      <div className="grid gap-1.5 font-mono text-[11px]" style={{ gridTemplateColumns: `64px repeat(${corpus.sdks.length}, minmax(0, 1fr))` }}>
         <span />
         {corpus.sdks.map((s) => (
           <span key={s.sdk} className="pb-1 text-center text-mute">{sdkLabel[s.sdk]}</span>
