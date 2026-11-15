@@ -57,6 +57,11 @@ const scorers = {
       ],
     };
   },
+  // The largest amount there is: credited exactly, in stroops.
+  'max-amount'(e, out) {
+    const credit = out.state_changes.find((s) => s.category === 'BALANCE' && s.reason === 'CREDIT' && s.account === e.recipient);
+    return { primary: credit, checks: [check('recipient credited', e.recipient, credit?.account), check('amount', e.amount_stroops, credit?.amount)] };
+  },
   // A Soroban operation from a muxed source (wallet-backend#716): the
   // participant is the base account, not the M-address.
   'muxed-soroban-source'(e, out) {

@@ -1,0 +1,47 @@
+{
+  "id": "base-max-length-vectors-pubnet-0001",
+  "pattern": "max-length-vectors",
+  "cap_ids": [],
+  "protocol_version": 29,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "envelope: tx.operations (100); envelope_signatures: signatures (20)",
+  "sha256": "86d1df497ec2f1af2ceac8cffbd4a1c7bf88944b02238dc993c206cd7ac0bc45",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 65083645,
+    "tx_hash": "08cf453203a4ac52a3b2cf575f5cc0482d668a5aba5e717846c9bdde66aa4db4",
+    "closed_at": "2026-10-22T21:20:08Z",
+    "related": [
+      {
+        "ledger": 65083663,
+        "tx_hash": "d8743dd3bae350bc597febfc36074730cda493025bab01650471de3ffec3b6e7",
+        "files": [
+          "envelope_signatures"
+        ]
+      }
+    ]
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "operation_count": 100,
+    "signature_count": 20
+  },
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "86d1df497ec2f1af2ceac8cffbd4a1c7bf88944b02238dc993c206cd7ac0bc45",
+      "bytes": 5792
+    },
+    {
+      "name": "envelope_signatures",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope_signatures.xdr.b64",
+      "sha256": "b7d63a5940fc17bbb7538ccf4293c1978c1af3f89f99a0fe10fff14335b0c13a",
+      "bytes": 664
+    }
+  ]
+}

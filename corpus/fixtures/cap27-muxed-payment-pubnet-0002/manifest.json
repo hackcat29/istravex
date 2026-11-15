@@ -1,0 +1,50 @@
+{
+  "id": "cap27-muxed-payment-pubnet-0002",
+  "pattern": "muxed-payment",
+  "cap_ids": [
+    "CAP-0027"
+  ],
+  "protocol_version": 29,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "feeBump.tx.innerTx.v1.tx.operations[0].body.paymentOp.destination",
+  "sha256": "937de78cf8488d00dd517fdf9505493c3cadcf2661f29cfdd6f19c9cc856b9e0",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 65119800,
+    "tx_hash": "1a5e418524e95dd36932533636d96763d28719763bada5a5c31198e1acc01aa7",
+    "closed_at": "2026-10-24T23:33:03Z"
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "tx_hash": "1a5e418524e95dd36932533636d96763d28719763bada5a5c31198e1acc01aa7",
+    "fee_bumped": true,
+    "op_index": 0,
+    "destination_muxed": "MAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTV6V3OBG5Q43MWYV36",
+    "destination_account": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+    "muxed_id": "18067157809773112502",
+    "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+    "amount": "70.0000000"
+  },
+  "expected_indexed": {
+    "recipient": "GAKICA7Q6YRRELF66WVYBASYRRZXXTYNDODKF5UDAVADQCPLWYVTUZ5Z",
+    "recipient_muxed_id": "18067157809773112502"
+  },
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "937de78cf8488d00dd517fdf9505493c3cadcf2661f29cfdd6f19c9cc856b9e0",
+      "bytes": 392
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "35b9a9c345c6688c005200a26de4ca36a3849a05ef309662e7797ca0828ad377",
+      "bytes": 80
+    }
+  ]
+}

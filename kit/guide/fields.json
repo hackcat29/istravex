@@ -231,6 +231,24 @@
       ]
     },
     {
+      "field": "Amounts",
+      "xdr": "PaymentOp.amount and every Int64 amount, balance and limit",
+      "validated": "yes",
+      "checks": "Positive, at most i64::MAX stroops (922,337,203,685.4775807 units), and covered by the sender's balance and the receiver's limit.",
+      "passes": "Nothing; but the range is the whole int64. A double holds stroops exactly only to 2^53 (900,719,925.4740992 units): above that, a float column stores a different amount.",
+      "rule": "wide-integers",
+      "patterns": [
+        "max-amount",
+        "muxed-payment"
+      ],
+      "keys": [
+        "expected_decoded.amount_stroops",
+        "expected_indexed.amount_stroops",
+        "expected_indexed.asset",
+        "expected_indexed.recipient"
+      ]
+    },
+    {
       "field": "Operations and participants",
       "xdr": "Transaction.operations, sourceAccount",
       "validated": "yes",

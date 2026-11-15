@@ -222,6 +222,37 @@ async function poolIssuerOrder(d) {
   });
 }
 
+// ── Base protocol: the largest amount there is ───────────────────────────
+// i64::MAX stroops: 922,337,203,685.4775807 units. A float64 holds integers
+// exactly only to 2^53, so any amount above 900,719,925.4740992 units is
+// rounded by code that stores amounts as doubles.
+export const I64_MAX = '9223372036854775807';
+async function maxAmount(d) {
+  const issuer = d.keypair('max-amount-issuer');
+  const holder = d.keypair('max-amount-holder');
+  await d.fund(issuer);
+  await d.fund(holder);
+  const asset = new Asset('ISTX', issuer.publicKey());
+  await d.submit(holder, Operation.changeTrust({ asset }));
+  const amount = '922337203685.4775807';
+  const res = await d.submit(issuer, Operation.payment({ destination: holder.publicKey(), asset, amount }));
+  return writeFixture({
+    id: `base-max-amount-${d.name}-0001`,
+    cap_ids: [],
+    protocol_version: d.protocolVersion,
+    network: d.name,
+    xdr_path: 'tx.operations[0].body.paymentOp.amount',
+    source: d.source(res),
+    expected_decoded: { amount, amount_stroops: I64_MAX, asset: assetString(asset) },
+    expected_indexed: { recipient: holder.publicKey(), asset: assetString(asset), amount_stroops: I64_MAX },
+    sightings: ['stellar/stellar-etl#454'],
+    files: {
+      envelope: { xdr_type: 'TransactionEnvelope', b64: res.envelope },
+      meta: { xdr_type: 'TransactionMeta', b64: res.meta },
+    },
+  });
+}
+
 // ── Base protocol: memo text that is not UTF-8, at its 28-byte maximum ───
 async function memoNonUtf8(d) {
   const sender = d.keypair('memo-sender');
@@ -448,6 +479,7 @@ export const SCENARIOS = [
   { name: 'muxed-max-id', run: muxedMaxId, drivers: ['core'] },
   { name: 'pool-issuer-order', run: poolIssuerOrder, drivers: ['core'] },
   { name: 'memo-non-utf8', run: memoNonUtf8, drivers: ['core'] },
+  { name: 'max-amount', run: maxAmount, drivers: ['core'] },
   { name: 'max-length-vectors', run: maxLengthVectors, drivers: ['core'] },
   { name: 'muxed-soroban-source', run: muxedSorobanSource, drivers: ['core'] },
   // The probe contract is built with soroban-sdk 29: protocol 29 and later.

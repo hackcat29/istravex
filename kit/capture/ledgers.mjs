@@ -49,14 +49,18 @@ async function testnet(seq) {
 const refresh = process.argv.includes('--refresh');
 const seen = new Set();
 for (const { manifest: m } of readCorpus()) {
-  const key = `${m.network}/${m.source.ledger}`;
-  if (m.network === 'local' || seen.has(key)) continue;
-  seen.add(key);
-  if (!refresh && ledgerStored(m.network, m.source.ledger)) {
-    console.log(`${key}: pinned`);
-    continue;
+  if (m.network === 'local' || m.network === 'synthetic') continue;
+  // The primary transaction's ledger, and the ledgers of any related transactions.
+  for (const seq of [m.source.ledger, ...(m.source.related ?? []).map((r) => r.ledger)]) {
+    const key = `${m.network}/${seq}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (!refresh && ledgerStored(m.network, seq)) {
+      console.log(`${key}: pinned`);
+      continue;
+    }
+    const got = m.network === 'pubnet' ? await pubnet(seq) : await testnet(seq);
+    storeLedger(m.network, seq, got.raw, got.source, got.zst);
+    console.log(`${key}: ${got.raw.length} B`);
   }
-  const got = m.network === 'pubnet' ? await pubnet(m.source.ledger) : await testnet(m.source.ledger);
-  storeLedger(m.network, m.source.ledger, got.raw, got.source, got.zst);
-  console.log(`${key}: ${got.raw.length} B`);
 }

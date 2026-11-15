@@ -1,0 +1,53 @@
+{
+  "id": "cap73-sac-trust-pubnet-0001",
+  "pattern": "sac-trust",
+  "cap_ids": [
+    "CAP-0073"
+  ],
+  "protocol_version": 29,
+  "network": "pubnet",
+  "xdr_type": "TransactionMeta",
+  "xdr_path": "operations[0].changes[*].created.data.trustLine",
+  "sha256": "638efee7c9f359350bbe78ee795c79963578c282ee3465282d6d94ba1ac5408e",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 65212685,
+    "tx_hash": "f4075df2bd9deeadc1cae476e7e13dd9f835618ea66c760c2257c686b9b915d4",
+    "closed_at": "2026-10-30T08:33:29Z",
+    "sac_contract": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75"
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "tx_hash": "f4075df2bd9deeadc1cae476e7e13dd9f835618ea66c760c2257c686b9b915d4",
+    "function": "trust",
+    "contract": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75"
+  },
+  "expected_indexed": {
+    "trustline_created": true,
+    "account": "GBR6F2WIA5ORKAWHE7MPVOQJOYVRU7Y2E64TQCZK7R5KNU6ITIVNJFJZ",
+    "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+    "limit": "9223372036854775807",
+    "classic_change_trust_ops": 0
+  },
+  "sightings": [
+    "stellar/wallet-backend#731",
+    "stellar/stellar-etl#460"
+  ],
+  "files": [
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "638efee7c9f359350bbe78ee795c79963578c282ee3465282d6d94ba1ac5408e",
+      "bytes": 2800
+    },
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "d886b39c7369260099c2b5b4180c3a45ec9f6342d07d22477697fdb6ebc27f7b",
+      "bytes": 624
+    }
+  ]
+}

@@ -12,9 +12,9 @@
   "source": {
     "kind": "generated",
     "network_endpoint": "stellar-core://standalone",
-    "ledger": 42,
-    "tx_hash": "d6c1eb95d6aba725a0abc6d0d932e59b0589ae86f7af2d6ec341b2fd29702347",
-    "closed_at": "2103-05-16T00:00:00.000Z",
+    "ledger": 46,
+    "tx_hash": "40ce0a1eb9e4f604c12273fa13b6673e8eebc3fbf44599857f39c59d0275e8a1",
+    "closed_at": "2103-09-13T00:00:00.000Z",
     "generator": {
       "core_version": "v30.0.0-dirty",
       "build": "Homebrew bottle stellar-core 30.0.0 (arm64_tahoe), bottle sha256 4f2963bae1af06b037e8ce6e397719ed3721e093d89f98d8358f69ec457aa25c",
@@ -27,7 +27,7 @@
       "close_time_step": 2592000,
       "probe_wasm_sha256": "384df0071e3d5fd998af9ccfcf75e9a07e5a8870d05cb2453ef582bf57b0e374"
     },
-    "ledger_entry_at": 42,
+    "ledger_entry_at": 46,
     "contract": "CAQJP4LYMMFS5GSORWHDMS3IHB7KPN2UHYZBYXWGAYQSCCIAGSV2DS23"
   },
   "synthetic": false,
@@ -70,14 +70,14 @@
       "name": "envelope",
       "xdr_type": "TransactionEnvelope",
       "path": "envelope.xdr.b64",
-      "sha256": "ec83b2e7a30b03495d0ba098573f0209fa37b3af87067fa4555fb8ed637e0bae",
+      "sha256": "c5bc38bd9328c32348a485bcb681d03f7b95701e4608ccc7d27f3589d7640e46",
       "bytes": 672
     },
     {
       "name": "meta",
       "xdr_type": "TransactionMeta",
       "path": "meta.xdr.b64",
-      "sha256": "923be482a7bfda8593e9ce69efca03aca43c28d0ee2a502d09fc11806ee2548b",
+      "sha256": "431ae9f995004fe507c93e02fd493c6b794035cdc59cc287ea78ffcb5cfe88a8",
       "bytes": 740
     }
   ]

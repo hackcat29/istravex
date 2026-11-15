@@ -59,7 +59,7 @@
       "name": "meta",
       "xdr_type": "TransactionMeta",
       "path": "meta.xdr.b64",
-      "sha256": "0fcc1eacf638bfccb41bb90a0d238fe0a3d107388b055d2e9986f722e3efa707",
+      "sha256": "bc08900f315ed7424423285c4ab54d8ca87bb2d43936b68492803eef5520aad0",
       "bytes": 2264
     }
   ]

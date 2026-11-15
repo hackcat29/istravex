@@ -92,6 +92,25 @@ const indexers = {
       return { recipient: m.baseAccount().accountId(), recipient_muxed_id: m.id(), participants: accountsChanged(meta) };
     },
   },
+  'max-amount': {
+    naive({ envelope: env }) {
+      // Bug pattern (stellar-etl#454): amounts kept as JavaScript numbers.
+      const pay = innerTx(env).operations[0].body.payment;
+      return { recipient: pay.destination, asset: assetString(pay.asset), amount_stroops: String(Number(pay.amount)) };
+    },
+    reference({ envelope: env, meta }) {
+      // The credited amount from the trustline's balance change in meta.
+      const body = meta.v4 ?? meta.v3 ?? meta.v2;
+      const changes = body.operations[0].changes;
+      const after = changes.find((c) => c.updated?.data?.trustline)?.updated.data.trustline;
+      const before = changes.find((c) => c.state?.data?.trustline)?.state.data.trustline;
+      return {
+        recipient: after.account_id,
+        asset: assetString(after.asset),
+        amount_stroops: String(BigInt(after.balance) - BigInt(before.balance)),
+      };
+    },
+  },
   'muxed-soroban-source': {
     naive({ envelope: env }) {
       // Bug pattern (wallet-backend#716): the source as written, an M-address.

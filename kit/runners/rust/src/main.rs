@@ -299,6 +299,14 @@ fn native<'a>(m: &'a Manifest, dec: &'a BTreeMap<String, Decoded>) -> Result<Vec
                 ),
             ]
         }
+        "max-amount" => {
+            let pay = move || env_json().map(|j| tx_body(&j)["operations"][0]["body"]["payment"].clone());
+            vec![
+                ("amount", s(&e["amount"]), Box::new(move || Ok(stroops(&s(&pay()?["amount"]))))),
+                ("amount_stroops", s(&e["amount_stroops"]), Box::new(move || Ok(s(&pay()?["amount"])))),
+                ("asset", s(&e["asset"]), Box::new(move || Ok(asset(&pay()?["asset"])))),
+            ]
+        }
         "memo-non-utf8" => vec![(
             "memo_bytes",
             s(&e["memo_hex"]),
@@ -521,6 +529,10 @@ fn main() {
             match native(&m, &dec) {
                 Ok(rows) => {
                     for (name, want, observe) in rows {
+                        // A check whose expected value this fixture doesn't carry doesn't apply.
+                        if want == "—" {
+                            continue;
+                        }
                         let got = observe().unwrap_or_else(|e| format!("error: {e}"));
                         if got != want {
                             failed.push(name.to_string());

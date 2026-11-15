@@ -7,3 +7,4 @@ kit/runners/rust/target
 .cache
 .wrangler
 build/
+docs/src/_props

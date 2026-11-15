@@ -227,6 +227,13 @@ func nativeChecks(m manifest, dec map[string]any) ([]row, error) {
 				return hex.EncodeToString(id[:]), err
 			}},
 		}, nil
+	case "max-amount":
+		pay := func() xdr.PaymentOp { return env.Operations()[0].Body.MustPaymentOp() }
+		return []row{
+			{"amount", str(e["amount"]), func() (string, error) { return ok(amount.String(pay().Amount)) }},
+			{"amount_stroops", str(e["amount_stroops"]), func() (string, error) { return ok(strconv.FormatInt(int64(pay().Amount), 10)) }},
+			{"asset", str(e["asset"]), func() (string, error) { return ok(pay().Asset.StringCanonical()) }},
+		}, nil
 	case "memo-non-utf8":
 		return []row{
 			{"memo_bytes", str(e["memo_hex"]), func() (string, error) { return ok(hex.EncodeToString([]byte(env.Memo().MustText()))) }},
@@ -371,6 +378,10 @@ func run(m manifest) result {
 	}
 	r.Checks["native"] = "pass"
 	for _, x := range rows {
+		// A check whose expected value this fixture doesn't carry doesn't apply.
+		if x.want == "<nil>" {
+			continue
+		}
 		got, err := evaluate(x)
 		if err != nil {
 			got = "error: " + err.Error()
