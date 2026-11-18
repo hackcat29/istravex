@@ -49,7 +49,7 @@ Each has its own page: [Capturing](/corpus/capturing) covers the first two, [Gen
 A fixture is only as good as the claim that it's real. Three things back that claim:
 
 1. **Canonical ledgers.** Every fixture's full ledger is stored, from the most authoritative source we could get (SDF's public data lake for mainnet), and its sha256 is recorded.
-2. **Byte equality.** The [provenance verifier](/corpus/provenance) requires every XDR value in every fixture to be byte-identical to the ledger's copy, and a whole-ledger fixture to equal its ledger. 1,794 checks, all passing, on every CI run.
+2. **Byte equality.** The [provenance verifier](/corpus/provenance) requires every XDR value in every fixture to be byte-identical to the ledger's copy, and a whole-ledger fixture to equal its ledger. 1,808 checks, all passing, on every CI run.
 3. **Independent expectations.** What a fixture says correct software should produce comes from Horizon or from the transaction as constructed, never from the SDKs being tested.
 
 On top of the corpus, the SDKs are also checked against [stellar-core's own golden ledgers](/corpus/goldens): 15,306 `LedgerCloseMeta` frames from core's test suite.

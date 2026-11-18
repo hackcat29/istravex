@@ -15,7 +15,7 @@ The full model is [`THREAT-MODEL.md`](https://github.com/hackcat29/istravex/blob
 
 | # | Threat | Control |
 |---|---|---|
-| T1 | A fixture's bytes don't match the ledger | Every fixture is byte-compared with its canonical ledger on every push (1,794 checks) |
+| T1 | A fixture's bytes don't match the ledger | Every fixture is byte-compared with its canonical ledger on every push (1,808 checks) |
 | T2 | An expected value comes from the SDK under test | Expected values come from Horizon, the transaction as built, or stellar-core's own records. Generated cases are judged by stellar-core's `print-xdr` |
 | T3 | A compromised upstream runs in CI | Exact pins; read-only CI permissions; deploy secrets only in protected environments that run from `main` |
 | T4 | A dependency changes under a version range | Lockfiles; sha256 pins for the Java jars and the stellar-core binary |

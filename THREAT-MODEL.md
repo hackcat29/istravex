@@ -38,7 +38,7 @@ Data flow: public ledger data → capture (bytes pinned by sha256 to the canonic
 
 | # | Control | Where |
 |---|---|---|
-| T1 | Every non-synthetic fixture is byte-compared with its canonical ledger, and every stored ledger by sha256, on every push (1,794 checks). Mainnet and testnet ledgers are the data lake's objects, byte for byte. | `kit/go/cmd/verify`, CI |
+| T1 | Every non-synthetic fixture is byte-compared with its canonical ledger, and every stored ledger by sha256, on every push (1,808 checks). Mainnet and testnet ledgers are the data lake's objects, byte for byte. | `kit/go/cmd/verify`, CI |
 | T2 | Expected values come from Horizon, the transaction as constructed, or stellar-core's own records (hashes in the ledger's results), never from an SDK under test; each manifest records its source. Generated cases are judged by the reference decoder and by stellar-core's `print-xdr`. | `kit/capture`, `kit/cases/core-oracle.mjs` |
 | T3 | Upstreams are pinned by exact version, commit or binary sha256; pilots build at pinned commits. CI jobs get read-only `contents` permission, and deploy secrets are only in the deploy workflow's environments, which run from `main` after CI passes. | Workflows, `deploy.yml` |
 | T4 | Lockfiles (`package-lock.json`, `go.sum`, `Cargo.lock`), exact pins for Python and PHP, sha256-pinned Java jars and stellar-core binary. | Repository |
