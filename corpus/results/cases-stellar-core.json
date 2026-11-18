@@ -1,0 +1,41 @@
+{
+ "sdk": "stellar-core",
+ "package": "stellar-core print-xdr",
+ "version": "v30.0.0-dirty",
+ "types": [
+  "LedgerHeader",
+  "TransactionMeta",
+  "TransactionResult",
+  "TransactionResultPair",
+  "TransactionEnvelope",
+  "LedgerEntryChanges"
+ ],
+ "cases": 45144,
+ "supported": 672,
+ "passed": 672,
+ "kinds": {
+  "valid": {
+   "cases": 12134,
+   "supported": 192,
+   "passed": 192
+  },
+  "trailing": {
+   "cases": 12134,
+   "supported": 192,
+   "passed": 192
+  },
+  "truncated": {
+   "cases": 12134,
+   "supported": 192,
+   "passed": 192
+  },
+  "bad_first_word": {
+   "cases": 8742,
+   "supported": 96,
+   "passed": 96
+  }
+ },
+ "failing_types": {},
+ "unsupported_types": [],
+ "failures": []
+}

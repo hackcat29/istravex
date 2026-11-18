@@ -31,8 +31,8 @@ Seven findings are defects the kit found that nobody had reported. Three were fi
 
 **Drafted, to file:**
 
-- **F-0023**, java-stellar-sdk 6.0.0, **high**: a transaction whose `PRECOND_V2` fields are all defaults is rebuilt as `PRECOND_TIME`, so `hashHex()` is wrong (`035f2643…` for mainnet transaction `68f96059…`) and signing it signs a different transaction. The sweep finds 58 such transactions in 307,577 mainnet transactions; Go, JavaScript, Rust and Python hash every one correctly. Same root as [java-stellar-sdk#837](https://github.com/lightsail-network/java-stellar-sdk/issues/837), with a trigger its proposed fix doesn't cover.
-- **F-0024**, stellar-php-sdk 1.18.0, **high**: the same defect in PHP, with the same wrong hash.
+- **F-0023**, java-stellar-sdk 6.0.0, medium: a transaction whose `PRECOND_V2` fields are all defaults is rebuilt as `PRECOND_TIME`, so `hashHex()` is wrong (`035f2643…` for mainnet transaction `68f96059…`) and signing it signs a different transaction. The sweep finds 58 such transactions in 307,577 mainnet transactions; Go, JavaScript, Rust and Python hash every one correctly. Same root as [java-stellar-sdk#837](https://github.com/lightsail-network/java-stellar-sdk/issues/837), with a trigger its proposed fix doesn't cover.
+- **F-0024**, stellar-php-sdk 1.18.0, medium: the same defect in PHP, with the same wrong hash.
 - **F-0021**, stellar-php-sdk 1.18.0, medium: `MuxedAccount::getId()` returns IDs above 2⁶³ as negative numbers; the destination of a real mainnet payment, 18067157809773112502, reads as -379586263936439114.
 - **F-0022**, stellar-php-sdk 1.18.0, low: the decoder accepts 101 operations and a 29-byte memo, past their XDR maximums.
 

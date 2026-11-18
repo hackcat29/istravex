@@ -25,7 +25,7 @@ Every finding is triaged on the severity scale in [`corpus/findings.json`](corpu
   - Projects covered by SDF's bug bounty (stellar-core, the SDKs, stellar-etl, wallet-backend and other SDF repositories): through the [SDF bug bounty program](https://stellar.org/grants-and-funding/bug-bounty).
   - Other projects: their security policy, or GitHub private vulnerability reporting, or their maintainers directly.
   - The fixture that reproduces it stays out of the public corpus, and the finding out of the public report, until a fix is released or 90 days have passed, whichever is first (extended on request while a fix is in progress).
-- **Low severity or informational, not exploitable** (reproducibility, ergonomics, documentation): filed as a public issue, with a link to the fixture.
+- **Medium, low or informational, and not exploitable by a third party** (a wrong value or a rejected valid value with no attacker path, reproducibility, ergonomics, documentation): filed as a public issue, with a link to the fixture.
 
 `findings.json` records how each finding was disclosed in its `disclosure` field.
 

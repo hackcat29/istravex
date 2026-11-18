@@ -23,7 +23,7 @@ In scope: the kit, the API and mock RPC (and their hosted instances), the site, 
 Every finding is triaged on the [severity scale](/project/findings#severity) first.
 
 - **Exploitable by a third party, or high or critical** (anything that halts or corrupts ingestion, mis-attributes funds, crashes a node or a decoder, or bypasses validation): reported **privately** first. For SDF projects (stellar-core, the SDKs, stellar-etl, wallet-backend), that's the [SDF bug bounty program](https://stellar.org/grants-and-funding/bug-bounty), which their own security policies point to. For other projects, their security policy or GitHub private vulnerability reporting. The reproducing fixture and the finding stay out of the public corpus until a fix ships or 90 days pass.
-- **Low severity or informational, not exploitable**: a public issue, linked to its fixture.
+- **Medium, low or informational, and not exploitable by a third party**: a public issue, linked to its fixture.
 
 Each finding records how it was disclosed in its `disclosure` field: `already-public`, `public-issue`, `private-then-public`, `private-embargoed` or `not-disclosed`.
 

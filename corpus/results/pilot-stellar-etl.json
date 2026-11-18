@@ -1,7 +1,7 @@
 {
   "component": "stellar/stellar-etl",
   "repo": "https://github.com/stellar/stellar-etl",
-  "ref": "v2.8.34",
+  "ref": "v2.8.35",
   "entrypoint": "internal/transform: TransformTransaction, TransformOperation, TransformEffect, TransformSigners, TransformTrustline",
   "runtime": "go1.27.3",
   "results": [

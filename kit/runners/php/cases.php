@@ -21,7 +21,7 @@ $failing = [];
 $unsupported = [];
 $fails = [];
 $n = 0;
-$lines = gzfile($path);
+$lines = array_filter(explode("\n", gzdecode(file_get_contents($path))), fn($l) => $l !== "");
 foreach ($lines as $line) {
     $c = json_decode($line, true);
     $type = $c['type'];

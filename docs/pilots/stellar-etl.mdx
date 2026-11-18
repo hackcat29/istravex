@@ -9,7 +9,7 @@ import Etl from '/snippets/etl-table.mdx';
 
 ## How it works
 
-stellar-etl's exports read Galexie files from a GCS datastore, and that's the only datastore it supports. So the pilot does what the wallet-backend pilot does: a small adapter, [`kit/pilot/stellar-etl/adapter.go`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/stellar-etl/adapter.go), is copied into a checkout of the latest release (v2.8.34) and runs the same transforms each export runs, on each fixture's canonical ledger read from `corpus/ledgers`:
+stellar-etl's exports read Galexie files from a GCS datastore, and that's the only datastore it supports. So the pilot does what the wallet-backend pilot does: a small adapter, [`kit/pilot/stellar-etl/adapter.go`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/stellar-etl/adapter.go), is copied into a checkout of the latest release (v2.8.35) and runs the same transforms each export runs, on each fixture's canonical ledger read from `corpus/ledgers`:
 
 | Export | Transform |
 |---|---|

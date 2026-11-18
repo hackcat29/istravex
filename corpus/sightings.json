@@ -48,7 +48,7 @@
       "status": "reproduced",
       "evidence": "pilot-stellar-etl",
       "finding": "ISTRAVEX-F-0016",
-      "detail": "Open upstream: reproduced at the current release, v2.8.34 (amounts above 2^53 stroops lose precision)."
+      "detail": "Open upstream: reproduced at the current release, v2.8.35 (amounts above 2^53 stroops lose precision)."
     },
     {
       "issue": "stellar/stellar-etl#470",
@@ -59,7 +59,7 @@
       "fixtures": [
         "cap85-contract-executable-external-ref-testnet-0001"
       ],
-      "detail": "The epic's XDR changes: stellar-etl v2.8.34 exports the CAP-0085 externally managed contract executable (a testnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
+      "detail": "The epic's XDR changes: stellar-etl v2.8.35 exports the CAP-0085 externally managed contract executable (a testnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
     },
     {
       "issue": "stellar/wallet-backend#716",
@@ -76,7 +76,7 @@
       "status": "reproduced",
       "evidence": "pilot-stellar-etl",
       "finding": "ISTRAVEX-F-0017",
-      "detail": "Open upstream: reproduced at the current release, v2.8.34 (no trustline_created effect for SAC trust())."
+      "detail": "Open upstream: reproduced at the current release, v2.8.35 (no trustline_created effect for SAC trust())."
     },
     {
       "issue": "stellar/wallet-backend#753",

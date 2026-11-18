@@ -17,7 +17,7 @@ description: Releases of the kit, corpus and API.
   - [The sweep](/tools/sdk-runners#sweeping-real-traffic): Go, Rust, JavaScript, Python and Java over 1,241 whole ledgers, each round-tripped byte for byte and each of 310,837 transaction hashes matched against stellar-core's
 
   **Pilots**
-  - wallet-backend: 123/123, over RPC and the data lake; stellar-etl v2.8.34: 119/123, the misses still its open #454 and #460
+  - wallet-backend: 123/123, over RPC and the data lake; stellar-etl v2.8.35 (its newest release, found by the new weekly monitor): 119/123, the misses still its open #454 and #460
 
   **Findings**
   - Seven new defects: F-0023 (java-stellar-sdk) and F-0024 (stellar-php-sdk) compute the wrong hash for transactions whose `PRECOND_V2` fields are all defaults; F-0021, PHP muxed IDs above 2⁶³ come back negative; F-0022, PHP decodes past XDR maximums; drafted for filing. F-0020: js-stellar-sdk before 17.3.0 can't decode protocol 30 XDR

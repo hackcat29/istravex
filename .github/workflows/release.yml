@@ -1,0 +1,57 @@
+name: Release
+
+# On a version tag: refuse unless the tagged commit is on main and CI passed
+# on it; build the release assets (the corpus archive and istravex-lint for
+# four platforms); write SHA256SUMS; attest each asset's build provenance
+# (verify with `gh attestation verify <file> -R hackcat29/istravex`); and
+# attach them to the GitHub release.
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: The tag is on main, and CI passed on its commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::$GITHUB_REF_NAME is not on main"; exit 1; }
+          ok=$(gh run list -R "$GITHUB_REPOSITORY" --workflow ci.yml --commit "$GITHUB_SHA" --json conclusion -q '[.[] | select(.conclusion == "success")] | length')
+          [ "$ok" -gt 0 ] || { echo "::error::CI has not passed on $GITHUB_SHA"; exit 1; }
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - name: Build the assets
+        run: |
+          mkdir -p dist-release
+          tar --sort=name --mtime='2026-01-01 00:00Z' --owner=0 --group=0 --numeric-owner \
+            -czf "dist-release/istravex-corpus-$GITHUB_REF_NAME.tar.gz" corpus
+          for target in linux/amd64 linux/arm64 darwin/amd64 darwin/arm64; do
+            os=${target%/*}; arch=${target#*/}
+            (cd kit/go && CGO_ENABLED=0 GOOS=$os GOARCH=$arch go build -trimpath -ldflags="-s -w" \
+              -o "../../dist-release/istravex-lint-$GITHUB_REF_NAME-$os-$arch" ./cmd/istravex-lint)
+          done
+          (cd dist-release && sha256sum * > SHA256SUMS && cat SHA256SUMS)
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist-release/*
+      - name: Attach to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --notes "See the changelog: https://docs.istravex.com/project/changelog" --verify-tag
+          fi
+          gh release upload "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" dist-release/* --clobber

@@ -32,8 +32,8 @@
     "reference_correct": 9,
     "replay_cases": 9,
     "max_protocol": 30,
-    "findings": 24,
-    "findings_reproduced": 19,
+    "findings": 26,
+    "findings_reproduced": 21,
     "covered_caps": 45,
     "caps_with_ledger_shape": 47,
     "cells_reachable": 603,
@@ -27866,7 +27866,7 @@
         "id": "ISTRAVEX-F-0016",
         "title": "Amounts above 2^53 stroops lose precision in stellar-etl's operation and balance rows",
         "component": "stellar/stellar-etl",
-        "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+        "affected": "v2.8.35 (latest, 2026-11-17) and earlier",
         "fixed_in": null,
         "severity": "medium",
         "status": "open-upstream",
@@ -27888,7 +27888,7 @@
         "id": "ISTRAVEX-F-0017",
         "title": "A trustline created by SAC trust() produces no trustline_created effect in stellar-etl",
         "component": "stellar/stellar-etl",
-        "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+        "affected": "v2.8.35 (latest, 2026-11-17) and earlier",
         "fixed_in": null,
         "severity": "medium",
         "status": "open-upstream",
@@ -28038,7 +28038,7 @@
         "component": "lightsail-network/java-stellar-sdk",
         "affected": "6.0.0 (latest) and earlier",
         "fixed_in": null,
-        "severity": "high",
+        "severity": "medium",
         "status": "to-file",
         "issue": null,
         "disclosure": "not-disclosed",
@@ -28063,7 +28063,7 @@
         "component": "Soneso/stellar-php-sdk",
         "affected": "1.18.0 (latest) and earlier",
         "fixed_in": null,
-        "severity": "high",
+        "severity": "medium",
         "status": "to-file",
         "issue": null,
         "disclosure": "not-disclosed",
@@ -28080,13 +28080,51 @@
         "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643… for mainnet transaction 68f96059…. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
         "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023).",
         "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledger bounds, no min sequence number, `minSeqAge` 0, `minSeqLedgerGap` 0, no extra signers. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`AbstractTransaction::fromEnvelopeBase64XdrString(...)->hash(Network::public())` returns 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0 for it, not the network's hash, because the rebuilt transaction carries `PRECOND_TIME`. (`XdrTransactionEnvelope` itself round-trips the bytes.) A wallet that decodes such an envelope and signs it signs a different transaction.\n\nKeeping the decoded preconditions discriminant, instead of inferring it from the values, fixes it. java-stellar-sdk has the same defect. Found by the Istravex conformance corpus (https://github.com/hackcat29/istravex)."
+      },
+      {
+        "id": "ISTRAVEX-F-0025",
+        "title": "java-stellar-sdk accepts trailing bytes after a complete XDR value",
+        "component": "lightsail-network/java-stellar-sdk",
+        "affected": "6.0.0 (latest release) and earlier",
+        "fixed_in": "lightsail-network/java-stellar-sdk#842 on master (2026-11-16), unreleased",
+        "severity": "low",
+        "status": "fixed-upstream",
+        "issue": "lightsail-network/java-stellar-sdk#833",
+        "disclosure": "already-public",
+        "cap_ids": [],
+        "fixtures": [],
+        "checks": [
+          "cases-java:trailing:all"
+        ],
+        "reproduced": true,
+        "summary": "fromXdrBase64 and fromXdrByteArray do not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there. stellar-core and the other SDKs refuse it.",
+        "evidence": "kit/runners/java/Run.java cases: every one of the 4,872 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; JavaScript, Go, Rust and both Python packages refuse all of them."
+      },
+      {
+        "id": "ISTRAVEX-F-0026",
+        "title": "Python stellar-sdk treats any non-zero optional flag as present",
+        "component": "StellarCN/py-stellar-base",
+        "affected": "stellar-sdk 17.0.1 (latest) and earlier",
+        "fixed_in": "stellar-xdr 0.2.x, the package replacing stellar_sdk.xdr; unreleased in stellar-sdk",
+        "severity": "low",
+        "status": "fixed-upstream",
+        "issue": "StellarCN/py-stellar-base#1263",
+        "disclosure": "already-public",
+        "cap_ids": [],
+        "fixtures": [],
+        "checks": [
+          "cases-python:bad_first_word:all"
+        ],
+        "reproduced": true,
+        "summary": "XDR optional flags must be 0 or 1. stellar_sdk.xdr reads any non-zero word as present, so a value whose optional flag is 0x7FFFFFFF decodes; stellar-core refuses it. The replacement package, stellar-xdr, refuses it too.",
+        "evidence": "kit/runners/python/cases.py: 58 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2 and others) decode in stellar-sdk 17.0.1; stellar-xdr 0.2.1 and every other SDK refuse them."
       }
     ]
   },
   "etl": {
     "component": "stellar/stellar-etl",
     "repo": "https://github.com/stellar/stellar-etl",
-    "ref": "v2.8.34",
+    "ref": "v2.8.35",
     "results": [
       {
         "fixture": "base-account-merge-has-sub-entries-pubnet-0001",

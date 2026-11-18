@@ -1,0 +1,91 @@
+name: Monitor
+
+# The monitoring plan (docs: project/threat-model#monitoring), run weekly.
+# Each check that finds something opens one issue (or comments on the open
+# one), so nothing it sees is lost:
+#
+# - upstream drift: every pinned SDK, indexer and stellar-core against its
+#   newest release (kit/monitor/drift.mjs);
+# - hosted services: the API, the mock RPC, the docs and the site answer
+#   correctly;
+# - new XDR shapes: the past week's mainnet and testnet ledgers scanned for
+#   cells the corpus has never seen (kit/go/cmd/shape-scan).
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+      - name: Pins against their newest releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node kit/monitor/drift.mjs | tee drift.jsonl
+          jq -c 'select(.newer == true)' drift.jsonl | while read -r r; do
+            dep=$(echo "$r" | jq -r .dep); latest=$(echo "$r" | jq -r .latest)
+            title="Upstream: $dep $latest"
+            if [ -n "$(gh issue list --state all --search "\"$title\" in:title" --json number -q '.[0].number')" ]; then continue; fi
+            gh issue create --label upstream-drift --title "$title" --body "$(echo "$r" | jq -r '"`\(.dep)` is pinned at **\(.pinned)** in `\(.where)`; the newest release is **\(.latest)** (\(.url)).\n\nTo move the pin:\n\n- [ ] Update the pin in `\(.where)` and run the affected stage (`npm run corpus:run`, the pilots, or the PHP / sweep workflows).\n- [ ] Every check that changes is either a finding fixed (move its status) or a new failure (triage it into `corpus/findings.json`).\n- [ ] `node kit/check-results.mjs` is green; release."')" \
+              || gh issue create --title "$title" --body "Pinned upstream has a newer release: $r"
+          done
+          jq -c 'select(.error != null)' drift.jsonl | while read -r r; do echo "::warning::$r"; done
+
+  services:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: The hosted API, mock RPC, docs and site answer correctly
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          fail=""
+          check() { if ! out=$(eval "$2" 2>&1); then fail="$fail\n- **$1**: $(echo "$out" | head -c 300)"; fi; }
+          check "API /v1/stats" "curl -fsS --max-time 20 https://api.istravex.com/v1/stats | jq -e '.fixtures > 0'"
+          check "Mock RPC getHealth (pubnet)" "curl -fsS --max-time 20 -X POST https://rpc.istravex.com/pubnet -H 'content-type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"getHealth\"}' | jq -e '.result.status == \"healthy\"'"
+          check "Docs" "curl -fsS --max-time 20 -o /dev/null https://docs.istravex.com/quickstart"
+          check "Site" "curl -fsS --max-time 20 -o /dev/null https://istravex.com/"
+          if [ -n "$fail" ]; then
+            open=$(gh issue list -R ${{ github.repository }} --state open --search '"Monitor: hosted services" in:title' --json number -q '.[0].number')
+            body=$(printf "The weekly check failed on %s:\n%b" "$(date -u +%F)" "$fail")
+            if [ -n "$open" ]; then gh issue comment "$open" -R ${{ github.repository }} --body "$body"; else gh issue create -R ${{ github.repository }} --title "Monitor: hosted services" --body "$body"; fi
+            exit 1
+          fi
+
+  new-shapes:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - name: Scan the past week (every 20th ledger) for cells the corpus hasn't seen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: kit/go
+        run: |
+          pub=$(curl -fsS https://horizon.stellar.org/ | jq -r .history_latest_ledger)
+          test=$(curl -fsS https://horizon-testnet.stellar.org/ | jq -r .history_latest_ledger)
+          go run ./cmd/shape-scan -from $((pub - 120000)) -to $pub -step 20 -keep 1 > pubnet.jsonl
+          go run ./cmd/shape-scan -network testnet -from $((test - 120000)) -to $test -step 20 -keep 1 > testnet.jsonl
+          jq -r '.cells[] | select(.seen > 0) | .cell' ../../corpus/cells.json | sort -u > known.txt
+          cat pubnet.jsonl testnet.jsonl | jq -r 'select(.kind == "summary") | .cell_counts | keys[]' | sort -u > seen.txt
+          comm -13 known.txt seen.txt > new.txt
+          if [ -s new.txt ]; then
+            body=$(printf "Cells seen on the networks this week that the corpus has never seen:\n\n%s\n\nCommit the scans to corpus/scan/ and run \`node kit/capture/shapes.mjs\` to capture fixtures for them." "$(sed 's/^/- `/; s/$/`/' new.txt)")
+            gh issue create -R ${{ github.repository }} --title "Monitor: new XDR cells ($(date -u +%F))" --body "$body"
+          fi
+          echo "$(wc -l < new.txt) new cells"

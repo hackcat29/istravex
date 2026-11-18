@@ -24,5 +24,7 @@
 | F-0020 | js-stellar-sdk before 17.3.0 cannot decode protocol 30 XDR | `stellar/js-stellar-sdk` | medium | by-design | — | yes |
 | F-0021 | stellar-php-sdk returns muxed account IDs above 2^63 as negative numbers | `Soneso/stellar-php-sdk` | medium | to-file | — | yes |
 | F-0022 | stellar-php-sdk decodes values longer than their XDR maximum | `Soneso/stellar-php-sdk` | low | to-file | — | yes |
-| F-0023 | java-stellar-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults | `lightsail-network/java-stellar-sdk` | high | to-file | — | yes |
-| F-0024 | stellar-php-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults | `Soneso/stellar-php-sdk` | high | to-file | — | yes |
+| F-0023 | java-stellar-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults | `lightsail-network/java-stellar-sdk` | medium | to-file | — | yes |
+| F-0024 | stellar-php-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults | `Soneso/stellar-php-sdk` | medium | to-file | — | yes |
+| F-0025 | java-stellar-sdk accepts trailing bytes after a complete XDR value | `lightsail-network/java-stellar-sdk` | low | fixed-upstream | [java-stellar-sdk#833](https://github.com/lightsail-network/java-stellar-sdk/issues/833) | yes |
+| F-0026 | Python stellar-sdk treats any non-zero optional flag as present | `StellarCN/py-stellar-base` | low | fixed-upstream | [py-stellar-base#1263](https://github.com/StellarCN/py-stellar-base/issues/1263) | yes |

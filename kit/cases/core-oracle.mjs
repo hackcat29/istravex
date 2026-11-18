@@ -6,7 +6,7 @@
 // against another library. Writes corpus/results/cases-stellar-core.json.
 //
 //   node kit/cases/core-oracle.mjs [stellar-core binary]
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -17,7 +17,7 @@ import { summarize } from '../lib/cases.mjs';
 const core = process.argv[2] ?? 'stellar-core';
 // print-xdr --filetype → the XDR type it decodes.
 const FILETYPE = {
-  LedgerHeaderHistoryEntry: 'ledgerheader',
+  LedgerHeader: 'ledgerheader',
   TransactionMeta: 'meta',
   TransactionResult: 'result',
   TransactionResultPair: 'resultpair',
@@ -28,14 +28,12 @@ const version = execFileSync(core, ['version'], { encoding: 'utf8' }).split('\n'
 const cases = gunzipSync(readFileSync(join(CORPUS, 'generated', 'cases.jsonl.gz'))).toString().trim().split('\n').map((l) => JSON.parse(l));
 const dir = mkdtempSync(join(tmpdir(), 'istravex-core-'));
 const file = join(dir, 'case.xdr');
+// print-xdr exits 0 either way: it accepts when it prints the decoded value,
+// and refuses with "Could not decode with type …" on stderr and nothing on stdout.
 const accepts = (type, b64) => {
   writeFileSync(file, Buffer.from(b64, 'base64'));
-  try {
-    execFileSync(core, ['print-xdr', file, '--filetype', FILETYPE[type]], { stdio: 'ignore', timeout: 20_000 });
-    return true;
-  } catch {
-    return false;
-  }
+  const r = spawnSync(core, ['print-xdr', file, '--filetype', FILETYPE[type]], { encoding: 'utf8', timeout: 20_000 });
+  return r.status === 0 && r.stdout.trim().length > 0 && !/Could not decode/.test(r.stderr);
 };
 const results = cases.map((c) => {
   if (!FILETYPE[c.type]) return { ...c, outcome: 'unsupported' };

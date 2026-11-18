@@ -4959,6 +4959,13 @@
                 },
                 "example": {
                   "results": [
+                    "cases-go",
+                    "cases-java",
+                    "cases-javascript",
+                    "cases-python-xdr",
+                    "cases-python",
+                    "cases-rust",
+                    "cases-stellar-core",
                     "go",
                     "goldens-go",
                     "goldens-javascript",
@@ -5576,7 +5583,7 @@
                       "id": "ISTRAVEX-F-0016",
                       "title": "Amounts above 2^53 stroops lose precision in stellar-etl's operation and balance rows",
                       "component": "stellar/stellar-etl",
-                      "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+                      "affected": "v2.8.35 (latest, 2026-11-17) and earlier",
                       "fixed_in": null,
                       "severity": "medium",
                       "status": "open-upstream",
@@ -5598,7 +5605,7 @@
                       "id": "ISTRAVEX-F-0017",
                       "title": "A trustline created by SAC trust() produces no trustline_created effect in stellar-etl",
                       "component": "stellar/stellar-etl",
-                      "affected": "v2.8.34 (latest, 2026-11-11) and earlier",
+                      "affected": "v2.8.35 (latest, 2026-11-17) and earlier",
                       "fixed_in": null,
                       "severity": "medium",
                       "status": "open-upstream",
@@ -5748,7 +5755,7 @@
                       "component": "lightsail-network/java-stellar-sdk",
                       "affected": "6.0.0 (latest) and earlier",
                       "fixed_in": null,
-                      "severity": "high",
+                      "severity": "medium",
                       "status": "to-file",
                       "issue": null,
                       "disclosure": "not-disclosed",
@@ -5773,7 +5780,7 @@
                       "component": "Soneso/stellar-php-sdk",
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
-                      "severity": "high",
+                      "severity": "medium",
                       "status": "to-file",
                       "issue": null,
                       "disclosure": "not-disclosed",
@@ -5790,6 +5797,44 @@
                       "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::…",
                       "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a61…",
                       "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledge…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0025",
+                      "title": "java-stellar-sdk accepts trailing bytes after a complete XDR value",
+                      "component": "lightsail-network/java-stellar-sdk",
+                      "affected": "6.0.0 (latest release) and earlier",
+                      "fixed_in": "lightsail-network/java-stellar-sdk#842 on master (2026-11-16), unreleased",
+                      "severity": "low",
+                      "status": "fixed-upstream",
+                      "issue": "lightsail-network/java-stellar-sdk#833",
+                      "disclosure": "already-public",
+                      "cap_ids": [],
+                      "fixtures": [],
+                      "checks": [
+                        "cases-java:trailing:all"
+                      ],
+                      "reproduced": true,
+                      "summary": "fromXdrBase64 and fromXdrByteArray do not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there. stel…",
+                      "evidence": "kit/runners/java/Run.java cases: every one of the 4,872 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; JavaScript, Go, Rust a…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0026",
+                      "title": "Python stellar-sdk treats any non-zero optional flag as present",
+                      "component": "StellarCN/py-stellar-base",
+                      "affected": "stellar-sdk 17.0.1 (latest) and earlier",
+                      "fixed_in": "stellar-xdr 0.2.x, the package replacing stellar_sdk.xdr; unreleased in stellar-sdk",
+                      "severity": "low",
+                      "status": "fixed-upstream",
+                      "issue": "StellarCN/py-stellar-base#1263",
+                      "disclosure": "already-public",
+                      "cap_ids": [],
+                      "fixtures": [],
+                      "checks": [
+                        "cases-python:bad_first_word:all"
+                      ],
+                      "reproduced": true,
+                      "summary": "XDR optional flags must be 0 or 1. stellar_sdk.xdr reads any non-zero word as present, so a value whose optional flag is 0x7FFFFFFF decodes; stellar-core ref…",
+                      "evidence": "kit/runners/python/cases.py: 58 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2 and others) decode …"
                     }
                   ]
                 }
