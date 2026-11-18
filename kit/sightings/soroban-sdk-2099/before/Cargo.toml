@@ -1,0 +1,13 @@
+[package]
+name = "istravex-sighting-2099-before"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# soroban-sdk 29.0.1: the last release before the fix.
+[dependencies]
+soroban-sdk = { version = "=29.0.1", features = ["testutils"] }
+
+[[bin]]
+name = "check"
+path = "../check.rs"

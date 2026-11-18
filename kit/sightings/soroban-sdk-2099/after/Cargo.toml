@@ -1,0 +1,13 @@
+[package]
+name = "istravex-sighting-2099-after"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# soroban-sdk 30.0.0-rc.1: the first release with the fix (stellar/rs-soroban-sdk#2099).
+[dependencies]
+soroban-sdk = { version = "=30.0.0-rc.1", features = ["testutils"] }
+
+[[bin]]
+name = "check"
+path = "../check.rs"

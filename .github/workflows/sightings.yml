@@ -1,0 +1,81 @@
+name: Sightings
+
+# Reproductions of RFP sightings that need upstream builds too heavy for the
+# main CI job: each runs on the release before the fix and on the fix. The
+# merged result is an artifact; its files are committed as
+# corpus/results/sightings-*.json and checked by kit/check-results.mjs.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['kit/sightings/**', '.github/workflows/sightings.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  soroban-sdk-2099:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        side: [before, after]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - name: MuxedAddress::try_from_val on non-address values
+        run: cargo run --release -q --manifest-path kit/sightings/soroban-sdk-2099/${{ matrix.side }}/Cargo.toml > "$RUNNER_TEMP/soroban-sdk-2099-${{ matrix.side }}.json"
+      - run: cat "$RUNNER_TEMP/soroban-sdk-2099-${{ matrix.side }}.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: soroban-sdk-2099-${{ matrix.side }}
+          path: ${{ runner.temp }}/soroban-sdk-2099-${{ matrix.side }}.json
+
+  js-xdr-165:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: The 5.0.0 release (before the fix)
+        run: |
+          mkdir -p "$RUNNER_TEMP/release" && cd "$RUNNER_TEMP/release"
+          echo '{"private":true}' > package.json
+          npm install --no-audit --no-fund @stellar/js-xdr@5.0.0
+      - name: The fix (stellar/js-xdr#173, merged as 96862ad), built from source
+        run: |
+          git clone -q https://github.com/stellar/js-xdr.git "$RUNNER_TEMP/fix" && cd "$RUNNER_TEMP/fix"
+          git checkout -q 96862adbbbb68049dbb014832c9a4392461a617c
+          corepack enable
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm exec rollup -c rollup.config.mjs
+      - name: Writer cases from the issue
+        run: |
+          node kit/sightings/js-xdr-165.mjs "$RUNNER_TEMP/release/node_modules/@stellar/js-xdr/dist/js-xdr.cjs" "5.0.0" > "$RUNNER_TEMP/js-xdr-165-before.json"
+          node kit/sightings/js-xdr-165.mjs "$RUNNER_TEMP/fix/dist/js-xdr.cjs" "96862ad (fix)" > "$RUNNER_TEMP/js-xdr-165-after.json"
+          cat "$RUNNER_TEMP"/js-xdr-165-*.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: js-xdr-165
+          path: ${{ runner.temp }}/js-xdr-165-*.json
+
+  merge:
+    needs: [soroban-sdk-2099, js-xdr-165]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          merge-multiple: true
+          path: out
+      - name: Combine
+        run: |
+          jq -n --slurpfile b out/soroban-sdk-2099-before.json --slurpfile a out/soroban-sdk-2099-after.json \
+            '{sighting: "stellar/rs-soroban-sdk#2099", before: $b[0], after: $a[0], run: env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID}' > sightings-soroban-sdk-2099.json
+          jq -n --slurpfile b out/js-xdr-165-before.json --slurpfile a out/js-xdr-165-after.json \
+            '{sighting: "stellar/js-xdr#165", before: $b[0], after: $a[0], run: env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID}' > sightings-js-xdr-165.json
+          cat sightings-*.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sightings
+          path: sightings-*.json
