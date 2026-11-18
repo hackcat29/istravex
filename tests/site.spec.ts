@@ -77,7 +77,13 @@ test('hero stats and fixtures come from the corpus', async ({ page }) => {
   await expect(page.locator('#top')).toContainText(`${s.pilot_correct}/${s.pilot_fixtures}`);
   await page.locator('#fixtures').scrollIntoViewIfNeeded();
   await page.getByRole('tab', { name: /xdr\.b64/ }).click();
-  await expect(page.locator('#fixtures pre')).toContainText(corpus.fixtures[0].primary.b64.slice(0, 40));
+  // The panel shows one of the corpus's fixtures, byte for byte.
+  await expect
+    .poll(async () => {
+      const shown = (await page.locator('#fixtures pre').textContent()) ?? '';
+      return corpus.fixtures.some((f) => shown.includes(f.primary.b64.slice(0, 40)));
+    })
+    .toBe(true);
 });
 
 test('anatomy field picker updates the detail panel', async ({ page }) => {

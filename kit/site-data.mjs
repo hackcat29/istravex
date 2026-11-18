@@ -53,6 +53,7 @@ const checks = sdks.flatMap((s) => s.results.flatMap((r) => Object.values(r.chec
 // Checks that fail on a current pin because of a known upstream bug (a finding explains them).
 const knownFailing = sdks.flatMap((s) => s.results.filter((r) => r.failed?.length).map((r) => ({ sdk: s.sdk, fixture: r.fixture, failed: r.failed })));
 const provChecks = provenance.flatMap((p) => p.checks);
+const rfpSightings = JSON.parse(readFileSync(join(ROOT, 'corpus', 'sightings.json'), 'utf8')).sightings;
 const stats = {
   golden_files: goldens[0].files,
   golden_frames: goldens[0].frames,
@@ -82,6 +83,15 @@ const stats = {
   max_protocol: Math.max(...fixtures.map((f) => f.protocol_version)),
   findings: findingsReport.findings.length,
   findings_reproduced: findingsReport.findings.filter((f) => f.reproduced).length,
+  covered_caps: coverage.covered_caps,
+  caps_with_ledger_shape: coverage.caps_with_ledger_shape,
+  cells_reachable: coverage.cells?.reachable ?? 0,
+  cells_seen: coverage.cells?.seen_on_networks ?? 0,
+  cells_in_corpus: coverage.cells?.in_corpus ?? 0,
+  scanned_ledgers: coverage.scanned?.ledgers ?? 0,
+  scanned_transactions: coverage.scanned?.transactions ?? 0,
+  rfp_sightings: rfpSightings.length,
+  rfp_sightings_reproduced: rfpSightings.filter((s) => s.status === 'reproduced').length,
   sightings: (pilotRaw.sightings ?? []).length,
   sightings_reproduced: (pilotRaw.sightings ?? []).filter((s) => s.reproduced).length,
   js_releases: matrix?.versions.length ?? 0,
