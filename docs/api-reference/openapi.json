@@ -5711,9 +5711,9 @@
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "medium",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "Soneso/stellar-php-sdk#220",
+                      "disclosure": "public-issue",
                       "cap_ids": [
                         "CAP-0027"
                       ],
@@ -5725,8 +5725,7 @@
                       ],
                       "reproduced": true,
                       "summary": "A muxed account ID is an unsigned 64-bit integer. MuxedAccount stores it in a PHP int, which is signed, so getId() returns IDs from 2^63 up as negative numbe…",
-                      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439…",
-                      "draft": "**MuxedAccount::getId() returns IDs above 2^63 as negative numbers**\n\nMuxed account IDs are unsigned 64-bit (CAP-0027), but `MuxedAccount` stores the ID in a…"
+                      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439…"
                     },
                     {
                       "id": "ISTRAVEX-F-0022",
@@ -5735,9 +5734,9 @@
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "low",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "Soneso/stellar-php-sdk#221",
+                      "disclosure": "public-issue",
                       "cap_ids": [],
                       "fixtures": [
                         "base-over-max-length-synthetic-0001"
@@ -5748,8 +5747,7 @@
                       ],
                       "reproduced": true,
                       "summary": "XDR bounds variable-length arrays and strings (operations<100>, string text<28>), and a decoder must refuse a value over the bound. The PHP SDK decodes a tra…",
-                      "evidence": "kit/runners/php/run.php: base-over-max-length-synthetic-0001 envelope_101_ops and envelope_memo_29 decode without error; JavaScript, Go, Rust, Python (both p…",
-                      "draft": "**XDR decoding accepts arrays and strings longer than their declared maximum**\n\n`XdrTransactionEnvelope::fromEnvelopeBase64XdrString` decodes a transaction w…"
+                      "evidence": "kit/runners/php/run.php: base-over-max-length-synthetic-0001 envelope_101_ops and envelope_memo_29 decode without error; JavaScript, Go, Rust, Python (both p…"
                     },
                     {
                       "id": "ISTRAVEX-F-0023",
@@ -5758,9 +5756,9 @@
                       "affected": "6.0.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "medium",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "lightsail-network/java-stellar-sdk#844",
+                      "disclosure": "public-issue",
                       "cap_ids": [
                         "CAP-0021"
                       ],
@@ -5773,8 +5771,7 @@
                       ],
                       "reproduced": true,
                       "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has m…",
-                      "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a…",
-                      "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every fie…"
+                      "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a…"
                     },
                     {
                       "id": "ISTRAVEX-F-0024",
@@ -5783,9 +5780,9 @@
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "medium",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "Soneso/stellar-php-sdk#222",
+                      "disclosure": "public-issue",
                       "cap_ids": [
                         "CAP-0021"
                       ],
@@ -5797,8 +5794,7 @@
                       ],
                       "reproduced": true,
                       "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::…",
-                      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a61…",
-                      "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledge…"
+                      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a61…"
                     },
                     {
                       "id": "ISTRAVEX-F-0025",
@@ -5845,9 +5841,9 @@
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "low",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "Soneso/stellar-php-sdk#223",
+                      "disclosure": "public-issue",
                       "cap_ids": [],
                       "fixtures": [],
                       "checks": [
@@ -5855,8 +5851,7 @@
                       ],
                       "reproduced": true,
                       "summary": "fromBase64Xdr does not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there, the same defect java-st…",
-                      "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0.",
-                      "draft": "**Title:** XDR decoding accepts trailing bytes after a complete value\n\n`XdrX::fromBase64Xdr()` reads one value from an `XdrBuffer` and returns it without che…"
+                      "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0."
                     },
                     {
                       "id": "ISTRAVEX-F-0028",
@@ -5865,9 +5860,9 @@
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
                       "severity": "info",
-                      "status": "to-file",
-                      "issue": null,
-                      "disclosure": "not-disclosed",
+                      "status": "open-upstream",
+                      "issue": "Soneso/stellar-php-sdk#224",
+                      "disclosure": "public-issue",
                       "cap_ids": [],
                       "fixtures": [],
                       "checks": [
@@ -5881,8 +5876,7 @@
                       ],
                       "reproduced": true,
                       "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (…",
-                      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31,…",
-                      "draft": "**Title:** XdrDataValue, XdrSponsorshipDescriptor, XdrTxAdvertVector and XdrTxDemandVector don't match the XDR definitions\n\nRound-tripping valid XDR through …"
+                      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31,…"
                     }
                   ]
                 }

@@ -468,9 +468,9 @@
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "medium",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "Soneso/stellar-php-sdk#220",
+      "disclosure": "public-issue",
       "cap_ids": [
         "CAP-0027"
       ],
@@ -482,8 +482,7 @@
       ],
       "reproduced": true,
       "summary": "A muxed account ID is an unsigned 64-bit integer. MuxedAccount stores it in a PHP int, which is signed, so getId() returns IDs from 2^63 up as negative numbers: 18067157809773112502, the destination of a real mainnet payment, comes back as -379586263936439114. The bytes round-trip, so the M-address is right, but code that reads the ID (an exchange matching a deposit to a customer) gets the wrong one.",
-      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439114, expected 18067157809773112502. The other SDKs return the ID exactly.",
-      "draft": "**MuxedAccount::getId() returns IDs above 2^63 as negative numbers**\n\nMuxed account IDs are unsigned 64-bit (CAP-0027), but `MuxedAccount` stores the ID in a PHP `int`, which is signed. Any ID from 2^63 up comes back negative.\n\nReproduction (1.18.0), with the destination of a real mainnet payment (ledger 65083663, tx 1a5e418524e95dd36932533636d96763d28719763bada5a5c31198e1acc01aa7):\n\n```php\n$m = MuxedAccount::fromMed25519AccountId(\"<the payment destination M-address>\");\nvar_dump($m->getId()); // int(-379586263936439114); expected 18067157809773112502\n```\n\nThe XDR round-trips (the M-address is preserved), so only callers that read the ID are affected, but those are the ones that use muxed accounts: exchanges and custodians matching deposits to customers. A string (or GMP) representation would keep the full range. Found by the Istravex conformance corpus (https://github.com/hackcat29/istravex)."
+      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439114, expected 18067157809773112502. The other SDKs return the ID exactly."
     },
     {
       "id": "ISTRAVEX-F-0022",
@@ -492,9 +491,9 @@
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "low",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "Soneso/stellar-php-sdk#221",
+      "disclosure": "public-issue",
       "cap_ids": [],
       "fixtures": [
         "base-over-max-length-synthetic-0001"
@@ -505,8 +504,7 @@
       ],
       "reproduced": true,
       "summary": "XDR bounds variable-length arrays and strings (operations<100>, string text<28>), and a decoder must refuse a value over the bound. The PHP SDK decodes a transaction with 101 operations and a memo text of 29 bytes without error. The network never produces such values, so ledger data is unaffected, but code that parses untrusted envelopes (a SEP-10 challenge, a transaction handed over for signing) accepts what stellar-core would reject. The other SDKs refuse both.",
-      "evidence": "kit/runners/php/run.php: base-over-max-length-synthetic-0001 envelope_101_ops and envelope_memo_29 decode without error; JavaScript, Go, Rust, Python (both packages) and Java reject them.",
-      "draft": "**XDR decoding accepts arrays and strings longer than their declared maximum**\n\n`XdrTransactionEnvelope::fromEnvelopeBase64XdrString` decodes a transaction with 101 operations (`Operation operations<MAX_OPS_PER_TX>`, 100) and one whose memo text is 29 bytes (`string text<28>`). RFC 4506 bounds these, stellar-core rejects them, and the JavaScript, Go, Rust, Python and Java SDKs refuse to decode them.\n\nThe two envelopes are in https://github.com/hackcat29/istravex/tree/main/corpus/fixtures/base-over-max-length-synthetic-0001 (`envelope_101_ops.xdr.b64`, `envelope_memo_29.xdr.b64`).\n\nLedger data cannot contain such values, but code that decodes untrusted envelopes (SEP-10 challenges, transactions submitted for co-signing) would accept a value the network never can. Checking the declared maximum in the generated decoders for bounded arrays, strings and opaques would close it."
+      "evidence": "kit/runners/php/run.php: base-over-max-length-synthetic-0001 envelope_101_ops and envelope_memo_29 decode without error; JavaScript, Go, Rust, Python (both packages) and Java reject them."
     },
     {
       "id": "ISTRAVEX-F-0023",
@@ -515,9 +513,9 @@
       "affected": "6.0.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "medium",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "lightsail-network/java-stellar-sdk#844",
+      "disclosure": "public-issue",
       "cap_ids": [
         "CAP-0021"
       ],
@@ -530,8 +528,7 @@
       ],
       "reproduced": true,
       "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643… for mainnet transaction 68f96059…; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",
-      "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep (.github/workflows/sweep.yml) over 1,001 mainnet ledgers finds 58 of 307,577 transactions whose hash Java gets wrong, every one checked a PRECOND_V2 with all-default fields; Go, JavaScript, Rust and Python hash all 307,577 correctly.",
-      "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every field at its default: no `ledgerBounds`, no `minSeqNum`, `minSeqAge` 0, `minSeqLedgerGap` 0, no `extraSigners`. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`TransactionPreconditions.fromXdr` keeps the values, but `hasV2()` is false when they are all defaults, so `toXdr()` writes `PRECOND_TIME`. The transaction's bytes change, and so does its hash:\n\n```java\nAbstractTransaction tx = AbstractTransaction.fromEnvelopeXdr(\"<envelope_xdr of 68f96059…>\", Network.PUBLIC);\ntx.hashHex();               // 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0\n                            // network: 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3\ntx.toEnvelopeXdrBase64();   // differs from the input\n```\n\nA wallet that decodes such an envelope and signs it signs a different transaction, and an indexer that hashes with the SDK records a hash the network doesn't know. This is the same root as #837 (the arm is inferred from the values), with a different trigger: reading `minSeqLedgerGap` with `longValue()` doesn't fix it. Keeping the decoded discriminant, and re-encoding with it, would.\n\nFound by the Istravex conformance corpus (https://github.com/hackcat29/istravex): JavaScript, Go, Rust and both Python packages hash these transactions correctly."
+      "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep (.github/workflows/sweep.yml) over 1,001 mainnet ledgers finds 58 of 307,577 transactions whose hash Java gets wrong, every one checked a PRECOND_V2 with all-default fields; Go, JavaScript, Rust and Python hash all 307,577 correctly."
     },
     {
       "id": "ISTRAVEX-F-0024",
@@ -540,9 +537,9 @@
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "medium",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "Soneso/stellar-php-sdk#222",
+      "disclosure": "public-issue",
       "cap_ids": [
         "CAP-0021"
       ],
@@ -554,8 +551,7 @@
       ],
       "reproduced": true,
       "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643… for mainnet transaction 68f96059…. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
-      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023).",
-      "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledger bounds, no min sequence number, `minSeqAge` 0, `minSeqLedgerGap` 0, no extra signers. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`AbstractTransaction::fromEnvelopeBase64XdrString(...)->hash(Network::public())` returns 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0 for it, not the network's hash, because the rebuilt transaction carries `PRECOND_TIME`. (`XdrTransactionEnvelope` itself round-trips the bytes.) A wallet that decodes such an envelope and signs it signs a different transaction.\n\nKeeping the decoded preconditions discriminant, instead of inferring it from the values, fixes it. java-stellar-sdk has the same defect. Found by the Istravex conformance corpus (https://github.com/hackcat29/istravex)."
+      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023)."
     },
     {
       "id": "ISTRAVEX-F-0025",
@@ -602,9 +598,9 @@
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "low",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "Soneso/stellar-php-sdk#223",
+      "disclosure": "public-issue",
       "cap_ids": [],
       "fixtures": [],
       "checks": [
@@ -612,8 +608,7 @@
       ],
       "reproduced": true,
       "summary": "fromBase64Xdr does not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there, the same defect java-stellar-sdk fixed in #842 (F-0025). stellar-core and the JavaScript, Go, Rust and Python SDKs refuse it. Two encodings of one value both decoding is a malleability footgun for anything that hashes or deduplicates raw XDR.",
-      "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0.",
-      "draft": "**Title:** XDR decoding accepts trailing bytes after a complete value\n\n`XdrX::fromBase64Xdr()` reads one value from an `XdrBuffer` and returns it without checking that the buffer is exhausted. Appending any bytes to a valid value still decodes, to the same value:\n\n```php\n$v = XdrTransactionEnvelope::fromEnvelopeBase64XdrString(base64_encode(base64_decode($valid) . \"\\x00\\x00\\x00\\x00\"));\n// no exception\n```\n\nstellar-core (`print-xdr`), js-stellar-base, the Go SDK, rs-stellar-xdr and py-stellar-base all refuse this input. java-stellar-sdk had the same behaviour and fixed it in lightsail-network/java-stellar-sdk#842.\n\n**Suggested fix:** in `fromBase64Xdr` (and `fromEnvelopeBase64XdrString`), after `decode()`, throw if the buffer has unread bytes.\n\nFound with Istravex's generated cases (12,134 trailing-bytes cases over every XDR type): https://github.com/hackcat29/istravex"
+      "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0."
     },
     {
       "id": "ISTRAVEX-F-0028",
@@ -622,9 +617,9 @@
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
       "severity": "info",
-      "status": "to-file",
-      "issue": null,
-      "disclosure": "not-disclosed",
+      "status": "open-upstream",
+      "issue": "Soneso/stellar-php-sdk#224",
+      "disclosure": "public-issue",
       "cap_ids": [],
       "fixtures": [],
       "checks": [
@@ -638,8 +633,7 @@
       ],
       "reproduced": true,
       "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (it is AccountID*); XdrTxAdvertVector and XdrTxDemandVector read each Hash as a length-prefixed string instead of 32 fixed bytes, which breaks FloodAdvert, FloodDemand and the overlay messages that carry them. The SDK's ledger decoders don't use these classes (ManageDataOp and LedgerEntryExtensionV2 decode their fields inline), so no ledger data is affected; code that uses the classes directly is.",
-      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, FloodAdvert 31, FloodDemand 31, AuthenticatedMessageV0 1); every other SDK and stellar-core round-trip them.",
-      "draft": "**Title:** XdrDataValue, XdrSponsorshipDescriptor, XdrTxAdvertVector and XdrTxDemandVector don't match the XDR definitions\n\nRound-tripping valid XDR through these classes fails:\n\n- `XdrDataValue` is `opaque DataValue<64>`, but `decode()` reads an optional presence flag first (the `*` belongs to `ManageDataOp.dataValue`). Valid `DataValue` bytes throw `presence flag must be 0 or 1`.\n- `XdrSponsorshipDescriptor` is `AccountID* SponsorshipDescriptor`, but `decode()` reads a bare `XdrPublicKey`, so a present descriptor throws `Unknown enum value: 1`.\n- `XdrTxAdvertVector` / `XdrTxDemandVector` are `Hash<…>`, fixed 32-byte hashes, but `decode()` calls `readString()`, a length-prefixed string. `XdrFloodAdvert`, `XdrFloodDemand` and the `StellarMessage` arms carrying them inherit this.\n\nThe ledger decoders read these fields inline, so transaction and ledger decoding is unaffected. Only direct users of the classes are.\n\nFound with Istravex's generated cases (32 valid values for every XDR type, checked against stellar-core): https://github.com/hackcat29/istravex"
+      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, FloodAdvert 31, FloodDemand 31, AuthenticatedMessageV0 1); every other SDK and stellar-core round-trip them."
     }
   ]
 }
