@@ -26,14 +26,14 @@
       "synthetic"
     ],
     "bytes": 1437432,
-    "sdk_checks": 2813,
-    "sdk_checks_passed": 2808,
+    "sdk_checks": 2816,
+    "sdk_checks_passed": 2810,
     "naive_faults": 9,
     "reference_correct": 9,
     "replay_cases": 9,
     "max_protocol": 30,
-    "findings": 23,
-    "findings_reproduced": 18,
+    "findings": 24,
+    "findings_reproduced": 19,
     "sightings": 4,
     "sightings_reproduced": 4,
     "js_releases": 4
@@ -20149,6 +20149,20 @@
           "detail": []
         },
         {
+          "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "fail"
+          },
+          "failed": [
+            "tx_hash"
+          ],
+          "detail": [
+            "tx_hash: expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0"
+          ]
+        },
+        {
           "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
           "checks": {
             "decode": "pass",
@@ -28028,6 +28042,30 @@
         "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643… for mainnet transaction 68f96059…; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",
         "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep finds 8 such transactions in the corpus ledgers alone; JavaScript, Go, Rust and both Python packages hash all of them correctly.",
         "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every field at its default: no `ledgerBounds`, no `minSeqNum`, `minSeqAge` 0, `minSeqLedgerGap` 0, no `extraSigners`. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`TransactionPreconditions.fromXdr` keeps the values, but `hasV2()` is false when they are all defaults, so `toXdr()` writes `PRECOND_TIME`. The transaction's bytes change, and so does its hash:\n\n```java\nAbstractTransaction tx = AbstractTransaction.fromEnvelopeXdr(\"<envelope_xdr of 68f96059…>\", Network.PUBLIC);\ntx.hashHex();               // 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0\n                            // network: 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3\ntx.toEnvelopeXdrBase64();   // differs from the input\n```\n\nA wallet that decodes such an envelope and signs it signs a different transaction, and an indexer that hashes with the SDK records a hash the network doesn't know. This is the same root as #837 (the arm is inferred from the values), with a different trigger: reading `minSeqLedgerGap` with `longValue()` doesn't fix it. Keeping the decoded discriminant, and re-encoding with it, would.\n\nFound by the Istravex conformance corpus (https://github.com/hackcat29/istravex): JavaScript, Go, Rust and both Python packages hash these transactions correctly."
+      },
+      {
+        "id": "ISTRAVEX-F-0024",
+        "title": "stellar-php-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults",
+        "component": "Soneso/stellar-php-sdk",
+        "affected": "1.18.0 (latest) and earlier",
+        "fixed_in": null,
+        "severity": "high",
+        "status": "to-file",
+        "issue": null,
+        "disclosure": "not-disclosed",
+        "cap_ids": [
+          "CAP-0021"
+        ],
+        "fixtures": [
+          "cap21-precond-v2-defaults-pubnet-0001"
+        ],
+        "checks": [
+          "php:cap21-precond-v2-defaults-pubnet-0001:tx_hash"
+        ],
+        "reproduced": true,
+        "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643… for mainnet transaction 68f96059…. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
+        "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023).",
+        "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledger bounds, no min sequence number, `minSeqAge` 0, `minSeqLedgerGap` 0, no extra signers. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`AbstractTransaction::fromEnvelopeBase64XdrString(...)->hash(Network::public())` returns 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0 for it, not the network's hash, because the rebuilt transaction carries `PRECOND_TIME`. (`XdrTransactionEnvelope` itself round-trips the bytes.) A wallet that decodes such an envelope and signs it signs a different transaction.\n\nKeeping the decoded preconditions discriminant, instead of inferring it from the values, fixes it. java-stellar-sdk has the same defect. Found by the Istravex conformance corpus (https://github.com/hackcat29/istravex)."
       }
     ]
   },
@@ -28560,6 +28598,13 @@
       "failed": [
         "rejects:envelope_101_ops",
         "rejects:envelope_memo_29"
+      ]
+    },
+    {
+      "sdk": "php",
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+      "failed": [
+        "tx_hash"
       ]
     },
     {

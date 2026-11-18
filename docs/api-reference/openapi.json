@@ -99,8 +99,8 @@
                     "testnet"
                   ],
                   "sdk_checks": {
-                    "passed": 2808,
-                    "total": 2813
+                    "passed": 2810,
+                    "total": 2816
                   },
                   "provenance_checks": {
                     "passed": 1794,
@@ -5761,6 +5761,30 @@
                       "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has m…",
                       "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a…",
                       "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every fie…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0024",
+                      "title": "stellar-php-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults",
+                      "component": "Soneso/stellar-php-sdk",
+                      "affected": "1.18.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "high",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [
+                        "CAP-0021"
+                      ],
+                      "fixtures": [
+                        "cap21-precond-v2-defaults-pubnet-0001"
+                      ],
+                      "checks": [
+                        "php:cap21-precond-v2-defaults-pubnet-0001:tx_hash"
+                      ],
+                      "reproduced": true,
+                      "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::…",
+                      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a61…",
+                      "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledge…"
                     }
                   ]
                 }
