@@ -85,8 +85,32 @@ jobs:
           name: rs-stellar-xdr-604-${{ matrix.version }}
           path: ${{ runner.temp }}/rs-stellar-xdr-604-${{ matrix.version }}.json
 
+  rs-stellar-xdr-581-598:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        side: [before, after]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release -q --manifest-path kit/sightings/rs-stellar-xdr-581-598/${{ matrix.side }}/Cargo.toml
+      - name: '#581: a 12-byte ScVal claiming 2^32 - 1 elements'
+        run: |
+          bin=kit/sightings/rs-stellar-xdr-581-598/${{ matrix.side }}/target/release/check
+          set +e; out=$("$bin" 581 2> err.txt); code=$?; set -e
+          if [ $code -ne 0 ]; then
+            out=$(jq -nc --arg e "$(head -c 300 err.txt)" --argjson c $code '{sighting: "stellar/rs-stellar-xdr#581", outcome: ("aborted (exit \($c)): " + $e)}')
+          fi
+          echo "$out" | tee "$RUNNER_TEMP/rs-stellar-xdr-581-${{ matrix.side }}.json"
+      - name: '#598: a 33-byte symbol from JSON'
+        run: kit/sightings/rs-stellar-xdr-581-598/${{ matrix.side }}/target/release/check 598 | tee "$RUNNER_TEMP/rs-stellar-xdr-598-${{ matrix.side }}.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rs-stellar-xdr-581-598-${{ matrix.side }}
+          path: ${{ runner.temp }}/rs-stellar-xdr-5*.json
+
   merge:
-    needs: [soroban-sdk-2099, js-xdr-165, rs-stellar-xdr-604]
+    needs: [soroban-sdk-2099, js-xdr-165, rs-stellar-xdr-604, rs-stellar-xdr-581-598]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v7
@@ -101,6 +125,10 @@ jobs:
             '{sighting: "stellar/js-xdr#165", before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-js-xdr-165.json
           jq -n --slurpfile b out/rs-stellar-xdr-604-28.0.0.json --slurpfile a out/rs-stellar-xdr-604-30.0.0.json \
             '{sighting: "stellar/rs-stellar-xdr#604", before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-rs-stellar-xdr-604.json
+          for n in 581 598; do
+            jq -n --slurpfile b out/rs-stellar-xdr-$n-before.json --slurpfile a out/rs-stellar-xdr-$n-after.json --arg n "$n" \
+              '{sighting: ("stellar/rs-stellar-xdr#" + $n), before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-rs-stellar-xdr-$n.json
+          done
           cat sightings-*.json
       - uses: actions/upload-artifact@v7
         with:

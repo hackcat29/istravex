@@ -1,0 +1,157 @@
+{
+  "note": "The 18 sightings listed in SCF RFP 2 (XDR/CAP-Coverage Audit Tool and Indexer-Hardening Guide), section 6, and where Istravex stands on each. reproduced: a check fails before the fix (or at the current release, when the fix is unreleased or the issue is open) and passes after it, in CI. exercised: the corpus runs what the sighting is about and checks the current behaviour, without a before/after. not-covered: why. kit/check-results.mjs checks every claim here against the results it names.",
+  "sightings": [
+    {
+      "issue": "stellar/stellar-core#5435",
+      "title": "--check-lcm mode for golden LedgerCloseMeta",
+      "kind": "feature",
+      "status": "exercised",
+      "evidence": "goldens",
+      "detail": "All three SDK decoders the RFP names round-trip every golden frame byte for byte, and every corpus entry agrees with the goldens. A feature, not a defect: nothing to reproduce."
+    },
+    {
+      "issue": "stellar/wallet-backend#731",
+      "title": "SAC-created trustlines produce no state change (CAP-0073)",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-wallet-backend",
+      "finding": "ISTRAVEX-F-0002"
+    },
+    {
+      "issue": "stellar/wallet-backend#729",
+      "title": "CAP-40 signed-payload signers in ingestion",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-wallet-backend",
+      "finding": "ISTRAVEX-F-0001"
+    },
+    {
+      "issue": "stellar-experimental/henyey#3941",
+      "title": "Validator dies during catchup on a bucket-entry XDR parse failure",
+      "kind": "bug",
+      "status": "not-covered",
+      "detail": "The failure is in parsing history-archive buckets during catchup, which no LedgerCloseMeta carries; the issue is open with its cause undetermined. The corpus's decoders reject malformed XDR cleanly (F-0009), but nothing here reproduces this report."
+    },
+    {
+      "issue": "stellar/rs-stellar-xdr#581",
+      "title": "Limit capacity reserved when decoding VecM",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "workflow",
+      "results": "sightings-rs-stellar-xdr-581.json",
+      "finding": "ISTRAVEX-F-0009"
+    },
+    {
+      "issue": "stellar/stellar-etl#454",
+      "title": "About 50 data-quality issues from one audit sweep",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-stellar-etl",
+      "finding": "ISTRAVEX-F-0016",
+      "detail": "Open upstream: reproduced at the current release, v2.8.34 (amounts above 2^53 stroops lose precision)."
+    },
+    {
+      "issue": "stellar/stellar-etl#470",
+      "title": "Protocol 28 epic over the ETL correctness backlog",
+      "kind": "epic",
+      "status": "exercised",
+      "evidence": "pilot-stellar-etl",
+      "fixtures": ["cap85-contract-executable-external-ref-pubnet-0001"],
+      "detail": "The epic's XDR changes: stellar-etl v2.8.34 exports the CAP-0085 externally managed contract executable (a mainnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
+    },
+    {
+      "issue": "stellar/wallet-backend#716",
+      "title": "AddressBytea truncates muxed and signed-payload addresses",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-wallet-backend",
+      "finding": "ISTRAVEX-F-0003"
+    },
+    {
+      "issue": "stellar/stellar-etl#460",
+      "title": "P23+ event and effect gaps from an old SDK pin (CAP-0073)",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-stellar-etl",
+      "finding": "ISTRAVEX-F-0017",
+      "detail": "Open upstream: reproduced at the current release, v2.8.34 (no trustline_created effect for SAC trust())."
+    },
+    {
+      "issue": "stellar/wallet-backend#753",
+      "title": "Four indexer fixes from an ingestion-halt audit",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "pilot-wallet-backend",
+      "finding": "ISTRAVEX-F-0003",
+      "detail": "The pilot drops the muxed Soroban source on f8e5786 and indexes it on bb0b162 (#753); IX003 flags the four call sites #753 changed."
+    },
+    {
+      "issue": "stellar/rs-soroban-sdk#2099",
+      "title": "MuxedAddress panics on a non-address ScVal",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "workflow",
+      "results": "sightings-soroban-sdk-2099.json"
+    },
+    {
+      "issue": "stellar/rs-stellar-xdr#598",
+      "title": "Enforce VecM max length on serde deserialize",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "workflow",
+      "results": "sightings-rs-stellar-xdr-598.json",
+      "finding": "ISTRAVEX-F-0009"
+    },
+    {
+      "issue": "stellar/js-stellar-sdk#1766",
+      "title": "Ordering of asset issuers and ScVal map keys",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "javascript-matrix",
+      "finding": "ISTRAVEX-F-0005"
+    },
+    {
+      "issue": "stellar/rs-stellar-xdr#604",
+      "title": "xdr-json schemas omit types behind feature flags",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "workflow",
+      "results": "sightings-rs-stellar-xdr-604.json"
+    },
+    {
+      "issue": "stellar/js-stellar-sdk#1789",
+      "title": "scValToNative silently drops colliding map entries",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "javascript-matrix",
+      "finding": "ISTRAVEX-F-0007"
+    },
+    {
+      "issue": "stellar/js-stellar-sdk#1785",
+      "title": "Muxed account and offer IDs encode a different ID",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "javascript-matrix",
+      "finding": "ISTRAVEX-F-0006"
+    },
+    {
+      "issue": "stellar/js-xdr#165",
+      "title": "Nine XDR validation issues in one audit pass (Writer coerces invalid inputs)",
+      "kind": "bug",
+      "status": "reproduced",
+      "evidence": "workflow",
+      "results": "sightings-js-xdr-165.json",
+      "detail": "Fixed on master (stellar/js-xdr#173), not yet released: reproduced on 5.0.0, the latest release, and passing on the fix built from source."
+    },
+    {
+      "issue": "stellar/js-stellar-sdk#1823",
+      "title": "XDR string arms mangle non-UTF-8 bytes and lone surrogates",
+      "kind": "bug",
+      "status": "exercised",
+      "evidence": "findings",
+      "finding": "ISTRAVEX-F-0008",
+      "fixtures": ["base-memo-non-utf8-local-0001"],
+      "detail": "Closed upstream by documenting that .value decodes leniently; the byte-keeping paths were always right. Every pinned release keeps a real non-UTF-8 memo's bytes; there is no before/after to show."
+    }
+  ]
+}

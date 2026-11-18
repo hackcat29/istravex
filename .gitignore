@@ -8,3 +8,7 @@ kit/runners/rust/target
 .wrangler
 build/
 docs/src/_props
+
+# Sighting reproductions build here (in CI)
+kit/sightings/**/target
+kit/sightings/**/Cargo.lock
