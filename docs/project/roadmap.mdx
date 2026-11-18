@@ -21,7 +21,7 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 | Deliverable | Where |
 |---|---|
 | Seven SDKs in CI | [SDK runners](/tools/sdk-runners) for JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`), Java and PHP, a [sweep](/tools/sdk-runners#sweeping-real-traffic) over 310,837 real transactions, and [stellar-core goldens](/corpus/goldens) |
-| Generated cases | [45,144 valid and hostile values](/tools/generated-cases) of every XDR type through every SDK, with stellar-core as the oracle |
+| Generated cases | [45,144 valid and hostile values](/tools/generated-cases) of every XDR type through every SDK, judged by the reference decoder and, for the types it reads, stellar-core |
 | Per-fixture results matrix | `corpus/results/`, the [API](/api-reference/introduction), and the site |
 | Go linter, three rules | [istravex-lint](/tools/lint) |
 

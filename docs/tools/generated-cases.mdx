@@ -1,6 +1,6 @@
 ---
 title: Generated cases
-description: 45,144 valid and hostile values of every XDR type, through every SDK, with stellar-core's own decoder as the oracle.
+description: 45,144 valid and hostile values of every XDR type, through every SDK, judged by the reference decoder and, for the types it reads, stellar-core.
 ---
 
 import Cases from '/snippets/cases-table.mdx';
@@ -27,7 +27,7 @@ cargo run --release -- cases-generate ../../../corpus/generated/cases.jsonl.gz 3
 
 ## The oracle
 
-A case is only as good as its verdict. Every valid case round-trips byte for byte through `stellar-xdr`, the Rust crate stellar-core's own XDR is generated from, and every hostile case is refused by it. On top of that, [`kit/cases/core-oracle.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/cases/core-oracle.mjs) feeds every case of the six types `stellar-core print-xdr` decodes to the pinned stellar-core 30.0.0. stellar-core accepts every valid one and refuses every hostile one, so the verdicts match the network's own decoder.
+A case is only as good as its verdict. Every valid case round-trips byte for byte through `stellar-xdr`, the Rust crate generated from the same XDR definitions as stellar-core, and every hostile case is refused by it. On top of that, [`kit/cases/core-oracle.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/cases/core-oracle.mjs) feeds every case of the six types `stellar-core print-xdr` decodes to the pinned stellar-core 30.0.0. stellar-core accepts every valid one and refuses every hostile one, so the verdicts match the network's own decoder.
 
 ## Through every SDK
 
