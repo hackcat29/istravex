@@ -437,7 +437,7 @@
     },
     {
       "id": "ISTRAVEX-F-0020",
-      "title": "js-stellar-sdk before 17.3.0 cannot decode a protocol 30 ledger header",
+      "title": "js-stellar-sdk before 17.3.0 cannot decode protocol 30 XDR",
       "component": "stellar/js-stellar-sdk",
       "affected": "17.2.1 and earlier",
       "fixed_in": "@stellar/stellar-sdk 17.3.0 (protocol 30 XDR)",
@@ -446,17 +446,20 @@
       "issue": null,
       "disclosure": "not-disclosed",
       "cap_ids": [
-        "CAP-0088"
+        "CAP-0088",
+        "CAP-0084"
       ],
       "fixtures": [
-        "cap88-stellar-value-ext-signed-ms-testnet-0001"
+        "cap88-stellar-value-ext-signed-ms-testnet-0001",
+        "cap84-sc-address-muxed-contract-testnet-0001"
       ],
       "checks": [
-        "javascript-matrix:cap88-stellar-value-ext-signed-ms-testnet-0001:decode"
+        "javascript-matrix:cap88-stellar-value-ext-signed-ms-testnet-0001:decode",
+        "javascript-matrix:cap84-sc-address-muxed-contract-testnet-0001:decode"
       ],
       "reproduced": true,
-      "summary": "Protocol 30 ledgers carry StellarValueExt arm STELLAR_VALUE_SIGNED_MS (CAP-0088, millisecond close times). js-stellar-sdk 17.2.0 and 17.2.1 reject the whole LedgerCloseMeta with \"scpValue.ext.v: unknown enum value 3\". It is an SDK that predates the protocol, not a bug, but an indexer pinned to it stops at the first protocol 30 ledger: testnet has been on protocol 30 since ledger 5,540,313.",
-      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail decode on testnet ledger 5,540,402; 17.3.0 and 17.4.0 decode and re-encode it byte for byte."
+      "summary": "Protocol 30 added XDR arms that 17.2.x does not know: StellarValueExt STELLAR_VALUE_SIGNED_MS (CAP-0088, millisecond close times) in every protocol 30 ledger header, and ScAddress SC_ADDRESS_TYPE_MUXED_CONTRACT (CAP-0084). js-stellar-sdk 17.2.0 and 17.2.1 reject the whole value (\"unknown enum value\"). It is an SDK that predates the protocol, not a bug, but an indexer pinned to it stops at the first protocol 30 ledger: testnet has been on protocol 30 since ledger 5,540,313.",
+      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail decode on testnet ledger 5,540,402 (header) and on a testnet transaction paying a muxed contract address; 17.3.0 and 17.4.0 decode and re-encode both byte for byte."
     }
   ]
 }

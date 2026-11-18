@@ -4,6 +4,7 @@
 |---|---|---|
 | `base-account-merge-has-sub-entries-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-account-merge-no-account-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `base-allow-trust-cant-revoke-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-allow-trust-no-trust-line-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-change-trust-low-reserve-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-create-account-already-exist-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
@@ -28,11 +29,16 @@
 | `base-path-payment-strict-receive-not-authorized-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-path-payment-strict-receive-offer-cross-self-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-path-payment-strict-receive-over-sendmax-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
+| `base-path-payment-strict-receive-src-no-trust-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
+| `base-path-payment-strict-receive-src-not-authorized-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-path-payment-strict-receive-too-few-offers-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-path-payment-strict-receive-underfunded-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `base-set-options-cant-change-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `base-set-options-too-many-signers-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
+| `cap1-account-merge-seqnum-too-far-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap1-bump-sequence-success-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap15-fee-bump-pubnet-0001` | correct | ✓ fee_charged<br />✓ fee debited from<br />✓ fee debit amount |
+| `cap15-tx-bad-auth-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap23-claim-claimable-balance-cannot-claim-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap23-claim-claimable-balance-does-not-exist-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
@@ -56,11 +62,17 @@
 | `cap27-muxed-payment-pubnet-0002` | correct | ✓ recipient credited<br />✓ to_muxed_id |
 | `cap3-account-entry-extension-v1-ext-v0-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap33-account-merge-is-sponsor-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap33-does-not-exist-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap33-low-reserve-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap33-not-sponsor-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap33-only-transferable-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap33-tx-bad-sponsorship-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap35-clawback-claimable-balance-does-not-exist-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap35-clawback-claimable-balance-not-issuer-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap35-clawback-no-trust-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap35-clawback-not-clawback-enabled-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap35-clawback-underfunded-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap35-set-options-auth-revocable-required-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
@@ -69,15 +81,18 @@
 | `cap35-set-trust-line-flags-no-trust-line-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap38-change-trust-asset-credit-alphanum12-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap38-change-trust-cannot-delete-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap38-change-trust-trust-line-missing-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-deposit-bad-price-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-deposit-no-trust-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap38-deposit-underfunded-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-ledger-key-liquidity-pool-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap38-withdraw-line-full-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-withdraw-no-trust-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-withdraw-under-minimum-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap38-withdraw-underfunded-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap40-signed-payload-signer-local-0001` | correct | ✓ signer<br />✓ weight |
 | `cap40-signed-payload-signer-testnet-0001` | correct | ✓ signer<br />✓ weight |
+| `cap46-contract-code-entry-ext-v0-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap46-contract-executable-stellar-asset-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap46-extend-footprint-ttl-success-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap46-host-function-upload-contract-wasm-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
@@ -85,6 +100,7 @@
 | `cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap46-muxed-soroban-source-local-0001` | correct | ✓ participants |
 | `cap46-sc-error-crypto-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
+| `cap46-sc-error-object-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap46-sc-error-wasm-vm-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant<br />✓ fee payer is a participant |
 | `cap46-sc-val-i256-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap58-host-function-create-contract-v2-pubnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
@@ -106,4 +122,5 @@
 | `cap73-sac-trust-local-0001` | correct | ✓ trustline operation<br />✓ asset<br />✓ limit<br />✓ TRUSTLINE state change |
 | `cap73-sac-trust-pubnet-0001` | correct | ✓ trustline operation<br />✓ asset<br />✓ limit<br />✓ TRUSTLINE state change |
 | `cap73-sac-trust-testnet-0001` | correct | ✓ trustline operation<br />✓ asset<br />✓ limit<br />✓ TRUSTLINE state change |
+| `cap84-sc-address-muxed-contract-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |
 | `cap85-contract-executable-external-ref-testnet-0001` | correct | ✓ hash<br />✓ fee_charged<br />✓ is_fee_bump<br />✓ successful<br />✓ source is a participant |

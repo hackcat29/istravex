@@ -701,6 +701,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 59471041,
+    "path": "ledgers/pubnet/59471041.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC74C5FF--59456000-59519999/FC748B3E--59471041.xdr.zst",
+    "sha256": "98c063b39f038a3502e6132a6e944dfba990705c501816c2680d035982437e26",
+    "bytes": 1223612,
+    "compressed_bytes": 149756
+  },
+  {
+    "network": "pubnet",
     "ledger": 59489200,
     "path": "ledgers/pubnet/59489200.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -728,6 +738,16 @@
     "sha256": "1ec1780069830f943205ffab61f47f6067fc1e4b66864f967a91875bc56edc40",
     "bytes": 981636,
     "compressed_bytes": 135138
+  },
+  {
+    "network": "pubnet",
+    "ledger": 59601392,
+    "path": "ledgers/pubnet/59601392.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC72D1FF--59584000-59647999/FC728E0F--59601392.xdr.zst",
+    "sha256": "9f47a2106befb941cfbf4eaaa7e8a773c9eb2a9358928419e0d5bceb7fcf59d5",
+    "bytes": 1396776,
+    "compressed_bytes": 160062
   },
   {
     "network": "pubnet",
@@ -841,6 +861,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 60361520,
+    "path": "ledgers/pubnet/60361520.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6719FF--60352000-60415999/FC66F4CF--60361520.xdr.zst",
+    "sha256": "96a096490dac0a37cd4d786fc358a6da6d4ab59484195048a99f51b58d087e3f",
+    "bytes": 1851436,
+    "compressed_bytes": 230957
+  },
+  {
+    "network": "pubnet",
     "ledger": 60385200,
     "path": "ledgers/pubnet/60385200.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -848,6 +878,16 @@
     "sha256": "6ca33e28731dd0729a1ce70769d368451ce5633f74fdaf75c0b3fb5536d85ced",
     "bytes": 1101508,
     "compressed_bytes": 110062
+  },
+  {
+    "network": "pubnet",
+    "ledger": 60493129,
+    "path": "ledgers/pubnet/60493129.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6525FF--60480000-60543999/FC64F2B6--60493129.xdr.zst",
+    "sha256": "ef48d03043af287ec649a30abd268dcc426269c777cda335ea8e37c83d2592e7",
+    "bytes": 1344664,
+    "compressed_bytes": 139048
   },
   {
     "network": "pubnet",
@@ -911,6 +951,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 61101446,
+    "path": "ledgers/pubnet/61101446.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5C5BFF--61056000-61119999/FC5BAA79--61101446.xdr.zst",
+    "sha256": "ccb576d62ec97cd5944fac50d08dfc064e926265b201e85a94546f8a0f0266a3",
+    "bytes": 2468108,
+    "compressed_bytes": 334515
+  },
+  {
+    "network": "pubnet",
     "ledger": 61319200,
     "path": "ledgers/pubnet/61319200.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -938,6 +988,16 @@
     "sha256": "8b93a9e6225982b7d4e7630f19e1d18db5bdaad99047a9a97b7e8eb330205b82",
     "bytes": 638996,
     "compressed_bytes": 88369
+  },
+  {
+    "network": "pubnet",
+    "ledger": 61604239,
+    "path": "ledgers/pubnet/61604239.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC548BFF--61568000-61631999/FC53FE70--61604239.xdr.zst",
+    "sha256": "f34dd63fa56a764f77379ed26cc1af268281522e50abef134a7459a1c78ee553",
+    "bytes": 1413052,
+    "compressed_bytes": 161613
   },
   {
     "network": "pubnet",
@@ -1001,6 +1061,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 62763486,
+    "path": "ledgers/pubnet/62763486.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC42F7FF--62720000-62783999/FC424E21--62763486.xdr.zst",
+    "sha256": "9a248758e24003aa59c15b6c15dd0aa202f534e7ffbd59d2950ff7c87572ab33",
+    "bytes": 2225272,
+    "compressed_bytes": 255977
+  },
+  {
+    "network": "pubnet",
     "ledger": 62793200,
     "path": "ledgers/pubnet/62793200.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1021,6 +1091,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 62918997,
+    "path": "ledgers/pubnet/62918997.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC4009FF--62912000-62975999/FC3FEEAA--62918997.xdr.zst",
+    "sha256": "820d3823659dd798d9d9e1b95c4983c2f67481a3f7fd634e879dbff4737f2983",
+    "bytes": 2431396,
+    "compressed_bytes": 221436
+  },
+  {
+    "network": "pubnet",
     "ledger": 63173600,
     "path": "ledgers/pubnet/63173600.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1038,6 +1118,16 @@
     "sha256": "434ff8c10d6444f6aca14a593b09af9fa7e9096199b278fef8bebc6005390190",
     "bytes": 2038104,
     "compressed_bytes": 169533
+  },
+  {
+    "network": "pubnet",
+    "ledger": 63319448,
+    "path": "ledgers/pubnet/63319448.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC3A2DFF--63296000-63359999/FC39D267--63319448.xdr.zst",
+    "sha256": "13702f491a154749ac476ef2052533ebabeb0792d587b1935c1c95eab56faa8e",
+    "bytes": 2169784,
+    "compressed_bytes": 181207
   },
   {
     "network": "pubnet",
@@ -1071,6 +1161,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 64211037,
+    "path": "ledgers/pubnet/64211037.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC2C81FF--64192000-64255999/FC2C37A2--64211037.xdr.zst",
+    "sha256": "25fe669d8fce2dc5ab6d559540efb52fe264b7b12ed519b5b2c9dacf48bba51b",
+    "bytes": 2146948,
+    "compressed_bytes": 244403
+  },
+  {
+    "network": "pubnet",
     "ledger": 64367200,
     "path": "ledgers/pubnet/64367200.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1081,6 +1181,16 @@
   },
   {
     "network": "pubnet",
+    "ledger": 64543186,
+    "path": "ledgers/pubnet/64543186.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC279FFF--64512000-64575999/FC27262D--64543186.xdr.zst",
+    "sha256": "18c2525cdcda885fc956a92847fd42a36c78c090817ecfd27aef1b0b61b4056e",
+    "bytes": 1797944,
+    "compressed_bytes": 202835
+  },
+  {
+    "network": "pubnet",
     "ledger": 64594000,
     "path": "ledgers/pubnet/64594000.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1088,6 +1198,16 @@
     "sha256": "6017b0f0c5effcc070c9eeae03de1908b689acefb8ccf53b4ee5664bbb0198d8",
     "bytes": 1812108,
     "compressed_bytes": 181433
+  },
+  {
+    "network": "pubnet",
+    "ledger": 64819095,
+    "path": "ledgers/pubnet/64819095.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC23B7FF--64768000-64831999/FC22F068--64819095.xdr.zst",
+    "sha256": "015d313cbb1d406aee34f267ea1d5825137cc6035a4a93d34e52bc10189b21c9",
+    "bytes": 2644632,
+    "compressed_bytes": 240912
   },
   {
     "network": "pubnet",
@@ -1221,6 +1341,16 @@
   },
   {
     "network": "testnet",
+    "ledger": 606666,
+    "path": "ledgers/testnet/606666.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFF735FF--576000-639999/FFF6BE35--606666.xdr.zst",
+    "sha256": "9e6cf1757437f1af9237b5d0d020e2eb70316660704c944ef0171683612e1704",
+    "bytes": 76516,
+    "compressed_bytes": 9315
+  },
+  {
+    "network": "testnet",
     "ledger": 988002,
     "path": "ledgers/testnet/988002.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1271,6 +1401,16 @@
   },
   {
     "network": "testnet",
+    "ledger": 4235871,
+    "path": "ledgers/testnet/4235871.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBF8BFF--4224000-4287999/FFBF5DA0--4235871.xdr.zst",
+    "sha256": "9a5c2797e5ba2c9ad46f863ca88c7c57fc15811522394f3cd44c925a6e8cd394",
+    "bytes": 205460,
+    "compressed_bytes": 20293
+  },
+  {
+    "network": "testnet",
     "ledger": 4295602,
     "path": "ledgers/testnet/4295602.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1291,6 +1431,16 @@
   },
   {
     "network": "testnet",
+    "ledger": 4554639,
+    "path": "ledgers/testnet/4554639.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBAA9FF--4544000-4607999/FFBA8070--4554639.xdr.zst",
+    "sha256": "839d6274237c244bcc1d455bb76ccccf8474515f8af82c6980864db1eed0e332",
+    "bytes": 85868,
+    "compressed_bytes": 13850
+  },
+  {
+    "network": "testnet",
     "ledger": 4949202,
     "path": "ledgers/testnet/4949202.xdr.zst",
     "xdr_type": "LedgerCloseMetaBatch",
@@ -1308,6 +1458,16 @@
     "sha256": "55df1cc6bdd2be5c834b6c76a127e9c5222344be35710efb703724de395bd5e6",
     "bytes": 80084,
     "compressed_bytes": 11770
+  },
+  {
+    "network": "testnet",
+    "ledger": 5003675,
+    "path": "ledgers/testnet/5003675.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFB3D3FF--4992000-5055999/FFB3A664--5003675.xdr.zst",
+    "sha256": "fc46ac899979e2d9a4487a62fc2c7a2edcd16a0c1a604fec2d751fe5c0704599",
+    "bytes": 149532,
+    "compressed_bytes": 15827
   },
   {
     "network": "testnet",
@@ -1348,6 +1508,26 @@
     "sha256": "20b03fd5322515601d8f2e1bdaa8c4c462588efadc62434b5ce0b72858f64288",
     "bytes": 68140,
     "compressed_bytes": 9267
+  },
+  {
+    "network": "testnet",
+    "ledger": 5541219,
+    "path": "ledgers/testnet/5541219.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAC03FF--5504000-5567999/FFAB729C--5541219.xdr.zst",
+    "sha256": "f91c9d8d38b6963b255a5377711c3eb946c0140e1065c494d0e8452419002c1e",
+    "bytes": 185804,
+    "compressed_bytes": 24159
+  },
+  {
+    "network": "testnet",
+    "ledger": 5604613,
+    "path": "ledgers/testnet/5604613.xdr.zst",
+    "xdr_type": "LedgerCloseMetaBatch",
+    "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAB09FF--5568000-5631999/FFAA7AFA--5604613.xdr.zst",
+    "sha256": "eed126ebeebec1aac14b4726c8db1b5b56007267466720777005b1e84e80da9e",
+    "bytes": 120364,
+    "compressed_bytes": 13312
   },
   {
     "network": "testnet",

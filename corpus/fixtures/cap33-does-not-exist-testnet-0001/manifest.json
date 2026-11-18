@@ -1,0 +1,66 @@
+{
+  "id": "cap33-does-not-exist-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0033"
+  ],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: RevokeSponsorshipResult:REVOKE_SPONSORSHIP_DOES_NOT_EXIST",
+  "sha256": "1f23800b32aecb509c95db9ab57911ae211eef70204c1f89b202fc4366935789",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5604613,
+    "tx_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+    "closed_at": "2026-11-07T10:18:26Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+    "successful": false,
+    "source_account": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "revoke_sponsorship",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "RevokeSponsorshipResult:REVOKE_SPONSORSHIP_DOES_NOT_EXIST"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "1f23800b32aecb509c95db9ab57911ae211eef70204c1f89b202fc4366935789",
+      "bytes": 240
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "9b9f55217ecdbd0645a485166c389a78896ecb4762810b8498bd65322eb9f173",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "5027dba4d35b80485e9f038e31fbca6e1b41f831d432da73abe229598eea1270",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "4afa406ebe560bdf7b5ca9a4b7639a67c7518f0851f99ffe13a5d8c99b9e5f18",
+      "bytes": 300
+    }
+  ]
+}

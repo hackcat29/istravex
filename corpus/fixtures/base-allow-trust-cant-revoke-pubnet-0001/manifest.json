@@ -1,0 +1,64 @@
+{
+  "id": "base-allow-trust-cant-revoke-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AllowTrustResult:ALLOW_TRUST_CANT_REVOKE",
+  "sha256": "ea0a2a6d73e91575ff4496e290e4f6efe0f84dfac18039dad7f95bf7b5017330",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 61604239,
+    "tx_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+    "closed_at": "2026-03-11T14:53:35Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+    "successful": false,
+    "source_account": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "allow_trust",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "AllowTrustResult:ALLOW_TRUST_CANT_REVOKE"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "ea0a2a6d73e91575ff4496e290e4f6efe0f84dfac18039dad7f95bf7b5017330",
+      "bytes": 200
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "005ec8c4584f3f6b77eee616f5fa36edc4f7bf13a24be1c2eb55f0540e5d9322",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "adb6ca49f14050f64100fafc1f29cf97754062f4ef5d80ab9df91ad4e0d582c9",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "dcba7a43c8ef1b154a04c83d16dd67b17c60957c5be2ea55807e9c0c2112561c",
+      "bytes": 300
+    }
+  ]
+}

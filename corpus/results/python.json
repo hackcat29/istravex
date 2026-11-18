@@ -25,6 +25,16 @@
       "detail": []
     },
     {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
       "checks": {
         "decode": "pass",
@@ -305,6 +315,26 @@
       "detail": []
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "checks": {
         "decode": "pass",
@@ -325,7 +355,27 @@
       "detail": []
     },
     {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-set-options-too-many-signers-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -346,6 +396,16 @@
     },
     {
       "fixture": "cap15-fee-bump-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -585,6 +645,26 @@
       "detail": []
     },
     {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
       "checks": {
         "decode": "pass",
@@ -615,6 +695,26 @@
       "detail": []
     },
     {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
       "checks": {
         "decode": "pass",
@@ -626,6 +726,26 @@
     },
     {
       "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -715,6 +835,16 @@
       "detail": []
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "checks": {
         "decode": "pass",
@@ -765,6 +895,16 @@
       "detail": []
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "checks": {
         "decode": "pass",
@@ -806,6 +946,16 @@
     },
     {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -906,6 +1056,16 @@
     },
     {
       "fixture": "cap46-sc-error-crypto-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-sc-error-object-testnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -1059,6 +1219,16 @@
       "detail": []
     },
     {
+      "fixture": "cap66-config-setting-entry-contract-ledger-cost-ext-v0-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
       "checks": {
         "decode": "pass",
@@ -1150,6 +1320,16 @@
     },
     {
       "fixture": "cap77-config-setting-entry-freeze-bypass-txs-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",

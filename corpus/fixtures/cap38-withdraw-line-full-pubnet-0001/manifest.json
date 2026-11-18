@@ -1,0 +1,66 @@
+{
+  "id": "cap38-withdraw-line-full-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0038"
+  ],
+  "protocol_version": 26,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: LiquidityPoolWithdrawResult:LIQUIDITY_POOL_WITHDRAW_LINE_FULL",
+  "sha256": "b5e094b8a6a0dc560b454e86b65481d5fc939528dfedc06a7e53b8ec80a31cd8",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 63319448,
+    "tx_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+    "closed_at": "2026-07-04T03:53:08Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+    "successful": false,
+    "source_account": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+    "fee_charged": "100",
+    "max_fee": "100000",
+    "operation_count": 1,
+    "operation_types": "liquidity_pool_withdraw",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "LiquidityPoolWithdrawResult:LIQUIDITY_POOL_WITHDRAW_LINE_FULL"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "b5e094b8a6a0dc560b454e86b65481d5fc939528dfedc06a7e53b8ec80a31cd8",
+      "bytes": 224
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "edfd14e5e1e014a59bf368caff7fe877bcc0999f53456e73587b283130476baf",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "23970850b865cd9f69db9b2b916d4a87648675cbb0388295419500567a46d672",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "f8cf9c8a62ad822bee3201368c4d376d9f960c64d747918648fd2ad13f933e7e",
+      "bytes": 396
+    }
+  ]
+}

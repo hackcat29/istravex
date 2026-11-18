@@ -122,6 +122,64 @@
       ]
     },
     {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 61604239,
+      "tx_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+          "observed": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "observed": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "allow_trust",
+          "observed": "allow_trust",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -1496,6 +1554,128 @@
       ]
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 62763486,
+      "tx_hash": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+          "observed": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "observed": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "300",
+          "observed": "300",
+          "ok": true
+        },
+        {
+          "field": "new_max_fee",
+          "expected": "600000",
+          "observed": "600000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "2",
+          "observed": "2",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "path_payment_strict_send,path_payment_strict_receive",
+          "observed": "path_payment_strict_send,path_payment_strict_receive",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        },
+        {
+          "field": "fee_account",
+          "expected": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "observed": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 59601392,
+      "tx_hash": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+          "observed": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "observed": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100000",
+          "observed": "100000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "path_payment_strict_receive",
+          "observed": "path_payment_strict_receive",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -1612,6 +1792,64 @@
       ]
     },
     {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 64543186,
+      "tx_hash": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+          "observed": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "observed": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "set_options",
+          "observed": "set_options",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-set-options-too-many-signers-testnet-0001",
       "pattern": "tx",
       "network": "testnet",
@@ -1671,6 +1909,64 @@
           "field": "fee_account",
           "expected": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
           "observed": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
+      "pattern": "tx",
+      "network": "testnet",
+      "ledger": 4235871,
+      "tx_hash": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+          "observed": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "observed": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "900",
+          "observed": "900",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "9000",
+          "observed": "9000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "9",
+          "observed": "9",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,claim_claimable_balance,begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,payment,account_merge",
+          "observed": "begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,claim_claimable_balance,begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,payment,account_merge",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
           "ok": true
         }
       ]
@@ -1751,6 +2047,70 @@
           "field": "fee_account",
           "expected": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
           "observed": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 61101446,
+      "tx_hash": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+          "observed": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "observed": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "200",
+          "observed": "200",
+          "ok": true
+        },
+        {
+          "field": "new_max_fee",
+          "expected": "200000",
+          "observed": "200000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "payment",
+          "observed": "payment",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        },
+        {
+          "field": "fee_account",
+          "expected": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "observed": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
           "ok": true
         }
       ]
@@ -2988,6 +3348,122 @@
       ]
     },
     {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 60493129,
+      "tx_hash": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+          "observed": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "observed": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "600",
+          "observed": "600",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "600",
+          "observed": "600",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "6",
+          "observed": "6",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,begin_sponsoring_future_reserves,change_trust,end_sponsoring_future_reserves",
+          "observed": "begin_sponsoring_future_reserves,create_account,end_sponsoring_future_reserves,begin_sponsoring_future_reserves,change_trust,end_sponsoring_future_reserves",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "pattern": "tx",
+      "network": "testnet",
+      "ledger": 5604613,
+      "tx_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+          "observed": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "observed": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "revoke_sponsorship",
+          "observed": "revoke_sponsorship",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
       "pattern": "tx",
       "network": "testnet",
@@ -3168,6 +3644,122 @@
       ]
     },
     {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 59471041,
+      "tx_hash": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+          "observed": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "observed": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "revoke_sponsorship",
+          "observed": "revoke_sponsorship",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 62918997,
+      "tx_hash": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+          "observed": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "observed": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "200",
+          "observed": "200",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "20000",
+          "observed": "20000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "2",
+          "observed": "2",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "begin_sponsoring_future_reserves,payment",
+          "observed": "begin_sponsoring_future_reserves,payment",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -3273,6 +3865,122 @@
           "field": "operation_types",
           "expected": "clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags",
           "observed": "clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "pattern": "tx",
+      "network": "testnet",
+      "ledger": 5003675,
+      "tx_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+          "observed": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "observed": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "clawback_claimable_balance",
+          "observed": "clawback_claimable_balance",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 60361520,
+      "tx_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+          "observed": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "observed": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "10000",
+          "observed": "10000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "clawback",
+          "observed": "clawback",
           "ok": true
         },
         {
@@ -3760,6 +4468,64 @@
       ]
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 64819095,
+      "tx_hash": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+          "observed": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "observed": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "change_trust",
+          "observed": "change_trust",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -3998,6 +4764,64 @@
       ]
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 63319448,
+      "tx_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+          "observed": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "observed": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "100000",
+          "observed": "100000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "liquidity_pool_withdraw",
+          "observed": "liquidity_pool_withdraw",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -4211,6 +5035,64 @@
           "field": "weight",
           "expected": "1",
           "observed": "1",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 64211037,
+      "tx_hash": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+          "observed": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "observed": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "209696576",
+          "observed": "209696576",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "241156730",
+          "observed": "241156730",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "invoke_host_function",
+          "observed": "invoke_host_function",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
           "ok": true
         }
       ]
@@ -4569,6 +5451,64 @@
           "field": "max_fee",
           "expected": "11000000",
           "observed": "11000000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "invoke_host_function",
+          "observed": "invoke_host_function",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-sc-error-object-testnet-0001",
+      "pattern": "tx",
+      "network": "testnet",
+      "ledger": 4554639,
+      "tx_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+          "observed": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "observed": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "38770",
+          "observed": "38770",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "355976",
+          "observed": "355976",
           "ok": true
         },
         {
@@ -5722,6 +6662,64 @@
           "expected": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
           "observed": "—",
           "ok": false
+        }
+      ]
+    },
+    {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
+      "pattern": "tx",
+      "network": "testnet",
+      "ledger": 5541219,
+      "tx_hash": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+          "observed": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "observed": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "6496",
+          "observed": "6496",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "11392",
+          "observed": "11392",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "invoke_host_function",
+          "observed": "invoke_host_function",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
         }
       ]
     },
@@ -7572,6 +8570,98 @@
           "closed_at": "2026-01-26T12:13:04Z",
           "closed_at_ms": "2026-01-26T12:13:04Z",
           "ledger_sequence": 60946000
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+        "ledger_sequence": 61604239,
+        "account": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+        "account_sequence": "256846062277361777",
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAACO0eNLnXtc4JssZxK3RmEbgNGtftFMenBTkJk7WFqEfgAAAGQDkIAiAAAAcQAAAAAAAAAAAAAAAQAAAAAAAAAHAAAAAGLmNYFA702rEkbzkJD5cC/OSWcQdvSEwDZ3VexlQNIuAAAAAUlMTEEAAAAAAAAAAAAAAAFYWoR+AAAAQCAyaY3S7lwL2VRxC63Yx1a09Ce5gMiA95peMDbG/3ZLDKplqnK7xWKt0Wugd91cs6c72x9IXhhhNLqRuZfZDA0=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAH/////AAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwOsAY8AAAAAAAAAAI7R40ude1zgmyxnErdGYRuA0a1+0Ux6cFOQmTtYWoR+AAAAADnQ2mUDkIAiAAAAcAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA6vz6AAAAABpsTQAAAAAAAAAAAEDrAGPAAAAAAAAAACO0eNLnXtc4JssZxK3RmEbgNGtftFMenBTkJk7WFqEfgAAAAA50NplA5CAIgAAAHEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOsAY8AAAAAabGB7wAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAACO0eNLnXtc4JssZxK3RmEbgNGtftFMenBTkJk7WFqEfgAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDq/PoAAAAAAAAAACO0eNLnXtc4JssZxK3RmEbgNGtftFMenBTkJk7WFqEfgAAAAA50NrJA5CAIgAAAHAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOr8+gAAAAAabE0AAAAAAAAAAABA6wBjwAAAAAAAAAAjtHjS517XOCbLGcSt0ZhG4DRrX7RTHpwU5CZO1hahH4AAAAAOdDaZQOQgCIAAABwAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAADq/PoAAAAAGmxNAAAAAAA",
+        "created_at": "2026-03-11T14:53:35Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "",
+        "successful": false,
+        "id": "264588191800074240",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-03-11T14:53:35Z",
+        "closed_at_ms": "2026-03-11T14:53:35Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "type": 7,
+          "type_string": "allow_trust",
+          "details": {
+            "asset_code": "ILLA",
+            "asset_id": "332979568732182130",
+            "asset_issuer": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+            "asset_type": "credit_alphanum4",
+            "authorize": false,
+            "trustee": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+            "trustor": "GBROMNMBIDXU3KYSI3ZZBEHZOAX44SLHCB3PJBGAGZ3VL3DFIDJC5ANP"
+          },
+          "transaction_id": "264588191800074240",
+          "id": "264588191800074241",
+          "closed_at": "2026-03-11T14:53:35Z",
+          "closed_at_ms": "2026-03-11T14:53:35Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "AllowTrustResultCodeAllowTrustCantRevoke",
+          "ledger_sequence": 61604239,
+          "details_json": {
+            "asset_code": "ILLA",
+            "asset_id": "332979568732182130",
+            "asset_issuer": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+            "asset_type": "credit_alphanum4",
+            "authorize": false,
+            "trustee": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+            "trustor": "GBROMNMBIDXU3KYSI3ZZBEHZOAX44SLHCB3PJBGAGZ3VL3DFIDJC5ANP"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "signer": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 61604239,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-03-11T14:53:35Z",
+          "closed_at_ms": "2026-03-11T14:53:35Z",
+          "ledger_sequence": 61604239
         }
       ],
       "trustlines": [],
@@ -12506,6 +13596,277 @@
       "transform_errors": []
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+        "ledger_sequence": 62763486,
+        "account": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+        "account_sequence": "266004860992750765",
+        "max_fee": 400000,
+        "fee_charged": 300,
+        "operation_count": 2,
+        "tx_envelope": "AAAABQAAAABQ516nV2/s4RrXG9/beZ9u7qNjrpASI88+wWFm6D+XTAAAAAAACSfAAAAAAgAAAAA4rMzyPK+JGKju9NFww0Dvj9N+GK+jcI9gi1tWyRpsbgAGGoADsQoDAAAErQAAAAIAAAABAAAAAAAAAAAAAAAAahdEdAAAAAEDvbHeA72x3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABAAAAALp4xhJw/SKNjBZyOpHIF8CcWv/vmWQqGadOnUtSUGJhAAAADQAAAAAAAAAAAAYotQAAAAC6eMYScP0ijYwWcjqRyBfAnFr/75lkKhmnTp1LUlBiYQAAAAFCVEMAAAAAAGrl+/NlIBMvk84azG8w7Y0MFeUfapja8f6qDe6lavWuAAAAAAAAAAEAAAABAAAAAlBZVVNEAAAAAAAAAAAAAADgT6Lp4eh6+jA6KPimRMk4OMu2x3/3aLj2IdXW2fpzOgAAAAEAAAAAunjGEnD9Io2MFnI6kcgXwJxa/++ZZCoZp06dS1JQYmEAAAACAAAAAUJUQwAAAAAAauX782UgEy+TzhrMbzDtjQwV5R9qmNrx/qoN7qVq9a4AAAAAAAAAAQAAAAC6eMYScP0ijYwWcjqRyBfAnFr/75lkKhmnTp1LUlBiYQAAAAAAAAAAAAYotQAAAAAAAAAAAAAAAlJQYmEAAABA+6+5hNubnh6RBtT72F9V/hJcLflr5mzHVTxFGe6TJ+yUIde3povfoZo4IVWI4rgJa5eP6ETgjjeRh131LQvjAskabG4AAABAfvezzgVlwCuAT/h8niaN5GNfVJpVk1z/rXH+5gmzSqIIas9sbbxlyokBE2cPOq7xdXbl1ii9DWhY6gUXqdDLAwAAAAAAAAAB6D+XTAAAAEB60ob+td8QJ1tcntcnT1NO9tImx3XMIb1npnmGk3hqUdECrnA4R6p82u5twfSbNkCpQP3IayqIl3YkPcvWGBAE",
+        "tx_result": "AAAAAAAAASz////z8oNoeB/7p+5OZxDIsQmPODLN9t1LuNvsL4h3ZAnz2ioAAAAAAAAAAP////8AAAACAAAAAAAAAA3////0AAAAAAAAAAL////9AAAAAAAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAAEAAAAAwO9sd4AAAAAAAAAAFDnXqdXb+zhGtcb39t5n27uo2OukBIjzz7BYWboP5dMAAAAAAzwzRQDrxKKAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQO9sd4AAAAAAAAAAFDnXqdXb+zhGtcb39t5n27uo2OukBIjzz7BYWboP5dMAAAAAAzwzRQDrxKKAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAwO9rr0AAAAAAAAAADiszPI8r4kYqO700XDDQO+P034Yr6Nwj2CLW1bJGmxuAAAAAACYloADsQoDAAAErAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA72uvQAAAABqFzIZAAAAAAAAAAEDvbHeAAAAAAAAAAA4rMzyPK+JGKju9NFww0Dvj9N+GK+jcI9gi1tWyRpsbgAAAAAAmJaAA7EKAwAABK0AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAO9sd4AAAAAahdEagAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAABQ516nV2/s4RrXG9/beZ9u7qNjrpASI88+wWFm6D+XTAAAAAoAAAAAAAAAAAAAAAAAAAEsAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDvbHdAAAAAAAAAABQ516nV2/s4RrXG9/beZ9u7qNjrpASI88+wWFm6D+XTAAAAAAM8M5AA68SigAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEDvbHeAAAAAAAAAABQ516nV2/s4RrXG9/beZ9u7qNjrpASI88+wWFm6D+XTAAAAAAM8M0UA68SigAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==",
+        "created_at": "2026-05-27T19:22:18Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1779909748)",
+        "successful": false,
+        "id": "269567119753580544",
+        "fee_account": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+        "inner_transaction_hash": "f28368781ffba7ee4e6710c8b1098f3832cdf6dd4bb8dbec2f88776409f3da2a",
+        "new_max_fee": 600000,
+        "ledger_bounds": "[62763486,62763487)",
+        "min_account_sequence": null,
+        "min_account_sequence_age": 0,
+        "min_account_sequence_ledger_gap": 0,
+        "extra_signers": null,
+        "closed_at": "2026-05-27T19:22:18Z",
+        "closed_at_ms": "2026-05-27T19:22:18Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFeeBumpInnerFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+          "type": 13,
+          "type_string": "path_payment_strict_send",
+          "details": {
+            "amount": "0.0000000",
+            "asset_code": "BTC",
+            "asset_id": "-2979674430763574587",
+            "asset_issuer": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
+            "asset_type": "credit_alphanum4",
+            "destination_min": "0.0000001",
+            "from": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+            "path": [
+              {
+                "asset_code": "PYUSD",
+                "asset_issuer": "GDQE7IXJ4HUHV6RQHIUPRJSEZE4DRS5WY577O2FY6YQ5LVWZ7JZTU2V5",
+                "asset_type": "credit_alphanum12"
+              }
+            ],
+            "source_amount": "0.0403637",
+            "source_asset_id": "-5706705804583548011",
+            "source_asset_type": "native",
+            "to": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM"
+          },
+          "transaction_id": "269567119753580544",
+          "id": "269567119753580545",
+          "closed_at": "2026-05-27T19:22:18Z",
+          "closed_at_ms": "2026-05-27T19:22:18Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "PathPaymentStrictSendResultCodePathPaymentStrictSendUnderDestmin",
+          "ledger_sequence": 62763486,
+          "details_json": {
+            "amount": "0.0000000",
+            "asset_code": "BTC",
+            "asset_id": "-2979674430763574587",
+            "asset_issuer": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
+            "asset_type": "credit_alphanum4",
+            "destination_min": "0.0000001",
+            "from": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+            "path": [
+              {
+                "asset_code": "PYUSD",
+                "asset_issuer": "GDQE7IXJ4HUHV6RQHIUPRJSEZE4DRS5WY577O2FY6YQ5LVWZ7JZTU2V5",
+                "asset_type": "credit_alphanum12"
+              }
+            ],
+            "source_amount": "0.0403637",
+            "source_asset_id": "-5706705804583548011",
+            "source_asset_type": "native",
+            "to": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM"
+          }
+        },
+        {
+          "source_account": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+          "type": 2,
+          "type_string": "path_payment_strict_receive",
+          "details": {
+            "amount": "0.0403637",
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+            "path": null,
+            "source_amount": "0.0000000",
+            "source_asset_code": "BTC",
+            "source_asset_id": "-2979674430763574587",
+            "source_asset_issuer": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
+            "source_asset_type": "credit_alphanum4",
+            "source_max": "1e-7",
+            "to": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM"
+          },
+          "transaction_id": "269567119753580544",
+          "id": "269567119753580546",
+          "closed_at": "2026-05-27T19:22:18Z",
+          "closed_at_ms": "2026-05-27T19:22:18Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "PathPaymentStrictReceiveResultCodePathPaymentStrictReceiveSrcNoTrust",
+          "ledger_sequence": 62763486,
+          "details_json": {
+            "amount": "0.0403637",
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM",
+            "path": null,
+            "source_amount": "0.0000000",
+            "source_asset_code": "BTC",
+            "source_asset_id": "-2979674430763574587",
+            "source_asset_issuer": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
+            "source_asset_type": "credit_alphanum4",
+            "source_max": "1e-7",
+            "to": "GC5HRRQSOD6SFDMMCZZDVEOIC7AJYWX756MWIKQZU5HJ2S2SKBRGDODM"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "signer": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 62763486,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-05-27T19:22:18Z",
+          "closed_at_ms": "2026-05-27T19:22:18Z",
+          "ledger_sequence": 62763486
+        },
+        {
+          "account_id": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "signer": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 62763486,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-05-27T19:22:18Z",
+          "closed_at_ms": "2026-05-27T19:22:18Z",
+          "ledger_sequence": 62763486
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+        "ledger_sequence": 59601392,
+        "account": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+        "account_sequence": "173099512879910846",
+        "max_fee": 100000,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAAB7XJvjt5CBUUigUMSQkrZUXUEIXkfSrWKfmlN1bQr5dwABhqACZvkXAAAPvgAAAAEAAAAAAAAAAAAAAABpKVU9AAAAAAAAAAEAAAAAAAAAAgAAAAFYUlAAAAAAAMBwIM4nMT8Rj/yx1nvIJ4bvNNt5lmv2+CbeJPkUxQY3AAAAAlJilR0AAAAAe1yb47eQgVFIoFDEkJK2VF1BCF5H0q1in5pTdW0K+XcAAAAAAAAAADsCM4AAAAAAAAAAAAAAAAFtCvl3AAAAQOI8VkL3KIxUTW8oIDZ6/aI6yfjVivJC43ADK1HlOvYw2cd7o6Yun/pZpO+LYiFFNZ9+0ISpXinflPmX0wbipQY=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAC/////AAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwONcfAAAAAAAAAAAHtcm+O3kIFRSKBQxJCStlRdQQheR9KtYp+aU3VtCvl3AAAAAATICngCZvkXAAAPvQAAAAwAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAAAAAAAAlsb2JzdHIuY28AAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA41x6wAAAABpAcghAAAAAAAAAAEDjXHwAAAAAAAAAAB7XJvjt5CBUUigUMSQkrZUXUEIXkfSrWKfmlN1bQr5dwAAAAAEyAp4Amb5FwAAD74AAAAMAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAONcfAAAAAAaQHIPwAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAAB7XJvjt5CBUUigUMSQkrZUXUEIXkfSrWKfmlN1bQr5dwAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDjXHrAAAAAAAAAAB7XJvjt5CBUUigUMSQkrZUXUEIXkfSrWKfmlN1bQr5dwAAAAAEyArcAmb5FwAAD70AAAAMAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAONcesAAAAAaQHIIQAAAAAAAAABA41x8AAAAAAAAAAAe1yb47eQgVFIoFDEkJK2VF1BCF5H0q1in5pTdW0K+XcAAAAABMgKeAJm+RcAAA+9AAAADAAAAAEAAAAAxHHGQ3BiyVBqiTQuU4oa2kBNL0HPHTolX0Mh98bg4XUAAAAAAAAACWxvYnN0ci5jbwAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAADjXHrAAAAAGkByCEAAAAA",
+        "created_at": "2025-10-29T07:54:39Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1764316477)",
+        "successful": false,
+        "id": "255986029436559360",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2025-10-29T07:54:39Z",
+        "closed_at_ms": "2025-10-29T07:54:39Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "type": 2,
+          "type_string": "path_payment_strict_receive",
+          "details": {
+            "amount": 99,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+            "path": null,
+            "source_amount": "0.0000000",
+            "source_asset_code": "XRP",
+            "source_asset_id": "-7191959396307615682",
+            "source_asset_issuer": "GDAHAIGOE4YT6EMP7SY5M66IE6DO6NG3PGLGX5XYE3PCJ6IUYUDDPXRP",
+            "source_asset_type": "credit_alphanum4",
+            "source_max": "997.2127005",
+            "to": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT"
+          },
+          "transaction_id": "255986029436559360",
+          "id": "255986029436559361",
+          "closed_at": "2025-10-29T07:54:39Z",
+          "closed_at_ms": "2025-10-29T07:54:39Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "PathPaymentStrictReceiveResultCodePathPaymentStrictReceiveSrcNotAuthorized",
+          "ledger_sequence": 59601392,
+          "details_json": {
+            "amount": 99,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+            "path": null,
+            "source_amount": "0.0000000",
+            "source_asset_code": "XRP",
+            "source_asset_id": "-7191959396307615682",
+            "source_asset_issuer": "GDAHAIGOE4YT6EMP7SY5M66IE6DO6NG3PGLGX5XYE3PCJ6IUYUDDPXRP",
+            "source_asset_type": "credit_alphanum4",
+            "source_max": "997.2127005",
+            "to": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "signer": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 59601392,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2025-10-29T07:54:39Z",
+          "closed_at_ms": "2025-10-29T07:54:39Z",
+          "ledger_sequence": 59601392
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "found": true,
       "transaction": {
@@ -12756,6 +14117,98 @@
           "closed_at": "2025-10-06T08:10:15Z",
           "closed_at_ms": "2025-10-06T08:10:15Z",
           "ledger_sequence": 59254800
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+        "ledger_sequence": 64543186,
+        "account": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+        "account_sequence": "203457887916261774",
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAACLmskbsUFDUscSsBXpYPf0C5HyfQyyyz+b4CLyWHHHfAAAAGQC0tPfAAABjgAAAAAAAAAAAAAAAQAAAAAAAAAFAAAAAAAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAEFN0ZWxsYXJEZXgubXkuaWQAAAAAAAAAAAAAAAFYccd8AAAAQHYLzOOmaVh60r+C2UODZoyC9Zyyw7V8LehWTW8Qr1HWV8NulusHmXFegdrCvpwK/bT9HnRMIy7298dBHpH2bg8=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAF////+wAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwPY2dIAAAAAAAAAAIuayRuxQUNSxxKwFelg9/QLkfJ9DLLLP5vgIvJYccd8AAAAAA5nQWUC0tPfAAABjQAAACgAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAADwAAABBTdGVsbGFyRGV4Lm15LmlkAQAAAAAAAAAAAAABAAAA305X5JAAAAAAAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAADAAAAAAPY2b4AAAAAarFByAAAAAAAAAABA9jZ0gAAAAAAAAAAi5rJG7FBQ1LHErAV6WD39AuR8n0Msss/m+Ai8lhxx3wAAAAADmdBZQLS098AAAGOAAAAKAAAAAEAAAAAxHHGQ3BiyVBqiTQuU4oa2kBNL0HPHTolX0Mh98bg4XUAAAAPAAAAEFN0ZWxsYXJEZXgubXkuaWQBAAAAAAAAAAAAAAEAAADfTlfkkAAAAAAAAAAAAAAAAgAAAAAAAAADAAAAAAAAAAMAAAAAA9jZ0gAAAABqsUIsAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEltPzYWa7C+mNIQ4xImzw8EMmLbSG+T9PLMMtolT75dwAAAAEAAAAAAAAAAgAAAA8AAAADZmVlAAAAABIAAAAAAAAAAIuayRuxQUNSxxKwFelg9/QLkfJ9DLLLP5vgIvJYccd8AAAACgAAAAAAAAAAAAAAAAAAAGQAAAAA",
+        "tx_fee_meta": "AAAAAgAAAAMD2Nm+AAAAAAAAAACLmskbsUFDUscSsBXpYPf0C5HyfQyyyz+b4CLyWHHHfAAAAAAOZ0HJAtLT3wAAAY0AAAAoAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAA8AAAAQU3RlbGxhckRleC5teS5pZAEAAAAAAAAAAAAAAQAAAN9OV+SQAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAwAAAAAD2Nm+AAAAAGqxQcgAAAAAAAAAAQPY2dIAAAAAAAAAAIuayRuxQUNSxxKwFelg9/QLkfJ9DLLLP5vgIvJYccd8AAAAAA5nQWUC0tPfAAABjQAAACgAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAADwAAABBTdGVsbGFyRGV4Lm15LmlkAQAAAAAAAAAAAAABAAAA305X5JAAAAAAAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAADAAAAAAPY2b4AAAAAarFByAAAAAA=",
+        "created_at": "2026-09-21T14:41:48Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "",
+        "successful": false,
+        "id": "277210873050243072",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-09-21T14:41:48Z",
+        "closed_at_ms": "2026-09-21T14:41:48Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "type": 5,
+          "type_string": "set_options",
+          "details": {
+            "clear_flags": [
+              8
+            ],
+            "clear_flags_s": [
+              "auth_clawback_enabled"
+            ],
+            "home_domain": "StellarDex.my.id"
+          },
+          "transaction_id": "277210873050243072",
+          "id": "277210873050243073",
+          "closed_at": "2026-09-21T14:41:48Z",
+          "closed_at_ms": "2026-09-21T14:41:48Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "SetOptionsResultCodeSetOptionsCantChange",
+          "ledger_sequence": 64543186,
+          "details_json": {
+            "clear_flags": [
+              8
+            ],
+            "clear_flags_s": [
+              "auth_clawback_enabled"
+            ],
+            "home_domain": "StellarDex.my.id"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "signer": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 64543186,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-09-21T14:41:48Z",
+          "closed_at_ms": "2026-09-21T14:41:48Z",
+          "ledger_sequence": 64543186
         }
       ],
       "trustlines": [],
@@ -13093,6 +14546,244 @@
           "closed_at": "2026-03-24T11:29:40Z",
           "closed_at_ms": "2026-03-24T11:29:40Z",
           "ledger_sequence": 1670002
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+        "ledger_sequence": 4235871,
+        "account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+        "account_sequence": "18192862990565381",
+        "max_fee": 9000,
+        "fee_charged": 900,
+        "operation_count": 9,
+        "tx_envelope": "AAAAAgAAAABOS3wqUXb/9hq7ZqnPBcboTttwf+YFgJDmKNyfGWY5hwAAIygAQKJQAAAABQAAAAEAAAAAAAAAAAAAAABqhoksAAAAAAAAAAkAAAABAAAAAE5LfCpRdv/2Grtmqc8FxuhO23B/5gWAkOYo3J8ZZjmHAAAAEAAAAACD17cD763zxEBu5lCnC7dmACrecebcBm3R1b8Nf48ergAAAAEAAAAATkt8KlF2//Yau2apzwXG6E7bcH/mBYCQ5ijcnxlmOYcAAAAAAAAAAIPXtwPvrfPEQG7mUKcLt2YAKt5x5twGbdHVvw1/jx6uAAAAAAAAAAAAAAABAAAAAIPXtwPvrfPEQG7mUKcLt2YAKt5x5twGbdHVvw1/jx6uAAAAEQAAAAEAAAAAg9e3A++t88RAbuZQpwu3ZgAq3nHm3AZt0dW/DX+PHq4AAAAPAAAAAIBN7XWn0J0XU/dW+m5cUk8l+J1FHoLuM/Tbx8pbzIKLAAAAAQAAAABOS3wqUXb/9hq7ZqnPBcboTttwf+YFgJDmKNyfGWY5hwAAABAAAAAANZHXoNLgxfZCEECYU/iQ8g7fBGOb1dq9ygCHvFA5P0sAAAABAAAAAE5LfCpRdv/2Grtmqc8FxuhO23B/5gWAkOYo3J8ZZjmHAAAAAAAAAAA1kdeg0uDF9kIQQJhT+JDyDt8EY5vV2r3KAIe8UDk/SwAAAAAAAAAAAAAAAQAAAAA1kdeg0uDF9kIQQJhT+JDyDt8EY5vV2r3KAIe8UDk/SwAAABEAAAABAAAAAIPXtwPvrfPEQG7mUKcLt2YAKt5x5twGbdHVvw1/jx6uAAAAAQAAAAA1kdeg0uDF9kIQQJhT+JDyDt8EY5vV2r3KAIe8UDk/SwAAAAAAAAAABfXhAAAAAAEAAAAAg9e3A++t88RAbuZQpwu3ZgAq3nHm3AZt0dW/DX+PHq4AAAAIAAAAADWR16DS4MX2QhBAmFP4kPIO3wRjm9XavcoAh7xQOT9LAAAAAAAAAAMZZjmHAAAAQFqVICYXfqqjzdOpC8c2nwpuQyYcvq2U3NoG71dHpXf/t8WUVkvgZbf+p3rJ1qlNxC/KqiQT7Fj6N8aHR12FUgR/jx6uAAAAQB2eD/ccJOCiZ07AHy6fQuT/GgwB3FuUcL681ZMbPsXrZUygRhQ5zMZ9Kdi2WbJ40Hgkw+6r9wpYkQNQLk/5nAZQOT9LAAAAQJkU7ES2c4hti3hTswMcaHnkaVoWAbre11FDaLgbatpKUX3IedwSD6hy0U9pn2TsJPjr8+xvjvRMacW/U7VlVQw=",
+        "tx_result": "AAAAAAAAA4T/////AAAACQAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAP/////gAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAB/////gAAAAAAAAAI////+wAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwBAol8AAAAAAAAAAE5LfCpRdv/2Grtmqc8FxuhO23B/5gWAkOYo3J8ZZjmHAAAAF0h21UAAQKJQAAAABAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAAECiXQAAAABqhohxAAAAAAAAAAEAQKJfAAAAAAAAAABOS3wqUXb/9hq7ZqnPBcboTttwf+YFgJDmKNyfGWY5hwAAABdIdtVAAECiUAAAAAUAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAABAol8AAAAAaoaIewAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAB15KLcsJwPM/q9+uf9O9NUEpVqLl5/JtFDqLIQrTRzmEAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAABOS3wqUXb/9hq7ZqnPBcboTttwf+YFgJDmKNyfGWY5hwAAAAoAAAAAAAAAAAAAAAAAAAOEAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMAQKJdAAAAAAAAAABOS3wqUXb/9hq7ZqnPBcboTttwf+YFgJDmKNyfGWY5hwAAABdIdtjEAECiUAAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAABAol0AAAAAaoaIcQAAAAAAAAABAECiXwAAAAAAAAAATkt8KlF2//Yau2apzwXG6E7bcH/mBYCQ5ijcnxlmOYcAAAAXSHbVQABAolAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAAQKJdAAAAAGqGiHEAAAAA",
+        "created_at": "2026-08-20T04:54:19Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1787201836)",
+        "successful": false,
+        "id": "18192927415078912",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-08-20T04:54:19Z",
+        "closed_at_ms": "2026-08-20T04:54:19Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "type": 16,
+          "type_string": "begin_sponsoring_future_reserves",
+          "details": {
+            "sponsored_id": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB"
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078913",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "BeginSponsoringFutureReservesResultCodeBeginSponsoringFutureReservesSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "sponsored_id": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB"
+          }
+        },
+        {
+          "source_account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "type": 0,
+          "type_string": "create_account",
+          "details": {
+            "account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "funder": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+            "starting_balance": 0
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078914",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "CreateAccountResultCodeCreateAccountSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "funder": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+            "starting_balance": 0
+          }
+        },
+        {
+          "source_account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+          "type": 17,
+          "type_string": "end_sponsoring_future_reserves",
+          "details": {},
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078915",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "EndSponsoringFutureReservesResultCodeEndSponsoringFutureReservesSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {}
+        },
+        {
+          "source_account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+          "type": 15,
+          "type_string": "claim_claimable_balance",
+          "details": {
+            "balance_id": "00000000804ded75a7d09d1753f756fa6e5c524f25f89d451e82ee33f4dbc7ca5bcc828b",
+            "balance_id_strkey": "BAAIATPNOWT5BHIXKP3VN6TOLRJE6JPYTVCR5AXOGP2NXR6KLPGIFC5D6E",
+            "claimant": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB"
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078916",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "ClaimClaimableBalanceResultCodeClaimClaimableBalanceCannotClaim",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "balance_id": "00000000804ded75a7d09d1753f756fa6e5c524f25f89d451e82ee33f4dbc7ca5bcc828b",
+            "balance_id_strkey": "BAAIATPNOWT5BHIXKP3VN6TOLRJE6JPYTVCR5AXOGP2NXR6KLPGIFC5D6E",
+            "claimant": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB"
+          }
+        },
+        {
+          "source_account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "type": 16,
+          "type_string": "begin_sponsoring_future_reserves",
+          "details": {
+            "sponsored_id": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078917",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "BeginSponsoringFutureReservesResultCodeBeginSponsoringFutureReservesSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "sponsored_id": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          }
+        },
+        {
+          "source_account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "type": 0,
+          "type_string": "create_account",
+          "details": {
+            "account": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC",
+            "funder": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+            "starting_balance": 0
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078918",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "CreateAccountResultCodeCreateAccountSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "account": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC",
+            "funder": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+            "starting_balance": 0
+          }
+        },
+        {
+          "source_account": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC",
+          "type": 17,
+          "type_string": "end_sponsoring_future_reserves",
+          "details": {},
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078919",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "EndSponsoringFutureReservesResultCodeEndSponsoringFutureReservesSuccess",
+          "ledger_sequence": 4235871,
+          "details_json": {}
+        },
+        {
+          "source_account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+          "type": 1,
+          "type_string": "payment",
+          "details": {
+            "amount": 10,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "to": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078920",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "PaymentResultCodePaymentUnderfunded",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "amount": 10,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "to": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          }
+        },
+        {
+          "source_account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+          "type": 8,
+          "type_string": "account_merge",
+          "details": {
+            "account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "into": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          },
+          "transaction_id": "18192927415078912",
+          "id": "18192927415078921",
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "AccountMergeResultCodeAccountMergeSeqnumTooFar",
+          "ledger_sequence": 4235871,
+          "details_json": {
+            "account": "GCB5PNYD56W7HRCAN3TFBJYLW5TAAKW6OHTNYBTN2HK36DL7R4PK4MXB",
+            "into": "GA2ZDV5A2LQML5SCCBAJQU7YSDZA5XYEMON5LWV5ZIAIPPCQHE7UXJUC"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "signer": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 4235871,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-08-20T04:54:19Z",
+          "closed_at_ms": "2026-08-20T04:54:19Z",
+          "ledger_sequence": 4235871
         }
       ],
       "trustlines": [],
@@ -14077,6 +15768,137 @@
           "liquidity_pool_id_strkey": ""
         }
       ],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+        "ledger_sequence": 61101446,
+        "account": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+        "account_sequence": "260466423355146296",
+        "max_fee": 100,
+        "fee_charged": 200,
+        "operation_count": 1,
+        "tx_envelope": "AAAABQAAAADSs+i/GFHjC1pP8Um8BCxlZRusb2MiaM52KTdwJ/eWcgAAAAAAAw1AAAAAAgAAAADijuHmaPvuzjGdA+xU/gW+RREuWb4KKshdK7fGv7e8hAAAAGQDnVzVAAAAOAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAACAzYznrHL4skggCVXdpt7APR7e5UwGCdLpB2IPfOuNUAAAAAVVTREMAAAAAO5kROA7+mIugqJAOsc/kTzZvfb6Ua+0HckD39iTfFcUAAAAAFNyTgAAAAAAAAAABR49eDwAAAECKz3Q5yuXx1xX/DzxrqjRP4diQXqYqY2TKoxuxFWbH9/7Nphj7ubHpgOM/JWddihD+hfYqQbih0DSGSGJ2kaAHAAAAAAAAAAEn95ZyAAAAQHfHDtGOn1tzKJ7GvugHcOSWlDO1cKCUj0SCaLBuZkOFWN3PAC5xTO33LnY1+9A/sBZp22/ES0B5lFz2QPE9zwk=",
+        "tx_result": "AAAAAAAAAMj////z40Oa6aBz8LZU4eTse2VXcaDAPMdp+DZpZ+DPTO+Yq7cAAAAAAAAAAP////oAAAAAAAAAAA==",
+        "tx_meta": "AAAABAAAAAAAAAAEAAAAAwOkVYYAAAAAAAAAANKz6L8YUeMLWk/xSbwELGVlG6xvYyJoznYpN3An95ZyAAAACe5fwTcCg/oBAAAALwAAAAQAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAAAAAAMAAAAAA1+2VAAAAABn/EwGAAAAAAAAAAEDpFWGAAAAAAAAAADSs+i/GFHjC1pP8Um8BCxlZRusb2MiaM52KTdwJ/eWcgAAAAnuX8E3AoP6AQAAAC8AAAAEAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAADAAAAAANftlQAAAAAZ/xMBgAAAAAAAAADA6RVhgAAAAAAAAAA4o7h5mj77s4xnQPsVP4FvkURLlm+CirIXSu3xr+3vIQAAAAAAAAAyAOdXNUAAAA3AAAABAAAAAAAAAAAAAAAAAAUFBQAAAADAAAAAJ3ohxsMk//j/50vXTugr0nbHAqNWFGE578PxUlPqxAiAAAACgAAAADjaryIyreBqksr8cRyWiuLn0kojOh5lbxuTZnkzkBiPgAAAAoAAAAA79VHLg7u2HAN10HhGPl0swtxnhc8It6ZdEI6GZUo2wYAAAAUAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAABgAAAAAAAAADAAAAAQAAAAAfOjKB5z7E4m6D9xzaGpvYchoObVmR8SitSc/WDsgalwAAAAEAAAAAHzoygec+xOJug/cc2hqb2HIaDm1ZkfEorUnP1g7IGpcAAAABAAAAAMi8cpyDYvxg9Pt9YUsRnLs/8HDJkieogkkPHF6J3XmvAAAAAwAAAAADpE6eAAAAAGmFB5YAAAABAAAAAQAAAAAfOjKB5z7E4m6D9xzaGpvYchoObVmR8SitSc/WDsgalwAAAAAAAAABA6RVhgAAAAAAAAAA4o7h5mj77s4xnQPsVP4FvkURLlm+CirIXSu3xr+3vIQAAAAAAAAAyAOdXNUAAAA4AAAABAAAAAAAAAAAAAAAAAAUFBQAAAADAAAAAJ3ohxsMk//j/50vXTugr0nbHAqNWFGE578PxUlPqxAiAAAACgAAAADjaryIyreBqksr8cRyWiuLn0kojOh5lbxuTZnkzkBiPgAAAAoAAAAA79VHLg7u2HAN10HhGPl0swtxnhc8It6ZdEI6GZUo2wYAAAAUAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAABgAAAAAAAAADAAAAAQAAAAAfOjKB5z7E4m6D9xzaGpvYchoObVmR8SitSc/WDsgalwAAAAEAAAAAHzoygec+xOJug/cc2hqb2HIaDm1ZkfEorUnP1g7IGpcAAAABAAAAAMi8cpyDYvxg9Pt9YUsRnLs/8HDJkieogkkPHF6J3XmvAAAAAwAAAAADpFWGAAAAAGmFL8sAAAABAAAAAQAAAAAfOjKB5z7E4m6D9xzaGpvYchoObVmR8SitSc/WDsgalwAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAADSs+i/GFHjC1pP8Um8BCxlZRusb2MiaM52KTdwJ/eWcgAAAAoAAAAAAAAAAAAAAAAAAADIAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDpFWGAAAAAAAAAADSs+i/GFHjC1pP8Um8BCxlZRusb2MiaM52KTdwJ/eWcgAAAAnuX8H/AoP6AQAAAC8AAAAEAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAADAAAAAANftlQAAAAAZ/xMBgAAAAAAAAABA6RVhgAAAAAAAAAA0rPovxhR4wtaT/FJvAQsZWUbrG9jImjOdik3cCf3lnIAAAAJ7l/BNwKD+gEAAAAvAAAABAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAwAAAAADX7ZUAAAAAGf8TAYAAAAA",
+        "created_at": "2026-02-06T00:03:23Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "",
+        "successful": false,
+        "id": "262428712310345728",
+        "fee_account": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+        "inner_transaction_hash": "e3439ae9a073f0b654e1e4ec7b655771a0c03cc769f8366967e0cf4cef98abb7",
+        "new_max_fee": 200000,
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-02-06T00:03:23Z",
+        "closed_at_ms": "2026-02-06T00:03:23Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFeeBumpInnerFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "type": 1,
+          "type_string": "payment",
+          "details": {
+            "amount": 35,
+            "asset_code": "USDC",
+            "asset_id": "-4025621231271331684",
+            "asset_issuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "asset_type": "credit_alphanum4",
+            "from": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+            "to": "GAQDGYZZ5MOL4LESBABFK53JW6YA6R5XXFJQDATUXJA5RA67HLRVJV3D"
+          },
+          "transaction_id": "262428712310345728",
+          "id": "262428712310345729",
+          "closed_at": "2026-02-06T00:03:23Z",
+          "closed_at_ms": "2026-02-06T00:03:23Z",
+          "operation_result_code": "",
+          "operation_trace_code": "",
+          "ledger_sequence": 61101446,
+          "details_json": {
+            "amount": 35,
+            "asset_code": "USDC",
+            "asset_id": "-4025621231271331684",
+            "asset_issuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "asset_type": "credit_alphanum4",
+            "from": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+            "to": "GAQDGYZZ5MOL4LESBABFK53JW6YA6R5XXFJQDATUXJA5RA67HLRVJV3D"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "signer": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 61101446,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-02-06T00:03:23Z",
+          "closed_at_ms": "2026-02-06T00:03:23Z",
+          "ledger_sequence": 61101446
+        },
+        {
+          "account_id": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "signer": "GCO6RBY3BSJ77Y77TUXV2O5AV5E5WHAKRVMFDBHHX4H4KSKPVMICFKT4",
+          "weight": 10,
+          "sponsor": "GAPTUMUB447MJYTOQP3RZWQ2TPMHEGQONVMZD4JIVVE47VQOZANJPYNH",
+          "last_modified_ledger": 61101446,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-02-06T00:03:23Z",
+          "closed_at_ms": "2026-02-06T00:03:23Z",
+          "ledger_sequence": 61101446
+        },
+        {
+          "account_id": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "signer": "GDRWVPEIZK3YDKSLFPY4I4S2FOFZ6SJIRTUHTFN4NZGZTZGOIBRD4CT7",
+          "weight": 10,
+          "sponsor": "GAPTUMUB447MJYTOQP3RZWQ2TPMHEGQONVMZD4JIVVE47VQOZANJPYNH",
+          "last_modified_ledger": 61101446,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-02-06T00:03:23Z",
+          "closed_at_ms": "2026-02-06T00:03:23Z",
+          "ledger_sequence": 61101446
+        },
+        {
+          "account_id": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "signer": "GDX5KRZOB3XNQ4AN25A6CGHZOSZQW4M6C46CFXUZORBDUGMVFDNQNVOP",
+          "weight": 20,
+          "sponsor": "GDELY4U4QNRPYYHU7N6WCSYRTS5T74DQZGJCPKECJEHRYXUJ3V427CUN",
+          "last_modified_ledger": 61101446,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-02-06T00:03:23Z",
+          "closed_at_ms": "2026-02-06T00:03:23Z",
+          "ledger_sequence": 61101446
+        }
+      ],
+      "trustlines": [],
       "transform_errors": []
     },
     {
@@ -32400,6 +34222,266 @@
       "transform_errors": []
     },
     {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+        "ledger_sequence": 60493129,
+        "account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+        "account_sequence": "251434162966233223",
+        "max_fee": 600,
+        "fee_charged": 600,
+        "operation_count": 6,
+        "tx_envelope": "AAAAAgAAAAAyNoe94Wx3H82mA6W9ja7qT8/GYJGxSDPdZIL0w2jg2QAAAlgDfUYKAAAAhwAAAAEAAAAAAAAAAAAAAABpT+hiAAAAAAAAAAYAAAAAAAAAEAAAAACdgDDUhbvpIBTFLdh25b6Ws8uOc6CWVklH3ROa+6YsPwAAAAAAAAAAAAAAAJ2AMNSFu+kgFMUt2Hblvpazy45zoJZWSUfdE5r7piw/AAAAAAAAAAAAAAABAAAAAJ2AMNSFu+kgFMUt2Hblvpazy45zoJZWSUfdE5r7piw/AAAAEQAAAAAAAAAQAAAAAJ2AMNSFu+kgFMUt2Hblvpazy45zoJZWSUfdE5r7piw/AAAAAQAAAACdgDDUhbvpIBTFLdh25b6Ws8uOc6CWVklH3ROa+6YsPwAAAAYAAAABVVNEQwAAAAA7mRE4Dv6Yi6CokA6xz+RPNm99vpRr7QdyQPf2JN8VxX//////////AAAAAQAAAACdgDDUhbvpIBTFLdh25b6Ws8uOc6CWVklH3ROa+6YsPwAAABEAAAAAAAAAAsNo4NkAAABAcgQfwJejmukkqWdhXecJBi/HpKO684e2RBunp2DIxuYDXxhT7p0Krmw0w5Dc2YB3pjDOUxl3d664dHmiJTOfDvumLD8AAABA4Bi1Yd8F7EPpwhqcfiKymA5FYSq9/Abo8OcHrm4d+vujrvv0mmfuA7GjE5TVqINOCYgfO+jkRKfgPYAVaGBgDQ==",
+        "tx_result": "AAAAAAAAAlj/////AAAABgAAAAAAAAAQAAAAAAAAAAAAAAAA/////f////4AAAAAAAAAEP////7////+/////gAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwObDUkAAAAAAAAAADI2h73hbHcfzaYDpb2NrupPz8ZgkbFIM91kgvTDaODZAAAAAAcWlQ4DfUYKAAAAhgAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAUAAAAAAAAAAMAAAAAA5mojgAAAABpR/A6AAAAAAAAAAEDmw1JAAAAAAAAAAAyNoe94Wx3H82mA6W9ja7qT8/GYJGxSDPdZIL0w2jg2QAAAAAHFpUOA31GCgAAAIcAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAFAAAAAAAAAADAAAAAAObDUkAAAAAaU/nNwAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAAAyNoe94Wx3H82mA6W9ja7qT8/GYJGxSDPdZIL0w2jg2QAAAAoAAAAAAAAAAAAAAAAAAAJYAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDmidiAAAAAAAAAAAyNoe94Wx3H82mA6W9ja7qT8/GYJGxSDPdZIL0w2jg2QAAAAAHFpdmA31GCgAAAIYAAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAFAAAAAAAAAADAAAAAAOZqI4AAAAAaUfwOgAAAAAAAAABA5sNSQAAAAAAAAAAMjaHveFsdx/NpgOlvY2u6k/PxmCRsUgz3WSC9MNo4NkAAAAABxaVDgN9RgoAAACGAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAABQAAAAAAAAAAwAAAAADmaiOAAAAAGlH8DoAAAAA",
+        "created_at": "2025-12-27T14:03:35Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1766844514)",
+        "successful": false,
+        "id": "259816010688094208",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2025-12-27T14:03:35Z",
+        "closed_at_ms": "2025-12-27T14:03:35Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "type": 16,
+          "type_string": "begin_sponsoring_future_reserves",
+          "details": {
+            "sponsored_id": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          },
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094209",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "BeginSponsoringFutureReservesResultCodeBeginSponsoringFutureReservesSuccess",
+          "ledger_sequence": 60493129,
+          "details_json": {
+            "sponsored_id": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          }
+        },
+        {
+          "source_account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "type": 0,
+          "type_string": "create_account",
+          "details": {
+            "account": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z",
+            "funder": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+            "starting_balance": 0
+          },
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094210",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "CreateAccountResultCodeCreateAccountLowReserve",
+          "ledger_sequence": 60493129,
+          "details_json": {
+            "account": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z",
+            "funder": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+            "starting_balance": 0
+          }
+        },
+        {
+          "source_account": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z",
+          "type": 17,
+          "type_string": "end_sponsoring_future_reserves",
+          "details": {},
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094211",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpNoAccount",
+          "operation_trace_code": "",
+          "ledger_sequence": 60493129,
+          "details_json": {}
+        },
+        {
+          "source_account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "type": 16,
+          "type_string": "begin_sponsoring_future_reserves",
+          "details": {
+            "sponsored_id": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          },
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094212",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "BeginSponsoringFutureReservesResultCodeBeginSponsoringFutureReservesAlreadySponsored",
+          "ledger_sequence": 60493129,
+          "details_json": {
+            "sponsored_id": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          }
+        },
+        {
+          "source_account": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z",
+          "type": 6,
+          "type_string": "change_trust",
+          "details": {
+            "asset_code": "USDC",
+            "asset_id": "-4025621231271331684",
+            "asset_issuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "asset_type": "credit_alphanum4",
+            "limit": "922337203685.4775",
+            "trustee": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "trustor": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          },
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094213",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpNoAccount",
+          "operation_trace_code": "",
+          "ledger_sequence": 60493129,
+          "details_json": {
+            "asset_code": "USDC",
+            "asset_id": "-4025621231271331684",
+            "asset_issuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "asset_type": "credit_alphanum4",
+            "limit": "922337203685.4775",
+            "trustee": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+            "trustor": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z"
+          }
+        },
+        {
+          "source_account": "GCOYAMGUQW56SIAUYUW5Q5XFX2LLHS4OOOQJMVSJI7ORHGX3UYWD756Z",
+          "type": 17,
+          "type_string": "end_sponsoring_future_reserves",
+          "details": {},
+          "transaction_id": "259816010688094208",
+          "id": "259816010688094214",
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "operation_result_code": "OperationResultCodeOpNoAccount",
+          "operation_trace_code": "",
+          "ledger_sequence": 60493129,
+          "details_json": {}
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "signer": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 60493129,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2025-12-27T14:03:35Z",
+          "closed_at_ms": "2025-12-27T14:03:35Z",
+          "ledger_sequence": 60493129
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+        "ledger_sequence": 5604613,
+        "account": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+        "account_sequence": 32250909435173,
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAAC7SYHRlwEkS6fzOWaXJBGtdJyT7WL64F+jOcEz2nA1GAAAAGQAAB1VAAAlJQAAAAAAAAAAAAAAAQAAAAAAAAASAAAAAAAAAAEAAAAA6FIuuSZ2K/XrwkBn5+JDNnnUA9JidV5mVxvQ6AMQF28AAAABWFhYWAAAAAC7SYHRlwEkS6fzOWaXJBGtdJyT7WL64F+jOcEz2nA1GAAAAAAAAAAB2nA1GAAAAEA7quIB5vWBmQkpVtZ3D395dLSMdJzjqJE7q/uaefzEA8jUSVJg1Cau9h9apCmsljwZ09XHAfbqfuGFoaNIbxUH",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAS/////wAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwBVhQUAAAAAAAAAALtJgdGXASRLp/M5ZpckEa10nJPtYvrgX6M5wTPacDUYAAAALADzDRcAAB1VAAAlJAAAADsAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAASejmAAAAAAgAAAAAAAAAuAAAAAAAAAAMAAAAAAFWFBAAAAABq7vrtAAAAAAAAAAEAVYUFAAAAAAAAAAC7SYHRlwEkS6fzOWaXJBGtdJyT7WL64F+jOcEz2nA1GAAAACwA8w0XAAAdVQAAJSUAAAA7AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAEno5gAAAAAIAAAAAAAAALgAAAAAAAAADAAAAAABVhQUAAAAAau768gAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAB15KLcsJwPM/q9+uf9O9NUEpVqLl5/JtFDqLIQrTRzmEAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAAC7SYHRlwEkS6fzOWaXJBGtdJyT7WL64F+jOcEz2nA1GAAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMAVYUEAAAAAAAAAAC7SYHRlwEkS6fzOWaXJBGtdJyT7WL64F+jOcEz2nA1GAAAACwA8w17AAAdVQAAJSQAAAA7AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAEno5gAAAAAIAAAAAAAAALgAAAAAAAAADAAAAAABVhQQAAAAAau767QAAAAAAAAABAFWFBQAAAAAAAAAAu0mB0ZcBJEun8zlmlyQRrXSck+1i+uBfoznBM9pwNRgAAAAsAPMNFwAAHVUAACUkAAAAOwAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABJ6OYAAAAACAAAAAAAAAC4AAAAAAAAAAwAAAAAAVYUEAAAAAGru+u0AAAAA",
+        "created_at": "2026-11-07T10:18:26Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "",
+        "successful": false,
+        "id": "24071629541765120",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-11-07T10:18:26Z",
+        "closed_at_ms": "2026-11-07T10:18:26.783Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "type": 18,
+          "type_string": "revoke_sponsorship",
+          "details": {
+            "trustline_account_id": "GDUFELVZEZ3CX5PLYJAGPZ7CIM3HTVAD2JRHKXTGK4N5B2ADCALW7NGW",
+            "trustline_asset": "XXXX:GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS"
+          },
+          "transaction_id": "24071629541765120",
+          "id": "24071629541765121",
+          "closed_at": "2026-11-07T10:18:26Z",
+          "closed_at_ms": "2026-11-07T10:18:26.783Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "RevokeSponsorshipResultCodeRevokeSponsorshipDoesNotExist",
+          "ledger_sequence": 5604613,
+          "details_json": {
+            "trustline_account_id": "GDUFELVZEZ3CX5PLYJAGPZ7CIM3HTVAD2JRHKXTGK4N5B2ADCALW7NGW",
+            "trustline_asset": "XXXX:GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "signer": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 5604613,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-11-07T10:18:26Z",
+          "closed_at_ms": "2026-11-07T10:18:26.783Z",
+          "ledger_sequence": 5604613
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
       "found": true,
       "transaction": {
@@ -34651,6 +36733,194 @@
           "closed_at": "2026-08-28T04:00:06Z",
           "closed_at_ms": "2026-08-28T04:00:06Z",
           "ledger_sequence": 64158000
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+        "ledger_sequence": 59471041,
+        "account": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+        "account_sequence": "180249280513051243",
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAABHw4RRT86YVrLQOR9GsNUAww5qTmrkj0/TRbQ0j+HlkgAAAGQCgF/EAAAKawAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEgAAAAAAAAAEAAAAAERoRpXB7un3ms82paC8KVEWwPT/9SXVqvUV890bV5lHAAAAAAAAAAGP4eWSAAAAQLJeudcWlOFBSZG+OS7a4uBEV8t81ZfzbDpDLUY0asBrD12eirFkBlgvn8MgBoOHlIhYu2N6vwH3/mqXdBjzyQ0=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAS/////AAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwOLdMEAAAAAAAAAAEfDhFFPzphWstA5H0aw1QDDDmpOauSPT9NFtDSP4eWSAAAAAF6TEGgCgF/EAAAKagAAANcAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAAAAAAAAlsb2JzdHIuY28AAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAABkAAAAAAAAAAMAAAAAA4sQNQAAAABo9C6eAAAAAAAAAAEDi3TBAAAAAAAAAABHw4RRT86YVrLQOR9GsNUAww5qTmrkj0/TRbQ0j+HlkgAAAABekxBoAoBfxAAACmsAAADXAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAZAAAAAAAAAADAAAAAAOLdMEAAAAAaPZrWwAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAABHw4RRT86YVrLQOR9GsNUAww5qTmrkj0/TRbQ0j+HlkgAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDi14wAAAAAAAAAABHw4RRT86YVrLQOR9GsNUAww5qTmrkj0/TRbQ0j+HlkgAAAABekxDMAoBfxAAACmoAAADXAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAZAAAAAAAAAADAAAAAAOLEDUAAAAAaPQungAAAAAAAAABA4t0wQAAAAAAAAAAR8OEUU/OmFay0DkfRrDVAMMOak5q5I9P00W0NI/h5ZIAAAAAXpMQaAKAX8QAAApqAAAA1wAAAAEAAAAAxHHGQ3BiyVBqiTQuU4oa2kBNL0HPHTolX0Mh98bg4XUAAAAAAAAACWxvYnN0ci5jbwAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAGQAAAAAAAAAAwAAAAADixA1AAAAAGj0Lp4AAAAA",
+        "created_at": "2025-10-20T17:03:23Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,)",
+        "successful": false,
+        "id": "255426176154271744",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2025-10-20T17:03:23Z",
+        "closed_at_ms": "2025-10-20T17:03:23Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "type": 18,
+          "type_string": "revoke_sponsorship",
+          "details": {
+            "claimable_balance_id": "0000000044684695c1eee9f79acf36a5a0bc295116c0f4fff525d5aaf515f3dd1b579947",
+            "claimable_balance_id_strkey": "BAAEI2CGSXA652PXTLHTNJNAXQUVCFWA6T77KJOVVL2RL465DNLZSR5JOU"
+          },
+          "transaction_id": "255426176154271744",
+          "id": "255426176154271745",
+          "closed_at": "2025-10-20T17:03:23Z",
+          "closed_at_ms": "2025-10-20T17:03:23Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "RevokeSponsorshipResultCodeRevokeSponsorshipOnlyTransferable",
+          "ledger_sequence": 59471041,
+          "details_json": {
+            "claimable_balance_id": "0000000044684695c1eee9f79acf36a5a0bc295116c0f4fff525d5aaf515f3dd1b579947",
+            "claimable_balance_id_strkey": "BAAEI2CGSXA652PXTLHTNJNAXQUVCFWA6T77KJOVVL2RL465DNLZSR5JOU"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "signer": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 59471041,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2025-10-20T17:03:23Z",
+          "closed_at_ms": "2025-10-20T17:03:23Z",
+          "ledger_sequence": 59471041
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+        "ledger_sequence": 62918997,
+        "account": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+        "account_sequence": "269145341079584827",
+        "max_fee": 20000,
+        "fee_charged": 200,
+        "operation_count": 2,
+        "tx_envelope": "AAAAAgAAAAAhrIj0ScD7+fStR8p66lH4ftGIWP/PUROt8bDqd9C2MQAATiADvDJDAAAAOwAAAAEAAAAAAAAAAAAAAABqJR80AAAAAgAAAABDmLv8AAAAAgAAAAAAAAAQAAAAAIrfRNBebq5eaF91wl7gKeYIMaQiOv7UNhsJ1JLvbKs0AAAAAAAAAAEAAAAAit9E0F5url5oX3XCXuAp5ggxpCI6/tQ2GwnUku9sqzQAAAAAAAAAAACYloAAAAAAAAAAAXfQtjEAAABA55+mVKYSDjZpzQRQ+looyy8G2I5ab8e1r8q+CZTv8FP1iFq3R7qDWL3Bz6AlPIt63OJCJC4AgdutGk9UIn3ICA==",
+        "tx_result": "AAAAAAAAAMj////yAAAAAA==",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwPAEVUAAAAAAAAAACGsiPRJwPv59K1HynrqUfh+0YhY/89RE63xsOp30LYxAAAAAAkW+dwDvDJDAAAAOgAAAAAAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAAAAAAAAlsb2JzdHIuY28AAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAMAAAAAA8ARUwAAAABqJR63AAAAAAAAAAEDwBFVAAAAAAAAAAAhrIj0ScD7+fStR8p66lH4ftGIWP/PUROt8bDqd9C2MQAAAAAJFvncA7wyQwAAADsAAAAAAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAADAAAAAAPAEVUAAAAAaiUewgAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAAAhrIj0ScD7+fStR8p66lH4ftGIWP/PUROt8bDqd9C2MQAAAAoAAAAAAAAAAAAAAAAAAADIAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDwBFTAAAAAAAAAAAhrIj0ScD7+fStR8p66lH4ftGIWP/PUROt8bDqd9C2MQAAAAAJFvqkA7wyQwAAADoAAAAAAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAADAAAAAAPAEVMAAAAAaiUetwAAAAAAAAABA8ARVQAAAAAAAAAAIayI9EnA+/n0rUfKeupR+H7RiFj/z1ETrfGw6nfQtjEAAAAACRb53AO8MkMAAAA6AAAAAAAAAAEAAAAAxHHGQ3BiyVBqiTQuU4oa2kBNL0HPHTolX0Mh98bg4XUAAAAAAAAACWxvYnN0ci5jbwAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAAwAAAAADwBFTAAAAAGolHrcAAAAA",
+        "created_at": "2026-06-07T07:33:22Z",
+        "memo_type": "MemoTypeMemoId",
+        "memo": "1134083068",
+        "time_bounds": "[0,1780817716)",
+        "successful": false,
+        "id": "270235034412691456",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-06-07T07:33:22Z",
+        "closed_at_ms": "2026-06-07T07:33:22Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxBadSponsorship",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "type": 16,
+          "type_string": "begin_sponsoring_future_reserves",
+          "details": {
+            "sponsored_id": "GCFN6RGQLZXK4XTIL524EXXAFHTAQMNEEI5P5VBWDME5JEXPNSVTIH3V"
+          },
+          "transaction_id": "270235034412691456",
+          "id": "270235034412691457",
+          "closed_at": "2026-06-07T07:33:22Z",
+          "closed_at_ms": "2026-06-07T07:33:22Z",
+          "operation_result_code": "",
+          "operation_trace_code": "",
+          "ledger_sequence": 62918997,
+          "details_json": {
+            "sponsored_id": "GCFN6RGQLZXK4XTIL524EXXAFHTAQMNEEI5P5VBWDME5JEXPNSVTIH3V"
+          }
+        },
+        {
+          "source_account": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "type": 1,
+          "type_string": "payment",
+          "details": {
+            "amount": 1,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+            "to": "GCFN6RGQLZXK4XTIL524EXXAFHTAQMNEEI5P5VBWDME5JEXPNSVTIH3V"
+          },
+          "transaction_id": "270235034412691456",
+          "id": "270235034412691458",
+          "closed_at": "2026-06-07T07:33:22Z",
+          "closed_at_ms": "2026-06-07T07:33:22Z",
+          "operation_result_code": "",
+          "operation_trace_code": "",
+          "ledger_sequence": 62918997,
+          "details_json": {
+            "amount": 1,
+            "asset_id": "-5706705804583548011",
+            "asset_type": "native",
+            "from": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+            "to": "GCFN6RGQLZXK4XTIL524EXXAFHTAQMNEEI5P5VBWDME5JEXPNSVTIH3V"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "signer": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 62918997,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-06-07T07:33:22Z",
+          "closed_at_ms": "2026-06-07T07:33:22Z",
+          "ledger_sequence": 62918997
         }
       ],
       "trustlines": [],
@@ -46645,6 +48915,178 @@
       "transform_errors": []
     },
     {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+        "ledger_sequence": 5003675,
+        "account": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+        "account_sequence": "21490560355270664",
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAACZDa+wPxSir1Zw6N+Z0X81IkTMGWFafxFEnI0t8v6InwAAAGQATFmNAAAACAAAAAEAAAAAAAAAAAAAAABqwSJZAAAAAAAAAAEAAAAAAAAAFAAAAADHpHts1DAM7Bj2ck4vewXhwzro5TAFsm7WJ8yhoMRwRgAAAAAAAAAB8v6InwAAAEAK2pauJ1IlK8nhTfFq/x8EusYH/tL2IHfpMIbWJC+C+eiY0OprwDgYRsdFZgXjMqugU2jj+4yq3T9xbz3zEcQC",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAU/////gAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwBMWZsAAAAAAAAAAJkNr7A/FKKvVnDo35nRfzUiRMwZYVp/EUScjS3y/oifAAAAFyqpf+AATFmNAAAABwAAAAAAAAAAAAAACwAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAMAAAAAAExZmQAAAABqwSGgAAAAAAAAAAEATFmbAAAAAAAAAACZDa+wPxSir1Zw6N+Z0X81IkTMGWFafxFEnI0t8v6InwAAABcqqX/gAExZjQAAAAgAAAAAAAAAAAAAAAsAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAADAAAAAABMWZsAAAAAasEhqgAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAB15KLcsJwPM/q9+uf9O9NUEpVqLl5/JtFDqLIQrTRzmEAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAACZDa+wPxSir1Zw6N+Z0X81IkTMGWFafxFEnI0t8v6InwAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMATFmZAAAAAAAAAACZDa+wPxSir1Zw6N+Z0X81IkTMGWFafxFEnI0t8v6InwAAABcqqYBEAExZjQAAAAcAAAAAAAAAAAAAAAsAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAADAAAAAABMWZkAAAAAasEhoAAAAAAAAAABAExZmwAAAAAAAAAAmQ2vsD8Uoq9WcOjfmdF/NSJEzBlhWn8RRJyNLfL+iJ8AAAAXKql/4ABMWY0AAAAHAAAAAAAAAAAAAAALAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAAwAAAAAATFmZAAAAAGrBIaAAAAAA",
+        "created_at": "2026-10-03T15:39:22Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1791042137)",
+        "successful": false,
+        "id": "21490620484825088",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-10-03T15:39:22Z",
+        "closed_at_ms": "2026-10-03T15:39:22Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "type": 20,
+          "type_string": "clawback_claimable_balance",
+          "details": {
+            "balance_id": "00000000c7a47b6cd4300cec18f6724e2f7b05e1c33ae8e53005b26ed627cca1a0c47046",
+            "balance_id_strkey": "BAAMPJD3NTKDADHMDD3HETRPPMC6DQZ25DSTABNSN3LCPTFBUDCHARWW3Q"
+          },
+          "transaction_id": "21490620484825088",
+          "id": "21490620484825089",
+          "closed_at": "2026-10-03T15:39:22Z",
+          "closed_at_ms": "2026-10-03T15:39:22Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "ClawbackClaimableBalanceResultCodeClawbackClaimableBalanceNotIssuer",
+          "ledger_sequence": 5003675,
+          "details_json": {
+            "balance_id": "00000000c7a47b6cd4300cec18f6724e2f7b05e1c33ae8e53005b26ed627cca1a0c47046",
+            "balance_id_strkey": "BAAMPJD3NTKDADHMDD3HETRPPMC6DQZ25DSTABNSN3LCPTFBUDCHARWW3Q"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "signer": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 5003675,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-10-03T15:39:22Z",
+          "closed_at_ms": "2026-10-03T15:39:22Z",
+          "ledger_sequence": 5003675
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+        "ledger_sequence": 60361520,
+        "account": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+        "account_sequence": "259162587248197667",
+        "max_fee": 10000,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAADPNX7Ko6uzvOyWOVTE1kGQ/IKJDHiFm59R2H2sRiG97gAAJxADmLsAAAAAIwAAAAEAAAAAAAAAAAAAAABpRGfWAAAAAAAAAAEAAAAAAAAAEwAAAAFOV08AAAAAAM81fsqjq7O87JY5VMTWQZD8gokMeIWbn1HYfaxGIb3uAAAAAITVSK4LMhwsoa794pTB9gI1jd/R4xDpI2S/p0WCFRZ/AAAADo1KUQAAAAAAAAAAAUYhve4AAABAw9u5b1gtCiQhy2XXFgunfUrYC6lFDP1bSyOJEKDPrSafezRdPa3S0lFuE7CCCqcRLI51IP5zr2XX5Dx8try/Bw==",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAT/////QAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwOZCzAAAAAAAAAAAM81fsqjq7O87JY5VMTWQZD8gokMeIWbn1HYfaxGIb3uAAAAAATEplQDmLsAAAAAIgAAAAAAAAAAAAAACgAAAA9ud28tc3RlbGxhci5vcmcAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOZCy8AAAAAaURntQAAAAAAAAABA5kLMAAAAAAAAAAAzzV+yqOrs7zsljlUxNZBkPyCiQx4hZufUdh9rEYhve4AAAAABMSmVAOYuwAAAAAjAAAAAAAAAAAAAAAKAAAAD253by1zdGVsbGFyLm9yZwABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA5kLMAAAAABpRGe8AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEltPzYWa7C+mNIQ4xImzw8EMmLbSG+T9PLMMtolT75dwAAAAEAAAAAAAAAAgAAAA8AAAADZmVlAAAAABIAAAAAAAAAAM81fsqjq7O87JY5VMTWQZD8gokMeIWbn1HYfaxGIb3uAAAACgAAAAAAAAAAAAAAAAAAAGQAAAAA",
+        "tx_fee_meta": "AAAAAgAAAAMDmQsvAAAAAAAAAADPNX7Ko6uzvOyWOVTE1kGQ/IKJDHiFm59R2H2sRiG97gAAAAAExKa4A5i7AAAAACIAAAAAAAAAAAAAAAoAAAAPbndvLXN0ZWxsYXIub3JnAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAADmQsvAAAAAGlEZ7UAAAAAAAAAAQOZCzAAAAAAAAAAAM81fsqjq7O87JY5VMTWQZD8gokMeIWbn1HYfaxGIb3uAAAAAATEplQDmLsAAAAAIgAAAAAAAAAAAAAACgAAAA9ud28tc3RlbGxhci5vcmcAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOZCy8AAAAAaURntQAAAAA=",
+        "created_at": "2025-12-18T20:44:44Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1766090710)",
+        "successful": false,
+        "id": "259250754337873920",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2025-12-18T20:44:44Z",
+        "closed_at_ms": "2025-12-18T20:44:44Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "type": 19,
+          "type_string": "clawback",
+          "details": {
+            "amount": 6250,
+            "asset_code": "NWO",
+            "asset_id": "-9144277148308476614",
+            "asset_issuer": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+            "asset_type": "credit_alphanum4",
+            "from": "GCCNKSFOBMZBYLFBV366FFGB6YBDLDO72HRRB2JDMS72ORMCCULH6JAP"
+          },
+          "transaction_id": "259250754337873920",
+          "id": "259250754337873921",
+          "closed_at": "2025-12-18T20:44:44Z",
+          "closed_at_ms": "2025-12-18T20:44:44Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "ClawbackResultCodeClawbackNoTrust",
+          "ledger_sequence": 60361520,
+          "details_json": {
+            "amount": 6250,
+            "asset_code": "NWO",
+            "asset_id": "-9144277148308476614",
+            "asset_issuer": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+            "asset_type": "credit_alphanum4",
+            "from": "GCCNKSFOBMZBYLFBV366FFGB6YBDLDO72HRRB2JDMS72ORMCCULH6JAP"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "signer": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 60361520,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2025-12-18T20:44:44Z",
+          "closed_at_ms": "2025-12-18T20:44:44Z",
+          "ledger_sequence": 60361520
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "cap35-clawback-not-clawback-enabled-pubnet-0001",
       "found": true,
       "transaction": {
@@ -51187,6 +53629,94 @@
       "transform_errors": []
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+        "ledger_sequence": 64819095,
+        "account": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+        "account_sequence": "278395644073213979",
+        "max_fee": 100,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAADYsxmFlgCf5PLRSAOnX6TMvFh7hg5pEsLCT7iXEsyD5AAAAGQD3Q9dAAAAGwAAAAEAAAAAAAAAAAAAAABqxk+3AAAAAAAAAAEAAAAAAAAABgAAAAMAAAAAAAAAAAAAAAFBTExPAAAAAJTb1KMW6EutB1Q3wPi9OYaU5I4vKH7XT5bSiMqQtdd9AAAAHn//////////AAAAAAAAAAESzIPkAAAAQATyqsRKPZXvu1U4GfU4Sgdkp65Za6Xorp4LRrdwwbOc0UsznKJTMxpWeH4VquBYhTZYJl3o6bjVb/RX03EfJQw=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAG////+gAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwPdD5cAAAAAAAAAANizGYWWAJ/k8tFIA6dfpMy8WHuGDmkSwsJPuJcSzIPkAAAAAAExInQD3Q9dAAAAGgAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA90PlQAAAABqxk7/AAAAAAAAAAED3Q+XAAAAAAAAAADYsxmFlgCf5PLRSAOnX6TMvFh7hg5pEsLCT7iXEsyD5AAAAAABMSJ0A90PXQAAABsAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAPdD5cAAAAAasZPCQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAADYsxmFlgCf5PLRSAOnX6TMvFh7hg5pEsLCT7iXEsyD5AAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMD3Q+VAAAAAAAAAADYsxmFlgCf5PLRSAOnX6TMvFh7hg5pEsLCT7iXEsyD5AAAAAABMSLYA90PXQAAABoAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAPdD5UAAAAAasZO/wAAAAAAAAABA90PlwAAAAAAAAAA2LMZhZYAn+Ty0UgDp1+kzLxYe4YOaRLCwk+4lxLMg+QAAAAAATEidAPdD10AAAAaAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAD3Q+VAAAAAGrGTv8AAAAA",
+        "created_at": "2026-10-07T13:54:17Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1791381431)",
+        "successful": false,
+        "id": "278395893182263296",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-10-07T13:54:17Z",
+        "closed_at_ms": "2026-10-07T13:54:17Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "type": 6,
+          "type_string": "change_trust",
+          "details": {
+            "asset_type": "liquidity_pool_shares",
+            "limit": "922337203685.4775",
+            "liquidity_pool_id": "584d0b91064dd396e400ce980bf24542a63b0dbc43b964561403557cb833f66a",
+            "liquidity_pool_id_strkey": "LBME2C4RAZG5HFXEADHJQC7SIVBKMOYNXRB3SZCWCQBVK7FYGP3GVCHY",
+            "trustor": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN"
+          },
+          "transaction_id": "278395893182263296",
+          "id": "278395893182263297",
+          "closed_at": "2026-10-07T13:54:17Z",
+          "closed_at_ms": "2026-10-07T13:54:17Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "ChangeTrustResultCodeChangeTrustTrustLineMissing",
+          "ledger_sequence": 64819095,
+          "details_json": {
+            "asset_type": "liquidity_pool_shares",
+            "limit": "922337203685.4775",
+            "liquidity_pool_id": "584d0b91064dd396e400ce980bf24542a63b0dbc43b964561403557cb833f66a",
+            "liquidity_pool_id_strkey": "LBME2C4RAZG5HFXEADHJQC7SIVBKMOYNXRB3SZCWCQBVK7FYGP3GVCHY",
+            "trustor": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "signer": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 64819095,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-10-07T13:54:17Z",
+          "closed_at_ms": "2026-10-07T13:54:17Z",
+          "ledger_sequence": 64819095
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "found": true,
       "transaction": {
@@ -52094,6 +54624,106 @@
       "transform_errors": []
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+        "ledger_sequence": 63319448,
+        "account": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+        "account_sequence": "269468228130964070",
+        "max_fee": 100000,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAADXxFtSC2u7n1zM95pKUhVP4N+DvwE0sGzCa5Pjn6ietAABhqADvVftAAACZgAAAAEAAAAAAAAAAAAAAABqcBCdAAAAAAAAAAEAAAAAAAAAFwxlA6Jk/Q8f5BNcre79hltzwKPyhGlVgXD5e9gppdbaAABZ/9pS7wMAAAACIW7ieA7ppBUqieFkAAAAAAAAAAGfqJ60AAAAQFgjEPwUTUZJ1uuF6apxqC+d9kRu9y4MiLmt3MJVNUZAErTbFWxeFmd09ZrtUN4q+N1K6w011LjcJ4Nvcs0vzwg=",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAX/////AAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwPGLZgAAAAAAAAAANfEW1ILa7ufXMz3mkpSFU/g34O/ATSwbMJrk+OfqJ60AAAAAAnmeckDvVftAAACZQAAABsAAAABAAAAAMRxxkNwYslQaok0LlOKGtpATS9Bzx06JV9DIffG4OF1AAAAAAAAAAlsb2JzdHIuY28AAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA8YtlAAAAABqSIONAAAAAAAAAAEDxi2YAAAAAAAAAADXxFtSC2u7n1zM95pKUhVP4N+DvwE0sGzCa5Pjn6ietAAAAAAJ5nnJA71X7QAAAmYAAAAbAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAPGLZgAAAAAakiDpAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAADXxFtSC2u7n1zM95pKUhVP4N+DvwE0sGzCa5Pjn6ietAAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDxi2UAAAAAAAAAADXxFtSC2u7n1zM95pKUhVP4N+DvwE0sGzCa5Pjn6ietAAAAAAJ5notA71X7QAAAmUAAAAbAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAJbG9ic3RyLmNvAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAPGLZQAAAAAakiDjQAAAAAAAAABA8YtmAAAAAAAAAAA18RbUgtru59czPeaSlIVT+Dfg78BNLBswmuT45+onrQAAAAACeZ5yQO9V+0AAAJlAAAAGwAAAAEAAAAAxHHGQ3BiyVBqiTQuU4oa2kBNL0HPHTolX0Mh98bg4XUAAAAAAAAACWxvYnN0ci5jbwAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAADxi2UAAAAAGpIg40AAAAA",
+        "created_at": "2026-07-04T03:53:08Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1785729181)",
+        "successful": false,
+        "id": "271954958361165824",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-07-04T03:53:08Z",
+        "closed_at_ms": "2026-07-04T03:53:08Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "type": 23,
+          "type_string": "liquidity_pool_withdraw",
+          "details": {
+            "liquidity_pool_id": "0c6503a264fd0f1fe4135cadeefd865b73c0a3f28469558170f97bd829a5d6da",
+            "liquidity_pool_id_strkey": "LAGGKA5CMT6Q6H7ECNOK33X5QZNXHQFD6KCGSVMBOD4XXWBJUXLNVAHP",
+            "reserve_a_asset_id": "-5706705804583548011",
+            "reserve_a_asset_type": "native",
+            "reserve_a_min_amount": "915.0849656",
+            "reserve_a_withdraw_amount": 0,
+            "reserve_b_asset_id": "-5706705804583548011",
+            "reserve_b_asset_type": "native",
+            "reserve_b_min_amount": "107457039691.95216",
+            "reserve_b_withdraw_amount": 0,
+            "shares": "9895541.4400771"
+          },
+          "transaction_id": "271954958361165824",
+          "id": "271954958361165825",
+          "closed_at": "2026-07-04T03:53:08Z",
+          "closed_at_ms": "2026-07-04T03:53:08Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "LiquidityPoolWithdrawResultCodeLiquidityPoolWithdrawLineFull",
+          "ledger_sequence": 63319448,
+          "details_json": {
+            "liquidity_pool_id": "0c6503a264fd0f1fe4135cadeefd865b73c0a3f28469558170f97bd829a5d6da",
+            "liquidity_pool_id_strkey": "LAGGKA5CMT6Q6H7ECNOK33X5QZNXHQFD6KCGSVMBOD4XXWBJUXLNVAHP",
+            "reserve_a_asset_id": "-5706705804583548011",
+            "reserve_a_asset_type": "native",
+            "reserve_a_min_amount": "915.0849656",
+            "reserve_a_withdraw_amount": 0,
+            "reserve_b_asset_id": "-5706705804583548011",
+            "reserve_b_asset_type": "native",
+            "reserve_b_min_amount": "107457039691.95216",
+            "reserve_b_withdraw_amount": 0,
+            "shares": "9895541.4400771"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "signer": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 63319448,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-07-04T03:53:08Z",
+          "closed_at_ms": "2026-07-04T03:53:08Z",
+          "ledger_sequence": 63319448
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "found": true,
       "transaction": {
@@ -52686,6 +55316,196 @@
           "closed_at": "2026-11-14T12:33:44Z",
           "closed_at_ms": "2026-11-14T12:33:44.899Z",
           "ledger_sequence": 5727196
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+        "ledger_sequence": 64211037,
+        "account": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+        "account_sequence": "275748496814899202",
+        "max_fee": 241156730,
+        "fee_charged": 209696576,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAAAfoi8BuMqJ0f6LJ6Anp1PvPCwXutX1Or4kK9ZbX2CgCA5fwnoD06fMAAAAAgAAAAAAAAAAAAAAAQAAAAAAAAAYAAAAAAAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuwAAAAdiYWxhbmNlAAAAAAEAAAASAAAAAXnlsMkX5YkfgvyC1dfb66/QybAZox3psbgr9ugVblkKAAAAAAAAAAEAAAABAAAAAwAAAAAAAAABAAAAAgAAAAAAAAADAAAABgAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuwAAABAAAAABAAAAAgAAAA8AAAAHQmFsYW5jZQAAAAASAAAAAXnlsMkX5YkfgvyC1dfb66/QybAZox3psbgr9ugVblkKAAAAAQAAAAYAAAABRU7Vmdmac6k0tnRkfVvzCAu5NtRSJCTlfUpgsJuwBrsAAAAUAAAAAQAAAAeTxeItBxozDnibxqYkCah6DAWWYnOXfiL8q/xX6DT1SAAzgr0AABoYAAAaGAAAAAAOX8IWAAAAAV9goAgAAABAVwI6IUa2yOGZjuv2uhcU3+DS6DapSU/qiN8lMI0ATW5byOqvHFj+owy+GsHFDpdLZdm6I3QoDWfi5PCene/NBw==",
+        "tx_result": "AAAAAAx/t0AAAAAAAAAAAQAAAAAAAAAYAAAAAKr0/x8MXSPuBz0gIY2cfR7uoIu7BCiAj9sqy+z23LjqAAAAAA==",
+        "tx_meta": "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",
+        "tx_fee_meta": "AAAAAgAAAAMD08hLAAAAAAAAAAAfoi8BuMqJ0f6LJ6Anp1PvPCwXutX1Or4kK9ZbX2CgCAAAAAAbFDmgA9OnzAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAPTx50AAAAAapWedwAAAAAAAAABA9PIXQAAAAAAAAAAH6IvAbjKidH+iyegJ6dT7zwsF7rV9Tq+JCvWW19goAgAAAAADLR3JgPTp8wAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAD08edAAAAAGqVnncAAAAA",
+        "created_at": "2026-08-31T15:50:41Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "",
+        "successful": true,
+        "id": "275784303958556672",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-08-31T15:50:41Z",
+        "closed_at_ms": "2026-08-31T15:50:41Z",
+        "resource_fee": 241156630,
+        "soroban_resources_instructions": 3375805,
+        "soroban_resources_read_bytes": 6680,
+        "soroban_resources_disk_read_bytes": 6680,
+        "soroban_resources_write_bytes": 6680,
+        "soroban_resources_archived_entries": [
+          0,
+          1,
+          2
+        ],
+        "transaction_result_code": "TransactionResultCodeTxSuccess",
+        "inclusion_fee_bid": 100,
+        "inclusion_fee_charged": 100,
+        "resource_fee_refund": 31460154,
+        "non_refundable_resource_fee_charged": 26531,
+        "refundable_resource_fee_charged": 209669945,
+        "rent_fee_charged": 209669847
+      },
+      "operations": [
+        {
+          "source_account": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "type": 24,
+          "type_string": "invoke_host_function",
+          "details": {
+            "asset_balance_changes": [],
+            "contract_code_hash": null,
+            "contract_id": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "59005e7b937c3c6506dd0c584554a8dda4044b1f65d7244cdf2e8dc7d87b7f21",
+              "314f551689cd82e5b97ed448cfbfdaaa8031923389bd5ad152ffd8bbd5f6c18c",
+              "7a654a705fa9069bba2de7593c1ac04574083216df5d5438c2e81aa50221405f"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuw=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAAAdiYWxhbmNlAA=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAF55bDJF+WJH4L8gtXX2+uv0MmwGaMd6bG4K/boFW5ZCg=="
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W"
+              },
+              {
+                "type": "Sym",
+                "value": "balance"
+              },
+              {
+                "type": "Address",
+                "value": "CB46LMGJC7SYSH4C7SBNLV635OX5BSNQDGRR32NRXAV7N2AVNZMQUJ3A"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuw==",
+              "AAAADwAAAAdiYWxhbmNlAA==",
+              "AAAAEgAAAAF55bDJF+WJH4L8gtXX2+uv0MmwGaMd6bG4K/boFW5ZCg=="
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W"
+              },
+              {
+                "symbol": "balance"
+              },
+              {
+                "address": "CB46LMGJC7SYSH4C7SBNLV635OX5BSNQDGRR32NRXAV7N2AVNZMQUJ3A"
+              }
+            ],
+            "type": "invoke_contract"
+          },
+          "transaction_id": "275784303958556672",
+          "id": "275784303958556673",
+          "closed_at": "2026-08-31T15:50:41Z",
+          "closed_at_ms": "2026-08-31T15:50:41Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "InvokeHostFunctionResultCodeInvokeHostFunctionSuccess",
+          "ledger_sequence": 64211037,
+          "details_json": {
+            "asset_balance_changes": [],
+            "contract_code_hash": null,
+            "contract_id": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "59005e7b937c3c6506dd0c584554a8dda4044b1f65d7244cdf2e8dc7d87b7f21",
+              "314f551689cd82e5b97ed448cfbfdaaa8031923389bd5ad152ffd8bbd5f6c18c",
+              "7a654a705fa9069bba2de7593c1ac04574083216df5d5438c2e81aa50221405f"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuw=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAAAdiYWxhbmNlAA=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAF55bDJF+WJH4L8gtXX2+uv0MmwGaMd6bG4K/boFW5ZCg=="
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W"
+              },
+              {
+                "type": "Sym",
+                "value": "balance"
+              },
+              {
+                "type": "Address",
+                "value": "CB46LMGJC7SYSH4C7SBNLV635OX5BSNQDGRR32NRXAV7N2AVNZMQUJ3A"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAFFTtWZ2ZpzqTS2dGR9W/MIC7k21FIkJOV9SmCwm7AGuw==",
+              "AAAADwAAAAdiYWxhbmNlAA==",
+              "AAAAEgAAAAF55bDJF+WJH4L8gtXX2+uv0MmwGaMd6bG4K/boFW5ZCg=="
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CBCU5VMZ3GNHHKJUWZ2GI7K36MEAXOJW2RJCIJHFPVFGBME3WADLXA6W"
+              },
+              {
+                "symbol": "balance"
+              },
+              {
+                "address": "CB46LMGJC7SYSH4C7SBNLV635OX5BSNQDGRR32NRXAV7N2AVNZMQUJ3A"
+              }
+            ],
+            "type": "invoke_contract"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "signer": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 64211037,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-08-31T15:50:41Z",
+          "closed_at_ms": "2026-08-31T15:50:41Z",
+          "ledger_sequence": 64211037
         }
       ],
       "trustlines": [],
@@ -59448,6 +62268,437 @@
       "transform_errors": []
     },
     {
+      "fixture": "cap46-sc-error-object-testnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+        "ledger_sequence": 4554639,
+        "account": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+        "account_sequence": 658117838766755,
+        "max_fee": 355976,
+        "fee_charged": 38770,
+        "operation_count": 1,
+        "tx_envelope": "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",
+        "tx_result": "AAAAAAAAl3L/////AAAAAQAAAAAAAAAY/////gAAAAA=",
+        "tx_meta": "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",
+        "tx_fee_meta": "AAAAAgAAAAMARX4JAAAAAAAAAAAzQJE6cgD0C5qcJyu1VD92yGNRKtXcSa4Be2F0pmYAFwAAAC6MPaWWAAJWjgAAAqIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAABFfgkAAAAAap7X0AAAAAAAAAABAEV/jwAAAAAAAAAAM0CROnIA9AuanCcrtVQ/dshjUSrV3EmuAXthdKZmABcAAAAujDg3JwACVo4AAAKiAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAAARX4JAAAAAGqe19AAAAAA",
+        "created_at": "2026-09-07T15:59:42Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[1788796717,1788796837)",
+        "successful": false,
+        "id": "19562025550114816",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-09-07T15:59:42Z",
+        "closed_at_ms": "2026-09-07T15:59:42Z",
+        "resource_fee": 355851,
+        "soroban_resources_instructions": 4548787,
+        "soroban_resources_read_bytes": 1020,
+        "soroban_resources_disk_read_bytes": 1020,
+        "soroban_resources_write_bytes": 1176,
+        "soroban_resources_archived_entries": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 125,
+        "inclusion_fee_charged": 100,
+        "resource_fee_refund": 317181,
+        "non_refundable_resource_fee_charged": 38670,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GBIBEPUZFFSYHO42BJO2W5KZFK2SIOP5X34A7VDKCNCMVKW6DQKY34OD",
+          "type": 24,
+          "type_string": "invoke_host_function",
+          "details": {
+            "asset_balance_changes": [],
+            "contract_code_hash": null,
+            "contract_id": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "1fb7f8bf4d915bd7c41754499a9b1dde7eec6bb0edc67e49faf5cb4e3766e276",
+              "c00a8af91132f42dbb2b0ae6154dc3f30ff8075f317f520fc0ade0e94c08bc22",
+              "ae78dc3684f3fac1b1bab6842a2abdcc9b7d58523c06a6cf87445cd42d37b8cc",
+              "9fc043c7c84975562c713653b22d4549a51bb701c05c7fd46851facb24c64873",
+              "f533b9b63b45c20ea75930dcf2b2667cbf03f6525ebc73842d1c2c744167c7d4",
+              "3c7094847d71edf019f1337c244d1b70129e8f68faa0a4db172a3f2fb444fa93",
+              "5e9af384b9e1ecdbef3d980ed5ce7472aecadaaf006155ecfec0eca80a29a8f7",
+              "a85f4fd324dfd6c944b5ff1c4054efdb55459e4071f3b385044de574c8c8d61f",
+              "b3e6ff2c892f4bb4f2def0b7c13da235ce2e9647837dac43f090917ec840c592",
+              "0b32d1d77270acf019042437ff9caad9a149b41ba51a0894338ee5b682f95d20",
+              "51472e2fd81d35f477ebeaaeaab33c5cfa0efc626abf46e3623c8e9ca8786c6f",
+              "c5ee7479470c09505a845095e0a2343628880eda4bcb429a95adf5f7ac001acb",
+              "8d97b0226e20b57cbdf120110f13f15ddd711045f56b6836ad5e264d51567657",
+              "6c955bd5c8a1ade1211463a8dcd928c0359550df20b63e2b5527f923783860f5",
+              "a473366ca1bdda27fcf297e51c9da0374742a2abd4398966baa55bd5d0e4b2d8"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAH+4ITSeaxM4UuLEJq5GuQX7q33afovsSypCGrbasbHCw=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAABxwcm9jZXNzX2luY29taW5nX3RyYW5zYWN0aW9u"
+              },
+              {
+                "type": "Bytes",
+                "value": "AAAADQAAABCgPIREY0FMPqw+pknzc3pA"
+              },
+              {
+                "type": "Bytes",
+                "value": "AAAADQAAABCOwE5aDX9Al7wUJ7PX/SHn"
+              },
+              {
+                "type": "Str",
+                "value": "AAAADgAAABlDYXJkLUNyZWRpdC1Nb25leVRyYW5zZmVyAAAA"
+              },
+              {
+                "type": "Str",
+                "value": "AAAADgAAAANHQlAA"
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAfbuV/4EKAAA="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAGoBbnrueRQuja0cpWTU84s3zj0/A/oCll8hWi/z+lEAg=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAEMAAxlhnk09TeJWwYS/TRaxRyWvEdkQiAasBz3iXFEZQ=="
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAAAAAAAdN674="
+              },
+              {
+                "type": "U64",
+                "value": "AAAABQAAAABqnt9p"
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO"
+              },
+              {
+                "type": "Sym",
+                "value": "process_incoming_transaction"
+              },
+              {
+                "type": "Bytes",
+                "value": "a03c844463414c3eac3ea649f3737a40"
+              },
+              {
+                "type": "Bytes",
+                "value": "8ec04e5a0d7f4097bc1427b3d7fd21e7"
+              },
+              {
+                "type": "Str",
+                "value": "Card-Credit-MoneyTransfer"
+              },
+              {
+                "type": "Str",
+                "value": "GBP"
+              },
+              {
+                "type": "Address",
+                "value": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4"
+              },
+              {
+                "type": "I128",
+                "value": "9060000000000000000"
+              },
+              {
+                "type": "Address",
+                "value": "CCUALOPLXHSFBORWWRZJLE2TZYWN6OHU7QH6QCSZPSCWRP6P5FCAE324"
+              },
+              {
+                "type": "Address",
+                "value": "CAGAADDFQZ4TJ5JXRFNQMEX5GRNMKHEWXRDWIQRADKYBZ54JOFCGKNT6"
+              },
+              {
+                "type": "I128",
+                "value": "122547134"
+              },
+              {
+                "type": "U64",
+                "value": "1788796777"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAH+4ITSeaxM4UuLEJq5GuQX7q33afovsSypCGrbasbHCw==",
+              "AAAADwAAABxwcm9jZXNzX2luY29taW5nX3RyYW5zYWN0aW9u",
+              "AAAADQAAABCgPIREY0FMPqw+pknzc3pA",
+              "AAAADQAAABCOwE5aDX9Al7wUJ7PX/SHn",
+              "AAAADgAAABlDYXJkLUNyZWRpdC1Nb25leVRyYW5zZmVyAAAA",
+              "AAAADgAAAANHQlAA",
+              "AAAAEgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "AAAACgAAAAAAAAAAfbuV/4EKAAA=",
+              "AAAAEgAAAAGoBbnrueRQuja0cpWTU84s3zj0/A/oCll8hWi/z+lEAg==",
+              "AAAAEgAAAAEMAAxlhnk09TeJWwYS/TRaxRyWvEdkQiAasBz3iXFEZQ==",
+              "AAAACgAAAAAAAAAAAAAAAAdN674=",
+              "AAAABQAAAABqnt9p"
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO"
+              },
+              {
+                "symbol": "process_incoming_transaction"
+              },
+              {
+                "bytes": "a03c844463414c3eac3ea649f3737a40"
+              },
+              {
+                "bytes": "8ec04e5a0d7f4097bc1427b3d7fd21e7"
+              },
+              {
+                "string": "Card-Credit-MoneyTransfer"
+              },
+              {
+                "string": "GBP"
+              },
+              {
+                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4"
+              },
+              {
+                "i128": "9060000000000000000"
+              },
+              {
+                "address": "CCUALOPLXHSFBORWWRZJLE2TZYWN6OHU7QH6QCSZPSCWRP6P5FCAE324"
+              },
+              {
+                "address": "CAGAADDFQZ4TJ5JXRFNQMEX5GRNMKHEWXRDWIQRADKYBZ54JOFCGKNT6"
+              },
+              {
+                "i128": "122547134"
+              },
+              {
+                "u64": "1788796777"
+              }
+            ],
+            "type": "invoke_contract"
+          },
+          "transaction_id": "19562025550114816",
+          "id": "19562025550114817",
+          "closed_at": "2026-09-07T15:59:42Z",
+          "closed_at_ms": "2026-09-07T15:59:42Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "InvokeHostFunctionResultCodeInvokeHostFunctionTrapped",
+          "ledger_sequence": 4554639,
+          "details_json": {
+            "asset_balance_changes": [],
+            "contract_code_hash": null,
+            "contract_id": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "1fb7f8bf4d915bd7c41754499a9b1dde7eec6bb0edc67e49faf5cb4e3766e276",
+              "c00a8af91132f42dbb2b0ae6154dc3f30ff8075f317f520fc0ade0e94c08bc22",
+              "ae78dc3684f3fac1b1bab6842a2abdcc9b7d58523c06a6cf87445cd42d37b8cc",
+              "9fc043c7c84975562c713653b22d4549a51bb701c05c7fd46851facb24c64873",
+              "f533b9b63b45c20ea75930dcf2b2667cbf03f6525ebc73842d1c2c744167c7d4",
+              "3c7094847d71edf019f1337c244d1b70129e8f68faa0a4db172a3f2fb444fa93",
+              "5e9af384b9e1ecdbef3d980ed5ce7472aecadaaf006155ecfec0eca80a29a8f7",
+              "a85f4fd324dfd6c944b5ff1c4054efdb55459e4071f3b385044de574c8c8d61f",
+              "b3e6ff2c892f4bb4f2def0b7c13da235ce2e9647837dac43f090917ec840c592",
+              "0b32d1d77270acf019042437ff9caad9a149b41ba51a0894338ee5b682f95d20",
+              "51472e2fd81d35f477ebeaaeaab33c5cfa0efc626abf46e3623c8e9ca8786c6f",
+              "c5ee7479470c09505a845095e0a2343628880eda4bcb429a95adf5f7ac001acb",
+              "8d97b0226e20b57cbdf120110f13f15ddd711045f56b6836ad5e264d51567657",
+              "6c955bd5c8a1ade1211463a8dcd928c0359550df20b63e2b5527f923783860f5",
+              "a473366ca1bdda27fcf297e51c9da0374742a2abd4398966baa55bd5d0e4b2d8"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAH+4ITSeaxM4UuLEJq5GuQX7q33afovsSypCGrbasbHCw=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAABxwcm9jZXNzX2luY29taW5nX3RyYW5zYWN0aW9u"
+              },
+              {
+                "type": "Bytes",
+                "value": "AAAADQAAABCgPIREY0FMPqw+pknzc3pA"
+              },
+              {
+                "type": "Bytes",
+                "value": "AAAADQAAABCOwE5aDX9Al7wUJ7PX/SHn"
+              },
+              {
+                "type": "Str",
+                "value": "AAAADgAAABlDYXJkLUNyZWRpdC1Nb25leVRyYW5zZmVyAAAA"
+              },
+              {
+                "type": "Str",
+                "value": "AAAADgAAAANHQlAA"
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAfbuV/4EKAAA="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAGoBbnrueRQuja0cpWTU84s3zj0/A/oCll8hWi/z+lEAg=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAEMAAxlhnk09TeJWwYS/TRaxRyWvEdkQiAasBz3iXFEZQ=="
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAAAAAAAdN674="
+              },
+              {
+                "type": "U64",
+                "value": "AAAABQAAAABqnt9p"
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO"
+              },
+              {
+                "type": "Sym",
+                "value": "process_incoming_transaction"
+              },
+              {
+                "type": "Bytes",
+                "value": "a03c844463414c3eac3ea649f3737a40"
+              },
+              {
+                "type": "Bytes",
+                "value": "8ec04e5a0d7f4097bc1427b3d7fd21e7"
+              },
+              {
+                "type": "Str",
+                "value": "Card-Credit-MoneyTransfer"
+              },
+              {
+                "type": "Str",
+                "value": "GBP"
+              },
+              {
+                "type": "Address",
+                "value": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4"
+              },
+              {
+                "type": "I128",
+                "value": "9060000000000000000"
+              },
+              {
+                "type": "Address",
+                "value": "CCUALOPLXHSFBORWWRZJLE2TZYWN6OHU7QH6QCSZPSCWRP6P5FCAE324"
+              },
+              {
+                "type": "Address",
+                "value": "CAGAADDFQZ4TJ5JXRFNQMEX5GRNMKHEWXRDWIQRADKYBZ54JOFCGKNT6"
+              },
+              {
+                "type": "I128",
+                "value": "122547134"
+              },
+              {
+                "type": "U64",
+                "value": "1788796777"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAH+4ITSeaxM4UuLEJq5GuQX7q33afovsSypCGrbasbHCw==",
+              "AAAADwAAABxwcm9jZXNzX2luY29taW5nX3RyYW5zYWN0aW9u",
+              "AAAADQAAABCgPIREY0FMPqw+pknzc3pA",
+              "AAAADQAAABCOwE5aDX9Al7wUJ7PX/SHn",
+              "AAAADgAAABlDYXJkLUNyZWRpdC1Nb25leVRyYW5zZmVyAAAA",
+              "AAAADgAAAANHQlAA",
+              "AAAAEgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "AAAACgAAAAAAAAAAfbuV/4EKAAA=",
+              "AAAAEgAAAAGoBbnrueRQuja0cpWTU84s3zj0/A/oCll8hWi/z+lEAg==",
+              "AAAAEgAAAAEMAAxlhnk09TeJWwYS/TRaxRyWvEdkQiAasBz3iXFEZQ==",
+              "AAAACgAAAAAAAAAAAAAAAAdN674=",
+              "AAAABQAAAABqnt9p"
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CD7OBBGSPGWEZYKLRMIJVOI24QL65LPXNH5C7MJMVEEGVW3KY3DQWQOO"
+              },
+              {
+                "symbol": "process_incoming_transaction"
+              },
+              {
+                "bytes": "a03c844463414c3eac3ea649f3737a40"
+              },
+              {
+                "bytes": "8ec04e5a0d7f4097bc1427b3d7fd21e7"
+              },
+              {
+                "string": "Card-Credit-MoneyTransfer"
+              },
+              {
+                "string": "GBP"
+              },
+              {
+                "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4"
+              },
+              {
+                "i128": "9060000000000000000"
+              },
+              {
+                "address": "CCUALOPLXHSFBORWWRZJLE2TZYWN6OHU7QH6QCSZPSCWRP6P5FCAE324"
+              },
+              {
+                "address": "CAGAADDFQZ4TJ5JXRFNQMEX5GRNMKHEWXRDWIQRADKYBZ54JOFCGKNT6"
+              },
+              {
+                "i128": "122547134"
+              },
+              {
+                "u64": "1788796777"
+              }
+            ],
+            "type": "invoke_contract"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "signer": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 4554639,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-09-07T15:59:42Z",
+          "closed_at_ms": "2026-09-07T15:59:42Z",
+          "ledger_sequence": 4554639
+        }
+      ],
+      "trustlines": [],
+      "transform_errors": []
+    },
+    {
       "fixture": "cap46-sc-error-wasm-vm-pubnet-0001",
       "found": true,
       "transaction": {
@@ -65781,6 +69032,304 @@
           "liquidity_pool_id_strkey": ""
         }
       ],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+        "ledger_sequence": 5541219,
+        "account": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+        "account_sequence": "23799350090006529",
+        "max_fee": 11392,
+        "fee_charged": 6496,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAAAfQVj7hJ162wIkuEnqbWYcCo8UuGuS2fRWkhh8HNuCeAAALIAAVI1iAAAAAQAAAAEAAAAAAAAAAAAAAABq6iUAAAAAAAAAAAEAAAAAAAAAGAAAAAAAAAAB15KLcsJwPM/q9+uf9O9NUEpVqLl5/JtFDqLIQrTRzmEAAAAIdHJhbnNmZXIAAAADAAAAEgAAAAAAAAAAH0FY+4SdetsCJLhJ6m1mHAqPFLhrktn0VpIYfBzbgngAAAASAAAABf//////////Pww0v5OtDZlx0EzMkPcFURyDiq2XNKSi+w16A/x/6JoAAAAKAAAAAAAAAAAAAAAAAAAwOQAAAAEAAAAAAAAAAAAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQAAAAh0cmFuc2ZlcgAAAAMAAAASAAAAAAAAAAAfQVj7hJ162wIkuEnqbWYcCo8UuGuS2fRWkhh8HNuCeAAAABIAAAAF//////////8/DDS/k60NmXHQTMyQ9wVRHIOKrZc0pKL7DXoD/H/omgAAAAoAAAAAAAAAAAAAAAAAADA5AAAAAAAAAAEAAAAAAAAAAQAAAAYAAAAB15KLcsJwPM/q9+uf9O9NUEpVqLl5/JtFDqLIQrTRzmEAAAAUAAAAAQAAAAIAAAAAAAAAAB9BWPuEnXrbAiS4SeptZhwKjxS4a5LZ9FaSGHwc24J4AAAABgAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQAAABAAAAABAAAAAgAAAA8AAAAHQmFsYW5jZQAAAAASAAAAAT8MNL+TrQ2ZcdBMzJD3BVEcg4qtlzSkovsNegP8f+iaAAAAAQAENQYAAACQAAABcAAAAAAAACwcAAAAARzbgngAAABATxNjOOZ6cZydJSiD+nCSbZwxMulstvDWsgW5rv98JPK2nNRljpDMx6L+9gW7AQ9H+HX979FUlNY+EZZkMCF6CQ==",
+        "tx_result": "AAAAAAAAGWAAAAAAAAAAAQAAAAAAAAAYAAAAAGO466pgT0VTbHSQGp4SNxhI0/GRce9esr4GUP1hqOtCAAAAAA==",
+        "tx_meta": "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",
+        "tx_fee_meta": "AAAAAgAAAAMAVI1iAAAAAAAAAAAfQVj7hJ162wIkuEnqbWYcCo8UuGuS2fRWkhh8HNuCeAAAABdIdugAAFSNYgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAVI1jAAAAAAAAAAAfQVj7hJ162wIkuEnqbWYcCo8UuGuS2fRWkhh8HNuCeAAAABdIdruAAFSNYgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==",
+        "created_at": "2026-11-03T18:15:35Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1793729792)",
+        "successful": true,
+        "id": "23799354385039360",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": null,
+        "min_account_sequence_ledger_gap": null,
+        "extra_signers": null,
+        "closed_at": "2026-11-03T18:15:35Z",
+        "closed_at_ms": "2026-11-03T18:15:35.027Z",
+        "resource_fee": 11292,
+        "soroban_resources_instructions": 275718,
+        "soroban_resources_read_bytes": 144,
+        "soroban_resources_disk_read_bytes": 144,
+        "soroban_resources_write_bytes": 368,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxSuccess",
+        "inclusion_fee_bid": 100,
+        "inclusion_fee_charged": 100,
+        "resource_fee_refund": 4896,
+        "non_refundable_resource_fee_charged": 5780,
+        "refundable_resource_fee_charged": 616,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "type": 24,
+          "type_string": "invoke_host_function",
+          "details": {
+            "asset_balance_changes": [
+              {
+                "amount": "0.0012345",
+                "asset_type": "native",
+                "from": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+                "to": "CA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+                "type": "transfer"
+              }
+            ],
+            "contract_code_hash": null,
+            "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "0d090a3cc3ea5134b052b990d57cf63db4f2c195c559a1d6221bd6ecd58ddfce",
+              "dd6735214b02173d4315a7a604620ab973b83f439d28ed5bf0e9b841a400523c",
+              "026d43ae665f785e98426af19af0491a275b545991c790715592d6c5b039c675"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQ=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAAAh0cmFuc2Zlcg=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAAAAAAAH0FY+4SdetsCJLhJ6m1mHAqPFLhrktn0VpIYfBzbgng="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAX//////////z8MNL+TrQ2ZcdBMzJD3BVEcg4qtlzSkovsNegP8f+ia"
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAAAAAAAAAMDk="
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+              },
+              {
+                "type": "Sym",
+                "value": "transfer"
+              },
+              {
+                "type": "Address",
+                "value": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP"
+              },
+              {
+                "type": "Address",
+                "value": "WA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJV7777777777777GMO"
+              },
+              {
+                "type": "I128",
+                "value": "12345"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQ==",
+              "AAAADwAAAAh0cmFuc2Zlcg==",
+              "AAAAEgAAAAAAAAAAH0FY+4SdetsCJLhJ6m1mHAqPFLhrktn0VpIYfBzbgng=",
+              "AAAAEgAAAAX//////////z8MNL+TrQ2ZcdBMzJD3BVEcg4qtlzSkovsNegP8f+ia",
+              "AAAACgAAAAAAAAAAAAAAAAAAMDk="
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+              },
+              {
+                "symbol": "transfer"
+              },
+              {
+                "address": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP"
+              },
+              {
+                "address": "WA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJV7777777777777GMO"
+              },
+              {
+                "i128": "12345"
+              }
+            ],
+            "type": "invoke_contract"
+          },
+          "transaction_id": "23799354385039360",
+          "id": "23799354385039361",
+          "closed_at": "2026-11-03T18:15:35Z",
+          "closed_at_ms": "2026-11-03T18:15:35.027Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "InvokeHostFunctionResultCodeInvokeHostFunctionSuccess",
+          "ledger_sequence": 5541219,
+          "details_json": {
+            "asset_balance_changes": [
+              {
+                "amount": "0.0012345",
+                "asset_type": "native",
+                "from": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+                "to": "CA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+                "type": "transfer"
+              }
+            ],
+            "contract_code_hash": null,
+            "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+            "function": "HostFunctionTypeHostFunctionTypeInvokeContract",
+            "ledger_key_hash": [
+              "0d090a3cc3ea5134b052b990d57cf63db4f2c195c559a1d6221bd6ecd58ddfce",
+              "dd6735214b02173d4315a7a604620ab973b83f439d28ed5bf0e9b841a400523c",
+              "026d43ae665f785e98426af19af0491a275b545991c790715592d6c5b039c675"
+            ],
+            "parameters": [
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQ=="
+              },
+              {
+                "type": "Sym",
+                "value": "AAAADwAAAAh0cmFuc2Zlcg=="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAAAAAAAH0FY+4SdetsCJLhJ6m1mHAqPFLhrktn0VpIYfBzbgng="
+              },
+              {
+                "type": "Address",
+                "value": "AAAAEgAAAAX//////////z8MNL+TrQ2ZcdBMzJD3BVEcg4qtlzSkovsNegP8f+ia"
+              },
+              {
+                "type": "I128",
+                "value": "AAAACgAAAAAAAAAAAAAAAAAAMDk="
+              }
+            ],
+            "parameters_decoded": [
+              {
+                "type": "Address",
+                "value": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+              },
+              {
+                "type": "Sym",
+                "value": "transfer"
+              },
+              {
+                "type": "Address",
+                "value": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP"
+              },
+              {
+                "type": "Address",
+                "value": "WA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJV7777777777777GMO"
+              },
+              {
+                "type": "I128",
+                "value": "12345"
+              }
+            ],
+            "parameters_json": [
+              "AAAAEgAAAAHXkotywnA8z+r365/0701QSlWouXn8m0UOoshCtNHOYQ==",
+              "AAAADwAAAAh0cmFuc2Zlcg==",
+              "AAAAEgAAAAAAAAAAH0FY+4SdetsCJLhJ6m1mHAqPFLhrktn0VpIYfBzbgng=",
+              "AAAAEgAAAAX//////////z8MNL+TrQ2ZcdBMzJD3BVEcg4qtlzSkovsNegP8f+ia",
+              "AAAACgAAAAAAAAAAAAAAAAAAMDk="
+            ],
+            "parameters_json_decoded": [
+              {
+                "address": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+              },
+              {
+                "symbol": "transfer"
+              },
+              {
+                "address": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP"
+              },
+              {
+                "address": "WA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJV7777777777777GMO"
+              },
+              {
+                "i128": "12345"
+              }
+            ],
+            "type": "invoke_contract"
+          }
+        }
+      ],
+      "effects": [
+        {
+          "address": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "address_muxed": null,
+          "operation_id": "23799354385039361",
+          "details": {
+            "amount": "0.0012345",
+            "asset_type": "native",
+            "contract_event_type": "transfer"
+          },
+          "type": 3,
+          "type_string": "account_debited",
+          "closed_at": "2026-11-03T18:15:35Z",
+          "closed_at_ms": "2026-11-03T18:15:35.027Z",
+          "ledger_sequence": 5541219,
+          "index": 0,
+          "id": "23799354385039361-0"
+        },
+        {
+          "address": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "address_muxed": null,
+          "operation_id": "23799354385039361",
+          "details": {
+            "amount": "0.0012345",
+            "asset_type": "native",
+            "contract": "CA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+            "contract_event_type": "transfer"
+          },
+          "type": 96,
+          "type_string": "contract_credited",
+          "closed_at": "2026-11-03T18:15:35Z",
+          "closed_at_ms": "2026-11-03T18:15:35.027Z",
+          "ledger_sequence": 5541219,
+          "index": 1,
+          "id": "23799354385039361-1"
+        }
+      ],
+      "signers": [
+        {
+          "account_id": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "signer": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 5541219,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-11-03T18:15:35Z",
+          "closed_at_ms": "2026-11-03T18:15:35.027Z",
+          "ledger_sequence": 5541219
+        },
+        {
+          "account_id": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "signer": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 5541219,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2026-11-03T18:15:35Z",
+          "closed_at_ms": "2026-11-03T18:15:35.027Z",
+          "ledger_sequence": 5541219
+        }
+      ],
+      "trustlines": [],
       "transform_errors": []
     },
     {

@@ -1,0 +1,52 @@
+{
+  "id": "cap66-config-setting-entry-contract-ledger-cost-ext-v0-testnet-0001",
+  "pattern": "ledger",
+  "cap_ids": [
+    "CAP-0066",
+    "CAP-0063",
+    "CAP-0046-07"
+  ],
+  "protocol_version": 25,
+  "network": "testnet",
+  "xdr_type": "LedgerCloseMeta",
+  "xdr_path": "cells: ConfigSettingEntry:CONFIG_SETTING_CONTRACT_BANDWIDTH_V0, ConfigSettingEntry:CONFIG_SETTING_CONTRACT_EVENTS_V0, ConfigSettingEntry:CONFIG_SETTING_CONTRACT_EXECUTION_LANES, ConfigSettingEntry:CONFIG_SETTING_CONTRACT_HISTORICAL_DATA_V0, …",
+  "sha256": "91f7775fb22040ec89564c2b935ab62ca57c7615c177c404f22604cb562a51c6",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 606666,
+    "closed_at": "2026-01-21T20:50:06Z",
+    "description": "A whole ledger chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "ledger",
+    "ledger_hash": "c21f85e01249ae8e9f19eda8e7a5f2d1d83639e12e2950d95f09b70171af032b",
+    "prev_hash": "f7322ce097f1619d5464cc0c5cc1c3f6e1e21b22c2aac18537b25035cdf0e359",
+    "sequence": 606666,
+    "protocol_version": 25,
+    "base_fee": "100",
+    "base_reserve": "5000000",
+    "max_tx_set_size": 200,
+    "transaction_count": 10,
+    "closed_at": "2026-01-21T20:50:06Z"
+  },
+  "covers": [
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_BANDWIDTH_V0",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_EVENTS_V0",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_EXECUTION_LANES",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_HISTORICAL_DATA_V0",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_LEDGER_COST_EXT_V0",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_LEDGER_COST_V0",
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_PARALLEL_COMPUTE_V0"
+  ],
+  "files": [
+    {
+      "name": "ledger",
+      "xdr_type": "LedgerCloseMeta",
+      "path": "ledger.xdr.b64",
+      "sha256": "91f7775fb22040ec89564c2b935ab62ca57c7615c177c404f22604cb562a51c6",
+      "bytes": 76504
+    }
+  ]
+}

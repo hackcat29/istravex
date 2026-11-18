@@ -1,0 +1,66 @@
+{
+  "id": "cap46-sc-error-object-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0046-01"
+  ],
+  "protocol_version": 28,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ScError:SCE_OBJECT",
+  "sha256": "c60b4017f77506448363e3c196ca96541f941ab4a1a57f70f5021155bf5adff5",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 4554639,
+    "tx_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+    "closed_at": "2026-09-07T15:59:42Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+    "successful": false,
+    "source_account": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+    "fee_charged": "38770",
+    "max_fee": "355976",
+    "operation_count": 1,
+    "operation_types": "invoke_host_function",
+    "memo_type": "none",
+    "signature_count": 2
+  },
+  "covers": [
+    "ScError:SCE_OBJECT"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "c60b4017f77506448363e3c196ca96541f941ab4a1a57f70f5021155bf5adff5",
+      "bytes": 2300
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "0f4eaa69a7ad65e18dc75503bd6ea58e5d653a08f9883c7712a42efaf0a92812",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "2bf9b94ac593c923c14d2db22ec782a19f09b55eb36650f9b1e17bd7d5d0e5da",
+      "bytes": 3552
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "cd578f24d6f716d30137daf460d56c97f3a9717830cf785b8bdbf513ab49a6ff",
+      "bytes": 300
+    }
+  ]
+}

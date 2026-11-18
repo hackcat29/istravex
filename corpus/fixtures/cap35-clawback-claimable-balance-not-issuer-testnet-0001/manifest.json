@@ -1,0 +1,66 @@
+{
+  "id": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035"
+  ],
+  "protocol_version": 29,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ClawbackClaimableBalanceResult:CLAWBACK_CLAIMABLE_BALANCE_NOT_ISSUER",
+  "sha256": "7f4be5482e6bf5f7d7ca7ad01dbe99f4eb44f97efcea69f89da455506d4d6486",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5003675,
+    "tx_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+    "closed_at": "2026-10-03T15:39:22Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+    "successful": false,
+    "source_account": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "clawback_claimable_balance",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ClawbackClaimableBalanceResult:CLAWBACK_CLAIMABLE_BALANCE_NOT_ISSUER"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "7f4be5482e6bf5f7d7ca7ad01dbe99f4eb44f97efcea69f89da455506d4d6486",
+      "bytes": 204
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "8830b28da9e52da38861727d7ee7becba0b72799c73d70c346cf8f0c14830b94",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "4391081946b4692df4b0a1320d4827a2f6defa0e3a686a59520e4f6c75555311",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "6bfb807abbf462e408297620d292922b82da40dac902b0365bc8ff62ce4436fa",
+      "bytes": 300
+    }
+  ]
+}

@@ -88,6 +88,47 @@
       ]
     },
     {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "pattern": "tx",
+      "cap": "base",
+      "network": "pubnet",
+      "ledger": 61604239,
+      "tx_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+          "observed": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "observed": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
       "pattern": "tx",
       "cap": "base",
@@ -1066,6 +1107,94 @@
       ]
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "pattern": "tx",
+      "cap": "base",
+      "network": "pubnet",
+      "ledger": 62763486,
+      "tx_hash": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+          "observed": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "300",
+          "observed": "300",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "observed": "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+          "ok": true
+        },
+        {
+          "field": "fee payer is a participant",
+          "expected": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "observed": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "pattern": "tx",
+      "cap": "base",
+      "network": "pubnet",
+      "ledger": 59601392,
+      "tx_hash": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+          "observed": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "observed": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "pattern": "tx",
       "cap": "base",
@@ -1148,6 +1277,47 @@
       ]
     },
     {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "pattern": "tx",
+      "cap": "base",
+      "network": "pubnet",
+      "ledger": 64543186,
+      "tx_hash": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+          "observed": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "observed": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-set-options-too-many-signers-testnet-0001",
       "pattern": "tx",
       "cap": "base",
@@ -1190,6 +1360,47 @@
           "field": "fee payer is a participant",
           "expected": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
           "observed": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0001",
+      "network": "testnet",
+      "ledger": 4235871,
+      "tx_hash": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+          "observed": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "900",
+          "observed": "900",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "observed": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
           "ok": true
         }
       ]
@@ -1260,6 +1471,53 @@
           "field": "fee debit amount",
           "expected": "40354",
           "observed": "40354",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0015",
+      "network": "pubnet",
+      "ledger": 61101446,
+      "tx_hash": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+          "observed": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "200",
+          "observed": "200",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "observed": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "ok": true
+        },
+        {
+          "field": "fee payer is a participant",
+          "expected": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "observed": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
           "ok": true
         }
       ]
@@ -2160,6 +2418,88 @@
       ]
     },
     {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0033",
+      "network": "pubnet",
+      "ledger": 60493129,
+      "tx_hash": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+          "observed": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "600",
+          "observed": "600",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "observed": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0033",
+      "network": "testnet",
+      "ledger": 5604613,
+      "tx_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+          "observed": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "observed": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
       "pattern": "tx",
       "cap": "CAP-0033",
@@ -2289,6 +2629,88 @@
       ]
     },
     {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0033",
+      "network": "pubnet",
+      "ledger": 59471041,
+      "tx_hash": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+          "observed": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "observed": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0033",
+      "network": "pubnet",
+      "ledger": 62918997,
+      "tx_hash": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+          "observed": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "200",
+          "observed": "200",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "observed": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
       "pattern": "tx",
       "cap": "CAP-0035",
@@ -2366,6 +2788,88 @@
           "field": "source is a participant",
           "expected": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
           "observed": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0035",
+      "network": "testnet",
+      "ledger": 5003675,
+      "tx_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+          "observed": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "observed": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0035",
+      "network": "pubnet",
+      "ledger": 60361520,
+      "tx_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+          "observed": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "observed": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
           "ok": true
         }
       ]
@@ -2711,6 +3215,47 @@
       ]
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0038",
+      "network": "pubnet",
+      "ledger": 64819095,
+      "tx_hash": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+          "observed": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "observed": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "pattern": "tx",
       "cap": "CAP-0038",
@@ -2881,6 +3426,47 @@
       ]
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0038",
+      "network": "pubnet",
+      "ledger": 63319448,
+      "tx_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+          "observed": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "observed": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "pattern": "tx",
       "cap": "CAP-0038",
@@ -3045,6 +3631,47 @@
           "field": "weight",
           "expected": "1",
           "observed": "1",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0046-02",
+      "network": "pubnet",
+      "ledger": 64211037,
+      "tx_hash": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+          "observed": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "209696576",
+          "observed": "209696576",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "observed": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
           "ok": true
         }
       ]
@@ -3320,6 +3947,47 @@
           "field": "source is a participant",
           "expected": "GD7G6G6PEQ5VGTLJQXTGHHNBHMVETXRSM6ZFOLQT6JQ3LNSDC3MOD43E",
           "observed": "GD7G6G6PEQ5VGTLJQXTGHHNBHMVETXRSM6ZFOLQT6JQ3LNSDC3MOD43E",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-sc-error-object-testnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0046-01",
+      "network": "testnet",
+      "ledger": 4554639,
+      "tx_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+          "observed": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "38770",
+          "observed": "38770",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "observed": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
           "ok": true
         }
       ]
@@ -4174,6 +4842,47 @@
       ]
     },
     {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
+      "pattern": "tx",
+      "cap": "CAP-0084",
+      "network": "testnet",
+      "ledger": 5541219,
+      "tx_hash": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "hash",
+          "expected": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+          "observed": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "6496",
+          "observed": "6496",
+          "ok": true
+        },
+        {
+          "field": "is_fee_bump",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "true",
+          "observed": "true",
+          "ok": true
+        },
+        {
+          "field": "source is a participant",
+          "expected": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "observed": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap85-contract-executable-external-ref-testnet-0001",
       "pattern": "tx",
       "cap": "CAP-0085",
@@ -4224,6 +4933,10 @@
       },
       {
         "fixture": "base-account-merge-no-account-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -4323,6 +5036,14 @@
         "verdict": "correct"
       },
       {
+        "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
         "verdict": "correct"
       },
@@ -4331,7 +5052,15 @@
         "verdict": "correct"
       },
       {
+        "fixture": "base-set-options-cant-change-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "base-set-options-too-many-signers-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
         "verdict": "correct"
       },
       {
@@ -4340,6 +5069,10 @@
       },
       {
         "fixture": "cap15-fee-bump-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap15-tx-bad-auth-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -4435,6 +5168,14 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-does-not-exist-testnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
         "verdict": "correct"
       },
@@ -4447,11 +5188,27 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap33-only-transferable-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
         "verdict": "correct"
       },
       {
         "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-no-trust-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -4487,6 +5244,10 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap38-deposit-bad-price-pubnet-0001",
         "verdict": "correct"
       },
@@ -4500,6 +5261,10 @@
       },
       {
         "fixture": "cap38-ledger-key-liquidity-pool-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-line-full-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -4520,6 +5285,10 @@
       },
       {
         "fixture": "cap40-signed-payload-signer-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -4548,6 +5317,10 @@
       },
       {
         "fixture": "cap46-sc-error-crypto-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-error-object-testnet-0001",
         "verdict": "correct"
       },
       {
@@ -4632,6 +5405,10 @@
       },
       {
         "fixture": "cap73-sac-trust-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
         "verdict": "correct"
       },
       {
@@ -5105,6 +5882,41 @@
           "account": "GBZX4MK5JKL7YBZXNXL6MGHYSKK3RVJLIFUJQ4D5JPBKPKIYOLMKTKHB",
           "operation": "UPDATE",
           "balance": "996400"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+        "inner_hash": "7d243df661ee831b7fcd440b27475f440122de3bdf3d76e647440bb9a5acbab7",
+        "to_id": "264588191800074240",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 61604239
+      },
+      "participants": [
+        "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GCHNDY2LTV5VZYE3FRTRFN2GMENYBUNNP3IUY6TQKOIJSO2YLKCH5END",
+          "operation": "UPDATE",
+          "balance": "969988709"
         }
       ],
       "persist_errors": []
@@ -5904,20 +6716,20 @@
       ],
       "trustline_changes": [
         {
-          "account": "GCKFM2ZMJRHHWHWSK6PX3OXHOCZYKXWVSSVLHAPBJH5N76VTI7CEV6VY",
-          "asset": "BOM:GD4UPZ2XVUKVJ4ND2ST4UIZZCGTRTW5ZRXVJYQAJKUF7NU33OIQKEBOM",
-          "operation_id": "255256778349846531",
-          "operation": "UPDATE",
-          "balance": "94896465015",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GDUHWC4N2BA5AOR4SD4LFUFZDT3RSHC3R7DAJ53XYFUSWCK4KZ6PTWNO",
           "asset": "BOM:GD4UPZ2XVUKVJ4ND2ST4UIZZCGTRTW5ZRXVJYQAJKUF7NU33OIQKEBOM",
           "operation_id": "255256778349846530",
           "operation": "UPDATE",
           "balance": "86630418683",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GCKFM2ZMJRHHWHWSK6PX3OXHOCZYKXWVSSVLHAPBJH5N76VTI7CEV6VY",
+          "asset": "BOM:GD4UPZ2XVUKVJ4ND2ST4UIZZCGTRTW5ZRXVJYQAJKUF7NU33OIQKEBOM",
+          "operation_id": "255256778349846531",
+          "operation": "UPDATE",
+          "balance": "94896465015",
           "limit": "9223372036854775807",
           "flags": 1
         }
@@ -6117,6 +6929,77 @@
       "persist_errors": []
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "56a1a239fc1279b2a7fa952977377fe7e7df2b76d3ffc216198d9baca6affd4d",
+        "inner_hash": "f28368781ffba7ee4e6710c8b1098f3832cdf6dd4bb8dbec2f88776409f3da2a",
+        "to_id": "269567119753580544",
+        "fee_charged": "300",
+        "is_fee_bump": true,
+        "result_code": "TransactionResultCodeTxFeeBumpInnerFailed",
+        "ledger": 62763486
+      },
+      "participants": [
+        "GA4KZTHSHSXYSGFI532NC4GDIDXY7U36DCX2G4EPMCFVWVWJDJWG5DHQ",
+        "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "300"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GBIOOXVHK5X6ZYI224N57W3ZT5XO5I3DV2IBEI6PH3AWCZXIH6LUYCWO",
+          "operation": "UPDATE",
+          "balance": "217107732"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+        "inner_hash": "a7a8b5984642b2c845a932cbfa5f9395a0ed843f6ff14e8ba285fa82bb1515f2",
+        "to_id": "255986029436559360",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 59601392
+      },
+      "participants": [
+        "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GB5VZG7DW6IICUKIUBIMJEESWZKF2QIILZD5FLLCT6NFG5LNBL4XPEHT",
+          "operation": "UPDATE",
+          "balance": "80218744"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "found": true,
       "transaction": {
@@ -6187,6 +7070,41 @@
       "persist_errors": []
     },
     {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+        "inner_hash": "9aa1bf6f33df3c73ecae3c9c4514427db57e871d562251498e01f5dce7b6d21c",
+        "to_id": "277210873050243072",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 64543186
+      },
+      "participants": [
+        "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GCFZVSI3WFAUGUWHCKYBL2LA672AXEPSPUGLFSZ7TPQCF4SYOHDXYZXZ",
+          "operation": "UPDATE",
+          "balance": "241647973"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "base-set-options-too-many-signers-testnet-0001",
       "found": true,
       "transaction": {
@@ -6218,6 +7136,41 @@
           "account": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
           "operation": "UPDATE",
           "balance": "199990467300"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+        "inner_hash": "fa2e0329bfc73c7b3634263e2786cf0be5ab220a9913cdfd4f0c0da1569860c9",
+        "to_id": "18192927415078912",
+        "fee_charged": "900",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 4235871
+      },
+      "participants": [
+        "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "900"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GBHEW7BKKF3P75Q2XNTKTTYFY3UE5W3QP7TALAEQ4YUNZHYZMY4YOB3E",
+          "operation": "UPDATE",
+          "balance": "99999995200"
         }
       ],
       "persist_errors": []
@@ -6356,20 +7309,20 @@
           "flags": 1
         },
         {
-          "account": "GD34MC2J45BZY45EK7U7DU4TDZSYVZSNHKY2OFSYF5HHT6QU5KOIQC2P",
-          "asset": "AAFN:GCJFH6HI5UPQVTUUOAS7JPOEPCQZCNGM63GWMBL6ULGUL4XUXRIXXIEQ",
-          "operation_id": "255282548153270274",
-          "operation": "UPDATE",
-          "balance": "41720330657",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GAFVKEEYDLASBEVKJP4XQGEYFZ5SWJWX35TI6HQB2XP6TK4L32JTALKO",
           "asset": "AFR:GBX6YI45VU7WNAAKA3RBFDR3I3UKNFHTJPQ5F6KOOKSGYIAM4TRQN54W",
           "operation_id": "255282548153270274",
           "operation": "UPDATE",
           "balance": "54342844282",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GD34MC2J45BZY45EK7U7DU4TDZSYVZSNHKY2OFSYF5HHT6QU5KOIQC2P",
+          "asset": "AAFN:GCJFH6HI5UPQVTUUOAS7JPOEPCQZCNGM63GWMBL6ULGUL4XUXRIXXIEQ",
+          "operation_id": "255282548153270274",
+          "operation": "UPDATE",
+          "balance": "41720330657",
           "limit": "9223372036854775807",
           "flags": 1
         }
@@ -6661,6 +7614,47 @@
           "account": "GA2JRQOF6EA3HQWDCEDBPPMLYPJCFLDDGYZLEQGMS5SOBQIB3BAFHVAW",
           "operation": "UPDATE",
           "balance": "6486011048330"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "cdc9128caa0aa461a6956b477324c189d3a4c809eae0727ffe28f978e3b73b20",
+        "inner_hash": "e3439ae9a073f0b654e1e4ec7b655771a0c03cc769f8366967e0cf4cef98abb7",
+        "to_id": "262428712310345728",
+        "fee_charged": "200",
+        "is_fee_bump": true,
+        "result_code": "TransactionResultCodeTxFeeBumpInnerFailed",
+        "ledger": 61101446
+      },
+      "participants": [
+        "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+        "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "200"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GDRI5YPGND565TRRTUB6YVH6AW7EKEJOLG7AUKWILUV3PRV7W66IJZGW",
+          "operation": "UPDATE",
+          "balance": "200"
+        },
+        {
+          "account": "GDJLH2F7DBI6GC22J7YUTPAEFRSWKG5MN5RSE2GOOYUTO4BH66LHENRW",
+          "operation": "UPDATE",
+          "balance": "42653958455"
         }
       ],
       "persist_errors": []
@@ -7432,20 +8426,20 @@
       ],
       "trustline_changes": [
         {
-          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
-          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
-          "operation_id": "281209887034449921",
-          "operation": "UPDATE",
-          "balance": "595110803",
-          "limit": "9223372036854775807",
-          "flags": 1
-        },
-        {
           "account": "GCIZNDMVO272L6YRQBMXO5V7ULZJRBPYXVCZ3QVP2A2NGELP5CF2CADV",
           "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "operation_id": "281209887034449921",
           "operation": "UPDATE",
           "balance": "0",
+          "limit": "9223372036854775807",
+          "flags": 1
+        },
+        {
+          "account": "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM",
+          "asset": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "operation_id": "281209887034449921",
+          "operation": "UPDATE",
+          "balance": "595110803",
           "limit": "9223372036854775807",
           "flags": 1
         }
@@ -9260,64 +10254,9 @@
       "trustline_changes": [],
       "account_changes": [
         {
-          "account": "GDYXNLQDXMEBOADYYC6HPHMTWJQEHZUBGXYNVB2CG3SXGPBFGDYW6HDU",
-          "operation": "UPDATE",
-          "balance": "199993439"
-        },
-        {
-          "account": "GB6QEVYXVIDNEU2TUPRTQDROQAZSB6P2PYNJQEGKZ7NWAJ3FHN6SSXXF",
-          "operation": "UPDATE",
-          "balance": "199994989"
-        },
-        {
           "account": "GBGPHM7PGWMR7L7MNB3WYY3UZGHCNYXRMNTPWJSEJNG5XMTEH6HG5SAO",
           "operation": "UPDATE",
           "balance": "199994669"
-        },
-        {
-          "account": "GD246NETKBQGXJUT7LMOIXTVQNNVLAHVNNQCRHESB7MABK23ZOQLAG37",
-          "operation": "UPDATE",
-          "balance": "199993261"
-        },
-        {
-          "account": "GDAS7ONWDLYZZBSZ4WXVMVNGIB6KY5XRLUVQVZQEDPQWIPFD2B5FAX3D",
-          "operation": "UPDATE",
-          "balance": "199994157"
-        },
-        {
-          "account": "GDOZI4SY44J22KZVA37RLKHHR6AY7LKN6IWMGZZENBR4SF2AGKDH5Y2X",
-          "operation": "UPDATE",
-          "balance": "199993218"
-        },
-        {
-          "account": "GAJES7HOHNPVLM4IOOMC2ADH5HOPG73B4AAFLYESCYHLHN6E4USRMZMP",
-          "operation": "UPDATE",
-          "balance": "199994577"
-        },
-        {
-          "account": "GDF5VJFDBPB42AMHSKZIHIQGJNBTHSHUPAYW24HI5HPY5FYMEQDLME7T",
-          "operation": "UPDATE",
-          "balance": "199994562"
-        },
-        {
-          "account": "GDCRIW7ZQGKELH3EOITIISLGZFWFLPBR6CYXUGZ7RCQ2AVK6OBECZZKT",
-          "operation": "UPDATE",
-          "balance": "169759347"
-        },
-        {
-          "account": "GDT2WAFF6NNWWSMLTEYRJFLR7ZME6JDERLYF7RPRPY5AN26QYPV65WL7",
-          "operation": "UPDATE",
-          "balance": "199994385"
-        },
-        {
-          "account": "GD3XMKO7UCDVHCEWR5VIIVO3S3LKMFZO5KOYARQBAHSDR4COUCJTXBVT",
-          "operation": "UPDATE",
-          "balance": "199993897"
-        },
-        {
-          "account": "GA6IYOJKQMP7PBWZK26PIBFJXJXTSZOBVIW332EY6DLFOD2QNMZIOAZM",
-          "operation": "UPDATE",
-          "balance": "199992015"
         },
         {
           "account": "GAT5MBOKAEBJCM53AYHYL6ZFZKTXFDTDVM5HC46ELJNNYJNOHP2OBKXP",
@@ -9325,324 +10264,9 @@
           "balance": "199994989"
         },
         {
-          "account": "GDNUKU5J7CEMUSF4OOLPLCLQFMY5U2NSFZOOLCKTLLT37YA2CBA3U4IV",
-          "operation": "UPDATE",
-          "balance": "199994977"
-        },
-        {
-          "account": "GD7Z2QUSD7C7WDKHN2DG3UEWM4MNDVJZAQTTBXQQCRI7O2CQZHDODKBA",
-          "operation": "UPDATE",
-          "balance": "199994906"
-        },
-        {
-          "account": "GC2WMSCK7NVSEK7LFWQUSPTINFB2MW76TRZHGGKTHHPRPZRASLG375XK",
-          "operation": "UPDATE",
-          "balance": "199994396"
-        },
-        {
-          "account": "GBSLYDRFPCXBGZIHYBXNAHT6INVIKHXAKUISBKS4P3SLQWLVU5CVJGAA",
-          "operation": "UPDATE",
-          "balance": "199992787"
-        },
-        {
-          "account": "GATSLMAO6P2LGS3EWOGZCVMDG6J3BKD4ZPHVXNPYZJUAPCZKXXEISC6W",
-          "operation": "UPDATE",
-          "balance": "199993815"
-        },
-        {
-          "account": "GDEOSQT4TMOWGYHHJO3DP4HZIZDIOSYT3TWDM67CTXPG4BZBLXVVXG5Z",
-          "operation": "UPDATE",
-          "balance": "199994977"
-        },
-        {
-          "account": "GD6VHARSVOPDRQUITPOF6IPIB47RUJ4X4YZ5Q3B2D6AUNESDIUEO5XHV",
-          "operation": "UPDATE",
-          "balance": "199993287"
-        },
-        {
-          "account": "GCXRUALNOA7HN2FECDUPROSARR4X5OPRGXVQPPGM67VNJYGLJ2OMF3AH",
-          "operation": "UPDATE",
-          "balance": "199994786"
-        },
-        {
-          "account": "GDE6D7ATD43CRDPYKHZZWF2ULE7NPRG2GN3TPFA5URPPMFQ7ACENTUIX",
-          "operation": "UPDATE",
-          "balance": "199994408"
-        },
-        {
-          "account": "GAFBT3J2CBDSQMILOIWRNFO4U5MDDF3W2FKGKZRW5DT2JIEODUY2HSS2",
-          "operation": "UPDATE",
-          "balance": "199993292"
-        },
-        {
-          "account": "GCRGHMRDZJQEPCGKZAJHJAGJIO24CMVGGPXFLQNHZJNSOI6EZDUBFOON",
-          "operation": "UPDATE",
-          "balance": "199993278"
-        },
-        {
-          "account": "GCORWLB4RULEAA7GXAC5WM3VWJRJNFDPNU5ZWNSPEBDNPFLBRW53SDOW",
-          "operation": "UPDATE",
-          "balance": "199994886"
-        },
-        {
-          "account": "GAEVECMLC3DBTAUNDF7ZX67W5RYSJOZXNJJASRX74HI4X77RHVHORAWF",
-          "operation": "UPDATE",
-          "balance": "199994590"
-        },
-        {
-          "account": "GCCMDT3A7JW26PFFC5K3CP65J7PRW5WCOOZ7X6VHSXMX5456K5IROU6Z",
-          "operation": "UPDATE",
-          "balance": "199994395"
-        },
-        {
-          "account": "GD25PF5BBOMC4F5RISLYYD7CZWGFUNOAYI25XSB3AOOHJPVA7CDAUTK6",
-          "operation": "UPDATE",
-          "balance": "199994622"
-        },
-        {
-          "account": "GAPV6ODW4PPGLHWHNQAUHELCVBJLJZ7KWHC6OBEOVAY5XXR2O5X2L4XM",
-          "operation": "UPDATE",
-          "balance": "199994690"
-        },
-        {
-          "account": "GAKJQX4XCCYHHZJERARZ4NEMA7ZPFAOIR5JFEK3KAFAZZG73RBNMB3CS",
-          "operation": "UPDATE",
-          "balance": "199993294"
-        },
-        {
-          "account": "GBXTKU6IZKE2H54BQUZEBRWSGRMNOE47KRVBW42NLABPW2SGTDPV7AIL",
-          "operation": "UPDATE",
-          "balance": "199993633"
-        },
-        {
-          "account": "GDPLSVQJXZQZ7FWEQ5YCEGG2PXMGWQTVB47OHW2TYSSK235XT5UH3FGX",
-          "operation": "UPDATE",
-          "balance": "199994472"
-        },
-        {
-          "account": "GBNAWZXT3VYOX2V4PEYVCWFYXCTYVXPJKMUPFEV3GGLZFLZ6NJE2C4LV",
-          "operation": "UPDATE",
-          "balance": "199992257"
-        },
-        {
-          "account": "GBMEVVPE65S7YDGNJMJDHB7CVX4YK2CV6G5AJGWR4ZUSUM7PWSE2MEET",
-          "operation": "UPDATE",
-          "balance": "199994964"
-        },
-        {
-          "account": "GAHO7G6DQ2ZJB4BXJPKP52RYCEYWRIELEP5W2OYXQ3PXD7PGBKIN5D23",
-          "operation": "UPDATE",
-          "balance": "199994014"
-        },
-        {
-          "account": "GBDNTOCKVOK5CDSUT5L6S542B2PGGPHXWNEQYCCU5PF6OE4XIMG54PAR",
-          "operation": "UPDATE",
-          "balance": "199993644"
-        },
-        {
-          "account": "GCEIEAKZGGLQD46QC5G36HF4V2XHTD7NKRAXF3WHHQUWPLX5ZEJGBWDJ",
-          "operation": "UPDATE",
-          "balance": "199994889"
-        },
-        {
-          "account": "GAILLQYZQJLFRXALTECLNZYJ62YDJKJPS42HZKNUYYTAU2KNX4YGHRVU",
-          "operation": "UPDATE",
-          "balance": "199993983"
-        },
-        {
-          "account": "GCMSOD2JAQLC4BBM4ZVYG2SEJXGV675SC4FOT23F52YL5AE2NJKGJ3UP",
-          "operation": "UPDATE",
-          "balance": "199993529"
-        },
-        {
-          "account": "GAQZEIQ7INT4S747T4DPTFUC22BLNLVXD3Y54J3XUV3MXTK7J3UDOE7B",
-          "operation": "UPDATE",
-          "balance": "199993183"
-        },
-        {
-          "account": "GASNT5THAPCOYZIHTRSGR6TQQQI4SKLEO7TYCTMRNBB2FOXOE7HGHDNY",
-          "operation": "UPDATE",
-          "balance": "199994897"
-        },
-        {
-          "account": "GAG7IDEJR42UXP73ME7BIJPMQ7CS633YQWBY7XL2U2CQBFOJTBIAO7VS",
-          "operation": "UPDATE",
-          "balance": "199994415"
-        },
-        {
-          "account": "GBPGGQRAXSTYY5SFRBA7MQ2Z65UALJDQ6BNOQJTUHFVVL66LSLGXL5ZV",
-          "operation": "UPDATE",
-          "balance": "199994803"
-        },
-        {
-          "account": "GAEIRTSP5VVLLAZXWOY2WLTOMLICGBSHJ7I7EBIT74BL2GNMIUUXLZRY",
-          "operation": "UPDATE",
-          "balance": "199994678"
-        },
-        {
           "account": "GCRKH4KX74BP7UT2SZWTWOWZO23DCEOO46OTEV7OUCFDWXDHMRGNXF3W",
           "operation": "UPDATE",
           "balance": "199993559"
-        },
-        {
-          "account": "GDLFVUONEGW5Q3UK7UPRW7EQWGQR4KDAYAJIPB6I74P7U22SMP2SB6DC",
-          "operation": "UPDATE",
-          "balance": "199994072"
-        },
-        {
-          "account": "GCQDMHJCC2TGSBGXB4ZKP2XZMX7OZUSH73F7UK5LJIZDCBHQSBHCUSU2",
-          "operation": "UPDATE",
-          "balance": "199994084"
-        },
-        {
-          "account": "GDJNHGZR6AONCHCVJMPRAH2D4NIZS4FANRVKJ3O2FYJQAMUA37XAIKOD",
-          "operation": "UPDATE",
-          "balance": "199993461"
-        },
-        {
-          "account": "GDK3ETLM3NG6RMTLC6GP3OLFC4UJ25ET4UNGU2ADGGMDLC5M2GM6IDVM",
-          "operation": "UPDATE",
-          "balance": "199993609"
-        },
-        {
-          "account": "GCMPE34HL76WCYZFI6CUXDOCAP3XCCN2XWOY3K575SWMY3YNLKUHXTWA",
-          "operation": "UPDATE",
-          "balance": "199994977"
-        },
-        {
-          "account": "GABGMBYEHRN35GHGXLV7C4KD77GF32ZMIVINUIE4CXEA5JG3DK7SHU3M",
-          "operation": "UPDATE",
-          "balance": "199994292"
-        },
-        {
-          "account": "GDQC2FNNOA5XI7FW6YUGUSZ7RZJX3BL3NTPELWMBNQBU7QH6NX44OJS5",
-          "operation": "UPDATE",
-          "balance": "199993272"
-        },
-        {
-          "account": "GC3VTNZCKOPKG272RI7QL6V4OWZFP3XYWD4Q6MGXBNRLBEKQYFWYFB2N",
-          "operation": "UPDATE",
-          "balance": "199993644"
-        },
-        {
-          "account": "GAYQYYTXBSCVGRDMLI3IOU4Y2MVWQSJYREETUNESFSDYZTEUIA7PRQ5H",
-          "operation": "UPDATE",
-          "balance": "199994973"
-        },
-        {
-          "account": "GBJFWTKFA7P2QLDC32ALIHZA4RXOQUYMLKMWLINEDWXJDHU2TCWI5DSO",
-          "operation": "UPDATE",
-          "balance": "199992884"
-        },
-        {
-          "account": "GDWISAAK3MHOQB5TBEHGWM5DGKZZKYYC5XB47KSBT7MKLQHYJC2DWWXN",
-          "operation": "UPDATE",
-          "balance": "199994887"
-        },
-        {
-          "account": "GD3A7PVIJQEZ3SBPEEZE533SMJJEXY4P6MWEVRPBJJJAFAUMHEYYGO3D",
-          "operation": "UPDATE",
-          "balance": "199992905"
-        },
-        {
-          "account": "GAKONIEMQM4BO7XPRD3DII7AB52TAZ3OPTMLB7HQCCRX6EHPGSOZCVYE",
-          "operation": "UPDATE",
-          "balance": "199992333"
-        },
-        {
-          "account": "GB2C5HCZYWNGVM6JGXDWQBJTMUY4S2HPPTCAH63HFAQVL2ALXDW7SSJ7",
-          "operation": "UPDATE",
-          "balance": "199993579"
-        },
-        {
-          "account": "GBOWLEFSCW7Q5VEOT6QNUB2VOWMI636ECCCXQHOCDVXHB55JOHKVD5CF",
-          "operation": "UPDATE",
-          "balance": "199994762"
-        },
-        {
-          "account": "GDWRAEAWOWYW2H4JY6FX5FNSSEPKXAVYPGIKJ7BL3LMYKAS7N7L6HHAH",
-          "operation": "UPDATE",
-          "balance": "199994089"
-        },
-        {
-          "account": "GD3Z4ZWHKFL2CY454WOJ3WSLFHLNXF2KLAB35H5UBHPAMVZ4CA26OYSH",
-          "operation": "UPDATE",
-          "balance": "199993720"
-        },
-        {
-          "account": "GB7SZIAYLFUEHNRNYQPVKCBNHQXKE5QUUAJCDCKGB636UZLWYMUXHPZM",
-          "operation": "UPDATE",
-          "balance": "199994977"
-        },
-        {
-          "account": "GC5447QVPFOWBVHZBQE7ESBHJKLFEA344ZOLMU7AARWJNFXIMYQXV4CJ",
-          "operation": "UPDATE",
-          "balance": "199994378"
-        },
-        {
-          "account": "GAJ25AHGYG4JXEZWIM7HP7SBICZ4IJZQLFGNZ7OBSZE57OO4HO6C3LWW",
-          "operation": "UPDATE",
-          "balance": "199993077"
-        },
-        {
-          "account": "GBBGGEWCISD44GCB6CHP4KRU5QS35RXTAGZAEGINLOZCN36XJXP64BVT",
-          "operation": "UPDATE",
-          "balance": "199994954"
-        },
-        {
-          "account": "GCYRTU5OQSENQ4GRR3423UNKSDV2NTOLE26KKNWOOSVZTXK47NKFTWOJ",
-          "operation": "UPDATE",
-          "balance": "199994886"
-        },
-        {
-          "account": "GBRYILCON7JLNYONEVJZMV72MKYDDCWKPHUXWJHBZ3I4QHMGISMZZESF",
-          "operation": "UPDATE",
-          "balance": "199992390"
-        },
-        {
-          "account": "GC2XAINRO5WYW6TD6FTQB5SFY3IXNL3NEMY77G3OAIAZDXZ6KAP2B5G6",
-          "operation": "UPDATE",
-          "balance": "199994222"
-        },
-        {
-          "account": "GBTJ33IHEBCKFHIMSCXY4GFAXONFXB2EDFWSYLKZ6ZQVXFUJFV2UACS2",
-          "operation": "UPDATE",
-          "balance": "199992516"
-        },
-        {
-          "account": "GAVSBVPKXH7AAPLDXPHXNNHAWG5S4NRWHXCO4J7RN2W76UW3WM5YZC5I",
-          "operation": "UPDATE",
-          "balance": "199992378"
-        },
-        {
-          "account": "GBTWJWMWCVHOUESZVWR2BHK32QH4OYVMNC33HBDS7GDVI5JI42BX6XP7",
-          "operation": "UPDATE",
-          "balance": "199994783"
-        },
-        {
-          "account": "GCMOZOYEAW356A6KFNPTAMBK4NON6CPSO3PEHYFBJDBKXONNUYZEQUJI",
-          "operation": "UPDATE",
-          "balance": "199994364"
-        },
-        {
-          "account": "GBXSHPH4NS33KGBLUZSVWTE3IG4E55AZZAFRMVPFB4G7IS2IUNVBRXGQ",
-          "operation": "UPDATE",
-          "balance": "199994400"
-        },
-        {
-          "account": "GDUJWNIN5T4WHAP5CBXFKPA3A2XLBUZZSWD6BP23W5CZTEYRYNQFYGWY",
-          "operation": "UPDATE",
-          "balance": "199994157"
-        },
-        {
-          "account": "GBEANXVJM37ALYWDX2Q5DBNLITY2OUDN3KEAIY2KNRO3XMYGRGM2LDDF",
-          "operation": "UPDATE",
-          "balance": "199993504"
-        },
-        {
-          "account": "GBJNCF2QIUAXADTVBHS7MY23AMKCHVJYL5CVBFFSEOBH6DVVC3IY3VNL",
-          "operation": "UPDATE",
-          "balance": "199994875"
         },
         {
           "account": "GAMGTDAJ5JD23PBMISWNUIXVA64XYVN64XXLPVOFIAOWDTOGO57YYW4M",
@@ -9650,19 +10274,19 @@
           "balance": "199994757"
         },
         {
-          "account": "GAPLEKLG3PS2SPLKAJBFGKFR5QCSOF3T7GVJOYIU75ZOJE3P4URFXGNP",
+          "account": "GDF5VJFDBPB42AMHSKZIHIQGJNBTHSHUPAYW24HI5HPY5FYMEQDLME7T",
           "operation": "UPDATE",
-          "balance": "199993537"
+          "balance": "199994562"
         },
         {
-          "account": "GB3OYFNR7AEBKVLEVAXWZIFJGZPQYLRE2EKG7VAKPLOP7ZDOWV4PW3ZH",
+          "account": "GC5447QVPFOWBVHZBQE7ESBHJKLFEA344ZOLMU7AARWJNFXIMYQXV4CJ",
           "operation": "UPDATE",
-          "balance": "199994886"
+          "balance": "199994378"
         },
         {
-          "account": "GDNAAMRLRHXQIPRXX6RI2DDKY5PBZRNCYZH4MPVM3U4EGNZILLUBKZBB",
+          "account": "GDQC2FNNOA5XI7FW6YUGUSZ7RZJX3BL3NTPELWMBNQBU7QH6NX44OJS5",
           "operation": "UPDATE",
-          "balance": "199993777"
+          "balance": "199993272"
         },
         {
           "account": "GDM3JTOIEQJ5BZ5YBTBOBKJVNMECQGQFRBSCHKGR77GLKYRRCSZHFEA6",
@@ -9670,49 +10294,79 @@
           "balance": "199992982"
         },
         {
-          "account": "GDL5HHGBDGLMTHLEIY5JL7AOARXEQEK4UWX3CQ4U355BGA4P6QN3LH26",
+          "account": "GA4CL5LAMNX4JIRT5E5FPO3AMGZBNFSWR4BJSS77XT4DC2VXWA4GOCSL",
           "operation": "UPDATE",
-          "balance": "199994889"
+          "balance": "199992603"
         },
         {
-          "account": "GDZSEFYIJK4HUYWOUCV6TTRK4FOBN4G4HR7R4LQMZHDALTBTGCOZLYJY",
+          "account": "GD25PF5BBOMC4F5RISLYYD7CZWGFUNOAYI25XSB3AOOHJPVA7CDAUTK6",
           "operation": "UPDATE",
-          "balance": "199993858"
+          "balance": "199994622"
         },
         {
-          "account": "GBSVJVUOF4OW7BAQCZHZ7OXIU6OJL6BETTEIBOLNBJGZ624K5YKKXQ6P",
+          "account": "GAKONIEMQM4BO7XPRD3DII7AB52TAZ3OPTMLB7HQCCRX6EHPGSOZCVYE",
           "operation": "UPDATE",
-          "balance": "199992888"
+          "balance": "199992333"
         },
         {
-          "account": "GASG2BESOXOHKWACFYDQ47BQULECR77D2OZ7FPH3C6KECANSFJBEVT37",
+          "account": "GBJNCF2QIUAXADTVBHS7MY23AMKCHVJYL5CVBFFSEOBH6DVVC3IY3VNL",
           "operation": "UPDATE",
-          "balance": "199993637"
+          "balance": "199994875"
         },
         {
-          "account": "GD5AMOOQ3YUTEREYGXGYK3Z7E2VRJIAZJBOXYI2JI2BIQ7PE2HLYCA4W",
+          "account": "GBTWJWMWCVHOUESZVWR2BHK32QH4OYVMNC33HBDS7GDVI5JI42BX6XP7",
           "operation": "UPDATE",
-          "balance": "199994889"
+          "balance": "199994783"
         },
         {
-          "account": "GAM5Q7VMDLC2KNPOH63RFC7HG7MRGL5VLNTXQN23T2VV3DAZXGQAUOHB",
+          "account": "GDT2WAFF6NNWWSMLTEYRJFLR7ZME6JDERLYF7RPRPY5AN26QYPV65WL7",
           "operation": "UPDATE",
-          "balance": "199994790"
+          "balance": "199994385"
         },
         {
-          "account": "GC6WGSRKUBSE4TWNDSXIITSCKZW4A4KSKY324MVTTWGDDSMXSUNJJWTZ",
+          "account": "GAJES7HOHNPVLM4IOOMC2ADH5HOPG73B4AAFLYESCYHLHN6E4USRMZMP",
           "operation": "UPDATE",
-          "balance": "199994104"
+          "balance": "199994577"
         },
         {
-          "account": "GAGR4RP5ENO4LMDYPHCWIK4HFDXQUNTXTQIW7ABBXKKTCE2IF5N36U6J",
+          "account": "GAILLQYZQJLFRXALTECLNZYJ62YDJKJPS42HZKNUYYTAU2KNX4YGHRVU",
           "operation": "UPDATE",
-          "balance": "199993303"
+          "balance": "199993983"
         },
         {
-          "account": "GBYWGUFQD2OJP4CI7RA2MDYHC2FXAOHOJMYD6Y7OK7JUZJKKMGKTSVDP",
+          "account": "GAJ25AHGYG4JXEZWIM7HP7SBICZ4IJZQLFGNZ7OBSZE57OO4HO6C3LWW",
           "operation": "UPDATE",
-          "balance": "199994903"
+          "balance": "199993077"
+        },
+        {
+          "account": "GDJNHGZR6AONCHCVJMPRAH2D4NIZS4FANRVKJ3O2FYJQAMUA37XAIKOD",
+          "operation": "UPDATE",
+          "balance": "199993461"
+        },
+        {
+          "account": "GAHO7G6DQ2ZJB4BXJPKP52RYCEYWRIELEP5W2OYXQ3PXD7PGBKIN5D23",
+          "operation": "UPDATE",
+          "balance": "199994014"
+        },
+        {
+          "account": "GCCMDT3A7JW26PFFC5K3CP65J7PRW5WCOOZ7X6VHSXMX5456K5IROU6Z",
+          "operation": "UPDATE",
+          "balance": "199994395"
+        },
+        {
+          "account": "GC2WMSCK7NVSEK7LFWQUSPTINFB2MW76TRZHGGKTHHPRPZRASLG375XK",
+          "operation": "UPDATE",
+          "balance": "199994396"
+        },
+        {
+          "account": "GCMPE34HL76WCYZFI6CUXDOCAP3XCCN2XWOY3K575SWMY3YNLKUHXTWA",
+          "operation": "UPDATE",
+          "balance": "199994977"
+        },
+        {
+          "account": "GBJFWTKFA7P2QLDC32ALIHZA4RXOQUYMLKMWLINEDWXJDHU2TCWI5DSO",
+          "operation": "UPDATE",
+          "balance": "199992884"
         },
         {
           "account": "GCOOZ775KHM3QGPEOYC7H5GPUNSJUCXC5O7FATRTUCXQV7IDYNRPGAJK",
@@ -9720,14 +10374,9 @@
           "balance": "199993815"
         },
         {
-          "account": "GDZKERN75FG3GANAOFQIKIT5EC3DRWEIXNH24PCMYB3ZKJ6IMG35XCRP",
+          "account": "GBMEVVPE65S7YDGNJMJDHB7CVX4YK2CV6G5AJGWR4ZUSUM7PWSE2MEET",
           "operation": "UPDATE",
-          "balance": "199993357"
-        },
-        {
-          "account": "GDTHMUCPWLTIX2DRL7WIJFZMHPNMU5ZVCZD2LPPPZ456EI4BDXZEQZWG",
-          "operation": "UPDATE",
-          "balance": "199992226"
+          "balance": "199994964"
         },
         {
           "account": "GBEELGQHXFHJ34UM5A3P7VYZ7E3PDGNHVKTN5C4JC2TAC2GKQ2Y6WV5N",
@@ -9735,14 +10384,99 @@
           "balance": "199993125"
         },
         {
-          "account": "GDMDQOPWDKZZ5V6PZ5BOZU44HLWXGX6WD4D7NPD7TR26GDT2BWN6J2BE",
+          "account": "GBYWGUFQD2OJP4CI7RA2MDYHC2FXAOHOJMYD6Y7OK7JUZJKKMGKTSVDP",
           "operation": "UPDATE",
-          "balance": "199994472"
+          "balance": "199994903"
         },
         {
-          "account": "GDQXQ7J56ACVKJHJZP5MKH23AAUEK7SHMZCFQ7TZ2WJ26L3D5A4LBLZT",
+          "account": "GDE6D7ATD43CRDPYKHZZWF2ULE7NPRG2GN3TPFA5URPPMFQ7ACENTUIX",
           "operation": "UPDATE",
-          "balance": "199993595"
+          "balance": "199994408"
+        },
+        {
+          "account": "GAYQYYTXBSCVGRDMLI3IOU4Y2MVWQSJYREETUNESFSDYZTEUIA7PRQ5H",
+          "operation": "UPDATE",
+          "balance": "199994973"
+        },
+        {
+          "account": "GBDNTOCKVOK5CDSUT5L6S542B2PGGPHXWNEQYCCU5PF6OE4XIMG54PAR",
+          "operation": "UPDATE",
+          "balance": "199993644"
+        },
+        {
+          "account": "GCORWLB4RULEAA7GXAC5WM3VWJRJNFDPNU5ZWNSPEBDNPFLBRW53SDOW",
+          "operation": "UPDATE",
+          "balance": "199994886"
+        },
+        {
+          "account": "GAFBT3J2CBDSQMILOIWRNFO4U5MDDF3W2FKGKZRW5DT2JIEODUY2HSS2",
+          "operation": "UPDATE",
+          "balance": "199993292"
+        },
+        {
+          "account": "GC6WGSRKUBSE4TWNDSXIITSCKZW4A4KSKY324MVTTWGDDSMXSUNJJWTZ",
+          "operation": "UPDATE",
+          "balance": "199994104"
+        },
+        {
+          "account": "GCMOZOYEAW356A6KFNPTAMBK4NON6CPSO3PEHYFBJDBKXONNUYZEQUJI",
+          "operation": "UPDATE",
+          "balance": "199994364"
+        },
+        {
+          "account": "GBPGGQRAXSTYY5SFRBA7MQ2Z65UALJDQ6BNOQJTUHFVVL66LSLGXL5ZV",
+          "operation": "UPDATE",
+          "balance": "199994803"
+        },
+        {
+          "account": "GDNAAMRLRHXQIPRXX6RI2DDKY5PBZRNCYZH4MPVM3U4EGNZILLUBKZBB",
+          "operation": "UPDATE",
+          "balance": "199993777"
+        },
+        {
+          "account": "GDEOSQT4TMOWGYHHJO3DP4HZIZDIOSYT3TWDM67CTXPG4BZBLXVVXG5Z",
+          "operation": "UPDATE",
+          "balance": "199994977"
+        },
+        {
+          "account": "GBBGGEWCISD44GCB6CHP4KRU5QS35RXTAGZAEGINLOZCN36XJXP64BVT",
+          "operation": "UPDATE",
+          "balance": "199994954"
+        },
+        {
+          "account": "GB2C5HCZYWNGVM6JGXDWQBJTMUY4S2HPPTCAH63HFAQVL2ALXDW7SSJ7",
+          "operation": "UPDATE",
+          "balance": "199993579"
+        },
+        {
+          "account": "GCMSOD2JAQLC4BBM4ZVYG2SEJXGV675SC4FOT23F52YL5AE2NJKGJ3UP",
+          "operation": "UPDATE",
+          "balance": "199993529"
+        },
+        {
+          "account": "GBXTKU6IZKE2H54BQUZEBRWSGRMNOE47KRVBW42NLABPW2SGTDPV7AIL",
+          "operation": "UPDATE",
+          "balance": "199993633"
+        },
+        {
+          "account": "GBSLYDRFPCXBGZIHYBXNAHT6INVIKHXAKUISBKS4P3SLQWLVU5CVJGAA",
+          "operation": "UPDATE",
+          "balance": "199992787"
+        },
+        {
+          "account": "GA6IYOJKQMP7PBWZK26PIBFJXJXTSZOBVIW332EY6DLFOD2QNMZIOAZM",
+          "operation": "UPDATE",
+          "balance": "199992015"
+        },
+        {
+          "account": "GAPV6ODW4PPGLHWHNQAUHELCVBJLJZ7KWHC6OBEOVAY5XXR2O5X2L4XM",
+          "operation": "UPDATE",
+          "balance": "199994690"
+        },
+        {
+          "account": "GAGR4RP5ENO4LMDYPHCWIK4HFDXQUNTXTQIW7ABBXKKTCE2IF5N36U6J",
+          "operation": "UPDATE",
+          "balance": "199993303"
         },
         {
           "account": "GD7CYXQ6UFOBAFKIUAXJSFBSKBRUK36WGISZ2B5UGTXNNK72C3F2VBSF",
@@ -9750,19 +10484,279 @@
           "balance": "199992677"
         },
         {
+          "account": "GCQDMHJCC2TGSBGXB4ZKP2XZMX7OZUSH73F7UK5LJIZDCBHQSBHCUSU2",
+          "operation": "UPDATE",
+          "balance": "199994084"
+        },
+        {
+          "account": "GD7Z2QUSD7C7WDKHN2DG3UEWM4MNDVJZAQTTBXQQCRI7O2CQZHDODKBA",
+          "operation": "UPDATE",
+          "balance": "199994906"
+        },
+        {
+          "account": "GBNAWZXT3VYOX2V4PEYVCWFYXCTYVXPJKMUPFEV3GGLZFLZ6NJE2C4LV",
+          "operation": "UPDATE",
+          "balance": "199992257"
+        },
+        {
+          "account": "GD3XMKO7UCDVHCEWR5VIIVO3S3LKMFZO5KOYARQBAHSDR4COUCJTXBVT",
+          "operation": "UPDATE",
+          "balance": "199993897"
+        },
+        {
+          "account": "GAG7IDEJR42UXP73ME7BIJPMQ7CS633YQWBY7XL2U2CQBFOJTBIAO7VS",
+          "operation": "UPDATE",
+          "balance": "199994415"
+        },
+        {
+          "account": "GAEVECMLC3DBTAUNDF7ZX67W5RYSJOZXNJJASRX74HI4X77RHVHORAWF",
+          "operation": "UPDATE",
+          "balance": "199994590"
+        },
+        {
+          "account": "GDCRIW7ZQGKELH3EOITIISLGZFWFLPBR6CYXUGZ7RCQ2AVK6OBECZZKT",
+          "operation": "UPDATE",
+          "balance": "169759347"
+        },
+        {
+          "account": "GASNT5THAPCOYZIHTRSGR6TQQQI4SKLEO7TYCTMRNBB2FOXOE7HGHDNY",
+          "operation": "UPDATE",
+          "balance": "199994897"
+        },
+        {
+          "account": "GB6QEVYXVIDNEU2TUPRTQDROQAZSB6P2PYNJQEGKZ7NWAJ3FHN6SSXXF",
+          "operation": "UPDATE",
+          "balance": "199994989"
+        },
+        {
+          "account": "GDQXQ7J56ACVKJHJZP5MKH23AAUEK7SHMZCFQ7TZ2WJ26L3D5A4LBLZT",
+          "operation": "UPDATE",
+          "balance": "199993595"
+        },
+        {
+          "account": "GAM5Q7VMDLC2KNPOH63RFC7HG7MRGL5VLNTXQN23T2VV3DAZXGQAUOHB",
+          "operation": "UPDATE",
+          "balance": "199994790"
+        },
+        {
+          "account": "GABGMBYEHRN35GHGXLV7C4KD77GF32ZMIVINUIE4CXEA5JG3DK7SHU3M",
+          "operation": "UPDATE",
+          "balance": "199994292"
+        },
+        {
           "account": "GAGMQSGDFHF4TASGLO4MUGMXIYAGOVD3NFJ4JHB5L4JLKXWWYTNEQLWH",
           "operation": "UPDATE",
           "balance": "199993275"
         },
         {
-          "account": "GA4CL5LAMNX4JIRT5E5FPO3AMGZBNFSWR4BJSS77XT4DC2VXWA4GOCSL",
+          "account": "GDOZI4SY44J22KZVA37RLKHHR6AY7LKN6IWMGZZENBR4SF2AGKDH5Y2X",
           "operation": "UPDATE",
-          "balance": "199992603"
+          "balance": "199993218"
+        },
+        {
+          "account": "GBEANXVJM37ALYWDX2Q5DBNLITY2OUDN3KEAIY2KNRO3XMYGRGM2LDDF",
+          "operation": "UPDATE",
+          "balance": "199993504"
+        },
+        {
+          "account": "GCRGHMRDZJQEPCGKZAJHJAGJIO24CMVGGPXFLQNHZJNSOI6EZDUBFOON",
+          "operation": "UPDATE",
+          "balance": "199993278"
+        },
+        {
+          "account": "GDTHMUCPWLTIX2DRL7WIJFZMHPNMU5ZVCZD2LPPPZ456EI4BDXZEQZWG",
+          "operation": "UPDATE",
+          "balance": "199992226"
         },
         {
           "account": "GDA34ZLT6IQMTYXOSRRNF3FOK5XSCQO7TSWQWHPDWDCMEAKYKPGZUXE6",
           "operation": "UPDATE",
           "balance": "199992281"
+        },
+        {
+          "account": "GAKJQX4XCCYHHZJERARZ4NEMA7ZPFAOIR5JFEK3KAFAZZG73RBNMB3CS",
+          "operation": "UPDATE",
+          "balance": "199993294"
+        },
+        {
+          "account": "GDPLSVQJXZQZ7FWEQ5YCEGG2PXMGWQTVB47OHW2TYSSK235XT5UH3FGX",
+          "operation": "UPDATE",
+          "balance": "199994472"
+        },
+        {
+          "account": "GDYXNLQDXMEBOADYYC6HPHMTWJQEHZUBGXYNVB2CG3SXGPBFGDYW6HDU",
+          "operation": "UPDATE",
+          "balance": "199993439"
+        },
+        {
+          "account": "GD6VHARSVOPDRQUITPOF6IPIB47RUJ4X4YZ5Q3B2D6AUNESDIUEO5XHV",
+          "operation": "UPDATE",
+          "balance": "199993287"
+        },
+        {
+          "account": "GBOWLEFSCW7Q5VEOT6QNUB2VOWMI636ECCCXQHOCDVXHB55JOHKVD5CF",
+          "operation": "UPDATE",
+          "balance": "199994762"
+        },
+        {
+          "account": "GDWISAAK3MHOQB5TBEHGWM5DGKZZKYYC5XB47KSBT7MKLQHYJC2DWWXN",
+          "operation": "UPDATE",
+          "balance": "199994887"
+        },
+        {
+          "account": "GASG2BESOXOHKWACFYDQ47BQULECR77D2OZ7FPH3C6KECANSFJBEVT37",
+          "operation": "UPDATE",
+          "balance": "199993637"
+        },
+        {
+          "account": "GC3VTNZCKOPKG272RI7QL6V4OWZFP3XYWD4Q6MGXBNRLBEKQYFWYFB2N",
+          "operation": "UPDATE",
+          "balance": "199993644"
+        },
+        {
+          "account": "GC2XAINRO5WYW6TD6FTQB5SFY3IXNL3NEMY77G3OAIAZDXZ6KAP2B5G6",
+          "operation": "UPDATE",
+          "balance": "199994222"
+        },
+        {
+          "account": "GDL5HHGBDGLMTHLEIY5JL7AOARXEQEK4UWX3CQ4U355BGA4P6QN3LH26",
+          "operation": "UPDATE",
+          "balance": "199994889"
+        },
+        {
+          "account": "GCYRTU5OQSENQ4GRR3423UNKSDV2NTOLE26KKNWOOSVZTXK47NKFTWOJ",
+          "operation": "UPDATE",
+          "balance": "199994886"
+        },
+        {
+          "account": "GBXSHPH4NS33KGBLUZSVWTE3IG4E55AZZAFRMVPFB4G7IS2IUNVBRXGQ",
+          "operation": "UPDATE",
+          "balance": "199994400"
+        },
+        {
+          "account": "GDLFVUONEGW5Q3UK7UPRW7EQWGQR4KDAYAJIPB6I74P7U22SMP2SB6DC",
+          "operation": "UPDATE",
+          "balance": "199994072"
+        },
+        {
+          "account": "GDNUKU5J7CEMUSF4OOLPLCLQFMY5U2NSFZOOLCKTLLT37YA2CBA3U4IV",
+          "operation": "UPDATE",
+          "balance": "199994977"
+        },
+        {
+          "account": "GD5AMOOQ3YUTEREYGXGYK3Z7E2VRJIAZJBOXYI2JI2BIQ7PE2HLYCA4W",
+          "operation": "UPDATE",
+          "balance": "199994889"
+        },
+        {
+          "account": "GAQZEIQ7INT4S747T4DPTFUC22BLNLVXD3Y54J3XUV3MXTK7J3UDOE7B",
+          "operation": "UPDATE",
+          "balance": "199993183"
+        },
+        {
+          "account": "GBSVJVUOF4OW7BAQCZHZ7OXIU6OJL6BETTEIBOLNBJGZ624K5YKKXQ6P",
+          "operation": "UPDATE",
+          "balance": "199992888"
+        },
+        {
+          "account": "GB7SZIAYLFUEHNRNYQPVKCBNHQXKE5QUUAJCDCKGB636UZLWYMUXHPZM",
+          "operation": "UPDATE",
+          "balance": "199994977"
+        },
+        {
+          "account": "GCXRUALNOA7HN2FECDUPROSARR4X5OPRGXVQPPGM67VNJYGLJ2OMF3AH",
+          "operation": "UPDATE",
+          "balance": "199994786"
+        },
+        {
+          "account": "GDUJWNIN5T4WHAP5CBXFKPA3A2XLBUZZSWD6BP23W5CZTEYRYNQFYGWY",
+          "operation": "UPDATE",
+          "balance": "199994157"
+        },
+        {
+          "account": "GB3OYFNR7AEBKVLEVAXWZIFJGZPQYLRE2EKG7VAKPLOP7ZDOWV4PW3ZH",
+          "operation": "UPDATE",
+          "balance": "199994886"
+        },
+        {
+          "account": "GDWRAEAWOWYW2H4JY6FX5FNSSEPKXAVYPGIKJ7BL3LMYKAS7N7L6HHAH",
+          "operation": "UPDATE",
+          "balance": "199994089"
+        },
+        {
+          "account": "GDZKERN75FG3GANAOFQIKIT5EC3DRWEIXNH24PCMYB3ZKJ6IMG35XCRP",
+          "operation": "UPDATE",
+          "balance": "199993357"
+        },
+        {
+          "account": "GAEIRTSP5VVLLAZXWOY2WLTOMLICGBSHJ7I7EBIT74BL2GNMIUUXLZRY",
+          "operation": "UPDATE",
+          "balance": "199994678"
+        },
+        {
+          "account": "GATSLMAO6P2LGS3EWOGZCVMDG6J3BKD4ZPHVXNPYZJUAPCZKXXEISC6W",
+          "operation": "UPDATE",
+          "balance": "199993815"
+        },
+        {
+          "account": "GD3Z4ZWHKFL2CY454WOJ3WSLFHLNXF2KLAB35H5UBHPAMVZ4CA26OYSH",
+          "operation": "UPDATE",
+          "balance": "199993720"
+        },
+        {
+          "account": "GD246NETKBQGXJUT7LMOIXTVQNNVLAHVNNQCRHESB7MABK23ZOQLAG37",
+          "operation": "UPDATE",
+          "balance": "199993261"
+        },
+        {
+          "account": "GDMDQOPWDKZZ5V6PZ5BOZU44HLWXGX6WD4D7NPD7TR26GDT2BWN6J2BE",
+          "operation": "UPDATE",
+          "balance": "199994472"
+        },
+        {
+          "account": "GDK3ETLM3NG6RMTLC6GP3OLFC4UJ25ET4UNGU2ADGGMDLC5M2GM6IDVM",
+          "operation": "UPDATE",
+          "balance": "199993609"
+        },
+        {
+          "account": "GAVSBVPKXH7AAPLDXPHXNNHAWG5S4NRWHXCO4J7RN2W76UW3WM5YZC5I",
+          "operation": "UPDATE",
+          "balance": "199992378"
+        },
+        {
+          "account": "GCEIEAKZGGLQD46QC5G36HF4V2XHTD7NKRAXF3WHHQUWPLX5ZEJGBWDJ",
+          "operation": "UPDATE",
+          "balance": "199994889"
+        },
+        {
+          "account": "GDAS7ONWDLYZZBSZ4WXVMVNGIB6KY5XRLUVQVZQEDPQWIPFD2B5FAX3D",
+          "operation": "UPDATE",
+          "balance": "199994157"
+        },
+        {
+          "account": "GDZSEFYIJK4HUYWOUCV6TTRK4FOBN4G4HR7R4LQMZHDALTBTGCOZLYJY",
+          "operation": "UPDATE",
+          "balance": "199993858"
+        },
+        {
+          "account": "GD3A7PVIJQEZ3SBPEEZE533SMJJEXY4P6MWEVRPBJJJAFAUMHEYYGO3D",
+          "operation": "UPDATE",
+          "balance": "199992905"
+        },
+        {
+          "account": "GBRYILCON7JLNYONEVJZMV72MKYDDCWKPHUXWJHBZ3I4QHMGISMZZESF",
+          "operation": "UPDATE",
+          "balance": "199992390"
+        },
+        {
+          "account": "GAPLEKLG3PS2SPLKAJBFGKFR5QCSOF3T7GVJOYIU75ZOJE3P4URFXGNP",
+          "operation": "UPDATE",
+          "balance": "199993537"
+        },
+        {
+          "account": "GBTJ33IHEBCKFHIMSCXY4GFAXONFXB2EDFWSYLKZ6ZQVXFUJFV2UACS2",
+          "operation": "UPDATE",
+          "balance": "199992516"
         }
       ],
       "persist_errors": []
@@ -9798,6 +10792,76 @@
           "account": "GBLDEXQCACDKF2MEHFFEIUNVFVYYIRE2XAMG3GBXNEWYSOE7GJF77GRP",
           "operation": "UPDATE",
           "balance": "218521254"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+        "inner_hash": "80edcb82010bc1fd009082ba6c7038c30fecfe7c861eff187e65e879e61bae45",
+        "to_id": "259816010688094208",
+        "fee_charged": "600",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 60493129
+      },
+      "participants": [
+        "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "600"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GAZDNB554FWHOH6NUYB2LPMNV3VE7T6GMCI3CSBT3VSIF5GDNDQNTRS4",
+          "operation": "UPDATE",
+          "balance": "118920462"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+        "inner_hash": "9e522c671bb9759b476e89c3d49b1748ae99e6d8b6fdd0410e30411c6e9bc2ef",
+        "to_id": "24071629541765120",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 5604613
+      },
+      "participants": [
+        "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GC5UTAORS4ASIS5H6M4WNFZECGWXJHET5VRPVYC7UM44CM62OA2RQEPS",
+          "operation": "UPDATE",
+          "balance": "188994489623"
         }
       ],
       "persist_errors": []
@@ -9909,6 +10973,76 @@
       "persist_errors": []
     },
     {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+        "inner_hash": "d4bc3dd8e484636ccbb4b3b931422050623cd75b7a99e445f4f7d72f042a51f7",
+        "to_id": "255426176154271744",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 59471041
+      },
+      "participants": [
+        "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GBD4HBCRJ7HJQVVS2A4R6RVQ2UAMGDTKJZVOJD2P2NC3INEP4HSZE3WO",
+          "operation": "UPDATE",
+          "balance": "1586696296"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+        "inner_hash": "9c94f8f8690e43a44cfcad89ca3deb2801bd31280089512cb1ec833d72bdad78",
+        "to_id": "270235034412691456",
+        "fee_charged": "200",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxBadSponsorship",
+        "ledger": 62918997
+      },
+      "participants": [
+        "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "200"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GAQ2ZCHUJHAPX6PUVVD4U6XKKH4H5UMILD746UITVXY3B2TX2C3DDJQT",
+          "operation": "UPDATE",
+          "balance": "152500700"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
       "found": true,
       "transaction": {
@@ -9950,30 +11084,30 @@
         },
         {
           "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
+          "reason": "SET",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024611",
+          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
           "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "operation_id": "254420118720024655",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+          "operation_id": "254420118720024631",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
+          "operation_id": "254420118720024645",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
           "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "operation_id": "254420118720024660",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024579",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024601",
+          "operation_id": "254420118720024659",
           "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
@@ -9985,94 +11119,17 @@
         },
         {
           "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
-          "operation_id": "254420118720024597",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024599",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024641",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "operation_id": "254420118720024653",
           "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024651",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
-          "operation_id": "254420118720024587",
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "operation_id": "254420118720024655",
           "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024607",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024611",
-          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024642",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024657",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
-          "operation_id": "254420118720024589",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "operation_id": "254420118720024615",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024658",
-          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024662",
-          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10084,9 +11141,23 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024583",
-          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "operation_id": "254420118720024589",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024609",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024641",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10099,15 +11170,8 @@
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
           "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024581",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024613",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+          "operation_id": "254420118720024579",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10119,37 +11183,9 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
-          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
-          "operation_id": "254420118720024637",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
           "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "operation_id": "254420118720024664",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
-          "operation_id": "254420118720024647",
+          "operation_id": "254420118720024629",
           "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024609",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
-          "operation_id": "254420118720024644",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10161,23 +11197,79 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024661",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "operation_id": "254420118720024597",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
           "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "operation_id": "254420118720024654",
+          "operation_id": "254420118720024615",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024613",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024585",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "operation_id": "254420118720024587",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "operation_id": "254420118720024605",
           "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024656",
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "operation_id": "254420118720024664",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
+          "operation_id": "254420118720024577",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024642",
           "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "operation_id": "254420118720024659",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024662",
+          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10189,8 +11281,57 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "operation_id": "254420118720024633",
+          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024581",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024607",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
+          "operation_id": "254420118720024637",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "operation_id": "254420118720024658",
+          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
           "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "operation_id": "254420118720024627",
+          "operation_id": "254420118720024660",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "operation_id": "254420118720024651",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024652",
           "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
         },
         {
@@ -10202,10 +11343,38 @@
         },
         {
           "category": "BALANCE_AUTHORIZATION",
+          "reason": "CLEAR",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "operation_id": "254420118720024666",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "operation_id": "254420118720024631",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024583",
+          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
+          "operation_id": "254420118720024623",
           "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
+          "operation_id": "254420118720024627",
+          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+        },
+        {
+          "category": "BALANCE_AUTHORIZATION",
+          "reason": "SET",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "operation_id": "254420118720024599",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10224,23 +11393,23 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
-          "operation_id": "254420118720024645",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
+          "operation_id": "254420118720024644",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "SET",
           "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024605",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+          "operation_id": "254420118720024601",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "operation_id": "254420118720024666",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
+          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
+          "operation_id": "254420118720024647",
+          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
@@ -10252,58 +11421,23 @@
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024652",
+          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
+          "operation_id": "254420118720024654",
           "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "CLEAR",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024661",
-          "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
-          "operation_id": "254420118720024577",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "operation_id": "254420118720024585",
-          "token": "CCTE3UCZZ6RCG3IN7HGFQ6TVJS5UDSZL3BUAVC3OQVWXRLTPFGOLPSNV"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
-          "operation_id": "254420118720024623",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
           "reason": "CLEAR",
           "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "operation_id": "254420118720024653",
-          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
-        },
-        {
-          "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "operation_id": "254420118720024629",
+          "operation_id": "254420118720024656",
           "token": "CARCKZ66U4AI2545NS4RAF47QVEXG3PRRCDA52H4Q3FDRAGSMP4BRU3W"
         },
         {
           "category": "BALANCE_AUTHORIZATION",
-          "reason": "SET",
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "operation_id": "254420118720024633",
-          "token": "CDSOP5Y4ZOWA7UNV76KB7QM6IZHX6UAMGYQ5THT35AEWRXF5QTKERG4R"
+          "reason": "CLEAR",
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "operation_id": "254420118720024657",
+          "token": "CDZOOVFGMCNQNGGBYJ5BEMDXVOBE7QURYBBMXVXYXDEWIFK3BJ345QHX"
         },
         {
           "category": "BALANCE",
@@ -10828,74 +11962,29 @@
       ],
       "trustline_changes": [
         {
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024658",
-          "operation": "UPDATE",
-          "balance": "333631747650261",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024641",
-          "operation": "UPDATE",
-          "balance": "70594462119",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024656",
-          "operation": "UPDATE",
-          "balance": "417039684562810",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024653",
-          "operation": "UPDATE",
-          "balance": "83407936912549",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
           "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024660",
-          "operation": "UPDATE",
-          "balance": "782352801",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024644",
-          "operation": "UPDATE",
-          "balance": "104574432368",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
           "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024652",
+          "operation_id": "254420118720024654",
           "operation": "UPDATE",
-          "balance": "11931470401427",
+          "balance": "388638246",
           "limit": "9223372036854775807",
           "flags": 4
         },
         {
-          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
-          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024643",
+          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024649",
           "operation": "UPDATE",
-          "balance": "282377848476",
+          "balance": "7160530374641",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024664",
+          "operation": "UPDATE",
+          "balance": "1857004781386",
           "limit": "9223372036854775807",
           "flags": 4
         },
@@ -10918,29 +12007,38 @@
           "flags": 4
         },
         {
-          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
           "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024647",
+          "operation_id": "254420118720024656",
           "operation": "UPDATE",
-          "balance": "1937484654212",
+          "balance": "417039684562810",
           "limit": "9223372036854775807",
           "flags": 4
         },
         {
-          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
           "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024649",
+          "operation_id": "254420118720024641",
           "operation": "UPDATE",
-          "balance": "7160530374641",
+          "balance": "70594462119",
           "limit": "9223372036854775807",
           "flags": 4
         },
         {
           "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024657",
+          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024661",
           "operation": "UPDATE",
-          "balance": "2386294080284",
+          "balance": "11931470401427",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
+          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024645",
+          "operation": "UPDATE",
+          "balance": "55743386068",
           "limit": "9223372036854775807",
           "flags": 4
         },
@@ -10955,64 +12053,10 @@
         },
         {
           "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
-          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024661",
+          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024652",
           "operation": "UPDATE",
           "balance": "11931470401427",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024663",
-          "operation": "UPDATE",
-          "balance": "9285023906931",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
-          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024650",
-          "operation": "UPDATE",
-          "balance": "35802651873346",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024654",
-          "operation": "UPDATE",
-          "balance": "388638246",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024655",
-          "operation": "UPDATE",
-          "balance": "9285023906931",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024659",
-          "operation": "UPDATE",
-          "balance": "156470560",
-          "limit": "9223372036854775807",
-          "flags": 4
-        },
-        {
-          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024665",
-          "operation": "UPDATE",
-          "balance": "7428019125545",
           "limit": "9223372036854775807",
           "flags": 4
         },
@@ -11036,10 +12080,28 @@
         },
         {
           "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
-          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024664",
+          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024665",
           "operation": "UPDATE",
-          "balance": "1857004781386",
+          "balance": "7428019125545",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024655",
+          "operation": "UPDATE",
+          "balance": "9285023906931",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GBUBRPTUTTMXK3GZ65L66QIVAINYBYFWW37PNLQOH3HDKSRO5QB42NWW",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024644",
+          "operation": "UPDATE",
+          "balance": "104574432368",
           "limit": "9223372036854775807",
           "flags": 4
         },
@@ -11053,25 +12115,97 @@
           "flags": 4
         },
         {
-          "account": "GA7MUE5RKHLHMQBD3EIQJXFRVX4OTWAMLN5QPCOYXMYEBFVKFSJDP3JH",
-          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
-          "operation_id": "254420118720024645",
+          "account": "GAUD6NCRYM26LXHGM6IBMXHYD5MTGGMBTKORMYLL5MBITNUD7XJMVHZX",
+          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024650",
           "operation": "UPDATE",
-          "balance": "55743386068",
+          "balance": "35802651873346",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GCDPZXSZHAU6OFI6E72OSKOAXKI65OFLCS5RYHQECYLVKRKFXETZGFFP",
+          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024643",
+          "operation": "UPDATE",
+          "balance": "282377848476",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
+          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024660",
+          "operation": "UPDATE",
+          "balance": "782352801",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GDCSETEODK4JEKULZ6KGL3SBUSV6FX2HG55LB6BZB6F65KJ3G7U4E75I",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024657",
+          "operation": "UPDATE",
+          "balance": "2386294080284",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GBD2CEYGWKBVZKOQOCVISK7TJZC3KXHRKRKIDEU472MAPF56DCW5XLZR",
+          "asset": "ICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024647",
+          "operation": "UPDATE",
+          "balance": "1937484654212",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "asset": "upvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024658",
+          "operation": "UPDATE",
+          "balance": "333631747650261",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GCJKGAFXV7KV2WMDBKPPLBJ7CZB4F5YAMB2L3MPAJ4FCIPNEFKIUZDH4",
+          "asset": "governICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024663",
+          "operation": "UPDATE",
+          "balance": "9285023906931",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GAF7SVGFD53BJC3PJQGF7I6VWL3Q6UIWHIUFY6HAZU2UYVVSDQ4BMJRO",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024659",
+          "operation": "UPDATE",
+          "balance": "156470560",
+          "limit": "9223372036854775807",
+          "flags": 4
+        },
+        {
+          "account": "GDDXUNC4PUWNEGO67HCXDJNIFDHUC4COXVX4TQXULTDS3ZEZBYOD2LXD",
+          "asset": "downvoteICE:GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+          "operation_id": "254420118720024653",
+          "operation": "UPDATE",
+          "balance": "83407936912549",
           "limit": "9223372036854775807",
           "flags": 4
         }
       ],
       "account_changes": [
         {
-          "account": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
-          "operation": "UPDATE",
-          "balance": "4401985864"
-        },
-        {
           "account": "GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
           "operation": "UPDATE",
           "balance": "100222869241"
+        },
+        {
+          "account": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+          "operation": "UPDATE",
+          "balance": "4401985864"
         }
       ],
       "persist_errors": []
@@ -11107,6 +12241,76 @@
           "account": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
           "operation": "UPDATE",
           "balance": "4377172151"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+        "inner_hash": "f543812fa0ad879c27576e62fd2a5b851913221d059a974716acfa87e5652817",
+        "to_id": "21490620484825088",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 5003675
+      },
+      "participants": [
+        "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GCMQ3L5QH4KKFL2WODUN7GORP42SERGMDFQVU7YRISOI2LPS72EJ6HFK",
+          "operation": "UPDATE",
+          "balance": "99499999200"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+        "inner_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+        "to_id": "259250754337873920",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 60361520
+      },
+      "participants": [
+        "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+          "operation": "UPDATE",
+          "balance": "79996500"
         }
       ],
       "persist_errors": []
@@ -11394,6 +12598,41 @@
       "persist_errors": []
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+        "inner_hash": "0ff8bb06c8ffa64c61011e8a7ea4c4723d9e3e77a0d5d89d043385ecc4e25065",
+        "to_id": "278395893182263296",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 64819095
+      },
+      "participants": [
+        "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GDMLGGMFSYAJ7ZHS2FEAHJ27UTGLYWD3QYHGSEWCYJH3RFYSZSB6IELN",
+          "operation": "UPDATE",
+          "balance": "19997300"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "found": true,
       "transaction": {
@@ -11603,6 +12842,41 @@
       "persist_errors": []
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+        "inner_hash": "c76416eef5a19d783d3062e6305e8a12b6048f86b521ed04585d78390f4ebc89",
+        "to_id": "271954958361165824",
+        "fee_charged": "100",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 63319448
+      },
+      "participants": [
+        "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "100"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GDL4IW2SBNV3XH24ZT3ZUSSSCVH6BX4DX4ATJMDMYJVZHY47VCPLINIM",
+          "operation": "UPDATE",
+          "balance": "166099401"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "found": true,
       "transaction": {
@@ -11789,6 +13063,41 @@
           "account": "GDT3UQKQD5XDD3DR35XQQUZ4ZR56MPKLLCUGH7MZDQFRTA2WHPTFYI6N",
           "operation": "UPDATE",
           "balance": "99999999900"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+        "inner_hash": "7b3ee838ae61399eb7497ee94ced77dde040e26ba57cd7709140ff8cf38eb90c",
+        "to_id": "275784303958556672",
+        "fee_charged": "209696576",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 64211037
+      },
+      "participants": [
+        "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "operation_id": "0",
+          "token": "CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA",
+          "amount": "209696576"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GAP2ELYBXDFITUP6RMT2AJ5HKPXTYLAXXLK7KOV6EQV5MW27MCQARTX5",
+          "operation": "UPDATE",
+          "balance": "244613728"
         }
       ],
       "persist_errors": []
@@ -12036,6 +13345,41 @@
           "account": "GD7G6G6PEQ5VGTLJQXTGHHNBHMVETXRSM6ZFOLQT6JQ3LNSDC3MOD43E",
           "operation": "UPDATE",
           "balance": "95999165850"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap46-sc-error-object-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+        "inner_hash": "940ee8844ca1516b5ec1a1bac55b17d4ebea4cd1611d63a69cbb49ed8b2e8f8d",
+        "to_id": "19562025550114816",
+        "fee_charged": "38770",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxFailed",
+        "ledger": 4554639
+      },
+      "participants": [
+        "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "38770"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GAZUBEJ2OIAPIC42TQTSXNKUH53MQY2RFLK5YSNOAF5WC5FGMYABO3BL",
+          "operation": "UPDATE",
+          "balance": "199921307172"
         }
       ],
       "persist_errors": []
@@ -12559,22 +13903,6 @@
           "category": "SIGNER",
           "reason": "ADD",
           "account": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
-          "operation_id": "16951385513799688",
-          "signer": "XBXJI2RSI2IAD4EYJJH6PXYSEXQ7BKA56KVMIXPYQ3O2FOXUTAIJIAL2",
-          "signer_weight_new": 1
-        },
-        {
-          "category": "SIGNER",
-          "reason": "ADD",
-          "account": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
-          "operation_id": "16951385513799689",
-          "signer": "GB5JHH4UZG6APVQSUMFMFDLVKRSFTO5S4S72BMTUF5SI572GUWCLUZVY",
-          "signer_weight_new": 1
-        },
-        {
-          "category": "SIGNER",
-          "reason": "ADD",
-          "account": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
           "operation_id": "16951385513799682",
           "signer": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
           "signer_weight_new": 1
@@ -12600,6 +13928,22 @@
           "operation_id": "16951385513799684",
           "token": "CAR36F4NOHBVFX43QFZQADXN6S5UDXOAXW4K74MZ3AZ4VHABET6RW2RB",
           "trustline_limit_new": "10000.0000000"
+        },
+        {
+          "category": "SIGNER",
+          "reason": "ADD",
+          "account": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
+          "operation_id": "16951385513799688",
+          "signer": "XBXJI2RSI2IAD4EYJJH6PXYSEXQ7BKA56KVMIXPYQ3O2FOXUTAIJIAL2",
+          "signer_weight_new": 1
+        },
+        {
+          "category": "SIGNER",
+          "reason": "ADD",
+          "account": "GBT2Y24LYIWT6JHMW2X5GXJAQR4K6IGUH6BDM72X3UBAYYPTPWBJR3NA",
+          "operation_id": "16951385513799689",
+          "signer": "GB5JHH4UZG6APVQSUMFMFDLVKRSFTO5S4S72BMTUF5SI572GUWCLUZVY",
+          "signer_weight_new": 1
         },
         {
           "category": "BALANCE",
@@ -13042,6 +14386,59 @@
           "account": "GBHD5DZGDWWGLYBAS4Q2U2N4LAXZCTSNN2VU4NAOWGKQ6M46WMIEZBPA",
           "operation": "UPDATE",
           "balance": "99999992854"
+        }
+      ],
+      "persist_errors": []
+    },
+    {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
+      "found": true,
+      "transaction": {
+        "hash": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+        "inner_hash": "a0ce0be487e82acad77d8ab2c7e321b82347603d2aad941847815cba0fd399a7",
+        "to_id": "23799354385039360",
+        "fee_charged": "6496",
+        "is_fee_bump": false,
+        "result_code": "TransactionResultCodeTxSuccess",
+        "ledger": 5541219
+      },
+      "participants": [
+        "CA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+        "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP"
+      ],
+      "state_changes": [
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "operation_id": "0",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "6496"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "DEBIT",
+          "account": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "operation_id": "23799354385039361",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "12345"
+        },
+        {
+          "category": "BALANCE",
+          "reason": "CREDIT",
+          "account": "CA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+          "operation_id": "23799354385039361",
+          "token": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "amount": "12345",
+          "to_muxed_id": "18446744073709551615"
+        }
+      ],
+      "trustline_changes": [],
+      "account_changes": [
+        {
+          "account": "GAPUCWH3QSOXVWYCES4ET2TNMYOAVDYUXBVZFWPUK2JBQ7A43OBHRUWP",
+          "operation": "UPDATE",
+          "balance": "99999981159"
         }
       ],
       "persist_errors": []

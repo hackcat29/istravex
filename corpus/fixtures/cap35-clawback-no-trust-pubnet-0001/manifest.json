@@ -1,0 +1,66 @@
+{
+  "id": "cap35-clawback-no-trust-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035"
+  ],
+  "protocol_version": 24,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ClawbackResult:CLAWBACK_NO_TRUST",
+  "sha256": "ebb79a4dee682e7d25ddf9036b4a4e73b8926622c521d71e5b083043ef9285aa",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 60361520,
+    "tx_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+    "closed_at": "2025-12-18T20:44:44Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "c102f1209f626ac9bf895529b8533094920938441ac0ed969132a51ae64915a2",
+    "successful": false,
+    "source_account": "GDHTK7WKUOV3HPHMSY4VJRGWIGIPZAUJBR4ILG47KHMH3LCGEG665RFN",
+    "fee_charged": "100",
+    "max_fee": "10000",
+    "operation_count": 1,
+    "operation_types": "clawback",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ClawbackResult:CLAWBACK_NO_TRUST"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "ebb79a4dee682e7d25ddf9036b4a4e73b8926622c521d71e5b083043ef9285aa",
+      "bytes": 256
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "f271d5e29a369f4bbd6da1c9e97bdce0daead2843dc972130224873dbd1b7dfc",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "50cf813b99a2cb89ef9c1930ea76f7c74a1c902f6fdaf0ddd3f68f237298e9ec",
+      "bytes": 492
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "4295cb83d736f2ab0b71ddfc9b415a5ec00316307d94639c7d2845f378f557e1",
+      "bytes": 332
+    }
+  ]
+}

@@ -125,6 +125,68 @@
       ]
     },
     {
+      "fixture": "base-allow-trust-cant-revoke-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC548BFF--61568000-61631999/FC53FE70--61604239.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (61604239)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (61604239)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 7d243df661ee",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC3C21FF--63168000-63231999/FC3C0C1F--63173600.xdr.zst",
       "checks": [
@@ -1793,6 +1855,130 @@
       ]
     },
     {
+      "fixture": "base-path-payment-strict-receive-src-no-trust-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC42F7FF--62720000-62783999/FC424E21--62763486.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (62763486)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (62763486)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 56a1a239fc12",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-src-not-authorized-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC72D1FF--59584000-59647999/FC728E0F--59601392.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (59601392)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (59601392)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: a7a8b5984642",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77EAAF--59250000.xdr.zst",
       "checks": [
@@ -1917,6 +2103,68 @@
       ]
     },
     {
+      "fixture": "base-set-options-cant-change-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC279FFF--64512000-64575999/FC27262D--64543186.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (64543186)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (64543186)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 9aa1bf6f33df",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "base-set-options-too-many-signers-testnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFE69BFF--1664000-1727999/FFE6848D--1670002.xdr.zst",
       "checks": [
@@ -1958,6 +2206,68 @@
         },
         {
           "name": "transaction in ledger: 1451e4883964",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap1-account-merge-seqnum-too-far-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBF8BFF--4224000-4287999/FFBF5DA0--4235871.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (4235871)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (4235871)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: fa2e0329bfc7",
           "ok": true
         },
         {
@@ -2086,6 +2396,68 @@
         },
         {
           "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap15-tx-bad-auth-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5C5BFF--61056000-61119999/FC5BAA79--61101446.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (61101446)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (61101446)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: cdc9128caa0a",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
           "ok": true
         },
         {
@@ -3473,6 +3845,130 @@
       ]
     },
     {
+      "fixture": "cap33-begin-sponsoring-future-reserves-already-sponsor-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6525FF--60480000-60543999/FC64F2B6--60493129.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (60493129)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (60493129)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 80edcb82010b",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-does-not-exist-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAB09FF--5568000-5631999/FFAA7AFA--5604613.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (5604613)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (5604613)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 9e522c671bb9",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFFFFFFF--0-63999/FFFF799D--34402.xdr.zst",
       "checks": [
@@ -3659,6 +4155,130 @@
       ]
     },
     {
+      "fixture": "cap33-only-transferable-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC74C5FF--59456000-59519999/FC748B3E--59471041.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (59471041)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (59471041)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: d4bc3dd8e484",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap33-tx-bad-sponsorship-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC4009FF--62912000-62975999/FC3FEEAA--62918997.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (62918997)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (62918997)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 9c94f8f8690e",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC781E3F--59236800.xdr.zst",
       "checks": [
@@ -3762,6 +4382,130 @@
         },
         {
           "name": "transaction in ledger: d9f0b11b5aec",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-not-issuer-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFB3D3FF--4992000-5055999/FFB3A664--5003675.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (5003675)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (5003675)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: f543812fa0ad",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap35-clawback-no-trust-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6719FF--60352000-60415999/FC66F4CF--60361520.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (60361520)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (60361520)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: c102f1209f62",
           "ok": true
         },
         {
@@ -4279,6 +5023,68 @@
       ]
     },
     {
+      "fixture": "cap38-change-trust-trust-line-missing-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC23B7FF--64768000-64831999/FC22F068--64819095.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (64819095)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (64819095)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 0ff8bb06c8ff",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-deposit-bad-price-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6CF5FF--59968000-60031999/FC6C6AEF--60003600.xdr.zst",
       "checks": [
@@ -4581,6 +5387,68 @@
       ]
     },
     {
+      "fixture": "cap38-withdraw-line-full-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC3A2DFF--63296000-63359999/FC39D267--63319448.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (63319448)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (63319448)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: c76416eef5a1",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap38-withdraw-no-trust-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC22BDFF--64832000-64895999/FC22A36F--64838800.xdr.zst",
       "checks": [
@@ -4854,6 +5722,68 @@
         },
         {
           "name": "matches ledger: envelope",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-contract-code-entry-ext-v0-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC2C81FF--64192000-64255999/FC2C37A2--64211037.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (64211037)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (64211037)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 7b3ee838ae61",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
           "ok": true
         }
       ]
@@ -5382,6 +6312,68 @@
         },
         {
           "name": "transaction in ledger: 3a5f50390009",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap46-sc-error-object-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBAA9FF--4544000-4607999/FFBA8070--4554639.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (4554639)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (4554639)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 940ee8844ca1",
           "ok": true
         },
         {
@@ -6231,6 +7223,40 @@
       ]
     },
     {
+      "fixture": "cap66-config-setting-entry-contract-ledger-cost-ext-v0-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFF735FF--576000-639999/FFF6BE35--606666.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 ledger",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (606666)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (606666)",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: ledger",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAEF1FF--5312000-5375999/FFAEAA1D--5330402.xdr.zst",
       "checks": [
@@ -6770,6 +7796,68 @@
         },
         {
           "name": "matches ledger: ledger",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "fixture": "cap84-sc-address-muxed-contract-testnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAC03FF--5504000-5567999/FFAB729C--5541219.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (5541219)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (5541219)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: a0ce0be487e8",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
           "ok": true
         }
       ]
