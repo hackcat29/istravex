@@ -33,7 +33,9 @@ sh('git', ['checkout', '-q', '--force', REFS.ref], { cwd: DIR });
 mkdirSync(join(DIR, 'istravex_pilot'), { recursive: true });
 copyFileSync(join(ROOT, 'kit', 'pilot', 'stellar-etl', 'adapter.go'), join(DIR, 'istravex_pilot', 'main.go'));
 
-const corpus = readCorpus().filter(({ manifest }) => manifest.expected_indexed && manifest.network !== 'synthetic');
+// Fixtures with hand-written expected_indexed, and every transaction fixture
+// chosen by set cover (pattern tx), scored against Horizon's values.
+const corpus = readCorpus().filter(({ manifest }) => (manifest.expected_indexed || manifest.pattern === 'tx') && manifest.network !== 'synthetic');
 const requests = corpus.map(({ manifest: m }) => ({
   fixture: m.id,
   ledger_file: join(CORPUS, 'ledgers', m.network, `${m.source.ledger}.xdr.zst`),

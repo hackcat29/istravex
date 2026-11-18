@@ -63,10 +63,30 @@ const scorers = {
   },
 };
 
+// Transaction fixtures chosen by set cover: the transaction row and the
+// operation rows against Horizon's values for the same transaction. A
+// transform that errors on the transaction counts against it too.
+function scoreTx(e, out) {
+  const t = out.transaction;
+  const checks = [
+    check('transaction_hash', e.tx_hash, t?.transaction_hash),
+    check('successful', e.successful, t?.successful),
+    check('account', e.source_account, t?.account),
+    check('fee_charged', e.fee_charged, t?.fee_charged),
+    // A fee-bump's own fee is new_max_fee; max_fee is the inner transaction's.
+    check(e.fee_account ? 'new_max_fee' : 'max_fee', e.max_fee, e.fee_account ? t?.new_max_fee : t?.max_fee),
+    check('operation_count', e.operation_count, t?.operation_count),
+    check('operation_types', e.operation_types, out.operations.map((o) => o.type_string).join(',')),
+    check('transform_errors', 'none', out.transform_errors?.length ? out.transform_errors.join(' | ') : 'none'),
+  ];
+  if (e.fee_account) checks.push(check('fee_account', e.fee_account, t?.fee_account));
+  return { primary: t, checks };
+}
+
 export function scoreEtl(manifest, out) {
   const base = { fixture: manifest.id, pattern: manifest.pattern, network: manifest.network, ledger: manifest.source.ledger, tx_hash: manifest.source.tx_hash };
   if (!out?.found || !out.transaction) return { ...base, verdict: 'dropped', checks: [check('transaction exported', manifest.source.tx_hash, out?.error ?? 'not found')] };
-  const { primary, checks } = scorers[manifest.pattern](manifest.expected_indexed, out);
+  const { primary, checks } = manifest.pattern === 'tx' ? scoreTx(manifest.expected_decoded, out) : scorers[manifest.pattern](manifest.expected_indexed, out);
   const verdict = !primary ? 'dropped' : checks.every((c) => c.ok) ? 'correct' : 'incorrect';
   return { ...base, verdict, checks };
 }

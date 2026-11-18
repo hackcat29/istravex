@@ -6,10 +6,10 @@
     "golden_exact": 15306,
     "provenance_checks": 1549,
     "provenance_passed": 1549,
-    "pilot_fixtures": 11,
-    "pilot_correct": 11,
-    "etl_fixtures": 11,
-    "etl_correct": 7,
+    "pilot_fixtures": 105,
+    "pilot_correct": 105,
+    "etl_fixtures": 105,
+    "etl_correct": 101,
     "mainnet_fixtures": 82,
     "sdk_count": 5,
     "live_caps": 70,
@@ -16563,6 +16563,586 @@
     "entrypoint": "internal/indexer.ProcessLedger via ingest.NewLedgerBackend(rpc)",
     "results": [
       {
+        "fixture": "base-account-merge-has-sub-entries-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59233200,
+        "tx_hash": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+            "observed": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "5500",
+            "observed": "5500",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDWAH55SWP7YHBZLEQCUKFIU6SAPLN7MJI6JCU5VRFUE6EJWM6FGV2EU",
+            "observed": "GDWAH55SWP7YHBZLEQCUKFIU6SAPLN7MJI6JCU5VRFUE6EJWM6FGV2EU",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-account-merge-no-account-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 60946000,
+        "tx_hash": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+            "observed": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBZX4MK5JKL7YBZXNXL6MGHYSKK3RVJLIFUJQ4D5JPBKPKIYOLMKTKHB",
+            "observed": "GBZX4MK5JKL7YBZXNXL6MGHYSKK3RVJLIFUJQ4D5JPBKPKIYOLMKTKHB",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 63173600,
+        "tx_hash": "41a30723b2859c93d576058ef2149207b0d51471cb69985202ba891e5d0afc6c",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "41a30723b2859c93d576058ef2149207b0d51471cb69985202ba891e5d0afc6c",
+            "observed": "41a30723b2859c93d576058ef2149207b0d51471cb69985202ba891e5d0afc6c",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "500",
+            "observed": "500",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBZ2G7TH6FX2RJAT2KMOKWVLMROC55AFYDKOHZX45XNBY5QOGUVDZQTI",
+            "observed": "GBZ2G7TH6FX2RJAT2KMOKWVLMROC55AFYDKOHZX45XNBY5QOGUVDZQTI",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-change-trust-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59380800,
+        "tx_hash": "9ac42d70f7df36c8c281047a354d7bc010efff712a5e043813a45bb4aaecec0f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "9ac42d70f7df36c8c281047a354d7bc010efff712a5e043813a45bb4aaecec0f",
+            "observed": "9ac42d70f7df36c8c281047a354d7bc010efff712a5e043813a45bb4aaecec0f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "800",
+            "observed": "800",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA4LM6LLOUTUEASMKVKRNBRFIWIZLHS6NWY7NBDFY45QP2IQGZDAJKIP",
+            "observed": "GA4LM6LLOUTUEASMKVKRNBRFIWIZLHS6NWY7NBDFY45QP2IQGZDAJKIP",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-create-account-already-exist-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59254800,
+        "tx_hash": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+            "observed": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBSIY3UZFIYKVHCW2HFVNWJE4JOV4FE2UU7RDEKZAFJMPTBC72WJG7G3",
+            "observed": "GBSIY3UZFIYKVHCW2HFVNWJE4JOV4FE2UU7RDEKZAFJMPTBC72WJG7G3",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-create-account-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59232800,
+        "tx_hash": "e23b5892415c9e65fe9c559304360b63306ba080b4da0a3ff6ffab6fc6988693",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "e23b5892415c9e65fe9c559304360b63306ba080b4da0a3ff6ffab6fc6988693",
+            "observed": "e23b5892415c9e65fe9c559304360b63306ba080b4da0a3ff6ffab6fc6988693",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "800",
+            "observed": "800",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDELY4U4QNRPYYHU7N6WCSYRTS5T74DQZGJCPKECJEHRYXUJ3V427CUN",
+            "observed": "GDELY4U4QNRPYYHU7N6WCSYRTS5T74DQZGJCPKECJEHRYXUJ3V427CUN",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-create-account-underfunded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59230800,
+        "tx_hash": "94f55cde90088f3b79ad657de4f28498625470663b7d7425c732d81b66728177",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "94f55cde90088f3b79ad657de4f28498625470663b7d7425c732d81b66728177",
+            "observed": "94f55cde90088f3b79ad657de4f28498625470663b7d7425c732d81b66728177",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBOPD7SSCWV34A4J5PO34ABPV27DG36YPNTTPXMKO4A6GGBWHSQQC2AK",
+            "observed": "GBOPD7SSCWV34A4J5PO34ABPV27DG36YPNTTPXMKO4A6GGBWHSQQC2AK",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GCP2VLIUVULTDRV7Y776A6MXJXKOCGYYFSMBZBE3IG6SUMLB2JDOZ2NP",
+            "observed": "GCP2VLIUVULTDRV7Y776A6MXJXKOCGYYFSMBZBE3IG6SUMLB2JDOZ2NP",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-data-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 62644400,
+        "tx_hash": "1b1d857f8f8343a316859fb3cc071f7dc6a404e969b67b4dc6340bdea9cdcaf0",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "1b1d857f8f8343a316859fb3cc071f7dc6a404e969b67b4dc6340bdea9cdcaf0",
+            "observed": "1b1d857f8f8343a316859fb3cc071f7dc6a404e969b67b4dc6340bdea9cdcaf0",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDDVTO46NXFDWKS7CEJY5DBGP6V3LINN5DFJ6SXJZJILVZ2GUX2MFMJK",
+            "observed": "GDDVTO46NXFDWKS7CEJY5DBGP6V3LINN5DFJ6SXJZJILVZ2GUX2MFMJK",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-offer-success-result-offer-manage-offer-u-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59236800,
+        "tx_hash": "34202444fe30dae04da8f0df220f34a2edd7e28f252079f53feeb7eefab6d702",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "34202444fe30dae04da8f0df220f34a2edd7e28f252079f53feeb7eefab6d702",
+            "observed": "34202444fe30dae04da8f0df220f34a2edd7e28f252079f53feeb7eefab6d702",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "600",
+            "observed": "600",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GB6WQS5ZG43OWQPMTVI4N2TKAVASABK2XLAKEHOHBWS2V3R3KQM65L6N",
+            "observed": "GB6WQS5ZG43OWQPMTVI4N2TKAVASABK2XLAKEHOHBWS2V3R3KQM65L6N",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59338000,
+        "tx_hash": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+            "observed": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCITC4ANMD325YBFFYB6XH5ODIDFIA4HDPZZHCHQ622XOGJWBJDBSTE2",
+            "observed": "GCITC4ANMD325YBFFYB6XH5ODIDFIA4HDPZZHCHQ622XOGJWBJDBSTE2",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-sell-offer-cross-self-testnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "testnet",
+        "ledger": 5540313,
+        "tx_hash": "a7d083ee4ae6acdbbb9cc13f944ac46e2b30e9f5243d8bf809740a9212f6b865",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "a7d083ee4ae6acdbbb9cc13f944ac46e2b30e9f5243d8bf809740a9212f6b865",
+            "observed": "a7d083ee4ae6acdbbb9cc13f944ac46e2b30e9f5243d8bf809740a9212f6b865",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "2200",
+            "observed": "2200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAVZAHSIQUODEQVOVBVNKZ2MGBXFEKPA7VTDOYMC6RZSL6XCABHHRTFM",
+            "observed": "GAVZAHSIQUODEQVOVBVNKZ2MGBXFEKPA7VTDOYMC6RZSL6XCABHHRTFM",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-sell-offer-line-full-testnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "testnet",
+        "ledger": 5540313,
+        "tx_hash": "33388e46862cfa054c15926ed2a4c9fe55d797d78e00ea782a0c4683768e409a",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "33388e46862cfa054c15926ed2a4c9fe55d797d78e00ea782a0c4683768e409a",
+            "observed": "33388e46862cfa054c15926ed2a4c9fe55d797d78e00ea782a0c4683768e409a",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAQF3TOGZWPNSD5PYTRYJBNNIJGQPCHFCMH7HDK4ACPLUHH46QK666WU",
+            "observed": "GAQF3TOGZWPNSD5PYTRYJBNNIJGQPCHFCMH7HDK4ACPLUHH46QK666WU",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59230800,
+        "tx_hash": "3eef767b7d18e6e3fa056906ddb0af06d17c1757b65cada63909106234a47f43",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "3eef767b7d18e6e3fa056906ddb0af06d17c1757b65cada63909106234a47f43",
+            "observed": "3eef767b7d18e6e3fa056906ddb0af06d17c1757b65cada63909106234a47f43",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCQSIYYJCMMRNV4Z3BK4CZAN34SSRQTFVH4IICKYI6QFEACDI7PWEHDW",
+            "observed": "GCQSIYYJCMMRNV4Z3BK4CZAN34SSRQTFVH4IICKYI6QFEACDI7PWEHDW",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59230000,
+        "tx_hash": "27143745a0c34b95e860efa4d5d76108b28444f7075e03fa2d903f979241f998",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "27143745a0c34b95e860efa4d5d76108b28444f7075e03fa2d903f979241f998",
+            "observed": "27143745a0c34b95e860efa4d5d76108b28444f7075e03fa2d903f979241f998",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCQSBNDMVWOG2GF647X6IZN2RX7ZPVK7FYD2Z2YGSZEAKAPOA75P6FRL",
+            "observed": "GCQSBNDMVWOG2GF647X6IZN2RX7ZPVK7FYD2Z2YGSZEAKAPOA75P6FRL",
+            "ok": true
+          }
+        ]
+      },
+      {
         "fixture": "base-max-amount-local-0001",
         "pattern": "max-amount",
         "cap": "base",
@@ -16581,6 +17161,633 @@
             "field": "amount",
             "expected": "9223372036854775807",
             "observed": "9223372036854775807",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-memo-hash-testnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "testnet",
+        "ledger": 5540313,
+        "tx_hash": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+            "observed": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAB62KEKMKHDOMF3256P4CS7FCWRDUPT7M2CLD4JGKFWCA2H3DW3NRRB",
+            "observed": "GAB62KEKMKHDOMF3256P4CS7FCWRDUPT7M2CLD4JGKFWCA2H3DW3NRRB",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-memo-id-testnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "testnet",
+        "ledger": 5540313,
+        "tx_hash": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+            "observed": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA45X2ZEFGTCKMORBEGG3G4RC7AFQB4PGQ5UBH73IQF4MAPHBUQ6BBGO",
+            "observed": "GA45X2ZEFGTCKMORBEGG3G4RC7AFQB4PGQ5UBH73IQF4MAPHBUQ6BBGO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-memo-return-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59380800,
+        "tx_hash": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+            "observed": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GB6OUOYOLIAL6KOCOCDLAICDHBH6W4YHB76WNN4OTBLOQZX6F7RP3QHG",
+            "observed": "GB6OUOYOLIAL6KOCOCDLAICDHBH6W4YHB76WNN4OTBLOQZX6F7RP3QHG",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-op-bad-auth-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59863200,
+        "tx_hash": "cfb0946060390e632f6a6c8085d90ea62dd49265131d0276b7d86d5ade10423f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "cfb0946060390e632f6a6c8085d90ea62dd49265131d0276b7d86d5ade10423f",
+            "observed": "cfb0946060390e632f6a6c8085d90ea62dd49265131d0276b7d86d5ade10423f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "700",
+            "observed": "700",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCXATZLL27H7F74KLYBKSWFFU4NXOVAI7Y2ERUT2BW5EDI2AHGRYT7FF",
+            "observed": "GCXATZLL27H7F74KLYBKSWFFU4NXOVAI7Y2ERUT2BW5EDI2AHGRYT7FF",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-op-exceeded-work-limit-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 60972800,
+        "tx_hash": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+            "observed": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GC4SOXFMKYEOXOMAY3V6TVBZYOIIAMJ3Z3KMKG47MTLXE36FHQ4UXK5L",
+            "observed": "GC4SOXFMKYEOXOMAY3V6TVBZYOIIAMJ3Z3KMKG47MTLXE36FHQ4UXK5L",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-operation-body-create-passive-sell-offer-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59431600,
+        "tx_hash": "e1d81123a3b8348b535cddb03115bdb41db688ce4bca0f8088710704601ea253",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "e1d81123a3b8348b535cddb03115bdb41db688ce4bca0f8088710704601ea253",
+            "observed": "e1d81123a3b8348b535cddb03115bdb41db688ce4bca0f8088710704601ea253",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "300",
+            "observed": "300",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCD5NCB6Z4BK2HJJ5MJGZCF4FO4VN2EM6366L2V3SSIF5VK4NTZZZD4R",
+            "observed": "GCD5NCB6Z4BK2HJJ5MJGZCF4FO4VN2EM6366L2V3SSIF5VK4NTZZZD4R",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-line-full-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 60082000,
+        "tx_hash": "e78b91c817c97655da4ddd494ffde663e0377cdd862e3f12699c72edc686f9be",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "e78b91c817c97655da4ddd494ffde663e0377cdd862e3f12699c72edc686f9be",
+            "observed": "e78b91c817c97655da4ddd494ffde663e0377cdd862e3f12699c72edc686f9be",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDX4LKKBJH7MQMG5IHQM3XUJGDE7PPKYRSDKWFY7VPDLBPCO3GOLJE5E",
+            "observed": "GDX4LKKBJH7MQMG5IHQM3XUJGDE7PPKYRSDKWFY7VPDLBPCO3GOLJE5E",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 60098000,
+        "tx_hash": "acebe106aa6df4268b702e0a7a323d8e84d5c65a5433fda6c6d7662b07315a72",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "acebe106aa6df4268b702e0a7a323d8e84d5c65a5433fda6c6d7662b07315a72",
+            "observed": "acebe106aa6df4268b702e0a7a323d8e84d5c65a5433fda6c6d7662b07315a72",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBSHG65VP5E4JDRSWJLTBHEQWZYMTAKJO2RZN24CADI5HM7WKKJJ2IZL",
+            "observed": "GBSHG65VP5E4JDRSWJLTBHEQWZYMTAKJO2RZN24CADI5HM7WKKJJ2IZL",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 62268400,
+        "tx_hash": "1bd3132e13dd4e151d74553454efc9074d8eda8fc3e7b66f6c9cd30b254bb9ae",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "1bd3132e13dd4e151d74553454efc9074d8eda8fc3e7b66f6c9cd30b254bb9ae",
+            "observed": "1bd3132e13dd4e151d74553454efc9074d8eda8fc3e7b66f6c9cd30b254bb9ae",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDE7H5JTTBOPA767JCHBWAEB4O3ZCW7CDIRFIKNLRIP4K3LMBR7TUU7L",
+            "observed": "GDE7H5JTTBOPA767JCHBWAEB4O3ZCW7CDIRFIKNLRIP4K3LMBR7TUU7L",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 63619200,
+        "tx_hash": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+            "observed": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDKET3IZMV2ZAM4CIWSWWFOTLWDSHIR7NJBHZOWXGZA7C35D4W7BLK7W",
+            "observed": "GDKET3IZMV2ZAM4CIWSWWFOTLWDSHIR7NJBHZOWXGZA7C35D4W7BLK7W",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-over-sendmax-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59232400,
+        "tx_hash": "2dd8aac56fe7d23e0d7c8221f64aa75216c93670165415248cff8e6ab30feeda",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "2dd8aac56fe7d23e0d7c8221f64aa75216c93670165415248cff8e6ab30feeda",
+            "observed": "2dd8aac56fe7d23e0d7c8221f64aa75216c93670165415248cff8e6ab30feeda",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GC2IYWB5ATCPW2SWEQKZTQ2JIZUUOMO6CFDPUA2QKLX2B6LIDFM4FD7U",
+            "observed": "GC2IYWB5ATCPW2SWEQKZTQ2JIZUUOMO6CFDPUA2QKLX2B6LIDFM4FD7U",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GC2IYWB5ATCPW2SWEQKZTQ2JIZUUOMO6CFDPUA2QKLX2B6LIDFM4FD7U",
+            "observed": "GC2IYWB5ATCPW2SWEQKZTQ2JIZUUOMO6CFDPUA2QKLX2B6LIDFM4FD7U",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59250000,
+        "tx_hash": "3e397684193370c23b550be6e99b42d567366bbdc81481807fc9dca0c3b2fa4d",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "3e397684193370c23b550be6e99b42d567366bbdc81481807fc9dca0c3b2fa4d",
+            "observed": "3e397684193370c23b550be6e99b42d567366bbdc81481807fc9dca0c3b2fa4d",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBGWDP53OIH3BGXPYXKO4HZXEETYVTRUU2I5GA5XISB4AEEPBJVUCEPX",
+            "observed": "GBGWDP53OIH3BGXPYXKO4HZXEETYVTRUU2I5GA5XISB4AEEPBJVUCEPX",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-underfunded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "pubnet",
+        "ledger": 59254800,
+        "tx_hash": "51fed1a0c4d3c09de16788f0a4f8edf7e830b9c5af24b07a3b176bf6987e2062",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "51fed1a0c4d3c09de16788f0a4f8edf7e830b9c5af24b07a3b176bf6987e2062",
+            "observed": "51fed1a0c4d3c09de16788f0a4f8edf7e830b9c5af24b07a3b176bf6987e2062",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCSO6DAFG52JZDJOB2ZXY3FZBCFJIEINR2BXNA2TTTCMFAOL5SQMIPW6",
+            "observed": "GCSO6DAFG52JZDJOB2ZXY3FZBCFJIEINR2BXNA2TTTCMFAOL5SQMIPW6",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "base-set-options-too-many-signers-testnet-0001",
+        "pattern": "tx",
+        "cap": "base",
+        "network": "testnet",
+        "ledger": 1670002,
+        "tx_hash": "1451e4883964999b2376393901c1676a9ba0dad9808a7069731b6c3330d5b779",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "1451e4883964999b2376393901c1676a9ba0dad9808a7069731b6c3330d5b779",
+            "observed": "1451e4883964999b2376393901c1676a9ba0dad9808a7069731b6c3330d5b779",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1600",
+            "observed": "1600",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCN4TLKEAI5A2QYE57VDYW676LXV7KQOXHLNMEUTPYBK7SKXMLRFX2YD",
+            "observed": "GCN4TLKEAI5A2QYE57VDYW676LXV7KQOXHLNMEUTPYBK7SKXMLRFX2YD",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
+            "observed": "GDEJGL6UC6RSEDB7AKYNGM4UU43VG7DDD5ED52PD2FBFD5SYGJ7JER4X",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap1-bump-sequence-success-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0001",
+        "network": "pubnet",
+        "ledger": 59437600,
+        "tx_hash": "919853d5bc8d16c463e3bfdf3878619f86eae2e0eea4aa35812882886e05f001",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "919853d5bc8d16c463e3bfdf3878619f86eae2e0eea4aa35812882886e05f001",
+            "observed": "919853d5bc8d16c463e3bfdf3878619f86eae2e0eea4aa35812882886e05f001",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GD34MC2J45BZY45EK7U7DU4TDZSYVZSNHKY2OFSYF5HHT6QU5KOIQC2P",
+            "observed": "GD34MC2J45BZY45EK7U7DU4TDZSYVZSNHKY2OFSYF5HHT6QU5KOIQC2P",
             "ok": true
           }
         ]
@@ -16610,6 +17817,744 @@
             "field": "fee debit amount",
             "expected": "40354",
             "observed": "40354",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0018",
+        "network": "pubnet",
+        "ledger": 59489200,
+        "tx_hash": "74391bd9cab01ce28dc8a90135cb0f90ef62d8a9dde5c91a92186cb9efc44006",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "74391bd9cab01ce28dc8a90135cb0f90ef62d8a9dde5c91a92186cb9efc44006",
+            "observed": "74391bd9cab01ce28dc8a90135cb0f90ef62d8a9dde5c91a92186cb9efc44006",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDVIQFRCYJLBPB3HLU2EBKAZXEFHU2JEZP6D3W7KYOZ4QLC6FMBOATMI",
+            "observed": "GDVIQFRCYJLBPB3HLU2EBKAZXEFHU2JEZP6D3W7KYOZ4QLC6FMBOATMI",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 59266800,
+        "tx_hash": "a9915b9ccd32f943d6a34055375d16cffdcf5feff9361356909f5d7fb7d9ee69",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "a9915b9ccd32f943d6a34055375d16cffdcf5feff9361356909f5d7fb7d9ee69",
+            "observed": "a9915b9ccd32f943d6a34055375d16cffdcf5feff9361356909f5d7fb7d9ee69",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GD4YWGGFRWOIOHIM7AKCD2WMSZJNGPLSW47QEEPZEMZ55YE6DNSYN2GF",
+            "observed": "GD4YWGGFRWOIOHIM7AKCD2WMSZJNGPLSW47QEEPZEMZ55YE6DNSYN2GF",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-does-not-exist-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 59245200,
+        "tx_hash": "ce4ff57f1a3e4b7a7ea1ab69b24ee0ea1b7d540a475316f7b932136728e62826",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "ce4ff57f1a3e4b7a7ea1ab69b24ee0ea1b7d540a475316f7b932136728e62826",
+            "observed": "ce4ff57f1a3e4b7a7ea1ab69b24ee0ea1b7d540a475316f7b932136728e62826",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GASWSYFT5UDG7JTJQI2CGO6HF5KQIQAP5L6JCNM3ETMUFIARTQ73ATMB",
+            "observed": "GASWSYFT5UDG7JTJQI2CGO6HF5KQIQAP5L6JCNM3ETMUFIARTQ73ATMB",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-line-full-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 60586800,
+        "tx_hash": "967b3ed76f0c30a6c5ffc9b00bc4772fe03c087eb9582d83bb17fa722f4a74be",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "967b3ed76f0c30a6c5ffc9b00bc4772fe03c087eb9582d83bb17fa722f4a74be",
+            "observed": "967b3ed76f0c30a6c5ffc9b00bc4772fe03c087eb9582d83bb17fa722f4a74be",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA73XG4K44A2FWNWDPZ2HM7AA3VGOSDXJ7EEIGPFLXTL5BX73XVHCRSP",
+            "observed": "GA73XG4K44A2FWNWDPZ2HM7AA3VGOSDXJ7EEIGPFLXTL5BX73XVHCRSP",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 59582400,
+        "tx_hash": "15b424614f868796b8aeda4cd9e7a79a57f4f85427ec5b6478354e709fe46eb6",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "15b424614f868796b8aeda4cd9e7a79a57f4f85427ec5b6478354e709fe46eb6",
+            "observed": "15b424614f868796b8aeda4cd9e7a79a57f4f85427ec5b6478354e709fe46eb6",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBTTT6GJABS26S7R6LCO6ASSUNZCST5IT7C54JDEJ2RSV2BUHU4H6VS5",
+            "observed": "GBTTT6GJABS26S7R6LCO6ASSUNZCST5IT7C54JDEJ2RSV2BUHU4H6VS5",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-predicate-and-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 61396800,
+        "tx_hash": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+            "observed": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "6700",
+            "observed": "6700",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDO46CZDTXWQVZPREP25HR547K3OSKPAKKMVY2HGNRDK77GYZ4GILDOM",
+            "observed": "GDO46CZDTXWQVZPREP25HR547K3OSKPAKKMVY2HGNRDK77GYZ4GILDOM",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-claim-predicate-or-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "testnet",
+        "ledger": 465202,
+        "tx_hash": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+            "observed": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCTRL5U7Y6H7MLKDMN2QZBGHFSCKFNCOVY3ZJFDOWUSUL5D32FMUU75G",
+            "observed": "GCTRL5U7Y6H7MLKDMN2QZBGHFSCKFNCOVY3ZJFDOWUSUL5D32FMUU75G",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 59263600,
+        "tx_hash": "4fdf966ec8d1f5074796c3db6831f173535bddacf414a4be0024ede6d0b64015",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "4fdf966ec8d1f5074796c3db6831f173535bddacf414a4be0024ede6d0b64015",
+            "observed": "4fdf966ec8d1f5074796c3db6831f173535bddacf414a4be0024ede6d0b64015",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "6001",
+            "observed": "6001",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDBZEJJSW2DEE5FJ45QIBYTDPRI45P2NHYKHFDH3OFOWMW2XK7UUCQBK",
+            "observed": "GDBZEJJSW2DEE5FJ45QIBYTDPRI45P2NHYKHFDH3OFOWMW2XK7UUCQBK",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 60570400,
+        "tx_hash": "d431c2fcae84821389073ca2a1ad4a8aaaf90f0ee32418e4d0c354416e635c56",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "d431c2fcae84821389073ca2a1ad4a8aaaf90f0ee32418e4d0c354416e635c56",
+            "observed": "d431c2fcae84821389073ca2a1ad4a8aaaf90f0ee32418e4d0c354416e635c56",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1400",
+            "observed": "1400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GC6VUEVTYX2XIUNET4TNR5Y3RHPHBW52CEMLXKDC5EISZ4NGTTB2J2VV",
+            "observed": "GC6VUEVTYX2XIUNET4TNR5Y3RHPHBW52CEMLXKDC5EISZ4NGTTB2J2VV",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0023",
+        "network": "pubnet",
+        "ledger": 62799200,
+        "tx_hash": "4481ca9184b82a0188cd383eaad6ab3c11824f90aa56f2b85f2719629206747e",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "4481ca9184b82a0188cd383eaad6ab3c11824f90aa56f2b85f2719629206747e",
+            "observed": "4481ca9184b82a0188cd383eaad6ab3c11824f90aa56f2b85f2719629206747e",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAADFOD2HU7PKICYIMMH3Q3WBGYM6Y6MSYKWOFM5WINRMCO4RQGSWROF",
+            "observed": "GAADFOD2HU7PKICYIMMH3Q3WBGYM6Y6MSYKWOFM5WINRMCO4RQGSWROF",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-line-full-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 59272800,
+        "tx_hash": "83111aeb86f17e509ea32fe4e77d111be1fc57a10bb8b96e0367de5d64d34edd",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "83111aeb86f17e509ea32fe4e77d111be1fc57a10bb8b96e0367de5d64d34edd",
+            "observed": "83111aeb86f17e509ea32fe4e77d111be1fc57a10bb8b96e0367de5d64d34edd",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBYWYUASWWY4ZKWT7ZDF6DY3V36YIPZMQ5HPORHHJH2JWHEK757RY5B3",
+            "observed": "GBYWYUASWWY4ZKWT7ZDF6DY3V36YIPZMQ5HPORHHJH2JWHEK757RY5B3",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-destination-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 65092800,
+        "tx_hash": "c6b9adb30162cce2e6537e70f7f754e16721d7b489836b1eb5dfa4e73ab2a768",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "c6b9adb30162cce2e6537e70f7f754e16721d7b489836b1eb5dfa4e73ab2a768",
+            "observed": "c6b9adb30162cce2e6537e70f7f754e16721d7b489836b1eb5dfa4e73ab2a768",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCDPTPGTVLRUN2TLTYBFSOZXUV4MFM2NH4BNRJ6IFKBXI44GNUU2J7QK",
+            "observed": "GCDPTPGTVLRUN2TLTYBFSOZXUV4MFM2NH4BNRJ6IFKBXI44GNUU2J7QK",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 59295600,
+        "tx_hash": "add222a4254603f510014730585ed0072d620d95b4bdb36b7ec071eafcd5d341",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "add222a4254603f510014730585ed0072d620d95b4bdb36b7ec071eafcd5d341",
+            "observed": "add222a4254603f510014730585ed0072d620d95b4bdb36b7ec071eafcd5d341",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBMA7T56ZZLFBXTRR3JQ73NPUQCO4RKF23QSP7BBJ3THMXVPWIV5IWPD",
+            "observed": "GBMA7T56ZZLFBXTRR3JQ73NPUQCO4RKF23QSP7BBJ3THMXVPWIV5IWPD",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 61624800,
+        "tx_hash": "f4ac45e39aa30dc36ae5799b62d1fc2953a6380952b9905b4ee8dba5c4995beb",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "f4ac45e39aa30dc36ae5799b62d1fc2953a6380952b9905b4ee8dba5c4995beb",
+            "observed": "f4ac45e39aa30dc36ae5799b62d1fc2953a6380952b9905b4ee8dba5c4995beb",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAV3PFSRHVXMQLHQFN3C7XSKIFCEBTPV5U6K5I33B7ETHMZMPLLWSPCB",
+            "observed": "GAV3PFSRHVXMQLHQFN3C7XSKIFCEBTPV5U6K5I33B7ETHMZMPLLWSPCB",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-offer-cross-self-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 62164800,
+        "tx_hash": "e9c201b3d945ae78d04f40a135f1b6ad9af31334379dcf98e87ac2cca9a55742",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "e9c201b3d945ae78d04f40a135f1b6ad9af31334379dcf98e87ac2cca9a55742",
+            "observed": "e9c201b3d945ae78d04f40a135f1b6ad9af31334379dcf98e87ac2cca9a55742",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1000",
+            "observed": "1000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBJAMW27KDP6AUPFVFRM7TUE3RGGBGJCNXE5V4PJ3JLRYCXQ6VNNWTBO",
+            "observed": "GBJAMW27KDP6AUPFVFRM7TUE3RGGBGJCNXE5V4PJ3JLRYCXQ6VNNWTBO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 60098800,
+        "tx_hash": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+            "observed": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "4000",
+            "observed": "4000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA6H6OAKSM54QHLRLFKZXMUQI7GC5F2HRZY25MIALFO6HWKYLBOFMMLB",
+            "observed": "GA6H6OAKSM54QHLRLFKZXMUQI7GC5F2HRZY25MIALFO6HWKYLBOFMMLB",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 61510000,
+        "tx_hash": "4982311eae7bcc3fac3a44ee0ab6aa4d7b5754e298af9fea47f89bc609cc958c",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "4982311eae7bcc3fac3a44ee0ab6aa4d7b5754e298af9fea47f89bc609cc958c",
+            "observed": "4982311eae7bcc3fac3a44ee0ab6aa4d7b5754e298af9fea47f89bc609cc958c",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBTEZE3JLLRBS5NFXRPQU675AFLC3L7P2CXDOIM4333AUNCZ2NUA2EKV",
+            "observed": "GBTEZE3JLLRBS5NFXRPQU675AFLC3L7P2CXDOIM4333AUNCZ2NUA2EKV",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-under-destmin-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0024",
+        "network": "pubnet",
+        "ledger": 59280000,
+        "tx_hash": "49735c45de273dd838d43d73edae88a299962eb6075edd1370aebb535eff2b05",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "49735c45de273dd838d43d73edae88a299962eb6075edd1370aebb535eff2b05",
+            "observed": "49735c45de273dd838d43d73edae88a299962eb6075edd1370aebb535eff2b05",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "400",
+            "observed": "400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GB7FZIUYDPOVOGCNCCKEG46MK45WPKXPXA5AWLRTTDKFCPRNPY67EILI",
+            "observed": "GB7FZIUYDPOVOGCNCCKEG46MK45WPKXPXA5AWLRTTDKFCPRNPY67EILI",
             "ok": true
           }
         ]
@@ -16690,6 +18635,932 @@
         ]
       },
       {
+        "fixture": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0003",
+        "network": "pubnet",
+        "ledger": 59238800,
+        "tx_hash": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+            "observed": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "10000",
+            "observed": "10000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDCRIW7ZQGKELH3EOITIISLGZFWFLPBR6CYXUGZ7RCQ2AVK6OBECZZKT",
+            "observed": "GDCRIW7ZQGKELH3EOITIISLGZFWFLPBR6CYXUGZ7RCQ2AVK6OBECZZKT",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap33-account-merge-is-sponsor-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0033",
+        "network": "pubnet",
+        "ledger": 63234400,
+        "tx_hash": "f1dfb31225e6e568cf7dbdd2a97cfb9c4fe732c766172af03e7330412a035701",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "f1dfb31225e6e568cf7dbdd2a97cfb9c4fe732c766172af03e7330412a035701",
+            "observed": "f1dfb31225e6e568cf7dbdd2a97cfb9c4fe732c766172af03e7330412a035701",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1000",
+            "observed": "1000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBLDEXQCACDKF2MEHFFEIUNVFVYYIRE2XAMG3GBXNEWYSOE7GJF77GRP",
+            "observed": "GBLDEXQCACDKF2MEHFFEIUNVFVYYIRE2XAMG3GBXNEWYSOE7GJF77GRP",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0033",
+        "network": "testnet",
+        "ledger": 34402,
+        "tx_hash": "4e5ba8ae2f84e327c8ab593f9769e2216796223907f90b0ff5963f99b83ec487",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "4e5ba8ae2f84e327c8ab593f9769e2216796223907f90b0ff5963f99b83ec487",
+            "observed": "4e5ba8ae2f84e327c8ab593f9769e2216796223907f90b0ff5963f99b83ec487",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "600",
+            "observed": "600",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCIITXPASUOAIEXS6OTMEJAVUQPRIY2B4WLBDF7QVCQRVXRYLDDEA2WT",
+            "observed": "GCIITXPASUOAIEXS6OTMEJAVUQPRIY2B4WLBDF7QVCQRVXRYLDDEA2WT",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GA5GR77WQTYE4WFAXQGOWEHJ2STWDTGV7IOM3L6V2OTURUOQCWAXP6AM",
+            "observed": "GA5GR77WQTYE4WFAXQGOWEHJ2STWDTGV7IOM3L6V2OTURUOQCWAXP6AM",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap33-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0033",
+        "network": "pubnet",
+        "ledger": 61708800,
+        "tx_hash": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+            "observed": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "10000",
+            "observed": "10000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCKLGWHEYT2V63HC2VDJRDWEY3G54YSHHPOA6Q3HAPQUGA5OZDWZL7KW",
+            "observed": "GCKLGWHEYT2V63HC2VDJRDWEY3G54YSHHPOA6Q3HAPQUGA5OZDWZL7KW",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap33-not-sponsor-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0033",
+        "network": "pubnet",
+        "ledger": 64158000,
+        "tx_hash": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+            "observed": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBEWMSMBDKLPP77HINZLZFGGIN6TEX7NTMASYLMA554J2ALR5YKV75B2",
+            "observed": "GBEWMSMBDKLPP77HINZLZFGGIN6TEX7NTMASYLMA554J2ALR5YKV75B2",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 59236800,
+        "tx_hash": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+            "observed": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "9000",
+            "observed": "9000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "observed": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 59266800,
+        "tx_hash": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+            "observed": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "9000",
+            "observed": "9000",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "observed": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 59266800,
+        "tx_hash": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+            "observed": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1100",
+            "observed": "1100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAGV3TJZARJMUMCYCOMYH3LBMYL3XSWED6LVQK2UAPYX37TBERGKRHOD",
+            "observed": "GAGV3TJZARJMUMCYCOMYH3LBMYL3XSWED6LVQK2UAPYX37TBERGKRHOD",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-clawback-underfunded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 59618800,
+        "tx_hash": "6ffc5e22e108b09e423700975f4c28e35a4d1d45755e96c52ea76724a5cd5f33",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "6ffc5e22e108b09e423700975f4c28e35a4d1d45755e96c52ea76724a5cd5f33",
+            "observed": "6ffc5e22e108b09e423700975f4c28e35a4d1d45755e96c52ea76724a5cd5f33",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1400",
+            "observed": "1400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "observed": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-set-options-auth-revocable-required-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "testnet",
+        "ledger": 4295602,
+        "tx_hash": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+            "observed": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDA6LC3PTTLFGAODZOT5RAL3ZC6BPDIPO2MRQYSZXT3SSI6FQY5NZ6UZ",
+            "observed": "GDA6LC3PTTLFGAODZOT5RAL3ZC6BPDIPO2MRQYSZXT3SSI6FQY5NZ6UZ",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-cant-revoke-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 64367200,
+        "tx_hash": "00f79dc913ff1a5f6dfb075355cea7a57851be9490882c702b19ef8b7143c32e",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "00f79dc913ff1a5f6dfb075355cea7a57851be9490882c702b19ef8b7143c32e",
+            "observed": "00f79dc913ff1a5f6dfb075355cea7a57851be9490882c702b19ef8b7143c32e",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAAM6IN6HZUQWYOSEHVGVKCUNRS3OZKU6UP76MH3RGWZG3GKB5ENNQFS",
+            "observed": "GAAM6IN6HZUQWYOSEHVGVKCUNRS3OZKU6UP76MH3RGWZG3GKB5ENNQFS",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-invalid-state-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "testnet",
+        "ledger": 5044402,
+        "tx_hash": "f35797442dfed6d5b08d1fe9d60100e66edc8d5fc43952b3f6ce8c7797da2185",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "f35797442dfed6d5b08d1fe9d60100e66edc8d5fc43952b3f6ce8c7797da2185",
+            "observed": "f35797442dfed6d5b08d1fe9d60100e66edc8d5fc43952b3f6ce8c7797da2185",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "300",
+            "observed": "300",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDBFV4FXC4LTHFCDAKF5RPZ7AEXYP33C25NABQ5MHE4BQ4LDXNJH5A5D",
+            "observed": "GDBFV4FXC4LTHFCDAKF5RPZ7AEXYP33C25NABQ5MHE4BQ4LDXNJH5A5D",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-no-trust-line-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0035",
+        "network": "pubnet",
+        "ledger": 59236800,
+        "tx_hash": "6afeff714bf10b5aab5ee8f62fa3acc66ae140377a1d9c2e7714ccb847d7ce4c",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "6afeff714bf10b5aab5ee8f62fa3acc66ae140377a1d9c2e7714ccb847d7ce4c",
+            "observed": "6afeff714bf10b5aab5ee8f62fa3acc66ae140377a1d9c2e7714ccb847d7ce4c",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "400",
+            "observed": "400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBDJKR3MQOREDBIPDLCWJWLLHM3O7Z6IBRWYQ3KS2TMJEJXKFMBLUVOO",
+            "observed": "GBDJKR3MQOREDBIPDLCWJWLLHM3O7Z6IBRWYQ3KS2TMJEJXKFMBLUVOO",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+            "observed": "GAXSGZ2JM3LNWOO4WRGADISNMWO4HQLG4QBGUZRKH5ZHL3EQBGX73ICE",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 60385200,
+        "tx_hash": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+            "observed": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "2900",
+            "observed": "2900",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAWTUSOTUZFXDYMVDJAUB2LZ4BQDCJNOOCHCLX5XWWCJDHAGOJ2G5N2T",
+            "observed": "GAWTUSOTUZFXDYMVDJAUB2LZ4BQDCJNOOCHCLX5XWWCJDHAGOJ2G5N2T",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GCMPFUGGGUEPSWP5ZI6NE7HOPVM2RYQHPM3KLDDP4RRBUI7BRL4IS77O",
+            "observed": "GCMPFUGGGUEPSWP5ZI6NE7HOPVM2RYQHPM3KLDDP4RRBUI7BRL4IS77O",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-change-trust-cannot-delete-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 60507200,
+        "tx_hash": "56870aab6a08efd1cfb75a02f977dcb7dd48b8fa9cd1448c9fe625d89aff48a9",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "56870aab6a08efd1cfb75a02f977dcb7dd48b8fa9cd1448c9fe625d89aff48a9",
+            "observed": "56870aab6a08efd1cfb75a02f977dcb7dd48b8fa9cd1448c9fe625d89aff48a9",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "5800",
+            "observed": "5800",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBKRCJOIJQMQCY6T3XCLDK43N6QG7FMVGFBAWP3NI7HUG762K3HRI455",
+            "observed": "GBKRCJOIJQMQCY6T3XCLDK43N6QG7FMVGFBAWP3NI7HUG762K3HRI455",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-deposit-bad-price-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 60003600,
+        "tx_hash": "d0cd2820badd6329610564e9a8be46924b6fed61b05b249065944a6d5132b7fd",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "d0cd2820badd6329610564e9a8be46924b6fed61b05b249065944a6d5132b7fd",
+            "observed": "d0cd2820badd6329610564e9a8be46924b6fed61b05b249065944a6d5132b7fd",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBP3L5TSZF3WO65WLHPQFB3XE62E5WLBZYCVHIRUBHOGMXAWJ5AHEXUJ",
+            "observed": "GBP3L5TSZF3WO65WLHPQFB3XE62E5WLBZYCVHIRUBHOGMXAWJ5AHEXUJ",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-deposit-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 60899200,
+        "tx_hash": "0387850e97ef5d732cb791f9a963c2cc4a22315298506f93adc195b7e77bc9c6",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "0387850e97ef5d732cb791f9a963c2cc4a22315298506f93adc195b7e77bc9c6",
+            "observed": "0387850e97ef5d732cb791f9a963c2cc4a22315298506f93adc195b7e77bc9c6",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "300",
+            "observed": "300",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDWTU2AIRHW7CSR4LLEHP4MDPIOJZW6IREUCPS7V3GGACZNCGCZ3AT3A",
+            "observed": "GDWTU2AIRHW7CSR4LLEHP4MDPIOJZW6IREUCPS7V3GGACZNCGCZ3AT3A",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GDB3RSSWTUXO7MBTNMHUP3DRBIUR3QRV2CVFRAKMN4GM2B4QNGEUT6CU",
+            "observed": "GDB3RSSWTUXO7MBTNMHUP3DRBIUR3QRV2CVFRAKMN4GM2B4QNGEUT6CU",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-deposit-underfunded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 59589200,
+        "tx_hash": "329e7a49c4f66b385e382a314631a03cba7e831efbb774c2b8020f400a3871c1",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "329e7a49c4f66b385e382a314631a03cba7e831efbb774c2b8020f400a3871c1",
+            "observed": "329e7a49c4f66b385e382a314631a03cba7e831efbb774c2b8020f400a3871c1",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GASTF2KYXQU5CAQ2KSB4PMMBI7DTI7QR77GX3WX5RWN5VLCFG6MZXOTG",
+            "observed": "GASTF2KYXQU5CAQ2KSB4PMMBI7DTI7QR77GX3WX5RWN5VLCFG6MZXOTG",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-ledger-key-liquidity-pool-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "testnet",
+        "ledger": 4330002,
+        "tx_hash": "4bcdf40820b5a9ed618aa3bc51aaa294a7df66942637bd2bd8b9a042e98c0905",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "4bcdf40820b5a9ed618aa3bc51aaa294a7df66942637bd2bd8b9a042e98c0905",
+            "observed": "4bcdf40820b5a9ed618aa3bc51aaa294a7df66942637bd2bd8b9a042e98c0905",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "400",
+            "observed": "400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDY7DMGET2P2YYJDRJKVLSKCFL2HVHMHCZQEBSTTGVFHIOF7ENJGB3IM",
+            "observed": "GDY7DMGET2P2YYJDRJKVLSKCFL2HVHMHCZQEBSTTGVFHIOF7ENJGB3IM",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-withdraw-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 64838800,
+        "tx_hash": "66f25624ded73475cebb2a534796c91d1073b0b2f475ea14e159c0e5b33e3edb",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "66f25624ded73475cebb2a534796c91d1073b0b2f475ea14e159c0e5b33e3edb",
+            "observed": "66f25624ded73475cebb2a534796c91d1073b0b2f475ea14e159c0e5b33e3edb",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA2HYJSRGRDITWRRJK34P7XDMQCEGXPL33NV6C4WBPGNJCRSFH65S33F",
+            "observed": "GA2HYJSRGRDITWRRJK34P7XDMQCEGXPL33NV6C4WBPGNJCRSFH65S33F",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-withdraw-under-minimum-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 59332800,
+        "tx_hash": "236a2dda3e46130b391c03c3532a6ed788b139fafe682771d4165c50ecb75a29",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "236a2dda3e46130b391c03c3532a6ed788b139fafe682771d4165c50ecb75a29",
+            "observed": "236a2dda3e46130b391c03c3532a6ed788b139fafe682771d4165c50ecb75a29",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GA6IDNV27SHHSNQ6TREHF4NQJUFYF4FGHWZHUXPVVB53L4KDUZPMI5ME",
+            "observed": "GA6IDNV27SHHSNQ6TREHF4NQJUFYF4FGHWZHUXPVVB53L4KDUZPMI5ME",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap38-withdraw-underfunded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0038",
+        "network": "pubnet",
+        "ledger": 59842400,
+        "tx_hash": "fe00495ddfbcebdb7ea272f8d572cf49a7834e19bafd977677d43e2b4c1a2c80",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "fe00495ddfbcebdb7ea272f8d572cf49a7834e19bafd977677d43e2b4c1a2c80",
+            "observed": "fe00495ddfbcebdb7ea272f8d572cf49a7834e19bafd977677d43e2b4c1a2c80",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAETWQE6C75QK4TOJJK4QWBIKBLHFGNTJGAGTWTYKTZK5JATVBSK55ID",
+            "observed": "GAETWQE6C75QK4TOJJK4QWBIKBLHFGNTJGAGTWTYKTZK5JATVBSK55ID",
+            "ok": true
+          }
+        ]
+      },
+      {
         "fixture": "cap40-signed-payload-signer-local-0001",
         "pattern": "signed-payload-signer",
         "cap": "CAP-0040",
@@ -16736,6 +19607,223 @@
         ]
       },
       {
+        "fixture": "cap46-contract-executable-stellar-asset-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-06",
+        "network": "pubnet",
+        "ledger": 62793200,
+        "tx_hash": "3e52fff07b0fa0dd3475d0549c1e0f1702afdd90269a31c36a94602332ef3a89",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "3e52fff07b0fa0dd3475d0549c1e0f1702afdd90269a31c36a94602332ef3a89",
+            "observed": "3e52fff07b0fa0dd3475d0549c1e0f1702afdd90269a31c36a94602332ef3a89",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "795068",
+            "observed": "795068",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDWJSSO24SVVEAPO44T7ASG5KRG42XNFUAQ3GG6T3O6R4UYA625HOETF",
+            "observed": "GDWJSSO24SVVEAPO44T7ASG5KRG42XNFUAQ3GG6T3O6R4UYA625HOETF",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-extend-footprint-ttl-success-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-12",
+        "network": "pubnet",
+        "ledger": 59426800,
+        "tx_hash": "28c1a344896cafd713ca9eb2821d928dc500f946df81affec1f947c017eb9630",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "28c1a344896cafd713ca9eb2821d928dc500f946df81affec1f947c017eb9630",
+            "observed": "28c1a344896cafd713ca9eb2821d928dc500f946df81affec1f947c017eb9630",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "231295",
+            "observed": "231295",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GD2CLHXYCAOOOGFVMSOYPIDRNVV5NIOF2VVA4PMV4NAPDRBW5OO4JK26",
+            "observed": "GD2CLHXYCAOOOGFVMSOYPIDRNVV5NIOF2VVA4PMV4NAPDRBW5OO4JK26",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-host-function-upload-contract-wasm-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-02",
+        "network": "pubnet",
+        "ledger": 61319200,
+        "tx_hash": "1d1a48f1dbe7a21aa2b6504cc694b7adfcab946747d5f1082293f3f6fc8dfdeb",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "1d1a48f1dbe7a21aa2b6504cc694b7adfcab946747d5f1082293f3f6fc8dfdeb",
+            "observed": "1d1a48f1dbe7a21aa2b6504cc694b7adfcab946747d5f1082293f3f6fc8dfdeb",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "175608153",
+            "observed": "175608153",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GB24UCVKYEN3GKXUX2VWFTOEWW77C7M3Z2MSLIDMESD6YPVVNL245CPZ",
+            "observed": "GB24UCVKYEN3GKXUX2VWFTOEWW77C7M3Z2MSLIDMESD6YPVVNL245CPZ",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-invoke-host-function-entry-archived-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-12",
+        "network": "pubnet",
+        "ledger": 62164800,
+        "tx_hash": "ab3bf2fc306cc22223fbb1ad0e4d5887c48e072f5282b757ef5e5430a96d2a4f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "ab3bf2fc306cc22223fbb1ad0e4d5887c48e072f5282b757ef5e5430a96d2a4f",
+            "observed": "ab3bf2fc306cc22223fbb1ad0e4d5887c48e072f5282b757ef5e5430a96d2a4f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "15274",
+            "observed": "15274",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBLPHSR7I7WXVEDW432ZUAGLUUDLIE5LRIA3MEKUZXBK3QOA4FDCZIKX",
+            "observed": "GBLPHSR7I7WXVEDW432ZUAGLUUDLIE5LRIA3MEKUZXBK3QOA4FDCZIKX",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GALDRM4DIO7EL7CGJ46QPRUC5BR7CDZNMOJMRBFHKVHYF65OGOBHEKF4",
+            "observed": "GALDRM4DIO7EL7CGJ46QPRUC5BR7CDZNMOJMRBFHKVHYF65OGOBHEKF4",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046",
+        "network": "pubnet",
+        "ledger": 60066800,
+        "tx_hash": "246a9113cef5a5a2bd6528bed2c5ec22a6d419dc37356d7f7d30717e13647cf6",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "246a9113cef5a5a2bd6528bed2c5ec22a6d419dc37356d7f7d30717e13647cf6",
+            "observed": "246a9113cef5a5a2bd6528bed2c5ec22a6d419dc37356d7f7d30717e13647cf6",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "777422",
+            "observed": "777422",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBP2GUSBM4URSVF3PY7CTTL3HBN3IHBZRE4VDZIFSHWU5KRLHG2FMEW2",
+            "observed": "GBP2GUSBM4URSVF3PY7CTTL3HBN3IHBZRE4VDZIFSHWU5KRLHG2FMEW2",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GBXFVMHGUVT4F25ZB6PZDEVEPQV3FQJNLAY2ENYUKVHAMX4P56K4N3TC",
+            "observed": "GBXFVMHGUVT4F25ZB6PZDEVEPQV3FQJNLAY2ENYUKVHAMX4P56K4N3TC",
+            "ok": true
+          }
+        ]
+      },
+      {
         "fixture": "cap46-muxed-soroban-source-local-0001",
         "pattern": "muxed-soroban-source",
         "cap": "CAP-0046",
@@ -16748,6 +19836,791 @@
             "field": "participants",
             "expected": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
             "observed": "GBJO5LCKSE2ERAV2OO4PKQ7UQ7MMW26XVOHOVT5JOQAY7J7DMJXLUMNA",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-sc-error-crypto-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-01",
+        "network": "testnet",
+        "ledger": 3142002,
+        "tx_hash": "3a5f50390009c49e547d7ee7ef8d87d1b8706d7a7f6fe996c56bfe6b8cabd115",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "3a5f50390009c49e547d7ee7ef8d87d1b8706d7a7f6fe996c56bfe6b8cabd115",
+            "observed": "3a5f50390009c49e547d7ee7ef8d87d1b8706d7a7f6fe996c56bfe6b8cabd115",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "38954",
+            "observed": "38954",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GD7G6G6PEQ5VGTLJQXTGHHNBHMVETXRSM6ZFOLQT6JQ3LNSDC3MOD43E",
+            "observed": "GD7G6G6PEQ5VGTLJQXTGHHNBHMVETXRSM6ZFOLQT6JQ3LNSDC3MOD43E",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-sc-error-wasm-vm-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-01",
+        "network": "pubnet",
+        "ledger": 59247200,
+        "tx_hash": "22a036623a81b9c948757a1d9fe0528e0461db352a288196314d989d6688f6d9",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "22a036623a81b9c948757a1d9fe0528e0461db352a288196314d989d6688f6d9",
+            "observed": "22a036623a81b9c948757a1d9fe0528e0461db352a288196314d989d6688f6d9",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "317154",
+            "observed": "317154",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCCQVVHPCYQ3IPUTNAMXYJFTG73UXOVZXNWDYAHDP3TDJA73W4TIP3KZ",
+            "observed": "GCCQVVHPCYQ3IPUTNAMXYJFTG73UXOVZXNWDYAHDP3TDJA73W4TIP3KZ",
+            "ok": true
+          },
+          {
+            "field": "fee payer is a participant",
+            "expected": "GDAO43KOND5ZWNHL4RVVCHCYY6GEODE62GPL6YS2J4VHDC54KLNXKD4B",
+            "observed": "GDAO43KOND5ZWNHL4RVVCHCYY6GEODE62GPL6YS2J4VHDC54KLNXKD4B",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap46-sc-val-i256-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0046-01",
+        "network": "pubnet",
+        "ledger": 64594000,
+        "tx_hash": "9e8ff97545de42f2a57fbbf3b386ff8189a9d41e5163501c5835443e18a575e4",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "9e8ff97545de42f2a57fbbf3b386ff8189a9d41e5163501c5835443e18a575e4",
+            "observed": "9e8ff97545de42f2a57fbbf3b386ff8189a9d41e5163501c5835443e18a575e4",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "832284",
+            "observed": "832284",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDPZ6RVQM4XHQ4ZDEMRMQ7D7K3HZCDDJWOEUXF2AP5VCMODFZIS6QNL2",
+            "observed": "GDPZ6RVQM4XHQ4ZDEMRMQ7D7K3HZCDDJWOEUXF2AP5VCMODFZIS6QNL2",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap58-host-function-create-contract-v2-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0058",
+        "network": "pubnet",
+        "ledger": 60183200,
+        "tx_hash": "52ec92051ec7ae9efef2c2148c1729e49fdd0167dcb6f9c8f0303f4a57efae30",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "52ec92051ec7ae9efef2c2148c1729e49fdd0167dcb6f9c8f0303f4a57efae30",
+            "observed": "52ec92051ec7ae9efef2c2148c1729e49fdd0167dcb6f9c8f0303f4a57efae30",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1190128",
+            "observed": "1190128",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GD55RTI55D4RJHGVM4TLG4K4BUQ2ELA4JTXLSZIICZ6EKCXOESZE4MR6",
+            "observed": "GD55RTI55D4RJHGVM4TLG4K4BUQ2ELA4JTXLSZIICZ6EKCXOESZE4MR6",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0058",
+        "network": "testnet",
+        "ledger": 5768002,
+        "tx_hash": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+            "observed": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "8050",
+            "observed": "8050",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAMPNRI75JKEVO2CY3LOMV3Z2OUKCMR3OJ7FPKWIIV6ZNRWBGKIU3DZO",
+            "observed": "GAMPNRI75JKEVO2CY3LOMV3Z2OUKCMR3OJ7FPKWIIV6ZNRWBGKIU3DZO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-no-trust-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 59302000,
+        "tx_hash": "668a4430eea7f06a1da48c218583528b5dde2e76231f8539d9ae9f603271e30a",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "668a4430eea7f06a1da48c218583528b5dde2e76231f8539d9ae9f603271e30a",
+            "observed": "668a4430eea7f06a1da48c218583528b5dde2e76231f8539d9ae9f603271e30a",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDRHTD6R4UOPCC6PJAPNNQ2235MDBUESCFJMRU62XFHA4MMBDZDSMT7C",
+            "observed": "GDRHTD6R4UOPCC6PJAPNNQ2235MDBUESCFJMRU62XFHA4MMBDZDSMT7C",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 59250000,
+        "tx_hash": "8604b7269ef5539d34e9f8086dd589b06e51c55fa50b5978b6ed0033be7bbdd4",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "8604b7269ef5539d34e9f8086dd589b06e51c55fa50b5978b6ed0033be7bbdd4",
+            "observed": "8604b7269ef5539d34e9f8086dd589b06e51c55fa50b5978b6ed0033be7bbdd4",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBXSX64YV6UBCI46M63X44WOLYSCKVNSHXL4O57QFSU5IHICVFL7FITR",
+            "observed": "GBXSX64YV6UBCI46M63X44WOLYSCKVNSHXL4O57QFSU5IHICVFL7FITR",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-cross-self-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 60013600,
+        "tx_hash": "afa249f25b67527b9172e33e53f1c2bd1f72d5014db2c48cdacafaba295e3ad8",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "afa249f25b67527b9172e33e53f1c2bd1f72d5014db2c48cdacafaba295e3ad8",
+            "observed": "afa249f25b67527b9172e33e53f1c2bd1f72d5014db2c48cdacafaba295e3ad8",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "400",
+            "observed": "400",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GABCRM2CSX2CXRKNIGTVHKJXPY6SV6J7FEETLFBQDFL25C5QYC4ENEOO",
+            "observed": "GABCRM2CSX2CXRKNIGTVHKJXPY6SV6J7FEETLFBQDFL25C5QYC4ENEOO",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-line-full-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 61973600,
+        "tx_hash": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+            "observed": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GAIUAK73BDPIDEGERGVV6Y33CSGIM6XN6SCWWO2CYMQWEJMK7R7LQOT3",
+            "observed": "GAIUAK73BDPIDEGERGVV6Y33CSGIM6XN6SCWWO2CYMQWEJMK7R7LQOT3",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-low-reserve-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 59234400,
+        "tx_hash": "01a7e0a3f9b72cf4cc2fe077bb9973173002c7cf5c725fc116b00e21632bac8a",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "01a7e0a3f9b72cf4cc2fe077bb9973173002c7cf5c725fc116b00e21632bac8a",
+            "observed": "01a7e0a3f9b72cf4cc2fe077bb9973173002c7cf5c725fc116b00e21632bac8a",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GANAVPZQPTCD3HU5VW5GXF4TKDVH45SQHCRB52S7BE3DGWIUSKBFVTLA",
+            "observed": "GANAVPZQPTCD3HU5VW5GXF4TKDVH45SQHCRB52S7BE3DGWIUSKBFVTLA",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-not-found-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 59334000,
+        "tx_hash": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+            "observed": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1200",
+            "observed": "1200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBD5U2WBPQIC6BVLLSXR5Q4MTOSYNPKCTVJBP4CXW2JR3DU4CH6Q2REX",
+            "observed": "GBD5U2WBPQIC6BVLLSXR5Q4MTOSYNPKCTVJBP4CXW2JR3DU4CH6Q2REX",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-no-trust-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "testnet",
+        "ledger": 988002,
+        "tx_hash": "23eb9d920c9e3615166f7d9a2d25d886d9ca7f23fa2a28ca5887ceaf48727c0f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "23eb9d920c9e3615166f7d9a2d25d886d9ca7f23fa2a28ca5887ceaf48727c0f",
+            "observed": "23eb9d920c9e3615166f7d9a2d25d886d9ca7f23fa2a28ca5887ceaf48727c0f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDCXDVW74UCFGNLTSFINI37PVAAE6OAC4FYYI4V44C3CPMGTQOBAN7UZ",
+            "observed": "GDCXDVW74UCFGNLTSFINI37PVAAE6OAC4FYYI4V44C3CPMGTQOBAN7UZ",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-not-authorized-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0006",
+        "network": "pubnet",
+        "ledger": 59310800,
+        "tx_hash": "a74a3010db0d309e86f5ecabeb6d57024ce3fe52bc6d8dace01200f77e8547f5",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "a74a3010db0d309e86f5ecabeb6d57024ce3fe52bc6d8dace01200f77e8547f5",
+            "observed": "a74a3010db0d309e86f5ecabeb6d57024ce3fe52bc6d8dace01200f77e8547f5",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "100",
+            "observed": "100",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBU56UFFOAIG3UIZQG2NW7XMJJRRRVL3BTMUUY3B5PTUU4WMDRCAC3N7",
+            "observed": "GBU56UFFOAIG3UIZQG2NW7XMJJRRRVL3BTMUUY3B5PTUU4WMDRCAC3N7",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0066",
+        "network": "testnet",
+        "ledger": 5330402,
+        "tx_hash": "01fa6716e48157a80917af905a97085d5d6561ea1bee01ad144c51c28587d91f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "01fa6716e48157a80917af905a97085d5d6561ea1bee01ad144c51c28587d91f",
+            "observed": "01fa6716e48157a80917af905a97085d5d6561ea1bee01ad144c51c28587d91f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "350804053",
+            "observed": "350804053",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GATAELQZRX56BX3UVEL4HWH37GUSTWGOWANSIM5MANCA6LXJDT3IE7SQ",
+            "observed": "GATAELQZRX56BX3UVEL4HWH37GUSTWGOWANSIM5MANCA6LXJDT3IE7SQ",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap66-soroban-transaction-data-ext-v1-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0066",
+        "network": "pubnet",
+        "ledger": 60269200,
+        "tx_hash": "d09d7862692b548758ffb74b482fca758a49a5ac8841b84937ea97392cdfe8dc",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "d09d7862692b548758ffb74b482fca758a49a5ac8841b84937ea97392cdfe8dc",
+            "observed": "d09d7862692b548758ffb74b482fca758a49a5ac8841b84937ea97392cdfe8dc",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "121281",
+            "observed": "121281",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GCRYUGD5NVARGXT56XEZI5CIFCQETYHAPQQTHO2O3IQZTHDH4LATMYWC",
+            "observed": "GCRYUGD5NVARGXT56XEZI5CIFCQETYHAPQQTHO2O3IQZTHDH4LATMYWC",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap67-sc-address-claimable-balance-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0067",
+        "network": "testnet",
+        "ledger": 3946802,
+        "tx_hash": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+            "observed": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "1500",
+            "observed": "1500",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GB5JHH4UZG6APVQSUMFMFDLVKRSFTO5S4S72BMTUF5SI572GUWCLUZVY",
+            "observed": "GB5JHH4UZG6APVQSUMFMFDLVKRSFTO5S4S72BMTUF5SI572GUWCLUZVY",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap67-sc-address-liquidity-pool-pubnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0067",
+        "network": "pubnet",
+        "ledger": 64160000,
+        "tx_hash": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+            "observed": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "200",
+            "observed": "200",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GADUP4XUZ5PUVDRX6DXZRTSVIIZW3CXOQPVGARBKBUVMPZNKG7DE4W4M",
+            "observed": "GADUP4XUZ5PUVDRX6DXZRTSVIIZW3CXOQPVGARBKBUVMPZNKG7DE4W4M",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-v2-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0071",
+        "network": "testnet",
+        "ledger": 4982002,
+        "tx_hash": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+            "observed": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "23378",
+            "observed": "23378",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GBXNPGZCVFEWOQQREWY2QT2WEGX3CXF3A72KTXHJ2RQUYNXYPYGEO3OH",
+            "observed": "GBXNPGZCVFEWOQQREWY2QT2WEGX3CXF3A72KTXHJ2RQUYNXYPYGEO3OH",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-with-delegates-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0071",
+        "network": "testnet",
+        "ledger": 4949202,
+        "tx_hash": "091238f1757d3a3e145d0cb96afe83813f5b8ee8343957de319adbb3baefd53b",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "091238f1757d3a3e145d0cb96afe83813f5b8ee8343957de319adbb3baefd53b",
+            "observed": "091238f1757d3a3e145d0cb96afe83813f5b8ee8343957de319adbb3baefd53b",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "17743",
+            "observed": "17743",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDG6UUTDDHX4FS432ULHFUFRBD6BFBBPNZRFSA2GCHIUB7JRCZHDKP5S",
+            "observed": "GDG6UUTDDHX4FS432ULHFUFRBD6BFBBPNZRFSA2GCHIUB7JRCZHDKP5S",
             "ok": true
           }
         ]
@@ -16856,6 +20729,47 @@
             "ok": true
           }
         ]
+      },
+      {
+        "fixture": "cap85-contract-executable-external-ref-testnet-0001",
+        "pattern": "tx",
+        "cap": "CAP-0085",
+        "network": "testnet",
+        "ledger": 5787202,
+        "tx_hash": "ed774dd0a0b46859972a0ab0e4179e9d79864f8ac8f7f9ba942af7a807434f4f",
+        "verdict": "correct",
+        "checks": [
+          {
+            "field": "hash",
+            "expected": "ed774dd0a0b46859972a0ab0e4179e9d79864f8ac8f7f9ba942af7a807434f4f",
+            "observed": "ed774dd0a0b46859972a0ab0e4179e9d79864f8ac8f7f9ba942af7a807434f4f",
+            "ok": true
+          },
+          {
+            "field": "fee_charged",
+            "expected": "45509",
+            "observed": "45509",
+            "ok": true
+          },
+          {
+            "field": "is_fee_bump",
+            "expected": "false",
+            "observed": "false",
+            "ok": true
+          },
+          {
+            "field": "successful",
+            "expected": "true",
+            "observed": "true",
+            "ok": true
+          },
+          {
+            "field": "source is a participant",
+            "expected": "GDZCVIANX2WPPZUMCAGXLYJUDTYEEIBF3MZDE4HDFWY53W7G7W3XOIZT",
+            "observed": "GDZCVIANX2WPPZUMCAGXLYJUDTYEEIBF3MZDE4HDFWY53W7G7W3XOIZT",
+            "ok": true
+          }
+        ]
       }
     ],
     "lint": {
@@ -16891,11 +20805,199 @@
     },
     "datastore": [
       {
+        "fixture": "base-account-merge-has-sub-entries-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-account-merge-no-account-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-change-trust-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-already-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-data-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-offer-success-result-offer-manage-offer-u-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-cross-self-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-line-full-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "base-max-amount-local-0001",
         "verdict": "correct"
       },
       {
+        "fixture": "base-memo-hash-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-memo-id-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-memo-return-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-op-bad-auth-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-op-exceeded-work-limit-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-operation-body-create-passive-sell-offer-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-over-sendmax-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-set-options-too-many-signers-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap1-bump-sequence-success-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap15-fee-bump-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-does-not-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-predicate-and-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-predicate-or-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-destination-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-under-destmin-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -16911,6 +21013,94 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-account-merge-is-sponsor-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-not-sponsor-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-options-auth-revocable-required-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-cant-revoke-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-invalid-state-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-no-trust-line-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-change-trust-cannot-delete-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-bad-price-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-ledger-key-liquidity-pool-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-under-minimum-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap40-signed-payload-signer-local-0001",
         "verdict": "correct"
       },
@@ -16919,7 +21109,103 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap46-contract-executable-stellar-asset-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-extend-footprint-ttl-success-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-host-function-upload-contract-wasm-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-invoke-host-function-entry-archived-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap46-muxed-soroban-source-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-error-crypto-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-error-wasm-vm-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-val-i256-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap58-host-function-create-contract-v2-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-not-found-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-no-trust-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap66-soroban-transaction-data-ext-v1-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap67-sc-address-claimable-balance-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap67-sc-address-liquidity-pool-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-v2-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-with-delegates-testnet-0001",
         "verdict": "correct"
       },
       {
@@ -16932,6 +21218,10 @@
       },
       {
         "fixture": "cap73-sac-trust-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap85-contract-executable-external-ref-testnet-0001",
         "verdict": "correct"
       }
     ],
@@ -17576,11 +21866,199 @@
     "ref": "v2.8.34",
     "results": [
       {
+        "fixture": "base-account-merge-has-sub-entries-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-account-merge-no-account-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-change-trust-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-already-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-create-account-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-data-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-offer-success-result-offer-manage-offer-u-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-cross-self-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-line-full-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-manage-sell-offer-sell-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "base-max-amount-local-0001",
         "verdict": "incorrect"
       },
       {
+        "fixture": "base-memo-hash-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-memo-id-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-memo-return-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-op-bad-auth-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-op-exceeded-work-limit-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-operation-body-create-passive-sell-offer-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-over-sendmax-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-path-payment-strict-receive-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "base-set-options-too-many-signers-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap1-bump-sequence-success-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap15-fee-bump-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-does-not-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-claimable-balance-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-predicate-and-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-claim-predicate-or-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap23-create-claimable-balance-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-destination-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-src-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap24-path-payment-strict-send-under-destmin-pubnet-0001",
         "verdict": "correct"
       },
       {
@@ -17596,6 +22074,94 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-account-merge-is-sponsor-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap33-not-sponsor-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-clawback-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-options-auth-revocable-required-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-cant-revoke-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-invalid-state-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap35-set-trust-line-flags-no-trust-line-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-change-trust-cannot-delete-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-bad-price-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-deposit-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-ledger-key-liquidity-pool-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-under-minimum-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap38-withdraw-underfunded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap40-signed-payload-signer-local-0001",
         "verdict": "correct"
       },
@@ -17604,7 +22170,103 @@
         "verdict": "correct"
       },
       {
+        "fixture": "cap46-contract-executable-stellar-asset-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-extend-footprint-ttl-success-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-host-function-upload-contract-wasm-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-invoke-host-function-entry-archived-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
         "fixture": "cap46-muxed-soroban-source-local-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-error-crypto-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-error-wasm-vm-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap46-sc-val-i256-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap58-host-function-create-contract-v2-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-no-trust-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-buy-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-cross-self-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-line-full-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-low-reserve-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-not-found-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-no-trust-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap6-manage-buy-offer-sell-not-authorized-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap66-soroban-transaction-data-ext-v1-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap67-sc-address-claimable-balance-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap67-sc-address-liquidity-pool-pubnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-v2-testnet-0001",
+        "verdict": "correct"
+      },
+      {
+        "fixture": "cap71-soroban-credentials-address-with-delegates-testnet-0001",
         "verdict": "correct"
       },
       {
@@ -17618,6 +22280,10 @@
       {
         "fixture": "cap73-sac-trust-testnet-0001",
         "verdict": "incorrect"
+      },
+      {
+        "fixture": "cap85-contract-executable-external-ref-testnet-0001",
+        "verdict": "correct"
       }
     ]
   },

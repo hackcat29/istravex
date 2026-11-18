@@ -287,6 +287,7 @@ func main() {
 	enc := json.NewEncoder(os.Stdout)
 	enc.SetIndent("", "  ")
 	if err := enc.Encode(outs); err != nil {
+		fmt.Fprintln(os.Stderr, "encode output:", err)
 		os.Exit(1)
 	}
 }

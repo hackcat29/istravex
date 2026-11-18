@@ -81,7 +81,9 @@ function checkout(ref) {
   writeFileSync(join(DIR, 'istravex_pilot', 'main.go'), adapterFor(DIR));
 }
 
-const indexable = (dir) => readCorpus(dir).filter(({ manifest }) => manifest.expected_indexed && manifest.network !== 'synthetic');
+// Fixtures with hand-written expected_indexed, and every transaction fixture
+// chosen by set cover (pattern tx), scored against Horizon's values.
+const indexable = (dir) => readCorpus(dir).filter(({ manifest }) => (manifest.expected_indexed || manifest.pattern === 'tx') && manifest.network !== 'synthetic');
 const corpus = indexable();
 const servers = {};
 for (const network of new Set(corpus.map((c) => c.manifest.network))) servers[network] = await startServer({ network });

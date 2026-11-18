@@ -111,8 +111,8 @@
                     "total": 15306
                   },
                   "wallet_backend_pilot": {
-                    "correct": 11,
-                    "total": 11
+                    "correct": 105,
+                    "total": 105
                   },
                   "cap_coverage": {
                     "live": 70,

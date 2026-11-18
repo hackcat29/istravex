@@ -69,13 +69,29 @@ const scorers = {
   },
 };
 
+// Transaction fixtures chosen by set cover: the transaction record against
+// Horizon's values, and the source (and fee payer) among its participants.
+const SUCCESS = new Set(['TransactionResultCodeTxSuccess', 'TransactionResultCodeTxFeeBumpInnerSuccess', 'txSUCCESS', 'txFEE_BUMP_INNER_SUCCESS', 'TX_SUCCESS', 'TX_FEE_BUMP_INNER_SUCCESS']);
+function scoreTx(e, out) {
+  const t = out.transaction;
+  const checks = [
+    check('hash', e.tx_hash, t?.hash),
+    check('fee_charged', e.fee_charged, t?.fee_charged),
+    check('is_fee_bump', Boolean(e.fee_account), t?.is_fee_bump),
+    check('successful', e.successful, t && SUCCESS.has(t.result_code)),
+    check('source is a participant', e.source_account, out.participants?.includes(e.source_account) ? e.source_account : undefined),
+  ];
+  if (e.fee_account) checks.push(check('fee payer is a participant', e.fee_account, out.participants?.includes(e.fee_account) ? e.fee_account : undefined));
+  return { primary: t, checks };
+}
+
 export function score(manifest, out) {
   const cap = manifest.cap_ids[0] ?? 'base';
   const base = { fixture: manifest.id, pattern: manifest.pattern, cap, network: manifest.network, ledger: manifest.source.ledger, tx_hash: manifest.source.tx_hash };
   if (!out?.found) return { ...base, verdict: 'dropped', checks: [check('transaction indexed', manifest.source.tx_hash, out?.error ?? 'not found')] };
   // A record persistence can't encode halts ingestion at this ledger: nothing is stored.
   if (out.persist_errors?.length) return { ...base, verdict: 'dropped', checks: [check('records persist', 'no encoding errors', out.persist_errors.join('; '))] };
-  const { primary, checks } = scorers[manifest.pattern](manifest.expected_indexed, out);
+  const { primary, checks } = manifest.pattern === 'tx' ? scoreTx(manifest.expected_decoded, out) : scorers[manifest.pattern](manifest.expected_indexed, out);
   const verdict = !primary ? 'dropped' : checks.every((c) => c.ok) ? 'correct' : 'incorrect';
   return { ...base, verdict, checks };
 }
