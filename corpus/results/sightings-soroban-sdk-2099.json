@@ -1,0 +1,64 @@
+{
+  "sighting": "stellar/rs-soroban-sdk#2099",
+  "before": {
+    "sighting": "stellar/rs-soroban-sdk#2099",
+    "soroban_sdk": "29.0.1",
+    "results": [
+      {
+        "case": "void",
+        "outcome": "panic"
+      },
+      {
+        "case": "bool",
+        "outcome": "panic"
+      },
+      {
+        "case": "u32",
+        "outcome": "panic"
+      },
+      {
+        "case": "i64",
+        "outcome": "panic"
+      },
+      {
+        "case": "claimable balance address",
+        "outcome": "error"
+      },
+      {
+        "case": "liquidity pool address",
+        "outcome": "error"
+      }
+    ]
+  },
+  "after": {
+    "sighting": "stellar/rs-soroban-sdk#2099",
+    "soroban_sdk": "30.0.0-rc.1",
+    "results": [
+      {
+        "case": "void",
+        "outcome": "error"
+      },
+      {
+        "case": "bool",
+        "outcome": "error"
+      },
+      {
+        "case": "u32",
+        "outcome": "error"
+      },
+      {
+        "case": "i64",
+        "outcome": "error"
+      },
+      {
+        "case": "claimable balance address",
+        "outcome": "error"
+      },
+      {
+        "case": "liquidity pool address",
+        "outcome": "error"
+      }
+    ]
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44216328020"
+}

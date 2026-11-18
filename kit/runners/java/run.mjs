@@ -3,6 +3,7 @@
 // checked against its sha256 in jars.json), then run the single source file.
 // Needs a JDK 17 or later.
 //   node kit/runners/java/run.mjs        → corpus/results/java.json
+//   node kit/runners/java/run.mjs sweep <passphrase> <ledger files...>
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -25,4 +26,6 @@ for (const { path, sha256 } of spec.jars) {
   }
   jars.push(file);
 }
-execFileSync('java', [`-Distravex.sdkVersion=${spec.sdk_version}`, '-cp', jars.join(':'), join(ROOT, 'kit', 'runners', 'java', 'Run.java'), CORPUS], { stdio: 'inherit' });
+// `node kit/runners/java/run.mjs sweep <passphrase> <files...>` runs the sweep instead.
+const args = process.argv.slice(2).length ? process.argv.slice(2) : [CORPUS];
+execFileSync('java', [`-Distravex.sdkVersion=${spec.sdk_version}`, '-cp', jars.join(':'), join(ROOT, 'kit', 'runners', 'java', 'Run.java'), ...args], { stdio: 'inherit' });

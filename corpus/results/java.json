@@ -425,6 +425,20 @@
       "detail": []
     },
     {
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "fail"
+      },
+      "failed": [
+        "tx_hash"
+      ],
+      "detail": [
+        "tx_hash: expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0"
+      ]
+    },
+    {
       "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
       "checks": {
         "decode": "pass",

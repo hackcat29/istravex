@@ -11,7 +11,7 @@ import { fieldTable } from './guide/fields.mjs';
 const read = (f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8'));
 const json = (v) => JSON.parse(JSON.stringify(v));
 const corpus = readCorpus();
-const sdks = ['javascript', 'go', 'rust', 'python', 'java'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
+const sdks = ['javascript', 'go', 'rust', 'python', 'python-xdr', 'java', 'php'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
 const etl = existsSync(join(RESULTS, 'pilot-stellar-etl.json')) ? read('pilot-stellar-etl.json') : null;
 const js = sdks.find((s) => s.sdk === 'javascript');
 const replay = read('replay.json').rows;

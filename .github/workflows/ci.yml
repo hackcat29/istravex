@@ -36,8 +36,8 @@ jobs:
         run: npm run corpus:js && npm run corpus:go && npm run corpus:rust
       - name: JavaScript SDK release matrix (upstream fixes fail before, pass after)
         run: npm run corpus:js-matrix
-      - name: Python SDK (stellar-sdk, pinned in kit/runners/python/requirements.txt)
-        run: npm run setup:python && npm run corpus:python
+      - name: Python SDKs (stellar-sdk and stellar-xdr, pinned in kit/runners/python/requirements.txt)
+        run: npm run setup:python && npm run corpus:python && npm run corpus:python-xdr
       - name: Java SDK (java-stellar-sdk; jars from Maven Central, sha256-pinned)
         run: java -version && npm run corpus:java
       - name: stellar-core golden LedgerCloseMeta (--check-lcm data) in all three SDKs

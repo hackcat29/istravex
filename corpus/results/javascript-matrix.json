@@ -386,6 +386,15 @@
           "failed": []
         },
         {
+          "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": []
+        },
+        {
           "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
           "checks": {
             "decode": "pass",
@@ -1623,6 +1632,15 @@
         },
         {
           "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": []
+        },
+        {
+          "fixture": "cap21-precond-v2-defaults-pubnet-0001",
           "checks": {
             "decode": "pass",
             "reencode": "pass",
@@ -2871,6 +2889,15 @@
           "failed": []
         },
         {
+          "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": []
+        },
+        {
           "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
           "checks": {
             "decode": "pass",
@@ -4094,6 +4121,15 @@
         },
         {
           "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+          "checks": {
+            "decode": "pass",
+            "reencode": "pass",
+            "native": "pass"
+          },
+          "failed": []
+        },
+        {
+          "fixture": "cap21-precond-v2-defaults-pubnet-0001",
           "checks": {
             "decode": "pass",
             "reencode": "pass",

@@ -429,6 +429,16 @@
       },
       "detail": [],
       "failed": [],
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001"
+    },
+    {
+      "checks": {
+        "decode": "pass",
+        "native": "pass",
+        "reencode": "pass"
+      },
+      "detail": [],
+      "failed": [],
       "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001"
     },
     {

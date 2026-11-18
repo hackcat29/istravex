@@ -90,7 +90,7 @@
                   "$ref": "#/components/schemas/Stats"
                 },
                 "example": {
-                  "fixtures": 136,
+                  "fixtures": 137,
                   "caps": 40,
                   "networks": [
                     "local",
@@ -99,8 +99,8 @@
                     "testnet"
                   ],
                   "sdk_checks": {
-                    "passed": 2018,
-                    "total": 2020
+                    "passed": 2808,
+                    "total": 2813
                   },
                   "provenance_checks": {
                     "passed": 1794,
@@ -111,8 +111,8 @@
                     "total": 15306
                   },
                   "wallet_backend_pilot": {
-                    "correct": 122,
-                    "total": 122
+                    "correct": 123,
+                    "total": 123
                   },
                   "cap_coverage": {
                     "live": 70,
@@ -986,6 +986,27 @@
                       "synthetic": false,
                       "xdr_type": "TransactionEnvelope",
                       "sha256": "20924a9041062d82a5b7633107d1538d5cf0d3c0bc3da443db9a6d037450a5ce",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap21-precond-v2-defaults-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0021"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59247200,
+                      "tx_hash": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "2e33243bb8bbbcf75742e6337a5e78d84109c0637342a38f37b7d664f4abbaca",
                       "files": [
                         "envelope",
                         "result",
@@ -4946,12 +4967,18 @@
                     "java",
                     "javascript-matrix",
                     "javascript",
+                    "php",
                     "pilot-stellar-etl",
                     "pilot-wallet-backend",
                     "provenance",
+                    "python-xdr",
                     "python",
                     "replay",
-                    "rust"
+                    "rust",
+                    "sightings-js-xdr-165",
+                    "sightings-rs-stellar-xdr-581",
+                    "sightings-rs-stellar-xdr-598",
+                    "sightings-soroban-sdk-2099"
                   ]
                 }
               }
@@ -5662,6 +5689,78 @@
                       "reproduced": true,
                       "summary": "Protocol 30 added XDR arms that 17.2.x does not know: StellarValueExt STELLAR_VALUE_SIGNED_MS (CAP-0088, millisecond close times) in every protocol 30 ledger…",
                       "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail decode on testnet ledger 5,540,402 (header) and on a testnet transaction paying a muxed contract address; 1…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0021",
+                      "title": "stellar-php-sdk returns muxed account IDs above 2^63 as negative numbers",
+                      "component": "Soneso/stellar-php-sdk",
+                      "affected": "1.18.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "medium",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [
+                        "CAP-0027"
+                      ],
+                      "fixtures": [
+                        "cap27-muxed-payment-pubnet-0002"
+                      ],
+                      "checks": [
+                        "php:cap27-muxed-payment-pubnet-0002:muxed_id"
+                      ],
+                      "reproduced": true,
+                      "summary": "A muxed account ID is an unsigned 64-bit integer. MuxedAccount stores it in a PHP int, which is signed, so getId() returns IDs from 2^63 up as negative numbe…",
+                      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439…",
+                      "draft": "**MuxedAccount::getId() returns IDs above 2^63 as negative numbers**\n\nMuxed account IDs are unsigned 64-bit (CAP-0027), but `MuxedAccount` stores the ID in a…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0022",
+                      "title": "stellar-php-sdk decodes values longer than their XDR maximum",
+                      "component": "Soneso/stellar-php-sdk",
+                      "affected": "1.18.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [],
+                      "fixtures": [
+                        "base-over-max-length-synthetic-0001"
+                      ],
+                      "checks": [
+                        "php:base-over-max-length-synthetic-0001:rejects:envelope_101_ops",
+                        "php:base-over-max-length-synthetic-0001:rejects:envelope_memo_29"
+                      ],
+                      "reproduced": true,
+                      "summary": "XDR bounds variable-length arrays and strings (operations<100>, string text<28>), and a decoder must refuse a value over the bound. The PHP SDK decodes a tra…",
+                      "evidence": "kit/runners/php/run.php: base-over-max-length-synthetic-0001 envelope_101_ops and envelope_memo_29 decode without error; JavaScript, Go, Rust, Python (both p…",
+                      "draft": "**XDR decoding accepts arrays and strings longer than their declared maximum**\n\n`XdrTransactionEnvelope::fromEnvelopeBase64XdrString` decodes a transaction w…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0023",
+                      "title": "java-stellar-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults",
+                      "component": "lightsail-network/java-stellar-sdk",
+                      "affected": "6.0.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "high",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [
+                        "CAP-0021"
+                      ],
+                      "fixtures": [
+                        "cap21-precond-v2-defaults-pubnet-0001"
+                      ],
+                      "checks": [
+                        "java:cap21-precond-v2-defaults-pubnet-0001:tx_hash",
+                        "sweep-java:tx_hash"
+                      ],
+                      "reproduced": true,
+                      "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has m…",
+                      "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a…",
+                      "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every fie…"
                     }
                   ]
                 }

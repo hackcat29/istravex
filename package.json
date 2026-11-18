@@ -15,8 +15,8 @@
     "corpus:go": "cd kit/go && go run ./cmd/conformance ../../corpus",
     "corpus:rust": "cd kit/runners/rust && cargo run --release -q -- ../../../corpus",
     "corpus:replay": "node kit/replay/replay.mjs",
-    "corpus:data": "node kit/site-data.mjs",
-    "corpus:run": "npm run corpus:verify && npm run corpus:js && npm run corpus:js-matrix && npm run corpus:go && npm run corpus:rust && npm run corpus:python && npm run corpus:java && npm run corpus:goldens && npm run corpus:replay && npm run corpus:data",
+    "corpus:data": "node kit/site-data.mjs && node kit/sightings/check.mjs",
+    "corpus:run": "npm run corpus:verify && npm run corpus:js && npm run corpus:js-matrix && npm run corpus:go && npm run corpus:rust && npm run corpus:python && npm run corpus:python-xdr && npm run corpus:java && npm run corpus:goldens && npm run corpus:replay && npm run corpus:data",
     "corpus:verify": "cd kit/go && go run ./cmd/verify ../../corpus",
     "corpus:audit": "node kit/audit/caps.mjs",
     "pilot:wallet-backend": "node kit/pilot/wallet-backend.mjs",
@@ -35,7 +35,8 @@
     "corpus:python": ".cache/py/bin/python kit/runners/python/run.py",
     "corpus:java": "node kit/runners/java/run.mjs",
     "pilot:stellar-etl": "node kit/pilot/stellar-etl.mjs",
-    "corpus:mainnet": "node kit/capture/mainnet.mjs && node kit/capture/ledgers.mjs && node kit/capture/canonicalize.mjs"
+    "corpus:mainnet": "node kit/capture/mainnet.mjs && node kit/capture/ledgers.mjs && node kit/capture/canonicalize.mjs",
+    "corpus:python-xdr": ".cache/py/bin/python kit/runners/python-xdr/run.py"
   },
   "dependencies": {
     "@hono/node-server": "2.1.8",

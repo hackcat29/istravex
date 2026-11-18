@@ -34,7 +34,7 @@ test('stats summarise the committed results', async () => {
   // SDK checks fail only where a finding explains it (bugs open upstream, or fixed but unreleased).
   const findings: { checks: string[] }[] = JSON.parse(readFileSync(resolve(corpusDir, 'findings.json'), 'utf8')).findings;
   const explained = new Set(findings.flatMap((f) => f.checks.map((c) => c.split(':').slice(0, 2).join(':'))));
-  const failing = ['javascript', 'go', 'rust', 'python', 'java'].flatMap((sdk) => {
+  const failing = ['javascript', 'go', 'rust', 'python', 'python-xdr', 'java', 'php'].flatMap((sdk) => {
     const r: { results: { fixture: string; checks: Record<string, string> }[] } = JSON.parse(readFileSync(resolve(corpusDir, 'results', `${sdk}.json`), 'utf8'));
     return r.results.flatMap((x) => Object.values(x.checks).filter((c) => c === 'fail').map(() => `${sdk}:${x.fixture}`));
   });

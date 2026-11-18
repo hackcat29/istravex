@@ -626,10 +626,92 @@ fn goldens(dir: &Path, corpus: &Path) {
     }
 }
 
+/// Every TransactionEnvelope in a ledger's transaction set.
+fn set_envelopes(lcm: &LedgerCloseMeta) -> Vec<TransactionEnvelope> {
+    use stellar_xdr::{GeneralizedTransactionSet, TransactionPhase, TxSetComponent};
+    let set = match lcm {
+        LedgerCloseMeta::V0(v) => return v.tx_set.txs.to_vec(),
+        LedgerCloseMeta::V1(v) => &v.tx_set,
+        LedgerCloseMeta::V2(v) => &v.tx_set,
+    };
+    let GeneralizedTransactionSet::V1(v1) = set;
+    let mut out = Vec::new();
+    for phase in v1.phases.iter() {
+        match phase {
+            TransactionPhase::V0(components) => {
+                for c in components.iter() {
+                    let TxSetComponent::TxsetCompTxsMaybeDiscountedFee(t) = c;
+                    out.extend(t.txs.iter().cloned());
+                }
+            }
+            TransactionPhase::V1(p) => {
+                for stage in p.execution_stages.iter() {
+                    for cluster in stage.0.iter() {
+                        out.extend(cluster.0.iter().cloned());
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+
+/// `sweep <passphrase> <LedgerCloseMetaBatch file>...`: every batch round-trips
+/// byte for byte, and every transaction hash the crate computes is the one
+/// stellar-core recorded in the ledger's results.
+fn sweep(passphrase: &str, files: &[String]) {
+    use stellar_xdr::LedgerCloseMetaBatch;
+    let (mut ledgers, mut txs, mut checks, mut passed) = (0usize, 0usize, 0usize, 0usize);
+    let mut failures: Vec<Value> = Vec::new();
+    let mut check = |ledger: String, name: &str, ok: bool, detail: String| {
+        checks += 1;
+        if ok {
+            passed += 1;
+        } else if failures.len() < 50 {
+            failures.push(json!({ "ledger": ledger, "check": name, "detail": detail }));
+        }
+    };
+    for path in files {
+        let raw = fs::read(path).expect("ledger file");
+        let name = Path::new(path).file_name().unwrap().to_string_lossy().to_string();
+        let batch = match LedgerCloseMetaBatch::from_xdr(&raw, Limits { depth: 2000, len: raw.len() }) {
+            Ok(b) => b,
+            Err(e) => {
+                check(name, "decode", false, e.to_string());
+                continue;
+            }
+        };
+        let again = batch.to_xdr(Limits::none()).unwrap_or_default();
+        check(name, "reencode", again == raw, format!("{} vs {} bytes", again.len(), raw.len()));
+        for lcm in batch.ledger_close_metas.iter() {
+            ledgers += 1;
+            let (seq, want): (u32, Vec<String>) = match lcm {
+                LedgerCloseMeta::V0(v) => (v.ledger_header.header.ledger_seq, v.tx_processing.iter().map(|t| hex::encode(t.result.transaction_hash.0)).collect()),
+                LedgerCloseMeta::V1(v) => (v.ledger_header.header.ledger_seq, v.tx_processing.iter().map(|t| hex::encode(t.result.transaction_hash.0)).collect()),
+                LedgerCloseMeta::V2(v) => (v.ledger_header.header.ledger_seq, v.tx_processing.iter().map(|t| hex::encode(t.result.transaction_hash.0)).collect()),
+            };
+            let envs = set_envelopes(lcm);
+            let got: std::collections::HashSet<String> = envs.iter().map(|e| envelope_hash(e, passphrase)).collect();
+            txs += want.len();
+            for h in &want {
+                check(seq.to_string(), "tx_hash", got.contains(h), h.clone());
+            }
+            check(seq.to_string(), "tx_count", envs.len() == want.len(), format!("{} envelopes, {} results", envs.len(), want.len()));
+        }
+    }
+    println!(
+        "{}",
+        json!({ "sdk": "rust", "package": "stellar-xdr", "version": "30.0.0", "ledgers": ledgers, "transactions": txs, "checks": checks, "passed": passed, "failures": failures })
+    );
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(1).map(String::as_str) == Some("goldens") {
         return goldens(Path::new(&args[2]), Path::new(&args[3]));
+    }
+    if args.get(1).map(String::as_str) == Some("sweep") {
+        return sweep(&args[2], &args[3..]);
     }
     let corpus = std::env::args().nth(1).unwrap_or("../../../corpus".into());
     let mut dirs: Vec<_> = fs::read_dir(Path::new(&corpus).join("fixtures"))

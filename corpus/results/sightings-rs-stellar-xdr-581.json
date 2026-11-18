@@ -1,0 +1,14 @@
+{
+  "sighting": "stellar/rs-stellar-xdr#581",
+  "before": {
+    "sighting": "stellar/rs-stellar-xdr#581",
+    "stellar_xdr": "28.0.0",
+    "outcome": "len 5 capacity 8"
+  },
+  "after": {
+    "sighting": "stellar/rs-stellar-xdr#581",
+    "stellar_xdr": "30.0.0",
+    "outcome": "len 5 capacity 5"
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44216328020"
+}

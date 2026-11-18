@@ -1,0 +1,69 @@
+name: SDK sweep
+
+# Every SDK over whole ledgers of real traffic from SDF's public data lake:
+# each LedgerCloseMetaBatch must round-trip byte for byte, and the hash the SDK
+# computes for every transaction must be the one stellar-core recorded. The
+# results are corpus/results/sweep-<sdk>.json, checked by kit/check-results.mjs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      pubnet_step:
+        description: Every Nth mainnet ledger from 59,300,000 to 65,500,000
+        default: '6200'
+      testnet_step:
+        description: Every Nth testnet ledger from 5,540,313 (protocol 30) to 5,790,000
+        default: '1000'
+
+permissions:
+  contents: read
+
+jobs:
+  sweep:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [go, rust, javascript, python, java]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Fetch the ledgers
+        run: |
+          kit/sweep/fetch.sh pubnet 59300000 65500000 ${{ inputs.pubnet_step || '6200' }} "$RUNNER_TEMP/pubnet"
+          kit/sweep/fetch.sh testnet 5540313 5790000 ${{ inputs.testnet_step || '1000' }} "$RUNNER_TEMP/testnet"
+      - if: matrix.sdk == 'go'
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - if: matrix.sdk == 'rust'
+        uses: dtolnay/rust-toolchain@stable
+      - if: matrix.sdk == 'javascript' || matrix.sdk == 'java'
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Sweep
+        run: |
+          PUB="Public Global Stellar Network ; September 2015"; TEST="Test SDF Network ; September 2015"
+          run() {
+            case ${{ matrix.sdk }} in
+              go) (cd kit/go && go run ./cmd/sweep -passphrase "$1" "$2"/*.xdr) ;;
+              rust) (cd kit/runners/rust && cargo run --release -q -- sweep "$1" "$2"/*.xdr) ;;
+              javascript) node kit/runners/js/sweep.mjs --passphrase "$1" "$2"/*.xdr ;;
+              python) .cache/py/bin/python kit/runners/python/sweep.py "$1" "$2"/*.xdr ;;
+              java) node kit/runners/java/run.mjs sweep "$1" "$2"/*.xdr ;;
+            esac
+          }
+          case ${{ matrix.sdk }} in
+            javascript|java) npm ci ;;
+            python) npm run setup:python ;;
+          esac
+          run "$PUB" "$RUNNER_TEMP/pubnet" > pubnet.json
+          run "$TEST" "$RUNNER_TEMP/testnet" > testnet.json
+          jq -n --slurpfile p pubnet.json --slurpfile t testnet.json --arg sdk ${{ matrix.sdk }} \
+            '{sdk: $p[0].sdk, package: $p[0].package, version: $p[0].version, pubnet: ($p[0] | del(.sdk, .package, .version)), testnet: ($t[0] | del(.sdk, .package, .version)), run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sweep-${{ matrix.sdk }}.json
+          jq -c '{sdk, version, pubnet: (.pubnet | del(.failures)), testnet: (.testnet | del(.failures))}' sweep-${{ matrix.sdk }}.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sweep-${{ matrix.sdk }}
+          path: sweep-${{ matrix.sdk }}.json

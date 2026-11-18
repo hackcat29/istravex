@@ -1,0 +1,63 @@
+{
+  "id": "cap21-precond-v2-defaults-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0021"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "envelope",
+  "sha256": "2e33243bb8bbbcf75742e6337a5e78d84109c0637342a38f37b7d664f4abbaca",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59247200,
+    "tx_hash": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+    "closed_at": "2025-10-05T20:09:35Z",
+    "description": "Captured by name (kit/capture/tx.mjs) as evidence for a finding; bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+    "successful": false,
+    "source_account": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+    "fee_charged": "100",
+    "max_fee": "5000000",
+    "operation_count": 1,
+    "operation_types": "path_payment_strict_send",
+    "memo_type": "none",
+    "signature_count": 2
+  },
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "2e33243bb8bbbcf75742e6337a5e78d84109c0637342a38f37b7d664f4abbaca",
+      "bytes": 408
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "448ca329daaec02f66154d45c242df4e9ee75730b2b05d688fc3cde52a070b31",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "faff4bedfd74d6d44acb6adf71cea94722dde9a0ce73f9f6c69a77cee0c85751",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "69557b8c21aebf5e6bd0f9035839519da8a6f932541551282d85edad1d4830be",
+      "bytes": 300
+    }
+  ]
+}

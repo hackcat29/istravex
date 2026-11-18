@@ -8,6 +8,7 @@
 //                                                (for a generated copy: ISTRAVEX_CORPUS=<dir>)
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { checkSightings } from './sightings/check.mjs';
 import { CORPUS, RESULTS, readCorpus } from './lib/fixture.mjs';
 import { checkFields } from './guide/fields.mjs';
 
@@ -28,17 +29,18 @@ for (const p of read('provenance.json').fixtures) {
 // on the default branch but unreleased).
 const openUpstream = (key) => {
   const f = explained.get(key);
-  return f?.status === 'open-upstream' || (f?.status === 'fixed-upstream' && /unreleased/.test(f.fixed_in ?? ''));
+  return f?.status === 'open-upstream' || f?.status === 'to-file' || (f?.status === 'fixed-upstream' && /unreleased/.test(f.fixed_in ?? ''));
 };
-for (const sdk of ['javascript', 'go', 'rust', 'python', 'java']) {
-  if (['python', 'java'].includes(sdk) && runnersOnly && !existsSync(join(RESULTS, `${sdk}.json`))) continue;
+for (const sdk of ['javascript', 'go', 'rust', 'python', 'python-xdr', 'java', 'php']) {
+  if (['python', 'python-xdr', 'java', 'php'].includes(sdk) && runnersOnly && !existsSync(join(RESULTS, `${sdk}.json`))) continue;
   const r = read(`${sdk}.json`);
   const seen = new Set(r.results.map((x) => x.fixture));
   for (const id of fixtures) if (!seen.has(id)) failures.push(`${sdk}: no result for ${id}`);
   for (const x of r.results) {
     const known = (x.failed ?? []).filter((c) => openUpstream(`${sdk}:${x.fixture}:${c}`));
     for (const [k, v] of Object.entries(x.checks)) {
-      const ok = v === 'pass' || (v === 'n/a' && negative.has(x.fixture) && k !== 'decode') || (k === 'native' && v === 'fail' && known.length && known.length === x.failed.length);
+      // stellar-xdr (Python) has no high-level forms: native checks apply to the generic profiles only.
+      const ok = v === 'pass' || (v === 'n/a' && negative.has(x.fixture) && k !== 'decode') || (v === 'n/a' && k === 'native' && ['python-xdr', 'php'].includes(sdk)) || (v === 'fail' && known.length && known.length === x.failed.length);
       if (!ok) failures.push(`${sdk} ${x.fixture} ${k}: ${v}: ${x.detail.join('; ')}`);
     }
   }
@@ -54,7 +56,7 @@ if (runnersOnly) {
 }
 
 // Findings that claim a failing check on a current SDK pin must be right.
-for (const sdk of ['python', 'java']) {
+for (const sdk of ['python', 'python-xdr', 'java', 'php']) {
   if (!existsSync(join(RESULTS, `${sdk}.json`))) continue;
   const failing = new Set(read(`${sdk}.json`).results.flatMap((x) => (x.failed ?? []).map((c) => `${sdk}:${x.fixture}:${c}`)));
   for (const key of explained.keys()) if (key.startsWith(`${sdk}:`) && !failing.has(key)) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
@@ -137,9 +139,17 @@ for (const f of findings) {
   for (const id of f.fixtures) if (!fixtures.includes(id)) failures.push(`finding ${f.id}: unknown fixture ${id}`);
 }
 
+// The RFP's sightings: every claim in corpus/sightings.json holds.
+const sightingRows = runnersOnly ? [] : (() => {
+  const { failures: f, rows } = checkSightings();
+  failures.push(...f);
+  return rows;
+})();
+
 if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
 const reproduced = findings.filter((f) => f.reproduced).length;
-console.log(`all green: ${fixtures.length} fixtures; ${findings.length} findings, ${reproduced} reproduced`);
+const sightingsReproduced = sightingRows.filter((r) => r.status === 'reproduced').length;
+console.log(`all green: ${fixtures.length} fixtures; ${findings.length} findings, ${reproduced} reproduced; RFP sightings ${sightingsReproduced}/${sightingRows.length} reproduced`);

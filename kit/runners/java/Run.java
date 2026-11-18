@@ -363,7 +363,104 @@ public class Run {
     return s.toString();
   }
 
+  /** Every TransactionEnvelope reachable from a value, by reflection over the generated XDR classes. */
+  static void envelopes(Object node, List<TransactionEnvelope> out, int depth) throws Exception {
+    if (node == null || depth > 64) return;
+    if (node instanceof TransactionEnvelope te) {
+      out.add(te);
+      return;
+    }
+    if (node.getClass().isArray()) {
+      for (int i = 0; i < java.lang.reflect.Array.getLength(node); i++) envelopes(java.lang.reflect.Array.get(node, i), out, depth + 1);
+      return;
+    }
+    if (node instanceof Iterable<?> it) {
+      for (Object o : it) envelopes(o, out, depth + 1);
+      return;
+    }
+    if (!node.getClass().getName().startsWith("org.stellar.sdk.xdr.")) return;
+    for (java.lang.reflect.Field f : node.getClass().getDeclaredFields()) {
+      if (java.lang.reflect.Modifier.isStatic(f.getModifiers()) || f.getType().isPrimitive() || f.getType().isEnum()) continue;
+      f.setAccessible(true);
+      envelopes(f.get(node), out, depth + 1);
+    }
+  }
+
+  /** `sweep <passphrase> <LedgerCloseMetaBatch file>...`: round-trip and stellar-core's transaction hashes. */
+  static void sweep(String passphrase, String[] files) throws Exception {
+    Network net = new Network(passphrase);
+    int ledgers = 0, txs = 0, checks = 0, passed = 0;
+    List<Map<String, String>> failures = new ArrayList<>();
+    for (String path : files) {
+      byte[] raw = Files.readAllBytes(Path.of(path));
+      String name = Path.of(path).getFileName().toString();
+      org.stellar.sdk.xdr.LedgerCloseMetaBatch batch;
+      try {
+        batch = org.stellar.sdk.xdr.LedgerCloseMetaBatch.fromXdrByteArray(raw);
+      } catch (Exception ex) {
+        checks++;
+        if (failures.size() < 50) failures.add(Map.of("ledger", name, "check", "decode", "detail", String.valueOf(ex.getMessage())));
+        continue;
+      }
+      byte[] again = batch.toXdrByteArray();
+      checks++;
+      if (java.util.Arrays.equals(again, raw)) passed++;
+      else if (failures.size() < 50) failures.add(Map.of("ledger", name, "check", "reencode", "detail", again.length + " vs " + raw.length + " bytes"));
+      for (org.stellar.sdk.xdr.LedgerCloseMeta lcm : batch.getLedgerCloseMetas()) {
+        ledgers++;
+        Object body = switch (lcm.getDiscriminant()) {
+          case 0 -> lcm.getV0();
+          case 1 -> lcm.getV1();
+          default -> lcm.getV2();
+        };
+        Object header = body.getClass().getMethod("getLedgerHeader").invoke(body);
+        org.stellar.sdk.xdr.LedgerHeader h = (org.stellar.sdk.xdr.LedgerHeader) header.getClass().getMethod("getHeader").invoke(header);
+        String seq = h.getLedgerSeq().getUint32().getNumber().toString();
+        Object[] processing = (Object[]) body.getClass().getMethod("getTxProcessing").invoke(body);
+        List<String> want = new ArrayList<>();
+        for (Object tp : processing) {
+          Object pair = tp.getClass().getMethod("getResult").invoke(tp);
+          org.stellar.sdk.xdr.Hash hash = (org.stellar.sdk.xdr.Hash) pair.getClass().getMethod("getTransactionHash").invoke(pair);
+          want.add(hex(hash.getHash()));
+        }
+        List<TransactionEnvelope> envs = new ArrayList<>();
+        envelopes(body.getClass().getMethod("getTxSet").invoke(body), envs, 0);
+        java.util.Set<String> got = new java.util.HashSet<>();
+        for (TransactionEnvelope env : envs) {
+          try {
+            got.add(AbstractTransaction.fromEnvelopeXdr(env, net).hashHex());
+          } catch (Exception ex) {
+            got.add("error: " + ex.getMessage());
+          }
+        }
+        txs += want.size();
+        for (String w : want) {
+          checks++;
+          if (got.contains(w)) passed++;
+          else if (failures.size() < 50) failures.add(Map.of("ledger", seq, "check", "tx_hash", "detail", w));
+        }
+        checks++;
+        if (envs.size() == want.size()) passed++;
+        else if (failures.size() < 50) failures.add(Map.of("ledger", seq, "check", "tx_count", "detail", envs.size() + " envelopes, " + want.size() + " results"));
+      }
+    }
+    Map<String, Object> out = new LinkedHashMap<>();
+    out.put("sdk", "java");
+    out.put("package", "network.lightsail:stellar-sdk");
+    out.put("version", System.getProperty("istravex.sdkVersion", "unknown"));
+    out.put("ledgers", ledgers);
+    out.put("transactions", txs);
+    out.put("checks", checks);
+    out.put("passed", passed);
+    out.put("failures", failures);
+    System.out.println(new Gson().toJson(out));
+  }
+
   public static void main(String[] args) throws Exception {
+    if (args.length > 0 && args[0].equals("sweep")) {
+      sweep(args[1], java.util.Arrays.copyOfRange(args, 2, args.length));
+      return;
+    }
     Path corpus = Path.of(args.length > 0 ? args[0] : "corpus").toAbsolutePath();
     List<Path> manifests;
     try (var s = Files.list(corpus.resolve("fixtures"))) {

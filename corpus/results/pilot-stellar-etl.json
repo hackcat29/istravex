@@ -2174,6 +2174,64 @@
       ]
     },
     {
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+      "pattern": "tx",
+      "network": "pubnet",
+      "ledger": 59247200,
+      "tx_hash": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+      "verdict": "correct",
+      "checks": [
+        {
+          "field": "transaction_hash",
+          "expected": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+          "observed": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+          "ok": true
+        },
+        {
+          "field": "successful",
+          "expected": "false",
+          "observed": "false",
+          "ok": true
+        },
+        {
+          "field": "account",
+          "expected": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+          "observed": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+          "ok": true
+        },
+        {
+          "field": "fee_charged",
+          "expected": "100",
+          "observed": "100",
+          "ok": true
+        },
+        {
+          "field": "max_fee",
+          "expected": "5000000",
+          "observed": "5000000",
+          "ok": true
+        },
+        {
+          "field": "operation_count",
+          "expected": "1",
+          "observed": "1",
+          "ok": true
+        },
+        {
+          "field": "operation_types",
+          "expected": "path_payment_strict_send",
+          "observed": "path_payment_strict_send",
+          "ok": true
+        },
+        {
+          "field": "transform_errors",
+          "expected": "none",
+          "observed": "none",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
       "pattern": "tx",
       "network": "pubnet",
@@ -16055,6 +16113,108 @@
           "liquidity_pool_id_strkey": ""
         }
       ],
+      "transform_errors": []
+    },
+    {
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+      "found": true,
+      "transaction": {
+        "transaction_hash": "68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3",
+        "ledger_sequence": 59247200,
+        "account": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+        "account_sequence": "240270022545669673",
+        "max_fee": 5000000,
+        "fee_charged": 100,
+        "operation_count": 1,
+        "tx_envelope": "AAAAAgAAAAAvXfCKt7y3JmM05cUEmx2N+YSNV1HLvkEPaziIeWJVHgBMS0ADVZxQAAJ+KQAAAAIAAAABAAAAAAAAAAAAAAAAaOLQmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAADFHL84DnXIni7dgvSYo1/aMqqQDLeRh9gwUh3MymFwGAAAAA0AAAAAAAAAA7egsHMAAAAAxRy/OA51yJ4u3YL0mKNf2jKqkAy3kYfYMFIdzMphcBgAAAABU0hYAAAAAADlOMj3OZP8orENyYJ2H+XpUVJEUQMf0EclKEV/Tfo+pAAAAFwCSv6aAAAAAAAAAAAAAAACymFwGAAAAEA3pfR3+Np6BC3M5npshPbc+yU9ALZfhaHmuH94U6PyCTE5Ym1rObdNWYGsfKcHcqntA00mgWqCDExniuArYIYDeWJVHgAAAECf7w1XnQFGG5Bo8PFlGBfjPsJsTNjQGpK3CXoGcmfD9qPKR7Lm98BtuCzmkIsvA3ENHoOjBFSy208U9U0qDMwI",
+        "tx_result": "AAAAAAAAAGT/////AAAAAQAAAAAAAAAN////9AAAAAA=",
+        "tx_meta": "AAAABAAAAAAAAAACAAAAAwOICmAAAAAAAAAAAC9d8Iq3vLcmYzTlxQSbHY35hI1XUcu+QQ9rOIh5YlUeAAAAAAXrLQcDVZxQAAJ+KAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAMAAAAAA4gKXQAAAABo4tBtAAAAAAAAAAEDiApgAAAAAAAAAAAvXfCKt7y3JmM05cUEmx2N+YSNV1HLvkEPaziIeWJVHgAAAAAF6y0HA1WcUAACfikAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOICmAAAAAAaOLQfwAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABJbT82FmuwvpjSEOMSJs8PBDJi20hvk/TyzDLaJU++XcAAAABAAAAAAAAAAIAAAAPAAAAA2ZlZQAAAAASAAAAAAAAAAAvXfCKt7y3JmM05cUEmx2N+YSNV1HLvkEPaziIeWJVHgAAAAoAAAAAAAAAAAAAAAAAAABkAAAAAA==",
+        "tx_fee_meta": "AAAAAgAAAAMDiApdAAAAAAAAAAAvXfCKt7y3JmM05cUEmx2N+YSNV1HLvkEPaziIeWJVHgAAAAAF6y1rA1WcUAACfigAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAADAAAAAAOICl0AAAAAaOLQbQAAAAAAAAABA4gKYAAAAAAAAAAAL13wire8tyZjNOXFBJsdjfmEjVdRy75BD2s4iHliVR4AAAAABestBwNVnFAAAn4oAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAwAAAAADiApdAAAAAGji0G0AAAAA",
+        "created_at": "2025-10-05T20:09:35Z",
+        "memo_type": "MemoTypeMemoNone",
+        "memo": "",
+        "time_bounds": "[0,1759695001)",
+        "successful": false,
+        "id": "254464786380328960",
+        "ledger_bounds": "",
+        "min_account_sequence": null,
+        "min_account_sequence_age": 0,
+        "min_account_sequence_ledger_gap": 0,
+        "extra_signers": null,
+        "closed_at": "2025-10-05T20:09:35Z",
+        "closed_at_ms": "2025-10-05T20:09:35Z",
+        "resource_fee": 0,
+        "soroban_resources_instructions": 0,
+        "soroban_resources_read_bytes": 0,
+        "soroban_resources_disk_read_bytes": 0,
+        "soroban_resources_write_bytes": 0,
+        "soroban_resources_archived_entries": null,
+        "transaction_result_code": "TransactionResultCodeTxFailed",
+        "inclusion_fee_bid": 0,
+        "inclusion_fee_charged": 0,
+        "resource_fee_refund": 0,
+        "non_refundable_resource_fee_charged": 0,
+        "refundable_resource_fee_charged": 0,
+        "rent_fee_charged": 0
+      },
+      "operations": [
+        {
+          "source_account": "GDCRZPZYBZ24RHRO3WBPJGFDL7NDFKUQBS3ZDB6YGBJB3TGKMFYBQ3LD",
+          "type": 13,
+          "type_string": "path_payment_strict_send",
+          "details": {
+            "amount": "0.0000000",
+            "asset_code": "SHX",
+            "asset_id": "5761364090685509331",
+            "asset_issuer": "GDSTRSHXHGJ7ZIVRBXEYE5Q74XUVCUSEKEBR7UCHEUUEK72N7I7KJ6JH",
+            "asset_type": "credit_alphanum4",
+            "destination_min": "39517.5460506",
+            "from": "GDCRZPZYBZ24RHRO3WBPJGFDL7NDFKUQBS3ZDB6YGBJB3TGKMFYBQ3LD",
+            "path": null,
+            "source_amount": "1596.5663347",
+            "source_asset_id": "-5706705804583548011",
+            "source_asset_type": "native",
+            "to": "GDCRZPZYBZ24RHRO3WBPJGFDL7NDFKUQBS3ZDB6YGBJB3TGKMFYBQ3LD"
+          },
+          "transaction_id": "254464786380328960",
+          "id": "254464786380328961",
+          "closed_at": "2025-10-05T20:09:35Z",
+          "closed_at_ms": "2025-10-05T20:09:35Z",
+          "operation_result_code": "OperationResultCodeOpInner",
+          "operation_trace_code": "PathPaymentStrictSendResultCodePathPaymentStrictSendUnderDestmin",
+          "ledger_sequence": 59247200,
+          "details_json": {
+            "amount": "0.0000000",
+            "asset_code": "SHX",
+            "asset_id": "5761364090685509331",
+            "asset_issuer": "GDSTRSHXHGJ7ZIVRBXEYE5Q74XUVCUSEKEBR7UCHEUUEK72N7I7KJ6JH",
+            "asset_type": "credit_alphanum4",
+            "destination_min": "39517.5460506",
+            "from": "GDCRZPZYBZ24RHRO3WBPJGFDL7NDFKUQBS3ZDB6YGBJB3TGKMFYBQ3LD",
+            "path": null,
+            "source_amount": "1596.5663347",
+            "source_asset_id": "-5706705804583548011",
+            "source_asset_type": "native",
+            "to": "GDCRZPZYBZ24RHRO3WBPJGFDL7NDFKUQBS3ZDB6YGBJB3TGKMFYBQ3LD"
+          }
+        }
+      ],
+      "effects": [],
+      "signers": [
+        {
+          "account_id": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+          "signer": "GAXV34EKW66LOJTDGTS4KBE3DWG7TBENK5I4XPSBB5VTRCDZMJKR4IJN",
+          "weight": 1,
+          "sponsor": null,
+          "last_modified_ledger": 59247200,
+          "ledger_entry_change": 1,
+          "deleted": false,
+          "closed_at": "2025-10-05T20:09:35Z",
+          "closed_at_ms": "2025-10-05T20:09:35Z",
+          "ledger_sequence": 59247200
+        }
+      ],
+      "trustlines": [],
       "transform_errors": []
     },
     {

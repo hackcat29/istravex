@@ -1,0 +1,88 @@
+{
+  "sighting": "stellar/js-xdr#165",
+  "before": {
+    "sighting": "stellar/js-xdr#165",
+    "build": "5.0.0",
+    "all_rejected": false,
+    "results": [
+      {
+        "case": "writeUint32(2^32)",
+        "outcome": "accepted",
+        "wrote": "00000000"
+      },
+      {
+        "case": "writeUint32(-1)",
+        "outcome": "accepted",
+        "wrote": "ffffffff"
+      },
+      {
+        "case": "writeInt32(1000.75)",
+        "outcome": "accepted",
+        "wrote": "000003e8"
+      },
+      {
+        "case": "writeUint32(NaN)",
+        "outcome": "accepted",
+        "wrote": "00000000"
+      },
+      {
+        "case": "writeInt32(2^31)",
+        "outcome": "accepted",
+        "wrote": "80000000"
+      },
+      {
+        "case": "writePadding(1.5)",
+        "outcome": "accepted",
+        "wrote": "0000"
+      },
+      {
+        "case": "writeBytes({ length: -4 })",
+        "outcome": "accepted",
+        "wrote": ""
+      }
+    ]
+  },
+  "after": {
+    "sighting": "stellar/js-xdr#165",
+    "build": "96862ad (fix)",
+    "all_rejected": true,
+    "results": [
+      {
+        "case": "writeUint32(2^32)",
+        "outcome": "threw",
+        "error": "writeUint32: expected integer in range 0..4294967295"
+      },
+      {
+        "case": "writeUint32(-1)",
+        "outcome": "threw",
+        "error": "writeUint32: expected integer in range 0..4294967295"
+      },
+      {
+        "case": "writeInt32(1000.75)",
+        "outcome": "threw",
+        "error": "writeInt32: expected integer in range -2147483648..2147483647"
+      },
+      {
+        "case": "writeUint32(NaN)",
+        "outcome": "threw",
+        "error": "writeUint32: expected integer in range 0..4294967295"
+      },
+      {
+        "case": "writeInt32(2^31)",
+        "outcome": "threw",
+        "error": "writeInt32: expected integer in range -2147483648..2147483647"
+      },
+      {
+        "case": "writePadding(1.5)",
+        "outcome": "threw",
+        "error": "writePadding: expected uint32 length"
+      },
+      {
+        "case": "writeBytes({ length: -4 })",
+        "outcome": "threw",
+        "error": "writeBytes: expected Uint8Array"
+      }
+    ]
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44216328020"
+}

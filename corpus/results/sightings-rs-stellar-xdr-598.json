@@ -1,0 +1,14 @@
+{
+  "sighting": "stellar/rs-stellar-xdr#598",
+  "before": {
+    "sighting": "stellar/rs-stellar-xdr#598",
+    "stellar_xdr": "28.0.0",
+    "outcome": "accepted: 21 signatures"
+  },
+  "after": {
+    "sighting": "stellar/rs-stellar-xdr#598",
+    "stellar_xdr": "30.0.0",
+    "outcome": "error: xdr value max length exceeded"
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44216328020"
+}

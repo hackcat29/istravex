@@ -57,9 +57,9 @@
       "status": "exercised",
       "evidence": "pilot-stellar-etl",
       "fixtures": [
-        "cap85-contract-executable-external-ref-pubnet-0001"
+        "cap85-contract-executable-external-ref-testnet-0001"
       ],
-      "detail": "The epic's XDR changes: stellar-etl v2.8.34 exports the CAP-0085 externally managed contract executable (a mainnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
+      "detail": "The epic's XDR changes: stellar-etl v2.8.34 exports the CAP-0085 externally managed contract executable (a testnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
     },
     {
       "issue": "stellar/wallet-backend#716",
