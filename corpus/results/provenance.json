@@ -2529,6 +2529,68 @@
       ]
     },
     {
+      "fixture": "cap21-precond-v2-defaults-pubnet-0001",
+      "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77F59F--59247200.xdr.zst",
+      "checks": [
+        {
+          "name": "manifest readable",
+          "ok": true
+        },
+        {
+          "name": "manifest schema",
+          "ok": true
+        },
+        {
+          "name": "manifest decode",
+          "ok": true
+        },
+        {
+          "name": "sha256 envelope",
+          "ok": true
+        },
+        {
+          "name": "sha256 result",
+          "ok": true
+        },
+        {
+          "name": "sha256 meta",
+          "ok": true
+        },
+        {
+          "name": "sha256 fee_meta",
+          "ok": true
+        },
+        {
+          "name": "canonical ledger sha256 (59247200)",
+          "ok": true
+        },
+        {
+          "name": "protocol_version matches ledger header (59247200)",
+          "ok": true
+        },
+        {
+          "name": "transaction in ledger: 68f960593873",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: envelope",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: result",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: meta",
+          "ok": true
+        },
+        {
+          "name": "matches ledger: fee_meta",
+          "ok": true
+        }
+      ]
+    },
+    {
       "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
       "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC77A90F--59266800.xdr.zst",
       "checks": [

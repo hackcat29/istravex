@@ -4,8 +4,8 @@
     "golden_files": 866,
     "golden_frames": 15306,
     "golden_exact": 15306,
-    "provenance_checks": 1794,
-    "provenance_passed": 1794,
+    "provenance_checks": 1808,
+    "provenance_passed": 1808,
     "pilot_fixtures": 123,
     "pilot_correct": 123,
     "etl_fixtures": 123,
@@ -3502,6 +3502,11 @@
         "name": "envelope",
         "xdr_type": "TransactionEnvelope",
         "b64": "AAAAAgAAAAAvXfCKt7y3JmM05cUEmx2N+YSNV1HLvkEPaziIeWJVHgBMS0ADVZxQAAJ+KQAAAAIAAAABAAAAAAAAAAAAAAAAaOLQmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAADFHL84DnXIni7dgvSYo1/aMqqQDLeRh9gwUh3MymFwGAAAAA0AAAAAAAAAA7egsHMAAAAAxRy/OA51yJ4u3YL0mKNf2jKqkAy3kYfYMFIdzMphcBgAAAABU0hYAAAAAADlOMj3OZP8orENyYJ2H+XpUVJEUQMf0EclKEV/Tfo+pAAAAFwCSv6aAAAAAAAAAAAAAAACymFwGAAAAEA3pfR3+Np6BC3M5npshPbc+yU9ALZfhaHmuH94U6PyCTE5Ym1rObdNWYGsfKcHcqntA00mgWqCDExniuArYIYDeWJVHgAAAECf7w1XnQFGG5Bo8PFlGBfjPsJsTNjQGpK3CXoGcmfD9qPKR7Lm98BtuCzmkIsvA3ENHoOjBFSy208U9U0qDMwI"
+      },
+      "provenance": {
+        "checks": 14,
+        "passed": 14,
+        "ledger_source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77F59F--59247200.xdr.zst"
       }
     },
     {
@@ -28049,7 +28054,7 @@
         ],
         "reproduced": true,
         "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643… for mainnet transaction 68f96059…; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",
-        "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep (.github/workflows/sweep.yml) over 1,001 mainnet ledgers finds 58 of 307,577 transactions whose hash Java gets wrong, every one checked a PRECOND_V2 with all-default fields; Go, JavaScript and Rust hash all 307,577 correctly.",
+        "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep (.github/workflows/sweep.yml) over 1,001 mainnet ledgers finds 58 of 307,577 transactions whose hash Java gets wrong, every one checked a PRECOND_V2 with all-default fields; Go, JavaScript, Rust and Python hash all 307,577 correctly.",
         "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every field at its default: no `ledgerBounds`, no `minSeqNum`, `minSeqAge` 0, `minSeqLedgerGap` 0, no `extraSigners`. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`TransactionPreconditions.fromXdr` keeps the values, but `hasV2()` is false when they are all defaults, so `toXdr()` writes `PRECOND_TIME`. The transaction's bytes change, and so does its hash:\n\n```java\nAbstractTransaction tx = AbstractTransaction.fromEnvelopeXdr(\"<envelope_xdr of 68f96059…>\", Network.PUBLIC);\ntx.hashHex();               // 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0\n                            // network: 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3\ntx.toEnvelopeXdrBase64();   // differs from the input\n```\n\nA wallet that decodes such an envelope and signs it signs a different transaction, and an indexer that hashes with the SDK records a hash the network doesn't know. This is the same root as #837 (the arm is inferred from the values), with a different trigger: reading `minSeqLedgerGap` with `longValue()` doesn't fix it. Keeping the decoded discriminant, and re-encoding with it, would.\n\nFound by the Istravex conformance corpus (https://github.com/hackcat29/istravex): JavaScript, Go, Rust and both Python packages hash these transactions correctly."
       },
       {

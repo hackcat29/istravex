@@ -103,8 +103,8 @@
                     "total": 2816
                   },
                   "provenance_checks": {
-                    "passed": 1794,
-                    "total": 1794
+                    "passed": 1808,
+                    "total": 1808
                   },
                   "golden_frames": {
                     "exact": 15306,
@@ -4982,6 +4982,7 @@
                     "sweep-go",
                     "sweep-java",
                     "sweep-javascript",
+                    "sweep-python",
                     "sweep-rust"
                   ]
                 }
