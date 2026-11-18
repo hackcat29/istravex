@@ -16,6 +16,7 @@ const { values: opt } = parseArgs({ options: { out: { type: 'string', default: j
 const OUT = resolve(opt.out);
 const DOCS = join(ROOT, 'docs');
 const SITE = 'https://docs.istravex.com';
+const review = JSON.parse(readFileSync(join(ROOT, 'kit', 'guide', 'review.json'), 'utf8'));
 
 const nav = JSON.parse(readFileSync(join(DOCS, 'docs.json'), 'utf8')).navigation.tabs.find((t) => t.tab === 'Hardening guide');
 const pages = nav.groups.flatMap((g) => g.pages);
@@ -73,7 +74,9 @@ pages.forEach((page, i) => {
     meta.description && `description: ${JSON.stringify(meta.description)}`,
     '---',
   ].filter(Boolean);
-  writeFileSync(join(OUT, `${slug}.md`), `${front.join('\n')}\n\n${body}`);
+  // Until the review the RFP gates publication on is recorded, every page says so.
+  const banner = review.status === 'reviewed' ? '' : `:::warning Draft, not reviewed\n\nThis page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.${review.request ? ` Review requested in ${review.request}.` : ''}\n\n:::\n\n`;
+  writeFileSync(join(OUT, `${slug}.md`), `${front.join('\n')}\n\n${banner}${body}`);
 });
 writeFileSync(join(OUT, '_category_.json'), JSON.stringify({ label: 'Indexer hardening guide', position: 1, link: { type: 'doc', id: 'overview' } }, null, 2) + '\n');
 // Nothing Mintlify-specific may survive.

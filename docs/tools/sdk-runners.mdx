@@ -1,12 +1,12 @@
 ---
 title: SDK runners
-description: The same checks, in JavaScript, Go, Rust, Python and Java, against every fixture.
+description: The same checks, in seven SDKs across five languages, against every fixture and over whole ledgers of real traffic.
 ---
 
 import Sdks from '/snippets/sdk-table.mdx';
 import Matrix from '/snippets/js-matrix-table.mdx';
 
-Each SDK gets a runner that reads the corpus and checks every fixture three ways: JavaScript (`@stellar/stellar-sdk`), Go (`go-stellar-sdk`), Rust (`stellar-xdr`), Python (`stellar-sdk`) and Java (`java-stellar-sdk`). The RFP asks for at least the first three; Python and Java are there because the same bugs travel between SDKs, and they did.
+Each SDK gets a runner that reads the corpus and checks every fixture three ways: JavaScript (`@stellar/stellar-sdk`), Go (`go-stellar-sdk`), Rust (`stellar-xdr`), Python (`stellar-sdk`, and `stellar-xdr`, the package replacing its XDR module), Java (`java-stellar-sdk`) and PHP (`stellar-php-sdk`). The RFP asks for at least the first three; the rest are there because the same bugs travel between SDKs, and they did: the PHP and Java SDKs compute the same wrong hash for one class of mainnet transaction.
 
 | Check | Question it answers |
 |---|---|
@@ -24,12 +24,16 @@ Each native check has a name (`muxed_id`, `pool_id`, `native_keeps_every_entry`�
 
 <Sdks />
 
+**The `tx` and `ledger` profiles.** The [set-cover fixtures](/corpus/cell-coverage) carry Horizon's values for their transaction or ledger. Every runner computes them from raw XDR: the transaction hash, outcome, source and fee payer, fee charged and maximum fee, operation types, memo type and signature count; or the ledger hash (the SHA-256 of the header), previous hash, protocol, fees, reserve, transaction count and close time. Python `stellar-xdr` and PHP run these profiles and every decode and re-encode check; they have no native checks for the hand-written patterns (Python `stellar-xdr` has no high-level forms), except PHP's muxed-ID checks.
+
 ## Bugs the current releases still have
 
-Two checks fail on the newest releases, and both are bugs the JavaScript SDK has already fixed:
+These checks fail on the newest releases. Each is a [finding](/project/findings):
 
 - **Python, stellar-sdk 17.0.1:** `scval.to_native` turns string `"b"` and symbol `"b"` into one dict key and drops an entry with no error, the same as [js-stellar-sdk#1789](https://github.com/stellar/js-stellar-sdk/issues/1789). It's open upstream as [StellarCN/py-stellar-base#1250](https://github.com/StellarCN/py-stellar-base/issues/1250), with a fix in review. ([F-0018](/project/findings))
 - **Java, java-stellar-sdk 6.0.0:** `Asset.compareTo` orders issuers by strkey text, so decoding the valid pool-share trustline throws, the same as [js-stellar-sdk#1766](https://github.com/stellar/js-stellar-sdk/pull/1766). It's fixed on master by [#832](https://github.com/lightsail-network/java-stellar-sdk/pull/832) but not yet released. ([F-0019](/project/findings))
+- **Java and PHP:** a transaction whose `PRECOND_V2` fields are all defaults is rebuilt as `PRECOND_TIME`, so its hash is wrong: `035f2643…` for mainnet transaction `68f96059…`. A wallet that decodes such an envelope and signs it signs a different transaction. New, found by the corpus and drafted for both SDKs. ([F-0023](/project/findings), [F-0024](/project/findings))
+- **PHP, stellar-php-sdk 1.18.0:** muxed account IDs above 2⁶³ come back negative from `MuxedAccount::getId()` (a real mainnet destination, 18067157809773112502, reads as -379586263936439114), and the decoder accepts 101 operations and a 29-byte memo. New, drafted. ([F-0021](/project/findings), [F-0022](/project/findings))
 
 `kit/check-results.mjs` allows a failure on a current release only when a finding explains it as a known bug with no fixed release yet, and fails if the finding's claim stops being true. When the fixes ship, the pins move and the cells turn green.
 
@@ -94,3 +98,17 @@ All are off. See [Keep 64-bit integers exact](/guide/wide-integers).
 ## Adding an SDK
 
 A runner is a few hundred lines: walk `corpus/fixtures`, decode each file by `xdr_type`, re-encode, run the named native checks for the fixture's `pattern`, pass files marked `expect: decode_error` only when they fail to decode, and write `corpus/results/<sdk>.json` in the same shape as the existing ones. Add it to `kit/check-results.mjs` and CI. The Python runner (`kit/runners/python/run.py`) is about 300 lines; the Java one (`kit/runners/java/Run.java`) is a single source file run with `java Run.java`, no build tool.
+
+## Sweeping real traffic
+
+The corpus is chosen to cover every shape; the sweep checks volume. `kit/go/cmd/sweep`, the Rust runner's `sweep` subcommand, `kit/runners/js/sweep.mjs`, `kit/runners/python/sweep.py` and the Java runner's `sweep` mode each read whole ledgers from SDF's public data lake and check two things against stellar-core's own bytes:
+
+- every `LedgerCloseMetaBatch` decodes and re-encodes byte for byte;
+- the hash the SDK computes for every transaction in the transaction set is the hash stellar-core recorded for it in the ledger's results.
+
+[`.github/workflows/sweep.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sweep.yml) runs it on GitHub's runners over a thousand mainnet ledgers spread across the last year and the protocol 30 testnet ledgers; the results are `corpus/results/sweep-<sdk>.json`. The sweep is how the Java hash defect (F-0023) was found: eight mainnet transactions in the corpus's own ledgers whose hash Java gets wrong.
+
+```bash
+kit/sweep/fetch.sh pubnet 65400000 65400100 10 /tmp/ledgers
+cd kit/go && go run ./cmd/sweep /tmp/ledgers/*.xdr
+```

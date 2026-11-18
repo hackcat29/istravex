@@ -1,0 +1,56 @@
+---
+title: Cell coverage
+description: How the corpus is chosen to cover every XDR shape real ledgers use, and how to measure it.
+---
+
+A CAP list says which protocol changes exist. It doesn't say which of their shapes a reader actually meets, or whether a corpus has them. Istravex measures both with **cells**.
+
+## What a cell is
+
+A cell is one arm of one XDR union, named `<Union>:<ARM>`: `ScAddress:SC_ADDRESS_TYPE_MUXED_ACCOUNT`, `Preconditions:PRECOND_V2`, `TransactionMeta:v4`, `LedgerEntryChange:LEDGER_ENTRY_RESTORED`. Two more kinds count as cells because a reader has to interpret them:
+
+- **Flag bits**, such as `TrustLineEntry.flags:AUTHORIZED_TO_MAINTAIN_LIABILITIES_FLAG`.
+- **Contract cost types**, such as `ContractCostType:Bn254G1Msm`: positions in the cost-parameter settings, appended by the protocol that adds the host functions.
+
+A union arm is where a decoder branches, and where a reader that forgot a new arm breaks. Covering every arm that occurs in real ledgers means every branch real data takes is in the corpus.
+
+`kit/go/cmd/shape-scan -universe` lists them from the pinned go-stellar-sdk XDR: **603 cells are reachable from `LedgerCloseMeta`**, the ones a ledger reader can meet. Peer messages, history-archive buckets and contract specs are out of that set.
+
+## Which CAP introduced each cell
+
+[`kit/audit/cell-caps.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/audit/cell-caps.mjs) assigns each cell to the CAP that introduced it, by rule: `Preconditions:PRECOND_V2` to CAP-0021, `ScAddress:SC_ADDRESS_TYPE_MUXED_CONTRACT` to CAP-0084, the BN254 cost types to CAP-0074 and CAP-0080. Cells older than CAPs are `base`. Every rule is checked against the CAP texts: the CAP must mention the arm's XDR name, or the rule says why it doesn't (extension arms and flags are named in prose). The [CAP coverage](/corpus/cap-coverage) page is built from it.
+
+## Scanning real ledgers
+
+`kit/go/cmd/shape-scan` streams ledgers from SDF's public data lake (pubnet, and testnet since its last reset), walks every transaction's envelope, result and meta, and every ledger's header, transaction set and upgrades, and records the cells each one exercises. [`.github/workflows/shape-scan.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/shape-scan.yml) runs it in 16 shards on GitHub's runners. The committed scans, in `corpus/scan/`:
+
+| Scan | Ledgers | Transactions |
+|---|---|---|
+| Mainnet, every 400th ledger from 59,230,000 | 15,763 | 4,853,565 |
+| Mainnet, every 37th ledger from 59,227,211 | 170,490 | 52,774,643 |
+| Testnet, every 400th and every 29th ledger since its reset | 214,046 | 2,002,380 |
+| The protocol 24–29 upgrade ledgers on mainnet, and 25–30 on testnet | 12 | 1,956 |
+
+In all, **470 of the 603 reachable cells occur on the networks.** The other 133 are mostly result codes no transaction has hit and arms no protocol has turned on yet.
+
+```bash
+cd kit/go
+go run ./cmd/shape-scan -from 65400000 -to 65401000 -step 10 > shapes.jsonl
+go run ./cmd/shape-scan -network testnet -ledgers 5540313
+go run ./cmd/shape-scan -corpus ../../corpus      # the cells each fixture exercises
+```
+
+## Choosing fixtures by set cover
+
+[`kit/capture/shapes.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/capture/shapes.mjs) reads the scans and picks, greedily, the transaction or ledger that adds the most cells the corpus lacks, preferring ledgers it already holds (a new ledger costs storage), until every cell seen on the networks is in the corpus. Each pick becomes a fixture:
+
+- **`tx` profile.** The envelope, result, meta and fee meta, byte for byte from the canonical ledger, and Horizon's values for the transaction: hash, outcome, source, fee payer, fee charged, maximum fee, operation types, memo type and signature count.
+- **`ledger` profile.** The whole `LedgerCloseMeta`, and Horizon's values for the ledger: hash, previous hash, protocol, fees, reserve, transaction count and close time.
+
+Every SDK runner must reproduce those values from raw XDR, and every indexer pilot must store them. Expected values come from Horizon, never from an SDK under test, and the bytes are verified against the ledger like every other fixture.
+
+The result: **the corpus covers all 470 cells the networks use**, with 116 fixtures chosen this way (111 transactions and 5 whole ledgers) beside the 20 hand-written ones, from 86 mainnet and 27 testnet ledgers. `corpus/cells.json` lists every cell with how often the scans saw it and which fixtures cover it.
+
+## Keeping it current
+
+A new protocol adds cells. After an upgrade, run `shape-scan.yml` over the new ledgers, commit the scan, and run `node kit/capture/shapes.mjs`: it captures fixtures for exactly the cells that are new. `node kit/audit/caps.mjs` then shows which CAPs the corpus covers.

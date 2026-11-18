@@ -6,10 +6,10 @@
 //   node kit/check-results.mjs
 //   node kit/check-results.mjs --runners-only   provenance and the three SDK runners only
 //                                                (for a generated copy: ISTRAVEX_CORPUS=<dir>)
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { checkSightings } from './sightings/check.mjs';
-import { CORPUS, RESULTS, readCorpus } from './lib/fixture.mjs';
+import { CORPUS, RESULTS, ROOT, readCorpus } from './lib/fixture.mjs';
 import { checkFields } from './guide/fields.mjs';
 
 const read = (f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8'));
@@ -137,6 +137,38 @@ for (const f of findings) {
   if (['fixed-upstream', 'open-upstream'].includes(f.status) && !f.issue) failures.push(`finding ${f.id}: ${f.status} without an upstream issue`);
   if (f.status === 'to-file' && !f.draft) failures.push(`finding ${f.id}: to-file without a draft`);
   for (const id of f.fixtures) if (!fixtures.includes(id)) failures.push(`finding ${f.id}: unknown fixture ${id}`);
+}
+
+// The sweeps over real traffic: every failure is a finding's.
+// Python's sweep is the slowest; it is checked when its results are present.
+for (const sdk of ['go', 'rust', 'javascript', 'python', 'java']) {
+  const file = `sweep-${sdk}.json`;
+  if (!existsSync(join(RESULTS, file))) {
+    if (!runnersOnly && sdk !== 'python') failures.push(`${file} missing (.github/workflows/sweep.yml)`);
+    continue;
+  }
+  const sw = read(file);
+  for (const net of ['pubnet', 'testnet']) {
+    const r = sw[net];
+    if (!r?.checks) failures.push(`${file}: no ${net} run`);
+    else if (r.passed !== r.checks) {
+      const unexplained = r.failures.filter((x) => !explained.has(`sweep-${sdk}:${x.check}`));
+      for (const x of unexplained) failures.push(`sweep ${sdk} ${net} ledger ${x.ledger}: ${x.check} fails (${x.detail}) and no finding explains it`);
+    }
+  }
+}
+
+// The guide's review: no page may claim one that kit/guide/review.json doesn't record.
+{
+  const review = JSON.parse(readFileSync(join(ROOT, 'kit', 'guide', 'review.json'), 'utf8'));
+  if (review.status !== 'reviewed') {
+    const claim = /reviewed (and confirmed )?by an? (stellar[ -]core|core|platform|sdf) engineer/i;
+    const files = ['README.md', 'public/proposal.md', 'public/llms.txt', 'src/content.ts', ...readdirSync(join(ROOT, 'docs'), { recursive: true }).filter((f) => f.endsWith('.mdx')).map((f) => join('docs', f))];
+    for (const f of files) {
+      const text = readFileSync(join(ROOT, f), 'utf8');
+      if (claim.test(text)) failures.push(`${f} claims the guide was reviewed, but kit/guide/review.json says ${review.status}`);
+    }
+  }
 }
 
 // The RFP's sightings: every claim in corpus/sightings.json holds.

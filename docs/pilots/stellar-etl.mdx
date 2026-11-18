@@ -18,7 +18,7 @@ stellar-etl's exports read Galexie files from a GCS datastore, and that's the on
 | `export_effects` | `TransformEffect` |
 | `export_ledger_entry_changes` | `TransformSigners`, `TransformTrustline` |
 
-The rows are scored against each fixture's `expected_indexed` by [`kit/pilot/score-etl.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/score-etl.mjs). stellar-etl writes 64-bit integers as JSON numbers (`to_muxed_id` can be 2⁶⁴ − 1), so the driver parses them with a reviver that keeps each number's source text: nothing is rounded on our side.
+The rows are scored against each fixture's `expected_indexed` (or, for the set-cover fixtures, Horizon's values in `expected_decoded`) by [`kit/pilot/score-etl.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/score-etl.mjs). stellar-etl writes 64-bit integers as JSON numbers (`to_muxed_id` can be 2⁶⁴ − 1), so the driver parses them with a reviver that keeps each number's source text: nothing is rounded on our side.
 
 ```bash
 npm run pilot:stellar-etl   # → corpus/results/pilot-stellar-etl.json
@@ -27,6 +27,8 @@ npm run pilot:stellar-etl   # → corpus/results/pilot-stellar-etl.json
 ## Results
 
 <Etl />
+
+**119 of 123 correct.** The pilot runs the fixtures with hand-written expectations and every [set-cover transaction fixture](/corpus/cell-coverage), scored against Horizon's values: the transaction row's hash, outcome, account, fee charged and maximum fee (`new_max_fee` for a fee-bump, which is what stellar-etl's schema calls the fee-bump's own fee), the operation rows' types, and no transform errors. That includes the CAP-0085 externally managed contract executable from protocol 28, which stellar-etl exports cleanly.
 
 stellar-etl gets the fee-bump, every muxed ID (exactly, up to 2⁶⁴ − 1), the full `P…` signer and the muxed Soroban source right. It gets two things wrong, both already open upstream:
 

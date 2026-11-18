@@ -1,0 +1,20 @@
+{
+  "sdk": "javascript",
+  "package": "@stellar/stellar-sdk",
+  "version": "17.4.0",
+  "pubnet": {
+    "ledgers": 1001,
+    "transactions": 307577,
+    "checks": 309579,
+    "passed": 309579,
+    "failures": []
+  },
+  "testnet": {
+    "ledgers": 240,
+    "transactions": 3260,
+    "checks": 3740,
+    "passed": 3740,
+    "failures": []
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44217754813"
+}

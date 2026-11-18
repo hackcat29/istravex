@@ -16,6 +16,9 @@ corpus/
 ├── ledgers/index.json        sha256 and source of every stored ledger
 ├── manifest.schema.json      JSON Schema 2020-12 for manifests
 ├── coverage.json             the CAP audit
+├── cells.json                every XDR cell, how often the networks use it, which fixtures cover it
+├── scan/                     shape-scan output: the cells each scanned transaction and ledger exercises
+├── sightings.json            the RFP's 18 sightings and how each is covered
 └── results/                  output of every kit stage
 ```
 
@@ -23,9 +26,11 @@ corpus/
 
 <Fixtures />
 
-That's 20 fixtures across six CAPs and 14 patterns. Six are captured on mainnet (four of them found by the [mainnet scan](/corpus/capturing#finding-the-transactions)), two on testnet, ten generated on a pinned stellar-core at mainnet's protocol, and two are synthetic: bytes a decoder must refuse, built from generated ones and labelled as such everywhere.
+That's 137 fixtures: 95 from mainnet, 30 from testnet, 10 generated on a pinned stellar-core at mainnet's protocol, and 2 synthetic (bytes a decoder must refuse, built from generated ones and labelled as such everywhere).
 
-CAP-0040 and CAP-0073 each exist twice, as a testnet capture and as a generated fixture. That's deliberate. The testnet copy proves the pattern exists on a real network; the generated copy can be rebuilt by anyone, at any time, byte for byte, without depending on testnet (which resets). Ten fixtures reproduce a bug that was reported upstream; their manifests list it under `sightings`, and the [findings report](/project/findings) shows the kit failing before each fix and passing after.
+**Hand-written patterns.** Twenty fixtures each target one pattern that has broken real software: a muxed ID above 2⁶³, a SAC-created trustline, a signed-payload signer, map keys in host order, and so on. Their manifests carry hand-checked expectations for decoders and indexers, and the ones that reproduce an upstream bug list it under `sightings`.
+
+**Chosen by set cover.** 116 more cover the rest of the protocol (and one, `cap21-precond-v2-defaults-pubnet-0001`, was captured by name as the evidence for a finding). [`kit/go/cmd/shape-scan`](/corpus/cell-coverage) read 400,311 mainnet and testnet ledgers (59.6 million transactions) from SDF's public data lake and recorded which XDR cells each transaction and ledger exercises: every union arm, interpreted flag bit and contract cost type. `kit/capture/shapes.mjs` then picked, greedily, the transactions and ledgers that add the most cells the corpus lacks, until all 470 cells seen on the networks were covered. Each carries the generic `tx` or `ledger` profile: Horizon's values for the transaction or ledger, which every SDK must reproduce from raw XDR, and every indexer pilot must store.
 
 ## Three ways in
 
@@ -34,6 +39,8 @@ CAP-0040 and CAP-0073 each exist twice, as a testnet capture and as a generated 
 | **Captured from mainnet** | `kit/capture/mainnet.mjs` | Patterns that already happen in the wild. Pinned by transaction hash, so re-running reproduces the same bytes. |
 | **Created on testnet** | `kit/capture/testnet.mjs` | Patterns that are rare on mainnet but can be produced on demand. |
 | **Generated on stellar-core** | `kit/capture/generate.mjs` | The same scenarios on a standalone network, fully reproducible, no external dependencies. |
+| **Chosen by set cover** | `kit/capture/shapes.mjs` | Every XDR cell real traffic uses, from the shape scans in `corpus/scan/`. |
+| **Captured by name** | `kit/capture/tx.mjs` | One transaction a finding needs as evidence. |
 
 Each has its own page: [Capturing](/corpus/capturing) covers the first two, [Generating](/corpus/generating) the third.
 
@@ -42,11 +49,11 @@ Each has its own page: [Capturing](/corpus/capturing) covers the first two, [Gen
 A fixture is only as good as the claim that it's real. Three things back that claim:
 
 1. **Canonical ledgers.** Every fixture's full ledger is stored, from the most authoritative source we could get (SDF's public data lake for mainnet), and its sha256 is recorded.
-2. **Byte equality.** The [provenance verifier](/corpus/provenance) requires every XDR value in every fixture to be byte-identical to the ledger's copy. 62 checks, all passing, on every CI run.
+2. **Byte equality.** The [provenance verifier](/corpus/provenance) requires every XDR value in every fixture to be byte-identical to the ledger's copy, and a whole-ledger fixture to equal its ledger. 1,794 checks, all passing, on every CI run.
 3. **Independent expectations.** What a fixture says correct software should produce comes from Horizon or from the transaction as constructed, never from the SDKs being tested.
 
 On top of the corpus, the SDKs are also checked against [stellar-core's own golden ledgers](/corpus/goldens): 15,306 `LedgerCloseMeta` frames from core's test suite.
 
 ## What it doesn't cover yet
 
-Four CAPs is a start, not a finish. Of the 40 live CAPs that change XDR, 37 have no fixture yet. The [CAP coverage](/corpus/cap-coverage) page lists every one, and [Contributing a fixture](/corpus/contributing) explains how to close a gap.
+Two CAPs leave a shape in ledger data that the corpus lacks: CAP-0070's SCP timing setting, created at the protocol 23 upgrade before the history Horizon keeps, and CAP-0083's empty transaction set, which appears only when validators vote to drop one and hasn't yet. 133 reachable cells have never occurred in a scanned ledger; most are result codes nobody has hit and arms no protocol has activated. The [CAP coverage](/corpus/cap-coverage) page lists every CAP with its reason, and [Contributing a fixture](/corpus/contributing) explains how to close a gap.

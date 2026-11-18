@@ -1,0 +1,7 @@
+{
+  "note": "The review the RFP gates publication on: by a stellar-core or platform engineer. Until status is reviewed, the guide says it is a draft, the developers.stellar.org export opens with a warning, and kit/check-results.mjs fails if any page claims a review.",
+  "status": "requested",
+  "requested": "2026-11-18",
+  "request": null,
+  "reviewers": []
+}

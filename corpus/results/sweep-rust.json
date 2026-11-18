@@ -1,0 +1,20 @@
+{
+  "sdk": "rust",
+  "package": "stellar-xdr",
+  "version": "30.0.0",
+  "pubnet": {
+    "checks": 309579,
+    "failures": [],
+    "ledgers": 1001,
+    "passed": 309579,
+    "transactions": 307577
+  },
+  "testnet": {
+    "checks": 3740,
+    "failures": [],
+    "ledgers": 240,
+    "passed": 3740,
+    "transactions": 3260
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44217754813"
+}

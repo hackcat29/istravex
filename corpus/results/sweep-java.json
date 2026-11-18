@@ -1,0 +1,271 @@
+{
+  "sdk": "java",
+  "package": "network.lightsail:stellar-sdk",
+  "version": "6.0.0",
+  "pubnet": {
+    "ledgers": 1001,
+    "transactions": 307577,
+    "checks": 309579,
+    "passed": 309521,
+    "failures": [
+      {
+        "ledger": "59324800",
+        "check": "tx_hash",
+        "detail": "51434e7d39750d3d9326af697f5cf938dd30eb64181fff5831eec337fde41b45"
+      },
+      {
+        "ledger": "59324800",
+        "check": "tx_hash",
+        "detail": "7f268ea136da09462fe2f2e62dc830962260cb8307aada3400eaa37a3413aee0"
+      },
+      {
+        "ledger": "59337200",
+        "check": "tx_hash",
+        "detail": "0b75401d64a9b1e80068c3cba965586d6bb93606d66d12ff5cd23ad6c358c5c0"
+      },
+      {
+        "ledger": "59337200",
+        "check": "tx_hash",
+        "detail": "b2d0c634b00c671a529a40b4665185f1db83e772fec549a61508040bbbfddd8d"
+      },
+      {
+        "ledger": "59424000",
+        "check": "tx_hash",
+        "detail": "d7ecd701646fbfdc5b907a93737778e6e85d503d98d846c3b0d7acb146b3cac1"
+      },
+      {
+        "ledger": "59424000",
+        "check": "tx_hash",
+        "detail": "a9a108b922092e4e64aad921cade9d77af71d810687d728aa5f39b0c08ffbb6b"
+      },
+      {
+        "ledger": "59510800",
+        "check": "tx_hash",
+        "detail": "76e0672e5ad84e9e4824dd5ed812237dab8eaac36f772e3e6a0f3ce5dc0685ee"
+      },
+      {
+        "ledger": "59510800",
+        "check": "tx_hash",
+        "detail": "d8770ed2d4eff6cf190ed841652fc15464ea96f993b94f33bc7df402c9cc8c69"
+      },
+      {
+        "ledger": "59566600",
+        "check": "tx_hash",
+        "detail": "36dcfa8656341b67a398d653ad82400dc944822f405695f3519dd2f85f2c5b37"
+      },
+      {
+        "ledger": "59566600",
+        "check": "tx_hash",
+        "detail": "80def6916342a006a451c4228ad55ec9584adae44a2d0f8284ba899b3f504d8e"
+      },
+      {
+        "ledger": "59690600",
+        "check": "tx_hash",
+        "detail": "83eb00eb8112a2e8830113da4bc3d971d14073929923f4562507b9cb6f2c8366"
+      },
+      {
+        "ledger": "59690600",
+        "check": "tx_hash",
+        "detail": "f8221f8939f0ee7531b606aaca4287ecacbed7464e1dc21b53c95a95e747b6bc"
+      },
+      {
+        "ledger": "59703000",
+        "check": "tx_hash",
+        "detail": "04fcd165716fa54d063a2b2e932a758bd4659951dc01fd294c26a4e910a147c2"
+      },
+      {
+        "ledger": "59703000",
+        "check": "tx_hash",
+        "detail": "4d44da7f74557477f9cd4abe87f02d5cfdd5ab7d1a1aa6f222241e6294c16c58"
+      },
+      {
+        "ledger": "59734000",
+        "check": "tx_hash",
+        "detail": "99504639bc9fbab9f2b648a2e78f5676f274dee03ec70899ddc355fdeb646c0e"
+      },
+      {
+        "ledger": "59734000",
+        "check": "tx_hash",
+        "detail": "b6148a291744b27527aa474160a05ab8499eff1e9922ed746d9d65b0bfe12cf8"
+      },
+      {
+        "ledger": "59771200",
+        "check": "tx_hash",
+        "detail": "08cbdc3b54cfe4b0326820f278621aaff7d686b86c9cfec636b383f8a3954cdd"
+      },
+      {
+        "ledger": "59771200",
+        "check": "tx_hash",
+        "detail": "5a7072b33c6ae49a0bcad1c2051625dffd184625f208b3e3ba407bd79062bfea"
+      },
+      {
+        "ledger": "59820800",
+        "check": "tx_hash",
+        "detail": "c89f8b2031337b8ba51bbf58078501e6e5de1c8c8f4491a7e1b6327ad82f53c6"
+      },
+      {
+        "ledger": "59820800",
+        "check": "tx_hash",
+        "detail": "dd6b390d39ee496538f427b6e520d56f36d554f3862b512c9fc32f4730922d50"
+      },
+      {
+        "ledger": "59827000",
+        "check": "tx_hash",
+        "detail": "33c01f234cfa486d68604a3faf7bae43910481e21aae0e8853ab1d7c1c850a9a"
+      },
+      {
+        "ledger": "59827000",
+        "check": "tx_hash",
+        "detail": "86c1869ff0920e3df3b5240d3d538e5c7c34c9f18f33d20fb6518e63ffc20bfc"
+      },
+      {
+        "ledger": "59858000",
+        "check": "tx_hash",
+        "detail": "c80e34369575d84a80bf4e07a1ce2af0613e4a67c45b43c0e8e2ccb0c5a08457"
+      },
+      {
+        "ledger": "59858000",
+        "check": "tx_hash",
+        "detail": "3085469abfe14f034172c66272bf92f901c23916181b443165884038b8817aa1"
+      },
+      {
+        "ledger": "59913800",
+        "check": "tx_hash",
+        "detail": "0f0910ac76ea6091022cfd379b113961c9da105cb041ff6a7811fa6713891082"
+      },
+      {
+        "ledger": "59913800",
+        "check": "tx_hash",
+        "detail": "91e57f7111f07e6a2e447b263aae13b7c35fa949fb7b9ea8ed61b012af48cb0f"
+      },
+      {
+        "ledger": "59951000",
+        "check": "tx_hash",
+        "detail": "33205b5c5551fa3b55260995806fcee37b905c33b8e8848dc6cdb104e32031ea"
+      },
+      {
+        "ledger": "59951000",
+        "check": "tx_hash",
+        "detail": "480c889739e7b9f766e9592634347fde96e0f47b4e8f04be1df3b43fcfb2f94d"
+      },
+      {
+        "ledger": "60298200",
+        "check": "tx_hash",
+        "detail": "b799d8b2826bcb5737e49a62f17bdbafaf62d6a815f994e5cfe5a6634ffad977"
+      },
+      {
+        "ledger": "60298200",
+        "check": "tx_hash",
+        "detail": "72917e76d355897b6eb3689f711006d117f8b79c9477cf8da39d1fd63f4fbf97"
+      },
+      {
+        "ledger": "60316800",
+        "check": "tx_hash",
+        "detail": "cf6aba67a35bda85a6a9e3050e3e4d839104e5e458080f3ccfbd2a72e63c5abc"
+      },
+      {
+        "ledger": "60316800",
+        "check": "tx_hash",
+        "detail": "19369d8c2caff31e59fcef6739fb6322c73854a6e29f5c961b70761c590c1129"
+      },
+      {
+        "ledger": "60329200",
+        "check": "tx_hash",
+        "detail": "d763c45ef5f3ae496bd35e21a3901bd4f5e3840e1c5bd9b21d586047dc5925c0"
+      },
+      {
+        "ledger": "60329200",
+        "check": "tx_hash",
+        "detail": "d6a6dcfbec2f2c5624ab71db92894678aea5d96b600d2c6fa264e79a8a879b3d"
+      },
+      {
+        "ledger": "60329200",
+        "check": "tx_hash",
+        "detail": "b2febf579706961c43692a96c4db7f22dd6f3d226cc75f658c2391bd7facebaa"
+      },
+      {
+        "ledger": "60329200",
+        "check": "tx_hash",
+        "detail": "8dae4fab4f35a610b4f5b51898558cf69883fe0a12fadaeb04cbe0c018bd60a5"
+      },
+      {
+        "ledger": "60484200",
+        "check": "tx_hash",
+        "detail": "eeaec0757e5eb01a06396c7663dedcdc1badb8acb2dac87bae01053038c7951a"
+      },
+      {
+        "ledger": "60484200",
+        "check": "tx_hash",
+        "detail": "efa8694d992e24c237163f926ec78fe07ecd90ef5d8e1c0f328351498149a62b"
+      },
+      {
+        "ledger": "60732200",
+        "check": "tx_hash",
+        "detail": "f0f75afe6f492958ddccc7882ba1fe5c3ebd9f5d3abc3888033a885893f44b47"
+      },
+      {
+        "ledger": "60732200",
+        "check": "tx_hash",
+        "detail": "1f23cd3fa21ab5bd2f4b1bd3eea63efd691e09ab06c2eb9c1f2c9752a569a47d"
+      },
+      {
+        "ledger": "60874800",
+        "check": "tx_hash",
+        "detail": "d46e9f2fc86801b5d22fb486feab572163e6550977f8fca2e93585560689304c"
+      },
+      {
+        "ledger": "60874800",
+        "check": "tx_hash",
+        "detail": "d25fc540e36ac827afccfc3527f7bc7cd8c494211c7a46a679478cb8e0901efd"
+      },
+      {
+        "ledger": "60893400",
+        "check": "tx_hash",
+        "detail": "3d7512d38f21f233119625ecc7a91f615ecffe1c86f7ff6b41009278149898da"
+      },
+      {
+        "ledger": "60893400",
+        "check": "tx_hash",
+        "detail": "7ec63342e587372e3638b606da4f2936604af4924f2ab6da92b65f17e5234f0f"
+      },
+      {
+        "ledger": "60992600",
+        "check": "tx_hash",
+        "detail": "cce4e6466499785459ed515d84a6393feee62adb63b308de9f9fb3f20ddff586"
+      },
+      {
+        "ledger": "60992600",
+        "check": "tx_hash",
+        "detail": "aeca4473c44f8ddcff3d11accc66d2446e648b716a45ce618ffa672139e1a8ee"
+      },
+      {
+        "ledger": "60998800",
+        "check": "tx_hash",
+        "detail": "d7b87d632822495b22f09befe5d5d57c09eed8ae4d8aa616ebf5cc9cac6a40fe"
+      },
+      {
+        "ledger": "60998800",
+        "check": "tx_hash",
+        "detail": "ca8d4f6f6e1b3c632f0a96404de1a8aaee63403469964e33747a1e407bda98ee"
+      },
+      {
+        "ledger": "61085600",
+        "check": "tx_hash",
+        "detail": "651b60bb8237d836b9dc83db563af1f771afb06204f087edce37febdc8b4dfb2"
+      },
+      {
+        "ledger": "61085600",
+        "check": "tx_hash",
+        "detail": "0e4d4c506ba63f0dfde511f16bd407125b94ecba1ce91edfa73ee634fc077983"
+      }
+    ]
+  },
+  "testnet": {
+    "ledgers": 240,
+    "transactions": 3260,
+    "checks": 3740,
+    "passed": 3740,
+    "failures": []
+  },
+  "run": "https://github.com/hackcat29/istravex/actions/runs/44217754813"
+}

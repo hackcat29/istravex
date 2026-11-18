@@ -1,0 +1,35 @@
+---
+title: "1. Read effects from metadata, not the envelope"
+sidebar_label: "Effects from metadata"
+sidebar_position: 6
+description: "The envelope is a request. The metadata is the outcome."
+---
+
+:::warning Draft, not reviewed
+
+This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.
+
+:::
+
+A transaction envelope is what someone submitted. By the time it's in a ledger, a lot has happened that the envelope can't tell you: who actually paid, what was actually charged, which entries were created, which accounts were touched by a contract.
+
+| Question | Wrong source | Right source | Evidence |
+|---|---|---|---|
+| Who paid the fee? | `Envelope.SourceAccount()` | The fee-bump fee account, i.e. the account debited in fee changes | `cap15-fee-bump-pubnet-0001`, IX003 |
+| How much was charged? | `Envelope.Fee()` (the bid) | `TransactionResult.FeeCharged` | `cap15-fee-bump-pubnet-0001`, IX003 |
+| Was a trustline created? | A `changeTrust` operation | A `CREATED` trustline entry in the operation's changes | `cap73-sac-trust-*` |
+| Which accounts were affected? | Envelope source + operation destinations, as written | The accounts whose entries changed in meta, as `G…` accounts | `cap27-muxed-max-id-*`, `cap46-muxed-soroban-source-*`, IX003 |
+
+## Measured
+
+The [replay harness](https://docs.istravex.com/tools/replay)'s naive indexer reads effects and participants from the envelope. It gets all nine indexed cases wrong: the muxed IDs, the largest amount and the fee-bump are incorrect, the participants include `M…` addresses, and the SAC trustlines (one of them a real mainnet USDC `trust()`) are dropped. The reference indexer reads metadata and gets all nine right. So does today's [wallet-backend](https://docs.istravex.com/pilots/wallet-backend), on all eleven fixtures it indexes, and the commits before its September fixes get exactly these cases wrong.
+
+## Participants are accounts
+
+A participant is an account whose ledger entries the transaction touched, so take participants from the meta's changed entries, as `G…` accounts. Building them from the envelope's addresses as written brings in `M…` forms, and the same account then appears twice. In wallet-backend that halted ingestion ([#716](https://github.com/stellar/wallet-backend/issues/716), fixed in [#753](https://github.com/stellar/wallet-backend/pull/753)); its Soroban participants now come from executed meta, not the authorization tree ([9538b3c](https://github.com/stellar/wallet-backend/commit/9538b3caeaebfeb3d034146c0ce9643c3066cf8a)).
+
+## Not every envelope read is wrong
+
+An operation with no source of its own runs as the *inner* transaction's source, fee-bump or not. So `Envelope.SourceAccount()` is the right fallback for an operation's source. [IX003](https://docs.istravex.com/tools/lint/ix003) only fires on it inside fee logic for exactly this reason: a broader version of the rule flagged two correct fallbacks in wallet-backend. Its participant check is just as narrow: it flags a muxed account's `M…` form only in participant code.
+
+The test is simple. If you're asking "what did the submitter say?", the envelope is fine. If you're asking "what happened?", read the meta.

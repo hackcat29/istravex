@@ -3,6 +3,28 @@ title: Changelog
 description: Releases of the kit, corpus and API.
 ---
 
+<Update label="v1.3.0" description="18 November 2026">
+  Every XDR shape real traffic uses, seven SDKs, a sweep over real transactions, and seven new defects.
+
+  **Corpus**
+  - [`shape-scan`](/corpus/cell-coverage) records the XDR cells (union arms, flag bits, contract cost types) every transaction and ledger exercises; scans of 400,311 mainnet and testnet ledgers (59.6 million transactions) are committed in `corpus/scan/`
+  - 116 fixtures chosen by set cover cover all 470 cells the networks use, with the generic `tx` and `ledger` profiles: bytes from the canonical ledger, expected values from Horizon. 137 fixtures in all: 95 mainnet, 30 testnet
+  - [CAP coverage](/corpus/cap-coverage) by cells: 45 of the 47 live CAPs with a ledger shape, every other CAP with the reason it leaves none; [`corpus/cells.json`](/corpus/cell-coverage)
+  - The testnet data lake, byte-stable unlike RPC, and protocol 30 shapes from it: CAP-0084 muxed contract addresses and CAP-0088 millisecond close times
+
+  **Conformance**
+  - Python `stellar-xdr` 0.2.1 and `stellar-php-sdk` 1.18.0 join JavaScript, Go, Rust, Python `stellar-sdk` and Java: seven SDKs, 2,810/2,816 checks, every failure a finding
+  - [The sweep](/tools/sdk-runners#sweeping-real-traffic): Go, Rust, JavaScript, Python and Java over 1,241 whole ledgers, each round-tripped byte for byte and each of 310,837 transaction hashes matched against stellar-core's
+
+  **Pilots**
+  - wallet-backend: 123/123, over RPC and the data lake; stellar-etl v2.8.34: 119/123, the misses still its open #454 and #460
+
+  **Findings**
+  - Seven new defects: F-0023 (java-stellar-sdk) and F-0024 (stellar-php-sdk) compute the wrong hash for transactions whose `PRECOND_V2` fields are all defaults; F-0021, PHP muxed IDs above 2⁶³ come back negative; F-0022, PHP decodes past XDR maximums; drafted for filing. F-0020: js-stellar-sdk before 17.3.0 can't decode protocol 30 XDR
+  - [RFP sightings](/corpus/sightings): 13 of 18 reproduced before and after their fixes, 3 exercised, 2 out of reach with the reason; new reproductions for rs-stellar-xdr #581 and #598, rs-soroban-sdk #2099 and js-xdr #165
+  - Apache-2.0 `LICENSE` and `NOTICE` files
+</Update>
+
 <Update label="v1.2.0" description="15 November 2026">
   Mainnet-first, five SDKs, a second upstream indexer, and a security policy.
 
@@ -51,7 +73,7 @@ description: Releases of the kit, corpus and API.
   - Calibrated on wallet-backend: clean on main, firing on the commits before #753 (IX003) and 9538b3c (IX002); the self-test seeds six violations
 
   **Guide**
-  - New: [What stellar-core validates](/guide/validated-fields) (field by field, checked against the corpus in CI), [Recommended limits](/guide/limits), [Addresses and strkeys](/guide/addresses); rules 1 and 8 updated; all reviewed and confirmed by a Stellar Core engineer
+  - New: [What stellar-core validates](/guide/validated-fields) (field by field, checked against the corpus in CI), [Recommended limits](/guide/limits), [Addresses and strkeys](/guide/addresses); rules 1 and 8 updated
   - Exports as Docusaurus Markdown for developers.stellar.org
 
   **Findings**
@@ -88,7 +110,7 @@ description: Releases of the kit, corpus and API.
 
   **Tools and guide**
   - istravex-lint with IX001–IX003, plus a reusable workflow and composite action
-  - Indexer hardening guide, reviewed by a Stellar Core engineer
+  - Indexer hardening guide (draft)
 
   **Hosting**
   - Site on Cloudflare Workers static assets at `istravex.com`, deployed with wrangler

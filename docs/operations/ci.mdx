@@ -9,13 +9,22 @@ description: What runs on every push, and the templates for running Istravex in 
 
 | Job | What it proves |
 |---|---|
-| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JS, Go and Rust runners pass; four JavaScript releases fail exactly the checks their findings explain; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; the mock RPC serves a 542 MB corpus under a 128 MB heap; the data-lake export matches the public lake; the guide's field table agrees with the corpus; the guide exports for developers.stellar.org; `src/data/corpus.json`, the docs tables and the API spec are up to date |
+| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`) and Java runners pass, and the committed PHP, sweep and sighting results hold; four JavaScript releases fail exactly the checks their findings explain; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; the mock RPC serves a 542 MB corpus under a 128 MB heap; the data-lake export matches the public lake; the guide's field table agrees with the corpus; the guide exports for developers.stellar.org; `src/data/corpus.json`, the docs tables and the API spec are up to date |
 | **Generate on pinned stellar-core** (×3: standalone, testnet, pubnet passphrases) | Installs SDF's stellar-core 30.0.0 package. Standalone: regenerates the committed fixtures on Linux and requires the same bytes, then verifies and runs them. Testnet and pubnet: two generations must match each other, and the result verifies and passes every runner |
 | **Probe contract rebuilds byte for byte** | The committed Wasm is exactly what the pinned toolchain builds from the committed source |
 | **API tests and container** | The API's tests pass, including the check that every OpenAPI path is served; the image builds and answers correctly while running read-only and unprivileged |
 | **istravex-lint action (self-test)** | The action passes on clean code and fails with exactly six findings on the seeded violations |
 | **Upstream pilot** | wallet-backend main indexes every fixture correctly over RPC and over the data lake; each commit before an upstream fix fails and each fix passes; every lint finding is triaged |
 | **Site build and e2e** | The site builds, `wrangler deploy --dry-run` accepts the Cloudflare config, and the Playwright suite passes on desktop and mobile |
+
+Four more workflows do the heavy lifting on GitHub's runners, close to SDF's data lake. Their results are committed, and the gate above checks them:
+
+| Workflow | When | What |
+|---|---|---|
+| [`shape-scan.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/shape-scan.yml) | By hand, after a protocol upgrade | The XDR cells every transaction and ledger in a range exercises, in 16 shards ([cell coverage](/corpus/cell-coverage)) |
+| [`sweep.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sweep.yml) | By hand | Five SDKs over a thousand mainnet ledgers and the protocol 30 testnet ones: round-trip and stellar-core's transaction hashes ([sweep](/tools/sdk-runners#sweeping-real-traffic)) |
+| [`sdk-runners.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sdk-runners.yml) | When the corpus or the PHP runner changes | The PHP runner, whose toolchain the main job doesn't set up |
+| [`sightings.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sightings.yml) | When a reproduction changes | RFP sightings that need upstream builds, before and after each fix ([sightings](/corpus/sightings)) |
 
 ## How long it takes
 
@@ -28,7 +37,7 @@ The jobs run in parallel, so a push is green as fast as the slowest one. Measure
 | Upstream pilot | about 4 minutes: wallet-backend builds at main and at seven other commits |
 | Everything else | under 2 minutes each |
 
-So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 20 fixtures and 58 ledgers.
+So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 137 fixtures and 157 ledgers.
 
 `node kit/check-results.mjs` is the gate inside the kit jobs. It checks results by substance (every check passed, every frame exact, every verdict correct) rather than diffing result files, which record machine-specific runtime versions.
 

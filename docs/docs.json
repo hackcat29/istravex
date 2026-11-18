@@ -91,6 +91,7 @@
               "corpus/generating",
               "corpus/goldens",
               "corpus/cap-coverage",
+              "corpus/cell-coverage",
               "corpus/sightings",
               "corpus/contributing"
             ]

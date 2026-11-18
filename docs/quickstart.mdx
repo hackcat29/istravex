@@ -50,12 +50,12 @@ You can be useful with Istravex in three ways, depending on how much you want to
         node kit/goldens/fetch.mjs   # once: stellar-core's golden ledgers (~80 MB)
         npm run corpus:run
         ```
-        This verifies every fixture against its canonical ledger, runs the JavaScript, Go and Rust SDK checks, round-trips stellar-core's golden ledgers, replays the corpus through the reference indexers, and regenerates `src/data/corpus.json`.
+        This verifies every fixture against its canonical ledger, runs every SDK's checks, round-trips stellar-core's golden ledgers, replays the corpus through the reference indexers, and regenerates `src/data/corpus.json`.
       </Step>
       <Step title="Confirm it's green">
         ```bash
         node kit/check-results.mjs
-        # all green: 20 fixtures; 19 findings, 14 reproduced
+        # all green: 137 fixtures; 24 findings, 19 reproduced; RFP sightings 13/18 reproduced
         ```
       </Step>
       <Step title="Optional: the upstream pilot and the audit">

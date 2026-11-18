@@ -1,0 +1,46 @@
+---
+title: "Addresses and strkeys (SEP-0023)"
+sidebar_label: "Addresses and strkeys"
+sidebar_position: 4
+description: "Which strkey forms you'll meet in ledger data, what each one encodes, and the two mistakes that come from treating them as interchangeable."
+---
+
+:::warning Draft, not reviewed
+
+This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.
+
+:::
+
+A strkey is a typed binary key, base32-encoded with a checksum ([SEP-0023](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0023.md)). The first character tells you the type. They are not all accounts, they are not all 32 bytes, and their text order is not their byte order.
+
+## The forms
+
+| First character | Type | Binary payload | Strkey length | What to store |
+|---|---|---|---|---|
+| `G` | Account (ed25519 public key) | 32 bytes | 56 | The account. |
+| `M` | Muxed account | 32-byte key + 8-byte ID | 69 | The `G` account **and** the 64-bit ID, separately ([Rule 4](./muxed-accounts.md)). Never use the `M` form as an account identity. |
+| `P` | Signed-payload signer | 32-byte key + 4-byte length + 1–64-byte payload, padded | up to 165 | The whole key, payload included ([Rule 5](./signed-payload-signers.md)). Up to 101 bytes binary. |
+| `C` | Contract | 32-byte hash | 56 | The contract. |
+| `T` | Pre-authorized transaction signer | 32-byte hash | 56 | A signer, not an account. |
+| `X` | Hash(x) signer | 32-byte hash | 56 | A signer, not an account. |
+| `L` | Liquidity pool | 32-byte pool ID | 56 | The pool. |
+| `B` | Claimable balance | 1-byte type + 32-byte hash | 58 | The balance ID. |
+| `S` | Secret seed | 32 bytes | 56 | Never. It's a private key. |
+
+SEP-0023 also reserves `W` for muxed contracts. Decoders must reject a strkey that doesn't re-encode to the same string: some base32 libraries accept non-canonical input.
+
+## Mistake 1: one column for every key
+
+A database column sized for a 32-byte account (or a 33-byte version-byte-plus-key) can't hold an `M` (40 bytes) or a `P` (up to 101 bytes). [wallet-backend#729](https://github.com/stellar/wallet-backend/pull/729) is what happens next: the first `P…` signer on testnet failed to encode, the persistence transaction rolled back with the cursor, and ingestion retried the same ledger forever. The kit reproduces it on the commit before the fix ([sightings](https://docs.istravex.com/pilots/wallet-backend#before-and-after-each-upstream-fix)).
+
+Decide per column what it holds. An account column takes `G` only, so reduce `M` to its `G` account first. A signer column takes every signer type, at its full length.
+
+## Mistake 2: sorting by the text
+
+Base32 puts `2`–`7` after `A`–`Z` in value, but ASCII puts them before. Two issuers can sort one way as strkeys and the other way as bytes. The network orders assets by the issuer's key bytes. Before 17.2.1, js-stellar-sdk ordered them by text ([#1766](https://github.com/stellar/js-stellar-sdk/pull/1766)): `TransactionBuilder.fromXDR` threw on a valid pool-share trustline whose issuers fell the wrong way, and the pool ID couldn't be computed.
+
+[`cap38-pool-issuer-order-local-0001`](https://docs.istravex.com/corpus/fixtures) is a real pool-share trustline whose two issuers were chosen to sort in opposite orders. Sort keys as bytes, or compare with your SDK's asset comparison (17.2.1 and later in JavaScript).
+
+## Mistake 3: equal accounts that compare unequal
+
+`GA…` and `MA…` for the same account are different strings. Participant sets, deduplication and primary keys built from strings treat them as two accounts, until a database reduces both to the same key and refuses the second. That's [wallet-backend#716](https://github.com/stellar/wallet-backend/issues/716): a single cheap `ExtendFootprintTtl` from a muxed source halted ingestion. [IX003](https://docs.istravex.com/tools/lint/ix003) flags the `M` form used as a participant in Go code.

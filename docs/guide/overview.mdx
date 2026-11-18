@@ -4,9 +4,9 @@ sidebarTitle: Overview
 description: What the network validates, what it passes through, and nine rules for turning Stellar ledger data into records correctly, each backed by evidence.
 ---
 
-<Check>
-Reviewed and confirmed by a Stellar Core engineer: version 1.0 (the nine rules and the checklist) on 14 November 2026, and version 1.1 ([validated fields](/guide/validated-fields), [limits](/guide/limits), [addresses](/guide/addresses), and the edits to rules 1 and 8) on 15 November 2026.
-</Check>
+<Warning>
+**Draft, not yet reviewed.** The RFP gates publication on review by a stellar-core or platform engineer, and that review hasn't happened. It has been requested publicly; [what a reviewer is asked to check](https://github.com/hackcat29/istravex/blob/main/kit/guide/REVIEW.md) lists the statements that rest on corpus evidence and the ones that rest on a source citation alone. The field table is checked against the corpus on every CI run either way.
+</Warning>
 
 This guide is for anyone writing code that turns Stellar ledger data into records: indexers, explorers, wallets, custody systems, analytics pipelines. It applies in any language. Where a rule can be checked mechanically in Go, [istravex-lint](/tools/lint) does it.
 

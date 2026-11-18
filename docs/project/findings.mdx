@@ -16,22 +16,33 @@ Every failure the kit produces on purpose maps to a finding, and CI enforces it 
 
 - **SDK releases.** A check that fails on an earlier [JavaScript release](/tools/sdk-runners#earlier-javascript-releases) must be listed in some finding's `checks`, and every check a finding lists must really fail on some release and pass on the current one.
 - **wallet-backend commits.** Each commit [before an upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix) must fail its fixtures (or trip its lint rule) and the fix must pass, and every failure must belong to a finding.
-- **The current pins** (JavaScript 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0, wallet-backend main) must pass everything. A new failure there is a new finding: triage it, give it a severity, file it, and add it to the file before CI goes green.
+- **The current pins** (all seven SDKs, wallet-backend main, stellar-etl's latest release) must pass everything except checks a finding explains as a known bug with no fixed release yet.
+- **The sweeps.** A check that fails in a [sweep over real traffic](/tools/sdk-runners#sweeping-real-traffic) must belong to a finding.
+- **New failures.** A new failure on a current pin is a new finding: triage it, give it a severity, file it, and add it to the file before CI goes green.
 - **Shape.** `findings.json` validates against [`corpus/findings.schema.json`](https://github.com/hackcat29/istravex/blob/main/corpus/findings.schema.json): a fixed or open finding needs an upstream link; one marked **to-file** needs the draft text.
 
 ## Severity
 
 <Severity />
 
-## Filed from this work
+## New defects
 
-Three findings are new, found while building the kit, and filed upstream on 15 November 2026:
+Seven findings are defects the kit found that nobody had reported. Three were filed upstream on 15 November 2026; four, found on 18 November when the PHP runner and the sweep came online, are drafted (the text is in each finding's `draft`) and are being filed with their maintainers.
+
+**Drafted, to file:**
+
+- **F-0023**, java-stellar-sdk 6.0.0, **high**: a transaction whose `PRECOND_V2` fields are all defaults is rebuilt as `PRECOND_TIME`, so `hashHex()` is wrong (`035f2643…` for mainnet transaction `68f96059…`) and signing it signs a different transaction. The sweep finds 58 such transactions in 307,577 mainnet transactions; Go, JavaScript and Rust hash every one correctly. Same root as [java-stellar-sdk#837](https://github.com/lightsail-network/java-stellar-sdk/issues/837), with a trigger its proposed fix doesn't cover.
+- **F-0024**, stellar-php-sdk 1.18.0, **high**: the same defect in PHP, with the same wrong hash.
+- **F-0021**, stellar-php-sdk 1.18.0, medium: `MuxedAccount::getId()` returns IDs above 2⁶³ as negative numbers; the destination of a real mainnet payment, 18067157809773112502, reads as -379586263936439114.
+- **F-0022**, stellar-php-sdk 1.18.0, low: the decoder accepts 101 operations and a 29-byte memo, past their XDR maximums.
+
+**Filed:**
 
 - **F-0010**, [stellar-core#5507](https://github.com/stellar/stellar-core/issues/5507): the order of ledger entry changes inside an operation's meta differs between runs on identical input. Three generations of the same corpus give three orders for one operation, with identical ledger headers.
 - **F-0011**, [stellar-core#5508](https://github.com/stellar/stellar-core/issues/5508): `get-settings-upgrade-txs` uses a random salt, so standalone networks can't be reproduced without rewriting and re-signing its transactions.
 - **F-0012**, [js-stellar-sdk#1906](https://github.com/stellar/js-stellar-sdk/issues/1906): `TransactionBuilder` refuses a muxed source or a memo on every Soroban transaction; stellar-core refuses them only on `InvokeHostFunction`.
 
-They're low severity: they affect reproducibility and SDK ergonomics, not ingestion correctness.
+The three filed ones are low severity: they affect reproducibility and SDK ergonomics, not ingestion correctness.
 
 ## Notes behind the findings
 
@@ -55,11 +66,11 @@ They're low severity: they affect reproducibility and SDK ergonomics, not ingest
 ## About the tools
 
 <AccordionGroup>
-  <Accordion title="All three SDKs are correct on everything we threw at them">
-    JavaScript, Go and Rust pass all 54 fixture checks and round-trip all 15,306 golden frames byte for byte. The risk isn't in the SDKs' decoding. It's in what applications do with the values next. → [SDK runners](/tools/sdk-runners)
+  <Accordion title="JavaScript, Go and Rust are correct on everything we threw at them">
+    The three SDKs the RFP names pass every check on all 137 fixtures, round-trip all 15,306 golden frames, and hash every one of 310,837 real transactions the way stellar-core did. The risk isn't in their decoding. It's in what applications do with the values next, and in the high-level layers of the other SDKs. → [SDK runners](/tools/sdk-runners)
   </Accordion>
   <Accordion title="wallet-backend already does it right">
-    SDF's wallet-backend indexes all eleven fixtures it reads correctly, over RPC and over the data lake. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
+    SDF's wallet-backend indexes all 123 fixtures it reads correctly, over RPC and over the data lake. The linter found one latent issue, an unvalidated memo helper that nothing calls yet. → [wallet-backend pilot](/pilots/wallet-backend)
   </Accordion>
   <Accordion title="stellar-core 30.0.0 standalone quirks">
     A bare `/manualclose` can abort core on a timer assertion; the HTTP query server matches header names case-sensitively and closes every connection; the first Soroban settings upgrade is larger than the starting limit it's stored under. All have workarounds. → [Generating](/corpus/generating#stellar-core-quirks-it-works-around)

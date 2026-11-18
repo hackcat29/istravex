@@ -200,7 +200,7 @@ export const kit = {
       docs: `${DOCS_URL}/tools/lint`,
       n: '04',
       title: 'Go linter & guide',
-      body: 'Three go/analysis rules: clean on wallet-backend main, firing on the code its upstream fixes removed. And a hardening guide reviewed by a Stellar Core engineer.',
+      body: 'Three go/analysis rules: clean on wallet-backend main, firing on the code its upstream fixes removed. And a hardening guide, a draft awaiting review by a stellar-core engineer.',
     },
     {
       id: 'pilot',
@@ -311,8 +311,8 @@ export const milestones = {
     {
       n: '03',
       title: 'Upstream pilot and release',
-      deliver: ['wallet-backend findings', 'Reviewed guide', 'Tagged release', 'CI templates'],
-      accept: 'Findings and upstream links are public, the guide has engineering review, and a tagged release ships.',
+      deliver: ['wallet-backend findings', 'Hardening guide', 'Tagged release', 'CI templates'],
+      accept: 'Findings and upstream links are public, the guide is up for engineering review, and a tagged release ships.',
     },
   ],
 };

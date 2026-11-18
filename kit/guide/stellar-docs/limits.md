@@ -1,0 +1,78 @@
+---
+title: "Recommended limits"
+sidebar_label: "Limits"
+sidebar_position: 3
+description: "Concrete depth and size caps for code that walks Stellar data, and where each number comes from."
+---
+
+:::warning Draft, not reviewed
+
+This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.
+
+:::
+
+Rule 8 says to bound every walk over recursive data. This page says how far. Each number comes from a limit the network itself enforces, so a walker with these caps accepts everything a valid ledger can contain and nothing much beyond it.
+
+## The numbers
+
+| What you bound | Recommended cap | Why this number |
+|---|---|---|
+| Decoding untrusted XDR: nesting | **500 levels** | The Soroban host decodes with exactly this (`DEFAULT_XDR_RW_LIMITS.depth` in soroban-env-host). go-stellar-sdk's default is 1,500; Rust's `stellar-xdr` has none unless you pass `Limits`. |
+| Decoding untrusted XDR: bytes | **The input's length** | A decoder should never read more than it was given. The host's ceiling is 32 MiB. In Rust, `Limits { depth: 500, len: input.len() }`. |
+| Walking an `ScVal` or an authorization tree: depth | **100 levels** | The host refuses deeper values (`DEFAULT_HOST_DEPTH_LIMIT`), so nothing valid that it executed goes past 100. |
+| Walking an `ScVal` or an authorization tree: nodes | **33,000 per transaction** | A transaction is at most 132,096 bytes on mainnet (`tx_max_size_bytes`, November 2026), and the smallest `ScVal` is 4 bytes. Read the setting from the network rather than hard-coding it: it can change. |
+| Strings you store | **The XDR maximum** | Memo text ≤ 28 bytes, symbols ≤ 32 bytes. Reject or truncate longer input before it reaches storage; validate UTF-8 separately ([Rule 7](./untrusted-strings.md)). |
+| One page of ledgers | **A byte budget, not a count** | A pubnet ledger is about 1.4 MB of metadata; 200 of them is 280 MB. Istravex's mock RPC stops a page at 16 MiB and lets the cursor carry on. |
+
+## In code
+
+```go title="Go"
+const maxDepth, maxNodes = 100, 33_000
+
+type walker struct{ nodes int }
+
+func (w *walker) walk(inv xdr.SorobanAuthorizedInvocation, depth int) error {
+	if depth > maxDepth {
+		return errTooDeep
+	}
+	if w.nodes++; w.nodes > maxNodes {
+		return errTooLarge
+	}
+	for _, sub := range inv.SubInvocations {
+		if err := w.walk(sub, depth+1); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+```
+
+```rust title="Rust"
+use stellar_xdr::{Limits, ReadXdr, TransactionEnvelope};
+
+// Untrusted bytes: the host's depth, and never more than we were given.
+let env = TransactionEnvelope::from_xdr(&bytes, Limits { depth: 500, len: bytes.len() })?;
+```
+
+```js title="JavaScript"
+// An explicit stack trades the call stack for the heap: it still needs both caps.
+function walk(root, { maxDepth = 100, maxNodes = 33_000 } = {}) {
+  const stack = [[root, 1]];
+  let nodes = 0;
+  while (stack.length) {
+    const [inv, depth] = stack.pop();
+    if (depth > maxDepth) throw new Error('authorization tree too deep');
+    if (++nodes > maxNodes) throw new Error('authorization tree too large');
+    for (const sub of inv.subInvocations) stack.push([sub, depth + 1]);
+  }
+  return nodes;
+}
+```
+
+## Test it against the corpus
+
+- [`cap46-nested-auth-local-0001`](https://docs.istravex.com/corpus/fixtures) is a real six-level authorization tree. Every walker should accept it.
+- [`cap46-scval-limits-synthetic-0001`](https://docs.istravex.com/corpus/fixtures) holds an `ScVal` claiming 2³² − 1 elements in 12 bytes, and a vector nested 2,000 deep. A decoder with the caps above refuses both immediately; one that reserves capacity from the length prefix tries to allocate for four billion elements.
+- [`base-over-max-length-synthetic-0001`](https://docs.istravex.com/corpus/fixtures) is a real envelope with a 101st operation, and one with a 29-byte memo. Both must fail to decode.
+
+All three pinned SDKs (JavaScript 17.4.0, go-stellar-sdk 0.9.0, stellar-xdr 30.0.0 with the limits above) pass all of these. [IX002](https://docs.istravex.com/tools/lint/ix002) flags Go walkers with no depth or size cap.

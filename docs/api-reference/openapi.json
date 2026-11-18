@@ -4978,7 +4978,11 @@
                     "sightings-js-xdr-165",
                     "sightings-rs-stellar-xdr-581",
                     "sightings-rs-stellar-xdr-598",
-                    "sightings-soroban-sdk-2099"
+                    "sightings-soroban-sdk-2099",
+                    "sweep-go",
+                    "sweep-java",
+                    "sweep-javascript",
+                    "sweep-rust"
                   ]
                 }
               }

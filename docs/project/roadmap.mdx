@@ -9,7 +9,7 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 
 | Deliverable | Where |
 |---|---|
-| Starter corpus | [20 fixtures, 6 CAPs, 14 patterns](/corpus/fixtures): 6 from mainnet, 18 verified against canonical ledgers, 2 synthetic |
+| Corpus | [137 fixtures](/corpus/overview): 95 from mainnet, 30 from testnet, 10 generated, 2 synthetic; every one of the [470 XDR cells](/corpus/cell-coverage) real traffic uses, and [45 of the 47 CAPs](/corpus/cap-coverage) with a ledger shape |
 | Fixture generator | [Pinned stellar-core generator](/corpus/generating): byte-reproducible, any passphrase, run in CI on every push |
 | Manifest schema | [`corpus/manifest.schema.json`](/corpus/manifest) |
 | Reference adapter | [Mock RPC](/tools/mock-rpc), [data lake](/tools/data-lake) and [replay](/tools/replay); the wallet-backend adapter |
@@ -20,7 +20,7 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 
 | Deliverable | Where |
 |---|---|
-| Five SDKs in CI | [SDK runners](/tools/sdk-runners) for JavaScript, Go, Rust, Python and Java, plus [stellar-core goldens](/corpus/goldens) |
+| Seven SDKs in CI | [SDK runners](/tools/sdk-runners) for JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`), Java and PHP, a [sweep](/tools/sdk-runners#sweeping-real-traffic) over 310,837 real transactions, and [stellar-core goldens](/corpus/goldens) |
 | Per-fixture results matrix | `corpus/results/`, the [API](/api-reference/introduction), and the site |
 | Go linter, three rules | [istravex-lint](/tools/lint) |
 
@@ -30,12 +30,12 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 
 | Deliverable | Where |
 |---|---|
-| Upstream pilots | [wallet-backend](/pilots/wallet-backend) (11/11) and [stellar-etl](/pilots/stellar-etl) (7/11, the rest its open issues), [findings report](/project/findings) |
-| Reviewed guide | [Hardening guide](/guide/overview), reviewed by a Stellar Core engineer; an independent SDF review is part of tranche 2 |
-| Tagged release | `v1.0.0`, `v1.1.0`, then `v1.2.0` on GitHub |
+| Upstream pilots | [wallet-backend](/pilots/wallet-backend) (123/123) and [stellar-etl](/pilots/stellar-etl) (119/123, the rest its open issues), [findings report](/project/findings) (7 new defects), [RFP sightings](/corpus/sightings) (13 of 18 reproduced) |
+| Guide | [Hardening guide](/guide/overview), a draft; review by a stellar-core or platform engineer requested publicly, and part of tranche 2 |
+| Tagged release | `v1.0.0` through `v1.3.0` on GitHub |
 | CI templates | [Reusable workflow and action](/operations/ci#in-your-repository) |
 
-**Acceptance:** findings and upstream links are public, the guide has engineering review, and a tagged release ships.
+**Acceptance:** findings and upstream links are public, the guide is reviewed by an engineer, and a tagged release ships. The review is outstanding: requested, and a tranche 2 deliverable.
 
 ## Against the RFP's reviewer checks
 
@@ -43,12 +43,12 @@ The SCF RFP lists a check for each deliverable. Each one runs in CI.
 
 | Deliverable | Reviewer check | Where it's checked |
 |---|---|---|
-| Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture; four more SDKs alongside) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
+| Corpus and generator | Entries round-trip through rs-stellar-xdr and agree with stellar-core's `--check-lcm` goldens | [SDK runners](/tools/sdk-runners) (stellar-xdr 30.0.0, every fixture; six more SDKs alongside) and [goldens](/corpus/goldens) (15,306/15,306 frames) |
 | Replay harness | The reference adapter reproduces wallet-backend #729, #731 and #716 on pre-fix commits and passes on the fixed ones | [Before and after each upstream fix](/pilots/wallet-backend#before-and-after-each-upstream-fix): all three, plus 9538b3c |
 | Linter | Flags seeded violations; runs clean on current wallet-backend | The [action self-test](/operations/ci) (six seeded findings) and the [pilot](/pilots/wallet-backend#lint) (one triaged latent finding, no live ones) |
-| Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; v1.0 reviewed 14 November, v1.1 on 15 November 2026 |
+| Guide | The field-by-field table agrees with the corpus manifest; reviewed by a core or platform engineer | [What stellar-core validates](/guide/validated-fields), checked by `kit/guide/fields.mjs`; review requested, not yet done |
 | Conformance runner | Reproduces js-stellar-sdk #1766, #1785 and #1789 on pre-fix tags | [Earlier JavaScript releases](/tools/sdk-runners#earlier-javascript-releases): 17.2.0 and 17.2.1 fail, 17.3.0 and 17.4.0 pass |
-| Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs`; stellar-etl, Python and Java failures map to their open upstream issues |
+| Findings reports | Every failure maps to a filed issue | [Findings](/project/findings), enforced by `kit/check-results.mjs`; known failures map to their upstream issues, and the four new defects found on 18 November to drafts being filed |
 
 ## The funded plan
 
@@ -56,22 +56,22 @@ What's above is built and isn't part of the request. The award would fund six mo
 
 | Work | Hours | Cost |
 |---|---|---|
-| CAP coverage from 5 to 12 of 40, starting with state archival (CAP-0062, CAP-0066), unified events (CAP-0067), claimable balances (CAP-0023) and clawback (CAP-0035) | 260 | $19,500 |
-| Mainnet capture: a scheduled scan, a mainnet fixture for every pattern mainnet has, a monthly rare-pattern report | 140 | $10,500 |
-| Swift, Dart and PHP runners; release matrices for Go, Rust, Python and Java | 200 | $15,000 |
-| Pilots: Horizon's ingestion processors and one community indexer | 160 | $12,000 |
+| Generated cases: a value of every XDR type and arm, and hostile variants of each (non-zero padding, a bool or optional flag other than 0 or 1, a length over the maximum, an absurd length prefix, trailing bytes, truncation), run through every SDK with stellar-core's own decoder as the oracle | 200 | $15,000 |
+| Four more SDKs: Swift (`stellar-ios-mac-sdk`), Dart (`stellar_flutter_sdk`), .NET (`dotnet-stellar-sdk`) and Kotlin; high-level checks on the hand-written patterns for every SDK; release matrices for all of them | 220 | $16,500 |
+| Indexers: Horizon's ingestion processors, SDF's token transfer processor (CAP-0067 events), and one community indexer chosen with SCF reviewers | 180 | $13,500 |
+| Network coverage that keeps up: the shape scan and the sweep on every week's new ledgers, fixtures captured automatically for any new cell, a monthly report; CAP-0070 and CAP-0083 closed | 140 | $10,500 |
 | Lint rules IX004 (amounts through floats), IX005 (effects from operations, not metadata), IX006 (unbounded strkey and memo decoding) | 100 | $7,500 |
-| Guide v2, an independent SDF review, a pull request to developers.stellar.org | 80 | $6,000 |
+| Guide v2 with the new findings, the engineer review the RFP requires, a pull request to developers.stellar.org | 80 | $6,000 |
 | The next protocol upgrade, end to end | 120 | $9,000 |
-| Maintenance: triage, upstream follow-up, dependency updates, releases | 120 | $9,000 |
+| Maintenance: filing and following every finding upstream (four drafted today), triage, dependency updates, releases | 140 | $10,500 |
 | Infrastructure | | $1,500 |
 | **Total** | **1,180** | **$90,000** |
 
 | Tranche | Share | Amount | Due | Deliverables |
 |---|---|---|---|---|
-| T0 · Award | 10% | $9,000 | On award | The plan as GitHub milestones; the mainnet scan running weekly |
-| T1 · MVP | 20% | $18,000 | Month 2 | CAPs 5 → 8; a mainnet fixture for every pattern mainnet has; the first rare-pattern report; the Swift runner; IX004 |
-| T2 · Testnet (public beta) | 30% | $27,000 | Month 4 | CAPs 8 → 12; Dart and PHP runners; every SDK's release matrix; the Horizon pilot; IX005 and IX006; guide v2 reviewed by SDF and proposed to developers.stellar.org |
+| T0 · Award | 10% | $9,000 | On award | The plan as GitHub milestones; the four drafted findings filed upstream; the weekly scan and sweep scheduled |
+| T1 · MVP | 20% | $18,000 | Month 2 | Generated and hostile cases for every XDR type through all seven SDKs, judged by stellar-core; the Swift runner; IX004 |
+| T2 · Testnet (public beta) | 30% | $27,000 | Month 4 | Dart, .NET and Kotlin runners; release matrices for every SDK; the Horizon and token-transfer-processor pilots; IX005 and IX006; the guide reviewed by a stellar-core or platform engineer and proposed to developers.stellar.org |
 | T3 · Mainnet (production) | 40% | $36,000 | Month 6 | The next protocol upgrade end to end; the community-indexer pilot; every open finding followed up; v2.0.0; a six-month maintenance report |
 
-Meanwhile, the issues filed from this work ([findings](/project/findings#filed-from-this-work)) get regression checks as their fixes land, and every protocol release is covered within two weeks of its mainnet vote ([how](/project/maintenance#on-a-protocol-upgrade)).
+Meanwhile, the issues filed from this work ([findings](/project/findings#new-defects)) get regression checks as their fixes land, and every protocol release is covered within two weeks of its mainnet vote ([how](/project/maintenance#on-a-protocol-upgrade)).
