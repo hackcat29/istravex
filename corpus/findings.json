@@ -526,7 +526,7 @@
       ],
       "checks": [
         "java:cap21-precond-v2-defaults-pubnet-0001:tx_hash",
-        "sweep-java:tx_hash"
+        "sweep-java:pubnet:tx_hash"
       ],
       "reproduced": true,
       "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643\u2026 for mainnet transaction 68f96059\u2026; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",

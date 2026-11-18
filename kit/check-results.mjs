@@ -152,7 +152,7 @@ for (const sdk of ['go', 'rust', 'javascript', 'python', 'java']) {
     const r = sw[net];
     if (!r?.checks) failures.push(`${file}: no ${net} run`);
     else if (r.passed !== r.checks) {
-      const unexplained = r.failures.filter((x) => !explained.has(`sweep-${sdk}:${x.check}`));
+      const unexplained = r.failures.filter((x) => !explained.has(`sweep-${sdk}:${net}:${x.check}`));
       for (const x of unexplained) failures.push(`sweep ${sdk} ${net} ledger ${x.ledger}: ${x.check} fails (${x.detail}) and no finding explains it`);
     }
   }

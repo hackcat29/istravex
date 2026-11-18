@@ -5759,7 +5759,7 @@
                       ],
                       "checks": [
                         "java:cap21-precond-v2-defaults-pubnet-0001:tx_hash",
-                        "sweep-java:tx_hash"
+                        "sweep-java:pubnet:tx_hash"
                       ],
                       "reproduced": true,
                       "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has m…",
