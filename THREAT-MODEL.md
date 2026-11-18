@@ -10,7 +10,7 @@ This follows SDF's threat-modelling template: the four questions, with STRIDE fo
 |---|---|---|
 | **Corpus** | `corpus/fixtures` (137 fixtures), `corpus/ledgers` (canonical `LedgerCloseMeta`), `corpus/generated` (45,144 generated cases), `corpus/scan` | Data from SDF's public data lake, Horizon, testnet and a pinned stellar-core enters here |
 | **Capture and generation** | `kit/capture`, `kit/go/cmd/shape-scan`, the Rust case generator, the standalone stellar-core generator | Reads public networks; runs a pinned stellar-core binary |
-| **Checks** | The SDK runners, the sweep, the indexer pilots, the linter, `kit/check-results.mjs` | Runs third-party code (seven SDKs, wallet-backend, stellar-etl) pinned by version or commit |
+| **Checks** | The SDK runners, the sweep, the indexer pilots, the linter, `kit/check-results.mjs` | Runs third-party code (seven SDKs, wallet-backend, stellar-etl, Horizon with a throwaway local PostgreSQL) pinned by version or commit |
 | **Hosted services** | api.istravex.com and rpc.istravex.com (one read-only container on a shared VPS behind nginx), istravex.com (Cloudflare Workers static assets), docs.istravex.com (Mintlify) | Public internet |
 | **CI/CD and releases** | GitHub Actions; deploys by SSH and Cloudflare token; tagged releases, the Go module, the GitHub Action | Repository secrets |
 | **Findings** | `corpus/findings.json`, drafts for issues not yet filed | Vulnerabilities in other projects before they are fixed |
@@ -23,7 +23,7 @@ Data flow: public ledger data → capture (bytes pinned by sha256 to the canonic
 |---|---|---|---|---|
 | T1 | A fixture's bytes don't match what the network recorded (a corrupted download, a bug in capture, a hand edit) | Tampering | Corpus | Wrong answers: SDKs judged against bytes the network never produced |
 | T2 | An expected value is wrong, or derived from an SDK under test (so the SDK grades itself) | Tampering | Corpus | Wrong answers that look independent |
-| T3 | A malicious or compromised upstream release (an SDK, stellar-etl, wallet-backend, stellar-core) runs in CI | Elevation of privilege | Checks, CI | Secrets exposed; results forged |
+| T3 | A malicious or compromised upstream release (an SDK, stellar-etl, wallet-backend, Horizon, stellar-core) runs in CI | Elevation of privilege | Checks, CI | Secrets exposed; results forged |
 | T4 | A dependency changes under a version range (an npm, crates, PyPI or Maven artefact replaced) | Tampering | Checks, CI | Results that can't be reproduced, or a supply-chain compromise |
 | T5 | A hostile corpus entry (huge length prefix, deep nesting) exhausts a runner or the hosted RPC | Denial of service | Checks, hosted services | CI or the service stops answering |
 | T6 | The hosted API or RPC is flooded | Denial of service | Hosted services | Unavailable to users, and to the other projects sharing the VPS |

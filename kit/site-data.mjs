@@ -13,6 +13,7 @@ const json = (v) => JSON.parse(JSON.stringify(v));
 const corpus = readCorpus();
 const sdks = ['javascript', 'go', 'rust', 'python', 'python-xdr', 'java', 'php'].filter((s) => existsSync(join(RESULTS, `${s}.json`))).map((s) => read(`${s}.json`));
 const etl = existsSync(join(RESULTS, 'pilot-stellar-etl.json')) ? read('pilot-stellar-etl.json') : null;
+const horizon = existsSync(join(RESULTS, 'pilot-horizon.json')) ? read('pilot-horizon.json') : null;
 const js = sdks.find((s) => s.sdk === 'javascript');
 const replay = read('replay.json').rows;
 const provenance = read('provenance.json').fixtures;
@@ -64,6 +65,8 @@ const stats = {
   pilot_correct: pilotRaw.results.filter((r) => r.verdict === 'correct').length,
   etl_fixtures: etl?.results.length ?? 0,
   etl_correct: etl?.results.filter((r) => r.verdict === 'correct').length ?? 0,
+  horizon_fixtures: horizon?.results.length ?? 0,
+  horizon_correct: horizon?.results.filter((r) => r.verdict === 'correct').length ?? 0,
   mainnet_fixtures: corpus.filter(({ manifest: m }) => m.network === 'pubnet').length,
   sdk_count: sdks.length,
   live_caps: coverage.live_caps,
@@ -195,11 +198,12 @@ snippet(
 |---|---|
 | Fixtures | **${stats.fixtures}** across ${stats.caps} CAPs and ${stats.patterns} patterns: ${stats.mainnet_fixtures} from mainnet, ${stats.synthetic} synthetic (${stats.networks.join(', ')}) |
 | Provenance | **${stats.provenance_passed}/${stats.provenance_checks}** checks, byte-identical to canonical ledgers |
-| SDK conformance | **${stats.sdk_checks_passed}/${stats.sdk_checks}** checks across JavaScript, Go, Rust, Python and Java; every failure is a known upstream bug |
+| SDK conformance | **${stats.sdk_checks_passed}/${stats.sdk_checks}** checks across ${stats.sdk_count} SDKs; every failure maps to a finding |
 | stellar-core goldens | **${stats.golden_exact.toLocaleString('en-US')}/${stats.golden_frames.toLocaleString('en-US')}** LedgerCloseMeta frames round-trip in every SDK |
 | Replay | naive indexer wrong on **${stats.naive_faults}/${stats.replay_cases}**; reference indexer right on **${stats.reference_correct}/${stats.replay_cases}** |
 | wallet-backend pilot | **${stats.pilot_correct}/${stats.pilot_fixtures}** fixtures indexed correctly, over RPC and the data lake |
 | stellar-etl pilot | **${stats.etl_correct}/${stats.etl_fixtures}** correct; the rest reproduce its open issues #454 and #460 |
+| Horizon pilot | **${stats.horizon_correct}/${stats.horizon_fixtures}** correct, backfilled by \`horizon db reingest range\` into PostgreSQL |
 | Upstream sightings | **${stats.sightings_reproduced}/${stats.sightings}** reproduced: wrong before the fix, right after |
 | JavaScript releases | **${stats.js_releases}** run; every failure maps to a finding |
 | Findings | **${stats.findings}**, ${stats.findings_reproduced} reproduced by the kit |
@@ -290,6 +294,33 @@ if (etl) {
     `| Fixture | Verdict | Checks |
 |---|---|---|
 ${etl.results.map((r) => `| ${code(r.fixture)} | ${r.verdict} | ${r.checks.map((c) => `${c.ok ? '✓' : '✗'} ${c.field}${c.ok ? '' : `: expected ${code(c.expected)}, got ${code(c.observed)}`}`).join('<br />')} |`).join('\n')}`,
+  );
+}
+// Generated cases: per SDK, per kind, and the finding behind each failure.
+{
+  const order = ['stellar-core', 'rust', 'go', 'javascript', 'python-xdr', 'python', 'java', 'php'];
+  const rows = order.filter((s) => existsSync(join(RESULTS, `cases-${s}.json`))).map((s) => read(`cases-${s}.json`));
+  const why = (sdk, kind) => findingsReport.findings.filter((f) => f.checks.some((c) => c.startsWith(`cases-${sdk}:${kind}:`))).map((f) => f.id.replace('ISTRAVEX-', '')).join(', ');
+  const cell = (r, k) => {
+    const x = r.kinds?.[k];
+    const n = x?.supported ?? x?.cases;
+    if (!n) return '—';
+    const ok = x.passed === n;
+    return `${ok ? '' : '**'}${x.passed.toLocaleString('en-US')}/${n.toLocaleString('en-US')}${ok ? '' : `** (${why(r.sdk, k) || 'unexplained'})`}`;
+  };
+  snippet(
+    'cases-table',
+    `| Decoder | Version | Valid round-trip | Trailing bytes refused | Truncation refused | Bad first word refused |
+|---|---|---|---|---|---|
+${rows.map((r) => `| ${r.sdk === 'stellar-core' ? '**stellar-core** (oracle)' : r.sdk} | ${code(String(r.version).replace(/^stellar-core (\S+).*/, '$1'))} | ${cell(r, 'valid')} | ${cell(r, 'trailing')} | ${cell(r, 'truncated')} | ${cell(r, 'bad_first_word')} |`).join('\n')}`,
+  );
+}
+if (horizon) {
+  snippet(
+    'horizon-table',
+    `| Fixture | Verdict | Checks |
+|---|---|---|
+${horizon.results.map((r) => `| ${code(r.fixture)} | ${r.verdict} | ${r.checks.map((c) => `${c.ok ? '✓' : '✗'} ${c.field}${c.ok ? '' : `: expected ${code(c.expected)}, got ${code(c.observed)}`}`).join('<br />')} |`).join('\n')}`,
   );
 }
 snippet(

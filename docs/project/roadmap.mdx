@@ -3,7 +3,7 @@ title: Roadmap
 description: "The three built milestones, and the funded plan: budget, tranches and deliverables."
 ---
 
-Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three milestones the RFP describes are built; the award would fund [six months of new work](#the-funded-plan).
+Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three milestones the RFP describes are built; the award would fund [six months of new work and twelve months of maintenance](#the-funded-plan).
 
 ## Milestone 1 · Corpus and reference replay <Badge color="green">Done</Badge>
 
@@ -21,6 +21,7 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 | Deliverable | Where |
 |---|---|
 | Seven SDKs in CI | [SDK runners](/tools/sdk-runners) for JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`), Java and PHP, a [sweep](/tools/sdk-runners#sweeping-real-traffic) over 310,837 real transactions, and [stellar-core goldens](/corpus/goldens) |
+| Generated cases | [45,144 valid and hostile values](/tools/generated-cases) of every XDR type through every SDK, with stellar-core as the oracle |
 | Per-fixture results matrix | `corpus/results/`, the [API](/api-reference/introduction), and the site |
 | Go linter, three rules | [istravex-lint](/tools/lint) |
 
@@ -30,9 +31,10 @@ Istravex is proposed to the Stellar Community Fund (SCF #46, RFP 2). The three m
 
 | Deliverable | Where |
 |---|---|
-| Upstream pilots | [wallet-backend](/pilots/wallet-backend) (123/123) and [stellar-etl](/pilots/stellar-etl) (119/123, the rest its open issues), [findings report](/project/findings) (7 new defects), [RFP sightings](/corpus/sightings) (13 of 18 reproduced) |
+| Upstream pilots | [wallet-backend](/pilots/wallet-backend) (123/123), [Horizon](/pilots/horizon) (123/123) and [stellar-etl](/pilots/stellar-etl) (119/123, the rest its open issues), [findings report](/project/findings) (7 new defects), [RFP sightings](/corpus/sightings) (13 of 18 reproduced) |
 | Guide | [Hardening guide](/guide/overview), a draft; review by a stellar-core or platform engineer requested publicly, and part of tranche 2 |
-| Tagged release | `v1.0.0` through `v1.3.0` on GitHub |
+| Tagged release | `v1.0.0` through `v1.3.0` on GitHub; from v1.3.0, built in CI with SHA256SUMS and signed build provenance |
+| Threat model | [STRIDE threat model and monitoring plan](/project/threat-model) |
 | CI templates | [Reusable workflow and action](/operations/ci#in-your-repository) |
 
 **Acceptance:** findings and upstream links are public, the guide is reviewed by an engineer, and a tagged release ships. The review is outstanding: requested, and a tranche 2 deliverable.
@@ -52,26 +54,26 @@ The SCF RFP lists a check for each deliverable. Each one runs in CI.
 
 ## The funded plan
 
-What's above is built and isn't part of the request. The award would fund six months of new work: **$90,000 in XLM**, 1,180 engineering hours at $75 an hour plus $1,500 of infrastructure.
+What's above is built and isn't part of the request. The award would put the kit inside the projects it tests and keep it current: **$90,000 in XLM**, 1,160 engineering hours at $75 an hour plus $3,000 of infrastructure for twelve months.
 
 | Work | Hours | Cost |
 |---|---|---|
-| Generated cases: a value of every XDR type and arm, and hostile variants of each (non-zero padding, a bool or optional flag other than 0 or 1, a length over the maximum, an absurd length prefix, trailing bytes, truncation), run through every SDK with stellar-core's own decoder as the oracle | 200 | $15,000 |
-| Four more SDKs: Swift (`stellar-ios-mac-sdk`), Dart (`stellar_flutter_sdk`), .NET (`dotnet-stellar-sdk`) and Kotlin; high-level checks on the hand-written patterns for every SDK; release matrices for all of them | 220 | $16,500 |
-| Indexers: Horizon's ingestion processors, SDF's token transfer processor (CAP-0067 events), and one community indexer chosen with SCF reviewers | 180 | $13,500 |
-| Network coverage that keeps up: the shape scan and the sweep on every week's new ledgers, fixtures captured automatically for any new cell, a monthly report; CAP-0070 and CAP-0083 closed | 140 | $10,500 |
-| Lint rules IX004 (amounts through floats), IX005 (effects from operations, not metadata), IX006 (unbounded strkey and memo decoding) | 100 | $7,500 |
-| Guide v2 with the new findings, the engineer review the RFP requires, a pull request to developers.stellar.org | 80 | $6,000 |
+| The kit inside the projects it tests: a conformance job offered as a pull request to each of the seven SDK repositories and the three indexers (wallet-backend, stellar-etl, Horizon), kept working as they change | 150 | $11,250 |
+| Four more SDKs, for eleven: Swift (`stellar-ios-mac-sdk`), Dart (`stellar_flutter_sdk`), .NET (`dotnet-stellar-sdk`) and Kotlin, through the corpus, the generated cases and the sweep, with release matrices | 200 | $15,000 |
+| A linter for TypeScript indexers: IX001–IX003 as an ESLint plugin, then IX004 (amounts through floats), IX005 (effects from operations, not metadata) and IX006 (unbounded strkey and memo decoding) in Go and TypeScript | 160 | $12,000 |
+| Three more indexer pilots: SDF's token transfer processor (CAP-0067 events) and two community indexers chosen with SCF reviewers | 170 | $12,750 |
+| Coverage that keeps up on its own: the weekly sweep; a fixture captured and opened as a pull request automatically for any new cell the weekly scan finds; a monthly report; CAP-0070 and CAP-0083 closed | 120 | $9,000 |
 | The next protocol upgrade, end to end | 120 | $9,000 |
-| Maintenance: filing and following every finding upstream (four drafted today), triage, dependency updates, releases | 140 | $10,500 |
-| Infrastructure | | $1,500 |
-| **Total** | **1,180** | **$90,000** |
+| Guide v2 with the new findings, the engineer review the RFP requires ([requested](https://github.com/stellar/stellar-docs/issues/3166)), a pull request to developers.stellar.org | 80 | $6,000 |
+| Twelve months of maintenance: filing and following every finding upstream (six drafted today), triage, the pins the [weekly monitor](/operations/ci) flags, releases, quarterly reports | 160 | $12,000 |
+| Infrastructure for twelve months | | $3,000 |
+| **Total** | **1,160** | **$90,000** |
 
 | Tranche | Share | Amount | Due | Deliverables |
 |---|---|---|---|---|
-| T0 · Award | 10% | $9,000 | On award | The plan as GitHub milestones; the four drafted findings filed upstream; the weekly scan and sweep scheduled |
-| T1 · MVP | 20% | $18,000 | Month 2 | Generated and hostile cases for every XDR type through all seven SDKs, judged by stellar-core; the Swift runner; IX004 |
-| T2 · Testnet (public beta) | 30% | $27,000 | Month 4 | Dart, .NET and Kotlin runners; release matrices for every SDK; the Horizon and token-transfer-processor pilots; IX005 and IX006; the guide reviewed by a stellar-core or platform engineer and proposed to developers.stellar.org |
-| T3 · Mainnet (production) | 40% | $36,000 | Month 6 | The next protocol upgrade end to end; the community-indexer pilot; every open finding followed up; v2.0.0; a six-month maintenance report |
+| T0 · Award | 10% | $9,000 | On award | The plan as GitHub milestones; the six drafted findings filed upstream; the weekly sweep running |
+| T1 · MVP | 20% | $18,000 | Month 2 | Conformance-job pull requests to all seven SDK repositories; Swift and Dart runners; the TypeScript linter with IX001–IX003 |
+| T2 · Testnet (public beta) | 30% | $27,000 | Month 4 | .NET and Kotlin runners (eleven SDKs); conformance-job pull requests to the three indexers; the token-transfer-processor pilot; IX004–IX006 in Go and TypeScript; automatic capture of new cells; the guide reviewed and proposed to developers.stellar.org; v1.4 |
+| T3 · Mainnet (production) | 40% | $36,000 | Month 6 | The two community-indexer pilots; the next protocol upgrade end to end; every open finding followed up; v2.0.0; maintenance to month 12, with quarterly and twelve-month reports |
 
 Meanwhile, the issues filed from this work ([findings](/project/findings#new-defects)) get regression checks as their fixes land, and every protocol release is covered within two weeks of its mainnet vote ([how](/project/maintenance#on-a-protocol-upgrade)).

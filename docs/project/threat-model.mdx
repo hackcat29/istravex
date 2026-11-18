@@ -1,0 +1,49 @@
+---
+title: Threat model
+description: What could make Istravex give a wrong answer, stop answering or leak a finding early, the control for each, and how each is monitored.
+---
+
+Istravex holds no funds or keys, deploys no contracts, and signs nothing outside its own standalone test network. Its risk is a different one: people use it to decide whether their SDK or indexer is correct. The threats that matter are the ones that would make it:
+
+- **give a wrong answer**, passing broken software or failing correct software;
+- **stop answering**;
+- **leak** a vulnerability before its owner can fix it.
+
+The full model is [`THREAT-MODEL.md`](https://github.com/hackcat29/istravex/blob/main/THREAT-MODEL.md). It follows SDF's threat-modelling template, with its four questions, and uses STRIDE for "what can go wrong?". It is reviewed with each release.
+
+## The twelve threats, in short
+
+| # | Threat | Control |
+|---|---|---|
+| T1 | A fixture's bytes don't match the ledger | Every fixture is byte-compared with its canonical ledger on every push (1,794 checks) |
+| T2 | An expected value comes from the SDK under test | Expected values come from Horizon, the transaction as built, or stellar-core's own records. Generated cases are judged by stellar-core's `print-xdr` |
+| T3 | A compromised upstream runs in CI | Exact pins; read-only CI permissions; deploy secrets only in protected environments that run from `main` |
+| T4 | A dependency changes under a version range | Lockfiles; sha256 pins for the Java jars and the stellar-core binary |
+| T5 | A hostile input exhausts a runner or the RPC | Depth and length limits; the mock RPC serves 542 MB under a 128 MB heap |
+| T6 | The hosted API or RPC is flooded | Per-IP rate limit, body limit, read-only container; everything runs locally from a clone |
+| T7 | A deploy key or token leaks | Environment-scoped secrets, deploys only after CI passes, a minimal VPS footprint |
+| T8 | A release is replaced | Releases built in CI from `main` with passing CI, with `SHA256SUMS` and signed build provenance |
+| T9 | An exploitable finding is published early | Severity triage first; high, critical or exploitable findings go private under a 90-day embargo ([Security](/project/security)) |
+| T10 | The services track users | No cookies, analytics or access logs ([User tracking](/project/maintenance#user-tracking)) |
+| T11 | Results go stale as upstreams release | The weekly monitor, the sweep over real traffic, release matrices |
+| T12 | A claim isn't backed by a result | The gate checks numbers, sightings and the guide's review status against the results |
+
+## Monitoring plan
+
+| Signal | Watched by | Response |
+|---|---|---|
+| A pinned dependency has a newer release: stellar-core, the seven SDKs, wallet-backend, stellar-etl or Horizon | `monitor.yml`, weekly | One issue per release, with the checklist to move the pin |
+| The hosted services stop answering correctly | `monitor.yml`, weekly | One issue; fixed within the security policy's targets |
+| Real traffic uses a shape the corpus lacks | `monitor.yml`, weekly shape scan of the past week's ledgers | An issue listing the new cells; fixtures captured for them |
+| A corpus file, ledger or result stops matching | CI on every push | `main` doesn't deploy until it's fixed |
+| An SDK mishandles real traffic | `sweep.yml` | A new finding, triaged and disclosed per `SECURITY.md` |
+| A vulnerability in Istravex is reported | GitHub private vulnerability reporting | Acknowledged in 3 business days, triaged in 7, fixed in 30 if high or critical |
+
+## Verifying a release
+
+From v1.3.0, every release asset is built by [`release.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/release.yml). The workflow only builds from a commit on `main` that CI passed. The assets are the corpus archive and `istravex-lint` for four platforms, released with `SHA256SUMS` and a signed build-provenance attestation for each:
+
+```bash
+sha256sum -c SHA256SUMS
+gh attestation verify istravex-lint-v1.3.0-linux-amd64 -R hackcat29/istravex
+```

@@ -13,13 +13,15 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | Corpus | 137 fixtures: 95 from mainnet, 30 from testnet, 10 generated on a pinned stellar-core (byte-reproducible, any passphrase), 2 synthetic ([corpus/](corpus/)). Chosen by set cover over a scan of 400,311 mainnet and testnet ledgers (59.6 million transactions) so that every XDR cell real traffic uses is in the corpus |
 | Cell coverage | 470 of the 603 XDR cells a ledger reader can meet (union arms, flag bits, contract cost types) occur on the networks; the corpus covers all 470 ([cells](corpus/cells.json)) |
 | CAP coverage | 45 of the 47 live CAPs that leave a shape in ledger data, the other 23 with the reason they leave none; open: CAP-0070 and CAP-0083 ([coverage](https://docs.istravex.com/corpus/cap-coverage)) |
+| Generated cases | 45,144 valid and hostile values (trailing bytes, truncation, a bad first word) of every XDR type, deterministic from a seed, through every SDK; stellar-core 30.0.0 is the oracle (672/672). With the corpus they reach all 603 reachable cells ([cases](https://docs.istravex.com/tools/generated-cases)) |
 | Provenance | 1,794/1,794 checks. Every non-synthetic fixture is byte-identical to the canonical `LedgerCloseMeta` of its ledger, stored from SDF's public data lake |
 | SDK conformance | 2,810/2,816 checks across seven SDKs: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 (Rust), Python `stellar-sdk` 17.0.1 and `stellar-xdr` 0.2.1, `java-stellar-sdk` 6.0.0, `stellar-php-sdk` 1.18.0. Every failure is a finding; js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789 |
-| Upstream pilots | `stellar/wallet-backend` @ `3e22515`: 123/123 fixtures indexed correctly, over RPC and over the data lake; #729, #731 and #716 reproduce on the commits before their fixes. `stellar/stellar-etl` v2.8.35: 119/123, the rest its open issues #454 and #460 |
-| Findings | 24 in [`corpus/findings.json`](corpus/findings.json): 7 new defects found by the kit (3 filed upstream, 4 drafted), 13 known bugs reproduced, 4 notes ([report](https://docs.istravex.com/project/findings)) |
+| Upstream pilots | `stellar/wallet-backend` @ `3e22515`: 123/123 fixtures indexed correctly, over RPC and over the data lake; #729, #731 and #716 reproduce on the commits before their fixes. `stellar/stellar-horizon` v30.0.1, through its own `db reingest range` into PostgreSQL: 123/123. `stellar/stellar-etl` v2.8.35: 119/123, the rest its open issues #454 and #460 |
+| Findings | 28 in [`corpus/findings.json`](corpus/findings.json): 9 new defects found by the kit (3 filed upstream, 6 drafted), 15 known bugs reproduced, 4 notes ([report](https://docs.istravex.com/project/findings)) |
 | RFP sightings | 13 of the RFP's 18 reproduced in CI before and after their fixes, 3 exercised, 2 not covered with the reason ([sightings](https://docs.istravex.com/corpus/sightings)) |
 | stellar-core goldens | 15,306/15,306 `LedgerCloseMeta` frames from core's `--check-lcm` data round-trip in JavaScript, Go and Rust |
-| Guide | [Indexer hardening guide](https://docs.istravex.com/guide/overview); [field-by-field table](https://docs.istravex.com/guide/validated-fields) checked against the corpus |
+| Guide | [Indexer hardening guide](https://docs.istravex.com/guide/overview), a draft (review requested in stellar/stellar-docs#3166); [field-by-field table](https://docs.istravex.com/guide/validated-fields) checked against the corpus |
+| Security | [Threat model](THREAT-MODEL.md) and monitoring plan; weekly drift, service and new-shape monitor; releases with `SHA256SUMS` and signed build provenance |
 
 ## Kit
 
@@ -39,7 +41,9 @@ The XDR conformance and replay kit for Stellar, proposed for SCF #46 RFP 2. This
 | `kit/rpc/` | Mock Stellar RPC (`getHealth`, `getNetwork`, `getLatestLedger`, `getLedgers`) serving the corpus offline, with bounded memory |
 | `kit/datalake/` | The corpus in the Galexie data-lake layout, plus a read-only S3 endpoint over it |
 | `kit/replay/` | Naive and reference indexers scored against `expected_indexed` |
-| `kit/pilot/` | stellar-etl adapter: its own transforms over the canonical ledgers, scored. wallet-backend adapter: its own RPC and datastore ledger backends + `indexer.ProcessLedger`, scored; the commits before and after each upstream fix; lint with reviewed triage |
+| `kit/cases/`, `corpus/generated/` | Generated valid and hostile cases of every XDR type (`cases-generate` in the Rust runner), each SDK's `cases` runner, and stellar-core as the oracle |
+| `kit/monitor/` | The weekly drift monitor |
+| `kit/pilot/` | Horizon: its own `db reingest range` from the data lake into PostgreSQL, history tables scored. stellar-etl adapter: its own transforms over the canonical ledgers, scored. wallet-backend adapter: its own RPC and datastore ledger backends + `indexer.ProcessLedger`, scored; the commits before and after each upstream fix; lint with reviewed triage |
 | `kit/guide/` | The hardening guide's field table, its corpus check, and the developers.stellar.org export |
 | `corpus/findings.json` | The findings report: every finding with severity, upstream issue, corpus entry and the checks it explains |
 | `kit/go/lint`, `kit/go/cmd/istravex-lint` | `go/analysis` rules IX001–IX003 |

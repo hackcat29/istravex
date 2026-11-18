@@ -106,7 +106,7 @@
             "description": "The failing checks this finding explains, as runner:fixture:check. Every failing check in the results must be listed by some finding.",
             "items": {
               "type": "string",
-              "pattern": "^[a-z0-9-]+:[a-z0-9-]+:[A-Za-z0-9_:-]+$"
+              "pattern": "^[a-z0-9-]+:[a-z0-9_-]+:[A-Za-z0-9_:-]+$"
             }
           },
           "reproduced": {

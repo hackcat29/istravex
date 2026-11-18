@@ -1,7 +1,7 @@
 {
  "sdk": "stellar-core",
  "package": "stellar-core print-xdr",
- "version": "v30.0.0-dirty",
+ "version": "stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)",
  "types": [
   "LedgerHeader",
   "TransactionMeta",

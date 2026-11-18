@@ -134,6 +134,22 @@ if (existsSync(join(RESULTS, 'pilot-stellar-etl.json'))) {
   for (const key of explained.keys()) if (key.startsWith('pilot-stellar-etl:') && !failing.has(key)) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
 } else failures.push('pilot-stellar-etl.json missing (node kit/pilot/stellar-etl.mjs)');
 
+// Horizon: the same rule. A dropped transaction or a reingest error fails
+// unless a finding claims it.
+if (existsSync(join(RESULTS, 'pilot-horizon.json'))) {
+  const hz = read('pilot-horizon.json');
+  const failing = new Set();
+  for (const r of hz.results) {
+    for (const c of r.checks.filter((x) => !x.ok)) {
+      const key = `pilot-horizon:${r.fixture}:${slug(c.field)}`;
+      failing.add(key);
+      if (!explained.has(key)) failures.push(`horizon ${r.fixture}: ${c.field} fails and no finding explains it`);
+    }
+  }
+  for (const [ledger, err] of Object.entries(hz.reingest_errors ?? {})) if (!explained.has(`pilot-horizon:${ledger.replace("/", "-")}:reingest`)) failures.push(`horizon reingest ${ledger}: ${err}`);
+  for (const key of explained.keys()) if (key.startsWith('pilot-horizon:') && !failing.has(key) && !key.endsWith(':reingest')) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
+} else failures.push('pilot-horizon.json missing (node kit/pilot/horizon.mjs)');
+
 for (const f of findings) {
   if (['fixed-upstream', 'open-upstream'].includes(f.status) && !f.issue) failures.push(`finding ${f.id}: ${f.status} without an upstream issue`);
   if (f.status === 'to-file' && !f.draft) failures.push(`finding ${f.id}: to-file without a draft`);

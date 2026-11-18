@@ -4,7 +4,7 @@
 
 Istravex is an open-source test kit that helps Stellar indexer and SDK maintainers verify that their software preserves what actually happened on the ledger. It uses a shared, versioned corpus of rare but valid Stellar XDR to answer two questions. Does the SDK decode and re-encode the data faithfully? Does the indexer store the right records and attribute them to the right accounts?
 
-Built for **SCF #46 RFP 2** (XDR/CAP-Coverage Audit Tool and Indexer-Hardening Guide). Everything below is built, public and running in CI: a 137-fixture corpus that covers every XDR shape real mainnet and testnet traffic uses (chosen from a scan of 400,311 ledgers), the replay harness with two upstream indexers, a conformance runner for seven SDKs plus a sweep over 310,837 real transactions, the Go linter, the hardening guide, a findings report with seven new defects, and a security policy. The grant would fund six months of new work: generated and hostile cases for every XDR type, four more SDKs, three more indexers, three more lint rules, and the next protocol upgrade.
+Built for **SCF #46 RFP 2** (XDR/CAP-Coverage Audit Tool and Indexer-Hardening Guide). Everything below is built, public and running in CI: a 137-fixture corpus that covers every XDR shape real mainnet and testnet traffic uses (chosen from a scan of 400,311 ledgers); 45,144 generated valid and hostile values of every XDR type, judged by stellar-core; the replay harness with three SDF indexers (wallet-backend, stellar-etl, Horizon); a conformance runner for seven SDKs plus a sweep over 310,837 real transactions; the Go linter; the hardening guide; a findings report with nine new defects; a threat model; and signed releases. The grant would put the kit inside the projects it tests, as CI jobs offered to seven SDKs and three indexers, and add four more SDKs, a TypeScript linter, three more indexers, automatic coverage of new shapes, the next protocol upgrade, and twelve months of maintenance.
 
 - Repository: https://github.com/hackcat29/istravex (Apache 2.0)
 - Docs: https://docs.istravex.com · API: https://api.istravex.com · Mock RPC: https://rpc.istravex.com
@@ -39,7 +39,7 @@ flowchart LR
   SW --> FR
   L --> RPC["Mock RPC getLedgers"]
   L --> LAKE["Data-lake layout<br/>filesystem or S3"]
-  RPC --> IDX["Your indexer<br/>(piloted: wallet-backend, stellar-etl)"]
+  RPC --> IDX["Your indexer<br/>(piloted: wallet-backend, stellar-etl, Horizon)"]
   LAKE --> IDX
   IDX --> S["Scorer<br/>correct · incorrect · dropped"]
   SRC["Indexer source (Go)"] --> LINT["istravex-lint<br/>IX001–IX003"]
@@ -49,24 +49,24 @@ flowchart LR
   FR --> GUIDE["Hardening guide<br/>field table checked against the corpus"]
 ```
 
-**In plain English.** The corpus is a folder of real Stellar transactions and ledgers, each tied to the protocol changes (CAPs) whose shapes it exercises, with the values a correct decoder and a correct indexer must produce. A scanner read 400,311 mainnet and testnet ledgers and recorded every XDR shape each transaction uses; the corpus was then chosen so that every shape real traffic uses is in it. A verifier proves every fixture is byte-identical to the ledger that recorded it. Seven small programs, one per SDK, decode every fixture and check the values, and a sweep checks five of them against stellar-core's own hashes for 310,837 real transactions. A fake Stellar RPC server, and an export in the same layout as SDF's public data lake, hand the same ledgers to any indexer, and a scorer compares what it stored with what it should have. A linter reads indexer source code for the mistakes that keep recurring. A findings file ties every failure to an issue upstream, and a guide explains each rule with the evidence.
+**In plain English.** The corpus is a folder of real Stellar transactions and ledgers, each tied to the protocol changes (CAPs) whose shapes it exercises, with the values a correct decoder and a correct indexer must produce. A scanner read 400,311 mainnet and testnet ledgers and recorded every XDR shape each transaction uses; the corpus was then chosen so that every shape real traffic uses is in it. A verifier proves every fixture is byte-identical to the ledger that recorded it. Seven small programs, one per SDK, decode every fixture and check the values; they also decode 45,144 generated values, valid and deliberately malformed, of every XDR type, judged against stellar-core's own decoder; and a sweep checks five of them against stellar-core's own hashes for 310,837 real transactions. A fake Stellar RPC server, and an export in the same layout as SDF's public data lake, hand the same ledgers to any indexer, and a scorer compares what it stored with what it should have. Three of SDF's indexers run over it in CI: wallet-backend, stellar-etl and Horizon. A linter reads indexer source code for the mistakes that keep recurring. A findings file ties every failure to an issue upstream, and a guide explains each rule with the evidence.
 
-**Stack.** Node 24 (corpus tooling, mock RPC, data-lake exporter, JavaScript runner, API), Go 1.26 (shape scanner, sweep, verifier, Go runner, `go/analysis` linter), Rust (stellar-xdr runner, the Soroban probe contract, sighting reproductions), Python 3, Java 17 and PHP 8 (their SDK runners), stellar-core 30.0.0 pinned by binary sha256, `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0, Python `stellar-sdk` 17.0.1 and `stellar-xdr` 0.2.1, `java-stellar-sdk` 6.0.0, `stellar-php-sdk` 1.18.0, Mintlify for docs, GitHub Actions for CI, scans, sweeps and deploys.
+**Stack.** Node 24 (corpus tooling, mock RPC, data-lake exporter, JavaScript runner, API), Go 1.26 (shape scanner, sweep, verifier, Go runner, `go/analysis` linter), Rust (stellar-xdr runner, the Soroban probe contract, sighting reproductions), Python 3, Java 17 and PHP 8 (their SDK runners), PostgreSQL 16 (the Horizon pilot), stellar-core 30.0.0 pinned by binary sha256, stellar-horizon 30.0.1, `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0, Python `stellar-sdk` 17.0.1 and `stellar-xdr` 0.2.1, `java-stellar-sdk` 6.0.0, `stellar-php-sdk` 1.18.0, Mintlify for docs, GitHub Actions for CI, scans, sweeps and deploys.
 
 ### What's built
 
 | Deliverable | What exists | RFP reviewer check |
 |---|---|---|
 | **Corpus and generator** | 137 fixtures: 95 from mainnet, 30 from testnet, 10 generated, 2 synthetic. 20 are hand-written patterns that broke real software; 116 were chosen by set cover so that **all 470 XDR cells real traffic uses** (union arms, flag bits, contract cost types; 603 are reachable from `LedgerCloseMeta`) are in the corpus. **45 of the 47 live CAPs that leave a ledger shape** are covered; the other 23 CAPs leave none, each with the reason. The generator runs a pinned standalone stellar-core, byte-reproducible, any passphrase, protocols 28–30. 1,794/1,794 provenance checks. | Every fixture round-trips through rs-stellar-xdr 30.0.0; all SDKs round-trip stellar-core's 15,306 `--check-lcm` golden frames. |
-| **Replay harness** | Mock Stellar RPC `getLedgers` and the Galexie data-lake layout (filesystem or S3), bounded memory (542 MB of ledgers served under a 128 MB heap). Two upstream indexers replayed over every fixture with a transaction: wallet-backend's own ingestion, **123/123** correct over both inputs; stellar-etl v2.8.35's own transforms, **119/123**, the four misses being its open issues #454 and #460. | wallet-backend #729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes, in CI. |
+| **Replay harness** | Mock Stellar RPC `getLedgers` and the Galexie data-lake layout (filesystem or S3), bounded memory (542 MB of ledgers served under a 128 MB heap). **Three SDF indexers** replayed over every fixture with a transaction: wallet-backend's own ingestion, **123/123** correct over RPC and the data lake; Horizon 30.0.1's own `db reingest` into PostgreSQL, **123/123**; stellar-etl v2.8.35's own transforms, **119/123**, the four misses being its open issues #454 and #460. | wallet-backend #729, #731 and #716 reproduce on the commits before their fixes and pass on the fixes, in CI. |
 | **Linter** | Three `go/analysis` rules: unvalidated fields used as if checked (IX001), walks with no depth or size limit (IX002), participants or fees from the envelope (IX003). A GitHub Action and a reusable workflow. | Flags all six seeded violations; clean on current wallet-backend apart from one triaged latent finding; flags the code #753 and 9538b3c fixed, on the commits before them. |
 | **Hardening guide** | Nine rules, a field-by-field table of what stellar-core validates and passes through (15 rows), recommended limits with sources, SEP-0023 address handling, a checklist. Exports to Docusaurus for developers.stellar.org. | The field table is generated from one file and CI checks it against every manifest. A draft: review by a stellar-core or platform engineer, which the RFP gates publication on, is requested publicly (stellar/stellar-docs#3166) and is a tranche 2 acceptance criterion. The export opens with a "Draft, not reviewed" warning until then. |
-| **Conformance runner** | **Seven SDKs** in CI: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 (Rust), Python `stellar-sdk` 17.0.1 and `stellar-xdr` 0.2.1, `java-stellar-sdk` 6.0.0, `stellar-php-sdk` 1.18.0. 2,810/2,816 checks; every failure is a finding. A **sweep** over 1,241 whole ledgers checks the SDKs against stellar-core's own bytes: every ledger round-trips, and Go, JavaScript, Rust and Python match all 310,837 transaction hashes stellar-core recorded; Java misses 58 (F-0023). Plus four JavaScript releases. | js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789; 17.3.0 and 17.4.0 pass. |
-| **Findings report** | 24 findings: **7 new defects** the kit found (3 filed upstream, 4 drafted), 13 known bugs reproduced, 4 notes; each with severity, affected versions, disclosure route, the corpus entry and the checks it explains; served at `/v1/findings`. | CI fails on any failure that no finding explains, in the runners, the pilots and the sweeps. |
+| **Conformance runner** | **Seven SDKs** in CI: `@stellar/stellar-sdk` 17.4.0, `go-stellar-sdk` 0.9.0, `stellar-xdr` 30.0.0 (Rust), Python `stellar-sdk` 17.0.1 and `stellar-xdr` 0.2.1, `java-stellar-sdk` 6.0.0, `stellar-php-sdk` 1.18.0. 2,810/2,816 checks; every failure is a finding. A **sweep** over 1,241 whole ledgers checks the SDKs against stellar-core's own bytes: every ledger round-trips, and Go, JavaScript, Rust and Python match all 310,837 transaction hashes stellar-core recorded; Java misses 58 (F-0023). Plus four JavaScript releases. **Generated cases:** 45,144 values of every XDR type (12,134 valid, 33,010 trailing-byte, truncated or bad-flag), deterministic from a seed, through every SDK, with stellar-core 30.0.0 as the oracle (672/672). Together with the corpus they reach all 603 reachable cells. | js-stellar-sdk 17.2.0 and 17.2.1 fail exactly the checks for #1766, #1785 and #1789; 17.3.0 and 17.4.0 pass. |
+| **Findings report** | 28 findings: **9 new defects** the kit found (3 filed upstream, 6 drafted), 15 known bugs reproduced, 4 notes; each with severity, affected versions, disclosure route, the corpus entry and the checks it explains; served at `/v1/findings`. | CI fails on any failure that no finding explains, in the runners, the generated cases, the pilots and the sweeps. |
 
 ### New defects
 
-The kit's value is the bugs it finds that nobody had reported. Seven so far:
+The kit's value is the bugs it finds that nobody had reported. Nine so far:
 
 | Finding | Component | Severity | What |
 |---|---|---|---|
@@ -74,10 +74,12 @@ The kit's value is the bugs it finds that nobody had reported. Seven so far:
 | F-0024 | stellar-php-sdk 1.18.0 | medium | The same defect in PHP, with the same wrong hash. Drafted. |
 | F-0021 | stellar-php-sdk 1.18.0 | medium | Muxed account IDs above 2⁶³ come back negative: a real mainnet destination, 18067157809773112502, reads as -379586263936439114. Drafted. |
 | F-0022 | stellar-php-sdk 1.18.0 | low | The decoder accepts 101 operations and a 29-byte memo, past their XDR maximums. Drafted. |
+| F-0027 | stellar-php-sdk 1.18.0 | low | Trailing bytes after a complete value are ignored: 9,845 generated cases across 406 types decode, which stellar-core and the other SDKs refuse. Java fixed the same defect in #842. Drafted. |
+| F-0028 | stellar-php-sdk 1.18.0 | info | Seven standalone XDR classes (`DataValue`, `SponsorshipDescriptor`, the overlay hash vectors) don't match the XDR; the ledger decoders don't use them. Drafted. |
 | F-0012 | js-stellar-sdk | low | `TransactionBuilder` refuses a muxed source or memo on every Soroban transaction. Filed: js-stellar-sdk#1906. |
 | F-0010, F-0011 | stellar-core | low | Operation-meta change order differs between identical runs; settings-upgrade salts make standalone networks unreproducible. Filed: stellar-core#5507, #5508. |
 
-The four drafted findings are filed with their maintainers on award (tranche 0); their reproductions are in the corpus today.
+The six drafted findings are filed with their maintainers on award (tranche 0); their reproductions are in the corpus today.
 
 ### Mainnet
 
@@ -96,6 +98,8 @@ The corpus is mainnet-first and measured against real traffic. `kit/go/cmd/shape
 - **Policy.** [SECURITY.md](https://github.com/hackcat29/istravex/blob/main/SECURITY.md): GitHub private vulnerability reporting, acknowledgement within 3 business days, triage within 7, a fix within 30 for high or critical issues.
 - **Disclosure of what the kit finds.** Every finding records its disclosure route. A finding that could halt ingestion, corrupt balances or be triggered by anyone submitting a transaction goes privately to the maintainer, or through SDF's bug bounty for stellar-core and SDF repositories, under a 90-day embargo, before any public issue or fixture. Low-severity findings are public issues. The record is in SECURITY.md and `corpus/findings.json`.
 - **Attack surface.** The kit holds no keys or funds and signs nothing outside its own standalone network. The hosted API and RPC are read-only, serve committed files, and are rate limited. Every dependency is pinned by version and, for stellar-core and the Java jars, by sha256.
+- **Threat model.** [THREAT-MODEL.md](https://github.com/hackcat29/istravex/blob/main/THREAT-MODEL.md) answers SDF's four questions and goes through STRIDE for the corpus, the runners, CI, the hosted API and RPC, and the releases: twelve threats, each with its control and how it is monitored.
+- **Monitoring and releases.** A weekly workflow opens an issue when any pinned dependency (stellar-core, the seven SDKs, the three indexers) has a newer release, checks the hosted services, and scans the week's new ledgers for XDR cells the corpus lacks. Releases are built in CI only from a commit on `main` that passed CI, with SHA256SUMS and signed build-provenance attestations (`gh attestation verify`).
 - **Audit history.** No third-party audit; there is nothing custodial to audit, and audits are an ineligible cost. The kit's own correctness is checked the way it checks others: byte-identical provenance against the ledger, reproducible regeneration, and calibration against known bugs.
 
 ### Team
@@ -123,31 +127,31 @@ Minimal, and documented at https://docs.istravex.com/project/maintenance#user-tr
 
 ### Budget and tranches
 
-Everything above is built and is not part of the request: past work is ineligible. The award would fund six months of new work.
+Everything above is built and is not part of the request: past work is ineligible. The award funds new work over six months, plus twelve months of maintenance from the award.
 
-**Request: $90,000 in XLM.** 1,180 engineering hours at $75 an hour, plus $1,500 of infrastructure.
+**Request: $90,000 in XLM.** 1,160 engineering hours at $75 an hour, plus $3,000 of infrastructure for twelve months.
 
 | Work | Hours | Cost |
 |---|---|---|
-| Generated cases: a value of every XDR type and arm, and hostile variants of each (non-zero padding, a bool or optional flag other than 0 or 1, a length over the maximum, an absurd length prefix, trailing bytes, truncation), through every SDK, with stellar-core's own decoder as the oracle | 200 | $15,000 |
-| Four more SDKs: Swift (`stellar-ios-mac-sdk`), Dart (`stellar_flutter_sdk`), .NET (`dotnet-stellar-sdk`) and Kotlin; high-level checks on the hand-written patterns for every SDK; release matrices for all of them | 220 | $16,500 |
-| Indexers: Horizon's ingestion processors, SDF's token transfer processor (CAP-0067 events), and one community indexer chosen with SCF reviewers | 180 | $13,500 |
-| Network coverage that keeps up: the shape scan and the sweep on every week's new ledgers, fixtures captured automatically for any new cell, a monthly report; CAP-0070 and CAP-0083 closed | 140 | $10,500 |
-| Linter rules IX004 (amounts through floats), IX005 (effects read from operations, not metadata) and IX006 (unbounded strkey and memo decoding), calibrated like IX001–IX003 | 100 | $7,500 |
-| Guide v2: new rules from the new findings, the engineer review the RFP requires, a pull request to developers.stellar.org | 80 | $6,000 |
-| The next protocol upgrade end to end: re-pin, rescan, regenerate, re-run, release within two weeks of the mainnet vote | 120 | $9,000 |
-| Maintenance: filing and following every finding upstream (four drafted today), triage, dependency updates, releases | 140 | $10,500 |
-| Infrastructure: the API and RPC host, domains, storage for the data-lake export | | $1,500 |
-| **Total** | **1,180** | **$90,000** |
+| **The kit inside the projects it tests.** A conformance job offered as a pull request to each of the seven SDK repositories and the three indexers (wallet-backend, stellar-etl, Horizon): the corpus and generated cases on every pull request, a failure naming the finding. Kept working as they change. | 150 | $11,250 |
+| **Four more SDKs, for eleven:** Swift (`stellar-ios-mac-sdk`), Dart (`stellar_flutter_sdk`), .NET (`dotnet-stellar-sdk`) and Kotlin, each through the corpus, the generated cases and the sweep, with a release matrix | 200 | $15,000 |
+| **A linter for TypeScript indexers:** IX001–IX003 ported to an ESLint plugin, then IX004 (amounts through floats), IX005 (effects read from operations, not metadata) and IX006 (unbounded strkey and memo decoding) in both Go and TypeScript, each calibrated on a seeded violation and a real bug | 160 | $12,000 |
+| **Three more indexer pilots:** SDF's token transfer processor (CAP-0067 events) and two community indexers chosen with SCF reviewers, scored over RPC and the data lake, every failure a finding | 170 | $12,750 |
+| **Coverage that keeps up on its own:** the sweep on every week's new ledgers; a fixture captured, verified and opened as a pull request automatically for any new cell the weekly scan finds; a monthly report; CAP-0070 and CAP-0083 closed | 120 | $9,000 |
+| **The next protocol upgrade end to end:** re-pin, rescan, regenerate, re-run, release within two weeks of the mainnet vote | 120 | $9,000 |
+| **Guide v2:** rules from the new findings, the stellar-core or platform engineer review the RFP requires (requested in stellar/stellar-docs#3166), a pull request to developers.stellar.org | 80 | $6,000 |
+| **Twelve months of maintenance:** filing and following every finding upstream (six drafted today), triage, the pins the weekly monitor flags, releases, a quarterly report | 160 | $12,000 |
+| Infrastructure for twelve months: the API and RPC host, domains, storage for the data-lake export | | $3,000 |
+| **Total** | **1,160** | **$90,000** |
 
-For comparison: SCF #45 made four RFP-track awards totalling $445,000 (about $111,000 each); SCF #44 awarded LumenWipe $120,000; SCF #41 awarded a Soroban reverse-engineering tool $120,000; SCF #40 awarded a Unity kit $47,000. Istravex asks for less than the RFP-track average because most of the kit is already built.
+For comparison: SCF #45 made four RFP-track awards totalling $445,000 (about $111,000 each); SCF #44 awarded LumenWipe $120,000; SCF #41 awarded a Soroban reverse-engineering tool $120,000; SCF #40 awarded a Unity kit $47,000. Istravex asks for less than the RFP-track average because the RFP's deliverables are already built; the award pays for putting them inside the projects they test and keeping them current.
 
 | Tranche | Share | Amount | Due | Deliverables (each testable from a clean checkout or a public link) |
 |---|---|---|---|---|
-| **T0 · Award** | 10% | $9,000 | On award | Funded-work plan published as GitHub milestones; the four drafted findings filed upstream; the shape scan and sweep running weekly |
-| **T1 · MVP** | 20% | $18,000 | Month 2 | Generated and hostile cases for every XDR type through all seven SDKs, judged by stellar-core; the Swift runner in CI; IX004 flags its seeded violation and stellar-etl's float amounts |
-| **T2 · Testnet** (public beta) | 30% | $27,000 | Month 4 | Dart, .NET and Kotlin runners and release matrices for every SDK in CI; the Horizon and token-transfer-processor pilots scored over RPC and the data lake; IX005 and IX006; the guide reviewed by a stellar-core or platform engineer and proposed to developers.stellar.org; v1.4 released |
-| **T3 · Mainnet** (production release) | 40% | $36,000 | Month 6 | The next protocol upgrade covered end to end (or, if its vote is later, its release candidate); the community-indexer pilot; every open finding followed up upstream; v2.0.0 released; a six-month maintenance report |
+| **T0 · Award** | 10% | $9,000 | On award | Funded-work plan published as GitHub milestones; the six drafted findings filed upstream; the weekly sweep running |
+| **T1 · MVP** | 20% | $18,000 | Month 2 | Conformance-job pull requests opened to all seven SDK repositories; Swift and Dart runners in CI; the TypeScript linter with IX001–IX003, flagging its seeded violations |
+| **T2 · Testnet** (public beta) | 30% | $27,000 | Month 4 | .NET and Kotlin runners in CI (eleven SDKs); conformance-job pull requests opened to the three indexers; the token-transfer-processor pilot; IX004–IX006 in Go and TypeScript; automatic capture of new cells; the guide reviewed and proposed to developers.stellar.org; v1.4 released |
+| **T3 · Mainnet** (production release) | 40% | $36,000 | Month 6 | The two community-indexer pilots; the next protocol upgrade covered end to end (or, if its vote is later, its release candidate); every open finding followed up upstream; v2.0.0 released; maintenance continuing to month 12, with quarterly reports and a twelve-month report |
 
 Each tranche follows the previous payment within 90 days, and every deliverable is checked by a command or a link a reviewer can open.
 
@@ -164,4 +168,4 @@ Istravex is promoted, and its results are posted, on every Stellar channel avail
 
 ### Open-source maintenance
 
-Apache 2.0, developed in public, with tagged releases and a public changelog. Tomiwa Adeyemi owns fixture review, dependency updates, issue triage and releases for six months after delivery, through the first protocol upgrade after it. On that upgrade, every step is a command and CI stays red until it's done: audit the new CAPs, re-pin stellar-core, move the SDK pins and the probe contract, regenerate (and prove regeneration reproducible on both platforms), re-run the pilot, triage any new failure into a finding with an upstream issue, and release. Progress is posted on every channel listed under Community with each release.
+Apache 2.0, developed in public, with tagged releases and a public changelog. Tomiwa Adeyemi owns fixture review, dependency updates, issue triage and releases for twelve months from the award, through the first protocol upgrade after it. On that upgrade, every step is a command and CI stays red until it's done: audit the new CAPs, re-pin stellar-core, move the SDK pins and the probe contract, regenerate (and prove regeneration reproducible on both platforms), re-run the pilots, triage any new failure into a finding with an upstream issue, and release. Progress is posted on every channel listed under Community with each release.

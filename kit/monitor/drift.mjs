@@ -104,6 +104,13 @@ const deps = [
     latest: async () => ghLatest('stellar/stellar-etl'),
     url: 'https://github.com/stellar/stellar-etl/releases',
   },
+  {
+    dep: 'stellar-horizon',
+    where: 'kit/pilot/horizon/refs.json',
+    pinned: json('kit/pilot/horizon/refs.json').ref,
+    latest: async () => ghLatest('stellar/stellar-horizon'),
+    url: 'https://github.com/stellar/stellar-horizon/releases',
+  },
 ];
 
 const rows = [];

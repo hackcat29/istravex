@@ -1,0 +1,40 @@
+---
+title: Horizon pilot
+description: SDF's Horizon backfills every corpus ledger into PostgreSQL through its own reingest command, and its history tables are scored against the fixtures.
+---
+
+import Horizon from '/snippets/horizon-table.mdx';
+
+[stellar/stellar-horizon](https://github.com/stellar/stellar-horizon) is the third indexer the kit runs, after [wallet-backend](/pilots/wallet-backend) and [stellar-etl](/pilots/stellar-etl). Unlike the other two, it needs no adapter. The pilot runs Horizon's own backfill command, unmodified, against the corpus, and reads back what Horizon wrote.
+
+## How it works
+
+[`kit/pilot/horizon.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/horizon.mjs):
+
+1. Checks out the latest release (pinned in [`kit/pilot/horizon/refs.json`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/horizon/refs.json)) and builds the `horizon` binary.
+2. Exports the corpus in the Galexie data-lake layout and serves it over the kit's read-only S3 endpoint ([`kit/datalake/lake.mjs`](/tools/data-lake)).
+3. For each network:
+   - creates a fresh PostgreSQL database and runs `horizon db migrate up`;
+   - runs every fixture ledger through `horizon db reingest range <seq> <seq> --ledgerbackend datastore`, the command operators use to backfill history.
+4. Reads `history_transactions`, `history_operations`, `history_effects` and `history_transaction_participants`, and scores them with [`kit/pilot/score-horizon.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/pilot/score-horizon.mjs).
+
+Fixtures are scored as follows:
+
+- **Set-cover transaction fixtures** are scored against the values the public Horizon API serves for the same transaction: hash, outcome, account, fee charged, maximum fee (`new_max_fee` for a fee-bump), operation count and types, memo type, and the source as a participant. A fresh backfill must reproduce what production Horizon serves.
+- **Hand-written fixtures** are held to their `expected_indexed`, the same expectations as the other pilots: the muxed ID up to 2⁶⁴ − 1, the i64::MAX amount, the `P…` signer, the SAC `trust()` effect and the muxed Soroban source's participants.
+
+64-bit IDs and amounts are read back as text, so nothing is rounded on our side.
+
+```bash
+npm run pilot:horizon   # needs PostgreSQL (createdb, psql); writes corpus/results/pilot-horizon.json
+```
+
+CI runs it on every push against a PostgreSQL 16 service container.
+
+## Results
+
+<Horizon />
+
+**123 of 123 correct, with no reingest errors.** Horizon backfills every corpus ledger from protocol 23 through 30, including the CAP-0085 executable from protocol 28. It gets right the two things stellar-etl gets wrong: the i64::MAX amount is exact, and SAC `trust()` records a `trustline_created` effect.
+
+The gate applies the same rule to Horizon as to the other pilots. Any failing check, dropped transaction or reingest error that no finding explains fails `kit/check-results.mjs`. A Horizon regression shows up on the first run after the pin moves, and the [weekly monitor](/operations/ci) opens the issue to move it.

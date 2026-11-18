@@ -35,8 +35,14 @@
     "corpus:python": ".cache/py/bin/python kit/runners/python/run.py",
     "corpus:java": "node kit/runners/java/run.mjs",
     "pilot:stellar-etl": "node kit/pilot/stellar-etl.mjs",
+    "pilot:horizon": "node kit/pilot/horizon.mjs",
     "corpus:mainnet": "node kit/capture/mainnet.mjs && node kit/capture/ledgers.mjs && node kit/capture/canonicalize.mjs",
-    "corpus:python-xdr": ".cache/py/bin/python kit/runners/python-xdr/run.py"
+    "corpus:python-xdr": ".cache/py/bin/python kit/runners/python-xdr/run.py",
+    "cases:js": "node kit/runners/js/cases.mjs",
+    "cases:go": "cd kit/go && go run ./cmd/cases ../../corpus/generated/cases.jsonl.gz > ../../corpus/results/cases-go.json",
+    "cases:rust": "cd kit/runners/rust && cargo run --release -q -- cases-check ../../../corpus/generated/cases.jsonl.gz > ../../../corpus/results/cases-rust.json",
+    "cases:python": ".cache/py/bin/python kit/runners/python/cases.py stellar-sdk && .cache/py/bin/python kit/runners/python/cases.py stellar-xdr",
+    "cases:java": "node kit/runners/java/run.mjs cases corpus/generated/cases.jsonl.gz > corpus/results/cases-java.json"
   },
   "dependencies": {
     "@hono/node-server": "2.1.8",

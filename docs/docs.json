@@ -100,6 +100,7 @@
             "group": "Tools",
             "pages": [
               "tools/sdk-runners",
+              "tools/generated-cases",
               "tools/mock-rpc",
               "tools/data-lake",
               "tools/replay",
@@ -119,6 +120,7 @@
             "pages": [
               "pilots/wallet-backend",
               "pilots/stellar-etl",
+              "pilots/horizon",
               "pilots/your-indexer"
             ]
           }
@@ -224,6 +226,7 @@
             "pages": [
               "project/findings",
               "project/security",
+              "project/threat-model",
               "project/roadmap",
               "project/maintenance",
               "project/faq",

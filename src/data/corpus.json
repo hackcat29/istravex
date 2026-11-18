@@ -10,6 +10,8 @@
     "pilot_correct": 123,
     "etl_fixtures": 123,
     "etl_correct": 119,
+    "horizon_fixtures": 123,
+    "horizon_correct": 123,
     "mainnet_fixtures": 95,
     "sdk_count": 7,
     "live_caps": 70,
@@ -32,8 +34,8 @@
     "reference_correct": 9,
     "replay_cases": 9,
     "max_protocol": 30,
-    "findings": 26,
-    "findings_reproduced": 21,
+    "findings": 28,
+    "findings_reproduced": 23,
     "covered_caps": 45,
     "caps_with_ledger_shape": 47,
     "cells_reachable": 603,
@@ -28098,7 +28100,7 @@
         ],
         "reproduced": true,
         "summary": "fromXdrBase64 and fromXdrByteArray do not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there. stellar-core and the other SDKs refuse it.",
-        "evidence": "kit/runners/java/Run.java cases: every one of the 4,872 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; JavaScript, Go, Rust and both Python packages refuse all of them."
+        "evidence": "kit/runners/java/Run.java cases: every one of the 12,102 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; stellar-core print-xdr, JavaScript, Go, Rust and both Python packages refuse all of them."
       },
       {
         "id": "ISTRAVEX-F-0026",
@@ -28117,7 +28119,53 @@
         ],
         "reproduced": true,
         "summary": "XDR optional flags must be 0 or 1. stellar_sdk.xdr reads any non-zero word as present, so a value whose optional flag is 0x7FFFFFFF decodes; stellar-core refuses it. The replacement package, stellar-xdr, refuses it too.",
-        "evidence": "kit/runners/python/cases.py: 58 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2 and others) decode in stellar-sdk 17.0.1; stellar-xdr 0.2.1 and every other SDK refuse them."
+        "evidence": "kit/runners/python/cases.py: 157 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2, SponsorshipDescriptor and others) decode in stellar-sdk 17.0.1; stellar-xdr 0.2.1 and every other SDK refuse them."
+      },
+      {
+        "id": "ISTRAVEX-F-0027",
+        "title": "stellar-php-sdk accepts trailing bytes after a complete XDR value",
+        "component": "Soneso/stellar-php-sdk",
+        "affected": "1.18.0 (latest) and earlier",
+        "fixed_in": null,
+        "severity": "low",
+        "status": "to-file",
+        "issue": null,
+        "disclosure": "not-disclosed",
+        "cap_ids": [],
+        "fixtures": [],
+        "checks": [
+          "cases-php:trailing:all"
+        ],
+        "reproduced": true,
+        "summary": "fromBase64Xdr does not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there, the same defect java-stellar-sdk fixed in #842 (F-0025). stellar-core and the JavaScript, Go, Rust and Python SDKs refuse it. Two encodings of one value both decoding is a malleability footgun for anything that hashes or deduplicates raw XDR.",
+        "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0.",
+        "draft": "**Title:** XDR decoding accepts trailing bytes after a complete value\n\n`XdrX::fromBase64Xdr()` reads one value from an `XdrBuffer` and returns it without checking that the buffer is exhausted. Appending any bytes to a valid value still decodes, to the same value:\n\n```php\n$v = XdrTransactionEnvelope::fromEnvelopeBase64XdrString(base64_encode(base64_decode($valid) . \"\\x00\\x00\\x00\\x00\"));\n// no exception\n```\n\nstellar-core (`print-xdr`), js-stellar-base, the Go SDK, rs-stellar-xdr and py-stellar-base all refuse this input. java-stellar-sdk had the same behaviour and fixed it in lightsail-network/java-stellar-sdk#842.\n\n**Suggested fix:** in `fromBase64Xdr` (and `fromEnvelopeBase64XdrString`), after `decode()`, throw if the buffer has unread bytes.\n\nFound with Istravex's generated cases (12,134 trailing-bytes cases over every XDR type): https://github.com/hackcat29/istravex"
+      },
+      {
+        "id": "ISTRAVEX-F-0028",
+        "title": "stellar-php-sdk's standalone classes for seven XDR types don't match the XDR",
+        "component": "Soneso/stellar-php-sdk",
+        "affected": "1.18.0 (latest) and earlier",
+        "fixed_in": null,
+        "severity": "info",
+        "status": "to-file",
+        "issue": null,
+        "disclosure": "not-disclosed",
+        "cap_ids": [],
+        "fixtures": [],
+        "checks": [
+          "cases-php:valid:DataValue",
+          "cases-php:valid:SponsorshipDescriptor",
+          "cases-php:valid:TxAdvertVector",
+          "cases-php:valid:TxDemandVector",
+          "cases-php:valid:FloodAdvert",
+          "cases-php:valid:FloodDemand",
+          "cases-php:valid:AuthenticatedMessageV0"
+        ],
+        "reproduced": true,
+        "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (it is AccountID*); XdrTxAdvertVector and XdrTxDemandVector read each Hash as a length-prefixed string instead of 32 fixed bytes, which breaks FloodAdvert, FloodDemand and the overlay messages that carry them. The SDK's ledger decoders don't use these classes (ManageDataOp and LedgerEntryExtensionV2 decode their fields inline), so no ledger data is affected; code that uses the classes directly is.",
+        "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, FloodAdvert 31, FloodDemand 31, AuthenticatedMessageV0 1); every other SDK and stellar-core round-trip them.",
+        "draft": "**Title:** XdrDataValue, XdrSponsorshipDescriptor, XdrTxAdvertVector and XdrTxDemandVector don't match the XDR definitions\n\nRound-tripping valid XDR through these classes fails:\n\n- `XdrDataValue` is `opaque DataValue<64>`, but `decode()` reads an optional presence flag first (the `*` belongs to `ManageDataOp.dataValue`). Valid `DataValue` bytes throw `presence flag must be 0 or 1`.\n- `XdrSponsorshipDescriptor` is `AccountID* SponsorshipDescriptor`, but `decode()` reads a bare `XdrPublicKey`, so a present descriptor throws `Unknown enum value: 1`.\n- `XdrTxAdvertVector` / `XdrTxDemandVector` are `Hash<…>`, fixed 32-byte hashes, but `decode()` calls `readString()`, a length-prefixed string. `XdrFloodAdvert`, `XdrFloodDemand` and the `StellarMessage` arms carrying them inherit this.\n\nThe ledger decoders read these fields inline, so transaction and ledger decoding is unaffected. Only direct users of the classes are.\n\nFound with Istravex's generated cases (32 valid values for every XDR type, checked against stellar-core): https://github.com/hackcat29/istravex"
       }
     ]
   },

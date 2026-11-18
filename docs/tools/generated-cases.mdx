@@ -1,0 +1,54 @@
+---
+title: Generated cases
+description: 45,144 valid and hostile values of every XDR type, through every SDK, with stellar-core's own decoder as the oracle.
+---
+
+import Cases from '/snippets/cases-table.mdx';
+
+The corpus holds what real traffic contains. Generated cases cover the rest: a value of every XDR type, including the ones no ledger has used yet, and malformed variants that a decoder must refuse.
+
+## What's generated
+
+[`kit/runners/rust/src/cases.rs`](https://github.com/hackcat29/istravex/blob/main/kit/runners/rust/src/cases.rs) walks every type in the pinned `stellar-xdr` 30.0.0 and draws up to 32 distinct valid values of each, using the crate's `arbitrary` support. The entropy is a SHA-256 counter stream from a fixed seed (`istravex-cases-v1`), so the same seed gives the same bytes on any machine. Each valid value gets the hostile variants a decoder must refuse:
+
+| Kind | What it is | Cases |
+|---|---|---|
+| `valid` | A value of the type, encoded | 12,134 |
+| `trailing` | The value followed by four extra bytes | 12,134 |
+| `truncated` | The value with its last byte cut off | 12,134 |
+| `bad_first_word` | The first word replaced by `0x7FFFFFFF`. Kept only where the first word is a union discriminant, an enum, a bool or an optional flag, so the value is out of range | 8,742 |
+
+That is 45,144 cases in [`corpus/generated/cases.jsonl.gz`](https://github.com/hackcat29/istravex/blob/main/corpus/generated/cases.jsonl.gz). Together with the corpus they reach all 603 [cells](/corpus/cell-coverage) reachable from `LedgerCloseMeta`. The cases alone reach 597 of the 688 cells in every type.
+
+```bash
+cd kit/runners/rust
+cargo run --release -- cases-generate ../../../corpus/generated/cases.jsonl.gz 32 istravex-cases-v1
+```
+
+## The oracle
+
+A case is only as good as its verdict. Every valid case round-trips byte for byte through `stellar-xdr`, the Rust crate stellar-core's own XDR is generated from, and every hostile case is refused by it. On top of that, [`kit/cases/core-oracle.mjs`](https://github.com/hackcat29/istravex/blob/main/kit/cases/core-oracle.mjs) feeds every case of the six types `stellar-core print-xdr` decodes to the pinned stellar-core 30.0.0. stellar-core accepts every valid one and refuses every hostile one, so the verdicts match the network's own decoder.
+
+## Through every SDK
+
+Each runner decodes every case of every type it exposes. A valid case must decode and re-encode to the same bytes, and a hostile one must throw:
+
+| SDK | Runner |
+|---|---|
+| Rust `stellar-xdr` | `cargo run -- cases-check` |
+| Go `go-stellar-sdk` | `kit/go/cmd/cases` |
+| JavaScript `@stellar/stellar-sdk` | `kit/runners/js/cases.mjs` |
+| Python `stellar-sdk`, `stellar-xdr` | `kit/runners/python/cases.py` |
+| Java `java-stellar-sdk` | `Run.java cases` |
+| PHP `stellar-php-sdk` | `kit/runners/php/cases.php` |
+
+<Cases />
+
+A dash means the decoder exposes no type for that kind. A count is out of the cases of the types that SDK exposes. Every failing kind maps to a [finding](/project/findings), and `kit/check-results.mjs` fails on any failure no finding explains, or on a finding whose failure has gone away:
+
+- **F-0025**, java-stellar-sdk: trailing bytes are ignored on every type. Fixed upstream in #842, not yet released.
+- **F-0026**, Python `stellar-sdk`: any non-zero optional flag counts as present. Fixed in the replacement `stellar-xdr` package, which passes everything.
+- **F-0027**, stellar-php-sdk: trailing bytes are ignored on every type.
+- **F-0028**, stellar-php-sdk: seven standalone classes don't match the XDR.
+
+CI reruns the cases for Rust, Go, JavaScript, both Python packages and Java on every push and fails if any result changes. PHP and the stellar-core oracle run in the [SDK runners workflow](/operations/ci) whenever the cases or those runners change.

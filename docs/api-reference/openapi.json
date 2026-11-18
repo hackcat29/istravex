@@ -4962,6 +4962,7 @@
                     "cases-go",
                     "cases-java",
                     "cases-javascript",
+                    "cases-php",
                     "cases-python-xdr",
                     "cases-python",
                     "cases-rust",
@@ -4975,6 +4976,7 @@
                     "javascript-matrix",
                     "javascript",
                     "php",
+                    "pilot-horizon",
                     "pilot-stellar-etl",
                     "pilot-wallet-backend",
                     "provenance",
@@ -5815,7 +5817,7 @@
                       ],
                       "reproduced": true,
                       "summary": "fromXdrBase64 and fromXdrByteArray do not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there. stel…",
-                      "evidence": "kit/runners/java/Run.java cases: every one of the 4,872 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; JavaScript, Go, Rust a…"
+                      "evidence": "kit/runners/java/Run.java cases: every one of the 12,102 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; stellar-core print-xd…"
                     },
                     {
                       "id": "ISTRAVEX-F-0026",
@@ -5834,7 +5836,53 @@
                       ],
                       "reproduced": true,
                       "summary": "XDR optional flags must be 0 or 1. stellar_sdk.xdr reads any non-zero word as present, so a value whose optional flag is 0x7FFFFFFF decodes; stellar-core ref…",
-                      "evidence": "kit/runners/python/cases.py: 58 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2 and others) decode …"
+                      "evidence": "kit/runners/python/cases.py: 157 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2, SponsorshipDescri…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0027",
+                      "title": "stellar-php-sdk accepts trailing bytes after a complete XDR value",
+                      "component": "Soneso/stellar-php-sdk",
+                      "affected": "1.18.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "low",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [],
+                      "fixtures": [],
+                      "checks": [
+                        "cases-php:trailing:all"
+                      ],
+                      "reproduced": true,
+                      "summary": "fromBase64Xdr does not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there, the same defect java-st…",
+                      "evidence": "kit/runners/php/cases.php: 9,845 generated trailing-bytes cases, across all 406 types whose valid cases decode, decode without error in 1.18.0.",
+                      "draft": "**Title:** XDR decoding accepts trailing bytes after a complete value\n\n`XdrX::fromBase64Xdr()` reads one value from an `XdrBuffer` and returns it without che…"
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0028",
+                      "title": "stellar-php-sdk's standalone classes for seven XDR types don't match the XDR",
+                      "component": "Soneso/stellar-php-sdk",
+                      "affected": "1.18.0 (latest) and earlier",
+                      "fixed_in": null,
+                      "severity": "info",
+                      "status": "to-file",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [],
+                      "fixtures": [],
+                      "checks": [
+                        "cases-php:valid:DataValue",
+                        "cases-php:valid:SponsorshipDescriptor",
+                        "cases-php:valid:TxAdvertVector",
+                        "cases-php:valid:TxDemandVector",
+                        "cases-php:valid:FloodAdvert",
+                        "cases-php:valid:FloodDemand",
+                        "cases-php:valid:AuthenticatedMessageV0"
+                      ],
+                      "reproduced": true,
+                      "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (…",
+                      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31,…",
+                      "draft": "**Title:** XdrDataValue, XdrSponsorshipDescriptor, XdrTxAdvertVector and XdrTxDemandVector don't match the XDR definitions\n\nRound-tripping valid XDR through …"
                     }
                   ]
                 }

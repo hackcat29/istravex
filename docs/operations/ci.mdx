@@ -9,22 +9,24 @@ description: What runs on every push, and the templates for running Istravex in 
 
 | Job | What it proves |
 |---|---|
-| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`) and Java runners pass, and the committed PHP, sweep and sighting results hold; four JavaScript releases fail exactly the checks their findings explain; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; the mock RPC serves a 542 MB corpus under a 128 MB heap; the data-lake export matches the public lake; the guide's field table agrees with the corpus; the guide exports for developers.stellar.org; `src/data/corpus.json`, the docs tables and the API spec are up to date |
+| **Corpus, runners and replay** | Every fixture matches its canonical ledger; the JavaScript, Go, Rust, Python (`stellar-sdk` and `stellar-xdr`) and Java runners pass; the [generated cases](/tools/generated-cases) rerun through the same five SDKs give the committed results; the committed PHP, stellar-core oracle, sweep and sighting results hold; four JavaScript releases fail exactly the checks their findings explain; all three SDKs round-trip stellar-core's 15,306 golden frames; replay verdicts hold; the mock RPC serves a 542 MB corpus under a 128 MB heap; the data-lake export matches the public lake; the guide's field table agrees with the corpus; the guide exports for developers.stellar.org; `src/data/corpus.json`, the docs tables and the API spec are up to date |
 | **Generate on pinned stellar-core** (×3: standalone, testnet, pubnet passphrases) | Installs SDF's stellar-core 30.0.0 package. Standalone: regenerates the committed fixtures on Linux and requires the same bytes, then verifies and runs them. Testnet and pubnet: two generations must match each other, and the result verifies and passes every runner |
 | **Probe contract rebuilds byte for byte** | The committed Wasm is exactly what the pinned toolchain builds from the committed source |
 | **API tests and container** | The API's tests pass, including the check that every OpenAPI path is served; the image builds and answers correctly while running read-only and unprivileged |
 | **istravex-lint action (self-test)** | The action passes on clean code and fails with exactly six findings on the seeded violations |
-| **Upstream pilot** | wallet-backend main indexes every fixture correctly over RPC and over the data lake; each commit before an upstream fix fails and each fix passes; every lint finding is triaged |
+| **Upstream pilots** | wallet-backend main indexes every fixture correctly over RPC and over the data lake; each commit before an upstream fix fails and each fix passes; every lint finding is triaged. stellar-etl's latest release runs its own transforms. Horizon's latest release backfills every fixture ledger into a PostgreSQL 16 service container with `db reingest range`. Every failing check in either is a finding |
 | **Site build and e2e** | The site builds, `wrangler deploy --dry-run` accepts the Cloudflare config, and the Playwright suite passes on desktop and mobile |
 
-Four more workflows do the heavy lifting on GitHub's runners, close to SDF's data lake. Their results are committed, and the gate above checks them:
+Six more workflows do the heavy lifting on GitHub's runners, close to SDF's data lake. Their results are committed, and the gate above checks them:
 
 | Workflow | When | What |
 |---|---|---|
 | [`shape-scan.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/shape-scan.yml) | By hand, after a protocol upgrade | The XDR cells every transaction and ledger in a range exercises, in 16 shards ([cell coverage](/corpus/cell-coverage)) |
 | [`sweep.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sweep.yml) | By hand | Five SDKs over a thousand mainnet ledgers and the protocol 30 testnet ones: round-trip and stellar-core's transaction hashes ([sweep](/tools/sdk-runners#sweeping-real-traffic)) |
-| [`sdk-runners.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sdk-runners.yml) | When the corpus or the PHP runner changes | The PHP runner, whose toolchain the main job doesn't set up |
+| [`sdk-runners.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sdk-runners.yml) | When the corpus, the cases or the PHP runner changes | The PHP runner and its generated cases, whose toolchain the main job doesn't set up; stellar-core 30.0.0's `print-xdr` as the oracle for the generated cases |
 | [`sightings.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/sightings.yml) | When a reproduction changes | RFP sightings that need upstream builds, before and after each fix ([sightings](/corpus/sightings)) |
+| [`monitor.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/monitor.yml) | Weekly | Opens an issue for any newer release of a pinned dependency (stellar-core, the seven SDKs, wallet-backend, stellar-etl, Horizon); checks the hosted API, RPC, docs and site; scans the past week's ledgers for cells the corpus lacks ([threat model](/project/threat-model#monitoring-plan)) |
+| [`release.yml`](https://github.com/hackcat29/istravex/blob/main/.github/workflows/release.yml) | On a version tag | Refuses a tag not on `main` or without passing CI; builds the corpus archive and `istravex-lint` for four platforms with `SHA256SUMS` and signed build provenance |
 
 ## How long it takes
 
@@ -34,7 +36,7 @@ The jobs run in parallel, so a push is green as fast as the slowest one. Measure
 |---|---|
 | Corpus, runners and replay | about 3 minutes (the 400-ledger memory test is 25 s of it) |
 | Generate (each passphrase) | about 2½ minutes |
-| Upstream pilot | about 4 minutes: wallet-backend builds at main and at seven other commits |
+| Upstream pilots | about 8 minutes: wallet-backend builds at main and at seven other commits; Horizon builds and backfills 110 ledgers |
 | Everything else | under 2 minutes each |
 
 So the whole suite fits in a pull request's review loop: about four minutes of wall-clock time. Replay alone, against your own indexer, takes seconds: the corpus is 137 fixtures and 157 ledgers.
