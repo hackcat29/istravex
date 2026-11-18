@@ -5,6 +5,8 @@
 //!
 //!     cargo run --release -- ../../../corpus
 
+mod cases;
+
 use serde::Deserialize;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
@@ -709,6 +711,13 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(1).map(String::as_str) == Some("goldens") {
         return goldens(Path::new(&args[2]), Path::new(&args[3]));
+    }
+    if args.get(1).map(String::as_str) == Some("cases-generate") {
+        let per = args.get(3).and_then(|s| s.parse().ok()).unwrap_or(12);
+        return cases::generate(&args[2], per, args.get(4).map(String::as_str).unwrap_or("istravex-cases-v1"));
+    }
+    if args.get(1).map(String::as_str) == Some("cases-check") {
+        return cases::check(&args[2]);
     }
     if args.get(1).map(String::as_str) == Some("sweep") {
         return sweep(&args[2], &args[3..]);

@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['kit/runners/php/**', 'corpus/fixtures/**', '.github/workflows/sdk-runners.yml']
+    paths: ['kit/runners/php/**', 'kit/cases/**', 'corpus/fixtures/**', 'corpus/generated/**', '.github/workflows/sdk-runners.yml']
 
 permissions:
   contents: read
@@ -28,7 +28,33 @@ jobs:
         run: composer install --no-interaction --no-progress
       - name: Run the corpus
         run: php kit/runners/php/run.php corpus
+      - name: Run the generated cases
+        run: php kit/runners/php/cases.php corpus/generated/cases.jsonl.gz > corpus/results/cases-php.json
       - uses: actions/upload-artifact@v7
         with:
           name: php
-          path: corpus/results/php.json
+          path: |
+            corpus/results/php.json
+            corpus/results/cases-php.json
+
+  stellar-core:
+    name: stellar-core as the oracle for generated cases
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+      - name: Install stellar-core 30.0.0 (SDF apt, pinned)
+        run: |
+          curl -fsSL https://apt.stellar.org/SDF.asc | sudo gpg --dearmor -o /usr/share/keyrings/sdf.gpg
+          echo "deb [signed-by=/usr/share/keyrings/sdf.gpg] https://apt.stellar.org noble stable" | sudo tee /etc/apt/sources.list.d/sdf.list
+          sudo apt-get update -q
+          sudo apt-get install -y -q stellar-core=30.0.0-3642.0e49751aa.noble
+      - name: print-xdr on every case of the six types it decodes
+        run: node kit/cases/core-oracle.mjs
+      - uses: actions/upload-artifact@v7
+        with:
+          name: stellar-core
+          path: corpus/results/cases-stellar-core.json

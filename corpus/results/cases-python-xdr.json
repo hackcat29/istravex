@@ -1,0 +1,40 @@
+{
+ "sdk": "python-xdr",
+ "package": "stellar-xdr",
+ "version": "0.2.1",
+ "cases": 18264,
+ "supported": 18024,
+ "passed": 18024,
+ "kinds": {
+  "valid": {
+   "cases": 4884,
+   "supported": 4812,
+   "passed": 4812
+  },
+  "trailing": {
+   "cases": 4884,
+   "supported": 4812,
+   "passed": 4812
+  },
+  "truncated": {
+   "cases": 4884,
+   "supported": 4812,
+   "passed": 4812
+  },
+  "bad_first_word": {
+   "cases": 3612,
+   "supported": 3588,
+   "passed": 3588
+  }
+ },
+ "failing_types": {},
+ "unsupported_types": [
+  "Int32",
+  "Int64",
+  "SError",
+  "SponsorshipDescriptor",
+  "Uint32",
+  "Uint64"
+ ],
+ "failures": []
+}

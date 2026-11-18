@@ -1,0 +1,1 @@
+{"cases":18264,"failures":[],"kinds":{"bad_first_word":{"cases":3612,"passed":3612},"trailing":{"cases":4884,"passed":4884},"truncated":{"cases":4884,"passed":4884},"valid":{"cases":4884,"passed":4884}},"package":"stellar-xdr","passed":18264,"sdk":"rust","supported":18264,"version":"30.0.0"}

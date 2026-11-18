@@ -1,0 +1,36 @@
+{
+ "cases": 18264,
+ "failing_types": {},
+ "failures": [],
+ "kinds": {
+  "bad_first_word": {
+   "cases": 3612,
+   "supported": 3588,
+   "passed": 3588
+  },
+  "trailing": {
+   "cases": 4884,
+   "supported": 4860,
+   "passed": 4860
+  },
+  "truncated": {
+   "cases": 4884,
+   "supported": 4860,
+   "passed": 4860
+  },
+  "valid": {
+   "cases": 4884,
+   "supported": 4860,
+   "passed": 4860
+  }
+ },
+ "package": "github.com/stellar/go-stellar-sdk",
+ "passed": 18168,
+ "sdk": "go",
+ "supported": 18168,
+ "unsupported_types": [
+  "SError",
+  "SponsorshipDescriptor"
+ ],
+ "version": "0.9.0"
+}

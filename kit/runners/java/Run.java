@@ -456,7 +456,83 @@ public class Run {
     System.out.println(new Gson().toJson(out));
   }
 
+  /** `cases <cases.jsonl.gz>`: generated cases, valid ones round-trip and hostile ones are refused. */
+  static void cases(String path) throws Exception {
+    // Every generated XDR class in the SDK jar, by lower-case simple name (nested ones too).
+    Map<String, Class<?>> byName = new java.util.HashMap<>();
+    String jar = Path.of(SCVal.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toString();
+    try (java.util.jar.JarFile jf = new java.util.jar.JarFile(jar)) {
+      for (var e : java.util.Collections.list(jf.entries())) {
+        String n = e.getName();
+        if (!n.startsWith("org/stellar/sdk/xdr/") || !n.endsWith(".class")) continue;
+        String cls = n.substring(0, n.length() - 6).replace('/', '.');
+        String simple = cls.substring(cls.lastIndexOf('.') + 1);
+        simple = simple.substring(simple.lastIndexOf('$') + 1);
+        try {
+          Class<?> c = Class.forName(cls);
+          c.getMethod("fromXdrByteArray", byte[].class);
+          byName.putIfAbsent(simple.toLowerCase(), c);
+        } catch (Throwable t) {
+          // not a decodable XDR type
+        }
+      }
+    }
+    Map<String, Map<String, Integer>> kinds = new TreeMap<>();
+    Map<String, Map<String, Integer>> failing = new TreeMap<>();
+    java.util.Set<String> unsupported = new java.util.TreeSet<>();
+    List<Map<String, String>> fails = new ArrayList<>();
+    int n = 0;
+    try (var in = new java.io.BufferedReader(new java.io.InputStreamReader(new java.util.zip.GZIPInputStream(Files.newInputStream(Path.of(path)))))) {
+      String line;
+      while ((line = in.readLine()) != null) {
+        JsonObject c = JsonParser.parseString(line).getAsJsonObject();
+        String type = c.get("type").getAsString(), kind = c.get("kind").getAsString(), b64 = c.get("b64").getAsString();
+        n++;
+        Map<String, Integer> k = kinds.computeIfAbsent(kind, x -> new TreeMap<>(Map.of("cases", 0, "supported", 0, "passed", 0)));
+        k.merge("cases", 1, Integer::sum);
+        Class<?> cls = byName.get(type.toLowerCase());
+        if (cls == null) {
+          unsupported.add(type);
+          continue;
+        }
+        k.merge("supported", 1, Integer::sum);
+        byte[] raw = java.util.Base64.getDecoder().decode(b64);
+        boolean pass;
+        try {
+          Object v = cls.getMethod("fromXdrByteArray", byte[].class).invoke(null, (Object) raw);
+          if (!kind.equals("valid")) pass = false;
+          else pass = java.util.Arrays.equals((byte[]) v.getClass().getMethod("toXdrByteArray").invoke(v), raw);
+        } catch (Throwable t) {
+          pass = !kind.equals("valid");
+        }
+        if (pass) k.merge("passed", 1, Integer::sum);
+        else {
+          failing.computeIfAbsent(kind, x -> new TreeMap<>()).merge(type, 1, Integer::sum);
+          if (fails.size() < 200) fails.add(Map.of("type", type, "kind", kind, "b64", b64.substring(0, Math.min(120, b64.length()))));
+        }
+      }
+    }
+    int supported = kinds.values().stream().mapToInt(x -> x.get("supported")).sum();
+    int passed = kinds.values().stream().mapToInt(x -> x.get("passed")).sum();
+    Map<String, Object> out = new LinkedHashMap<>();
+    out.put("sdk", "java");
+    out.put("package", "network.lightsail:stellar-sdk");
+    out.put("version", System.getProperty("istravex.sdkVersion", "unknown"));
+    out.put("cases", n);
+    out.put("supported", supported);
+    out.put("passed", passed);
+    out.put("kinds", kinds);
+    out.put("failing_types", failing);
+    out.put("unsupported_types", unsupported);
+    out.put("failures", fails);
+    System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(out));
+  }
+
   public static void main(String[] args) throws Exception {
+    if (args.length > 0 && args[0].equals("cases")) {
+      cases(args[1]);
+      return;
+    }
     if (args.length > 0 && args[0].equals("sweep")) {
       sweep(args[1], java.util.Arrays.copyOfRange(args, 2, args.length));
       return;

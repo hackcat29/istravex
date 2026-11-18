@@ -1,0 +1,58 @@
+{
+ "sdk": "javascript",
+ "package": "@stellar/stellar-sdk",
+ "version": "17.4.0",
+ "cases": 18264,
+ "supported": 17208,
+ "passed": 17208,
+ "kinds": {
+  "valid": {
+   "cases": 4884,
+   "supported": 4596,
+   "passed": 4596
+  },
+  "trailing": {
+   "cases": 4884,
+   "supported": 4596,
+   "passed": 4596
+  },
+  "truncated": {
+   "cases": 4884,
+   "supported": 4596,
+   "passed": 4596
+  },
+  "bad_first_word": {
+   "cases": 3612,
+   "supported": 3420,
+   "passed": 3420
+  }
+ },
+ "failing_types": {},
+ "unsupported_types": [
+  "ContractCostParams",
+  "DependentTxCluster",
+  "Duration",
+  "Int32",
+  "Int64",
+  "LedgerEntryChanges",
+  "ParallelTxExecutionStage",
+  "SError",
+  "ScMap",
+  "ScString",
+  "ScSymbol",
+  "ScVec",
+  "SequenceNumber",
+  "SorobanAuthorizationEntries",
+  "SponsorshipDescriptor",
+  "String32",
+  "String64",
+  "TimePoint",
+  "TimePointMs",
+  "TimeSlicedPeerDataList",
+  "TxAdvertVector",
+  "TxDemandVector",
+  "Uint32",
+  "Uint64"
+ ],
+ "failures": []
+}
