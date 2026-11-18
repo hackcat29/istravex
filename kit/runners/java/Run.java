@@ -508,7 +508,7 @@ public class Run {
         if (pass) k.merge("passed", 1, Integer::sum);
         else {
           failing.computeIfAbsent(kind, x -> new TreeMap<>()).merge(type, 1, Integer::sum);
-          if (fails.size() < 200) fails.add(Map.of("type", type, "kind", kind, "b64", b64.substring(0, Math.min(120, b64.length()))));
+          if (fails.size() < 200) fails.add(new TreeMap<>(Map.of("type", type, "kind", kind, "b64", b64.substring(0, Math.min(120, b64.length())))));
         }
       }
     }
