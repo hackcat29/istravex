@@ -226,6 +226,7 @@
             "pages": [
               "project/findings",
               "project/security",
+              "project/architecture",
               "project/threat-model",
               "project/roadmap",
               "project/maintenance",

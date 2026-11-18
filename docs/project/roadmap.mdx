@@ -69,11 +69,47 @@ What's above is built and isn't part of the request. The award would put the kit
 | Infrastructure for twelve months, at cost | | $1,900 |
 | **Total** | **1,180** | **$55,000** |
 
-| Tranche | Share | Amount | Due | Deliverables |
+| Tranche | Share | Amount | Due | Deliverables (each testable from a clean checkout or a public link) |
 |---|---|---|---|---|
-| T0 · Award | 10% | $5,500 | On award | The plan as GitHub milestones; the weekly sweep running; a fix offered as a pull request for each of the six SDK defects filed on 18 November |
-| T1 · MVP | 20% | $11,000 | Month 2 | Conformance-job pull requests to all seven SDK repositories; Swift and Dart runners; the TypeScript linter with IX001–IX003 |
-| T2 · Testnet (public beta) | 30% | $16,500 | Month 4 | .NET and Kotlin runners (eleven SDKs); conformance-job pull requests to the three indexers; the token-transfer-processor pilot; IX004–IX006 in Go and TypeScript; automatic capture of new cells; the guide reviewed and proposed to developers.stellar.org; v1.4 |
-| T3 · Mainnet (production) | 40% | $22,000 | Month 6 | The two community-indexer pilots; the next protocol upgrade end to end; every open finding followed up; v2.0.0; maintenance to month 12, with quarterly and twelve-month reports |
+| **T0 · Award** | 10% | $5,500 | On award | Paid on approval. The funded-work plan published as GitHub milestones |
+| **T1 · MVP** | 20% | $11,000 | Month 2 | Deliverables 1–5 below |
+| **T2 · Testnet** (public beta) | 30% | $16,500 | Month 4 | Deliverables 6–13 below, including the updated threat model and monitoring plan |
+| **T3 · Mainnet** (production release) | 40% | $22,000 | Month 6 | Deliverables 14–17 below; maintenance continues to month 12 |
+
+Each tranche follows the previous payment within 90 days. Payments follow SCF's 10/20/30/40 schedule; the deliverable budgets below show where the $55,000 of work goes (hours at $45, infrastructure spread across the year), and add up to it.
+
+**Tranche 1 (month 2): $15,900 of work**
+
+| # | Deliverable | Done when | Budget |
+|---|---|---|---|
+| 1 | Conformance job offered to the seven SDK repositories | Seven pull requests open, each with a green run of the corpus and generated cases on that SDK's current main | $4,050 (90 h) |
+| 2 | Swift and Dart runners (`stellar-ios-mac-sdk`, `stellar_flutter_sdk`) | Corpus, generated cases and sweep run in CI; results in `corpus/results/`; every failure a finding | $4,500 (100 h) |
+| 3 | TypeScript linter with IX001–IX003 (ESLint plugin) | Published to npm; CI self-test flags every seeded violation | $3,600 (80 h) |
+| 4 | Weekly sweep of new ledgers and the first monthly report | `sweep.yml` scheduled weekly; report published in the docs | $1,350 (30 h) |
+| 5 | Fixes for the six SDK defects filed on 18 November | A fix pull request offered for each, or the maintainer's fix verified by the kit and the finding moved to fixed | $1,800 (40 h) |
+| | Infrastructure, months 1–2 | | $600 |
+
+**Tranche 2 (month 4): $21,750 of work**
+
+| # | Deliverable | Done when | Budget |
+|---|---|---|---|
+| 6 | .NET and Kotlin runners: eleven SDKs | As deliverable 2 | $4,500 (100 h) |
+| 7 | Conformance job offered to wallet-backend, stellar-etl and Horizon | Three pull requests open, each with a green run | $2,700 (60 h) |
+| 8 | Token-transfer-processor pilot (CAP-0067 events) | Scored over RPC and the data lake in CI; every failure a finding | $3,150 (70 h) |
+| 9 | IX004–IX006 in Go and TypeScript | Each flags its seeded violation and a real upstream bug | $3,600 (80 h) |
+| 10 | Automatic capture of new cells | A new cell in the weekly scan opens a pull request with a verified fixture | $2,700 (60 h) |
+| 11 | Guide v2: the engineer review and a pull request to developers.stellar.org | The review recorded in `kit/guide/review.json` with its link; the stellar-docs pull request open | $3,600 (80 h) |
+| 12 | Threat model and monitoring plan, updated for the new components | `THREAT-MODEL.md` revised; each new monitor running | $900 (20 h) |
+| 13 | v1.4 released; infrastructure, months 3–4 | Signed release with SHA256SUMS and provenance | $600 |
+
+**Tranche 3 (month 6): $17,350 of work**
+
+| # | Deliverable | Done when | Budget |
+|---|---|---|---|
+| 14 | Two community-indexer pilots, chosen with SCF reviewers | Both scored in CI; every failure a finding filed upstream | $4,500 (100 h) |
+| 15 | CAP-0070 and CAP-0083 covered | Fixtures in the corpus; CAP coverage 47 of 47 | $1,350 (30 h) |
+| 16 | The next protocol upgrade end to end | Re-pinned, rescanned, regenerated, rerun and released within two weeks of the mainnet vote (or on its release candidate, if the vote is later) | $5,400 (120 h) |
+| 17 | v2.0.0 and twelve months of maintenance | v2.0.0 released; every open finding followed up; quarterly reports to month 12 and a twelve-month report | $5,400 (120 h) |
+| | Infrastructure, months 5–12 | | $700 |
 
 Meanwhile, the issues filed from this work ([findings](/project/findings#new-defects)) get regression checks as their fixes land, and every protocol release is covered within two weeks of its mainnet vote ([how](/project/maintenance#on-a-protocol-upgrade)).
