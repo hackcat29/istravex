@@ -27,8 +27,8 @@
         "pilot-sighting:cap40-signed-payload-signer-local-0001:records-persist"
       ],
       "reproduced": true,
-      "summary": "A SetOptions that adds a P\u2026 signer produces a state change whose signer column can't be encoded (68-byte key into a 33-byte AddressBytea). The COPY fails, the persist transaction rolls back with the cursor, and ingestion retries the ledger forever.",
-      "evidence": "Pilot at 2a0a84e (before): dropped, records persist: state_change.SignerAccountID \u2026 has a 68-byte key. At 2c87335 (the fix): correct. Protocol 28 corpus, kit/pilot/wallet-backend/refs.json."
+      "summary": "A SetOptions that adds a P… signer produces a state change whose signer column can't be encoded (68-byte key into a 33-byte AddressBytea). The COPY fails, the persist transaction rolls back with the cursor, and ingestion retries the ledger forever.",
+      "evidence": "Pilot at 2a0a84e (before): dropped, records persist: state_change.SignerAccountID … has a 68-byte key. At 2c87335 (the fix): correct. Protocol 28 corpus, kit/pilot/wallet-backend/refs.json."
     },
     {
       "id": "ISTRAVEX-F-0002",
@@ -75,8 +75,8 @@
         "lint:wallet-backend-f8e5786:IX003"
       ],
       "reproduced": true,
-      "summary": "The Soroban participant path added the source as M\u2026, the classic path as G\u2026; both encode to one primary key, the COPY fails with SQLSTATE 23505, and ingestion stops at the ledger. Anyone can trigger it with one cheap ExtendFootprintTtl.",
-      "evidence": "Pilot at f8e5786 (before): dropped, participants G\u2026 and M\u2026 encode to the same key. At bb0b162 (#753): correct. istravex-lint IX003 flags the four call sites #753 changed (contract_operations.go:156, 259, 303, 347) at f8e5786 and none at bb0b162."
+      "summary": "The Soroban participant path added the source as M…, the classic path as G…; both encode to one primary key, the COPY fails with SQLSTATE 23505, and ingestion stops at the ledger. Anyone can trigger it with one cheap ExtendFootprintTtl.",
+      "evidence": "Pilot at f8e5786 (before): dropped, participants G… and M… encode to the same key. At bb0b162 (#753): correct. istravex-lint IX003 flags the four call sites #753 changed (contract_operations.go:156, 259, 303, 347) at f8e5786 and none at bb0b162."
     },
     {
       "id": "ISTRAVEX-F-0004",
@@ -126,7 +126,7 @@
         "javascript-matrix:cap46-scmap-host-order-local-0001:sorted_map_matches_host"
       ],
       "reproduced": true,
-      "summary": "Strkeys are base32, where 2\u20137 sort before A\u2013Z in ASCII but after them in value. 17.2.0 orders issuers by strkey text, so decoding a valid pool-share changeTrust throws (\"Assets are not in lexicographic order\") and the pool ID can't be computed; scvSortedMap orders keys by their native string forms, which the host rejects.",
+      "summary": "Strkeys are base32, where 2–7 sort before A–Z in ASCII but after them in value. 17.2.0 orders issuers by strkey text, so decoding a valid pool-share changeTrust throws (\"Assets are not in lexicographic order\") and the pool ID can't be computed; scvSortedMap orders keys by their native string forms, which the host rejects.",
       "evidence": "kit/runners/js/matrix.mjs: 17.2.0 fails the four checks; 17.2.1 and later pass. The fixture's issuers were chosen so their strkey order is the reverse of their key-byte order; stellar-core accepted the operation."
     },
     {
@@ -150,7 +150,7 @@
         "javascript-matrix:cap27-muxed-max-id-local-0001:offer_id_input_exact"
       ],
       "reproduced": true,
-      "summary": "MuxedAccount accepts \"0x\u2026\" for the maximum ID and id() then returns the string as typed, not the ID the M-address encodes; manageSellOffer rounds a numeric offer ID above 2^53 (9007199254740993 encodes as \u2026992).",
+      "summary": "MuxedAccount accepts \"0x…\" for the maximum ID and id() then returns the string as typed, not the ID the M-address encodes; manageSellOffer rounds a numeric offer ID above 2^53 (9007199254740993 encodes as …992).",
       "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail both checks; 17.3.0 and later reject both inputs."
     },
     {
@@ -234,7 +234,7 @@
       "checks": [],
       "reproduced": true,
       "summary": "Two runs of the same pinned binary on identical input (same keys, transactions and close times) produce identical ledger headers, transaction sets and results, but the LedgerEntryChange entries inside some operations' changes come out in a different order. Anything that hashes or byte-compares meta from two producers (data lake objects from two captive cores, RPC nodes) can disagree on a ledger both closed identically.",
-      "evidence": "Three generations of the same corpus (node kit/capture/generate.mjs --out \u2026) give identical ledger headers for ledger 20 and three different orders of the pool-share changeTrust operation's eight changes; the first Soroban settings-upgrade transaction shows the same. --check compares metadata order-insensitively (kit/lib/canonical.mjs) and reports when it had to."
+      "evidence": "Three generations of the same corpus (node kit/capture/generate.mjs --out …) give identical ledger headers for ledger 20 and three different orders of the pool-share changeTrust operation's eight changes; the first Soroban settings-upgrade transaction shows the same. --check compares metadata order-insensitively (kit/lib/canonical.mjs) and reports when it had to."
     },
     {
       "id": "ISTRAVEX-F-0011",
@@ -529,9 +529,9 @@
         "sweep-java:pubnet:tx_hash"
       ],
       "reproduced": true,
-      "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643\u2026 for mainnet transaction 68f96059\u2026; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",
+      "summary": "A transaction can carry PRECOND_V2 with every field at its default (no ledger bounds, no min sequence number, age and gap 0, no extra signers); mainnet has many. Transaction.fromEnvelopeXdr keeps the values but not the arm: TransactionPreconditions.hasV2() is false for defaults, so the SDK re-encodes the transaction as PRECOND_TIME and hashes different bytes. hashHex() returns 035f2643… for mainnet transaction 68f96059…; signing it signs a different transaction. Same root as #837 (the arm is inferred from values), but a different trigger that the fix proposed there does not cover.",
       "evidence": "kit/runners/java/Run.java on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0; toEnvelopeXdrBase64() differs from the input. The sweep (.github/workflows/sweep.yml) over 1,001 mainnet ledgers finds 58 of 307,577 transactions whose hash Java gets wrong, every one checked a PRECOND_V2 with all-default fields; Go, JavaScript, Rust and Python hash all 307,577 correctly.",
-      "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every field at its default: no `ledgerBounds`, no `minSeqNum`, `minSeqAge` 0, `minSeqLedgerGap` 0, no `extraSigners`. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`TransactionPreconditions.fromXdr` keeps the values, but `hasV2()` is false when they are all defaults, so `toXdr()` writes `PRECOND_TIME`. The transaction's bytes change, and so does its hash:\n\n```java\nAbstractTransaction tx = AbstractTransaction.fromEnvelopeXdr(\"<envelope_xdr of 68f96059\u2026>\", Network.PUBLIC);\ntx.hashHex();               // 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0\n                            // network: 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3\ntx.toEnvelopeXdrBase64();   // differs from the input\n```\n\nA wallet that decodes such an envelope and signs it signs a different transaction, and an indexer that hashes with the SDK records a hash the network doesn't know. This is the same root as #837 (the arm is inferred from the values), with a different trigger: reading `minSeqLedgerGap` with `longValue()` doesn't fix it. Keeping the decoded discriminant, and re-encoding with it, would.\n\nFound by the Istravex conformance corpus (https://github.com/hackcat29/istravex): JavaScript, Go, Rust and both Python packages hash these transactions correctly."
+      "draft": "**A decoded transaction with default-valued PRECOND_V2 re-encodes as PRECOND_TIME, so hashHex() is wrong**\n\nA transaction can use `PRECOND_V2` with every field at its default: no `ledgerBounds`, no `minSeqNum`, `minSeqAge` 0, `minSeqLedgerGap` 0, no `extraSigners`. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`TransactionPreconditions.fromXdr` keeps the values, but `hasV2()` is false when they are all defaults, so `toXdr()` writes `PRECOND_TIME`. The transaction's bytes change, and so does its hash:\n\n```java\nAbstractTransaction tx = AbstractTransaction.fromEnvelopeXdr(\"<envelope_xdr of 68f96059…>\", Network.PUBLIC);\ntx.hashHex();               // 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0\n                            // network: 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3\ntx.toEnvelopeXdrBase64();   // differs from the input\n```\n\nA wallet that decodes such an envelope and signs it signs a different transaction, and an indexer that hashes with the SDK records a hash the network doesn't know. This is the same root as #837 (the arm is inferred from the values), with a different trigger: reading `minSeqLedgerGap` with `longValue()` doesn't fix it. Keeping the decoded discriminant, and re-encoding with it, would.\n\nFound by the Istravex conformance corpus (https://github.com/hackcat29/istravex): JavaScript, Go, Rust and both Python packages hash these transactions correctly."
     },
     {
       "id": "ISTRAVEX-F-0024",
@@ -553,9 +553,47 @@
         "php:cap21-precond-v2-defaults-pubnet-0001:tx_hash"
       ],
       "reproduced": true,
-      "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643\u2026 for mainnet transaction 68f96059\u2026. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
+      "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643… for mainnet transaction 68f96059…. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
       "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023).",
       "draft": "**A decoded transaction with default-valued PRECOND_V2 hashes as PRECOND_TIME**\n\nA transaction can use `PRECOND_V2` with every field at its default: no ledger bounds, no min sequence number, `minSeqAge` 0, `minSeqLedgerGap` 0, no extra signers. Mainnet has many, for example 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3 (ledger 59247200).\n\n`AbstractTransaction::fromEnvelopeBase64XdrString(...)->hash(Network::public())` returns 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0 for it, not the network's hash, because the rebuilt transaction carries `PRECOND_TIME`. (`XdrTransactionEnvelope` itself round-trips the bytes.) A wallet that decodes such an envelope and signs it signs a different transaction.\n\nKeeping the decoded preconditions discriminant, instead of inferring it from the values, fixes it. java-stellar-sdk has the same defect. Found by the Istravex conformance corpus (https://github.com/hackcat29/istravex)."
+    },
+    {
+      "id": "ISTRAVEX-F-0025",
+      "title": "java-stellar-sdk accepts trailing bytes after a complete XDR value",
+      "component": "lightsail-network/java-stellar-sdk",
+      "affected": "6.0.0 (latest release) and earlier",
+      "fixed_in": "lightsail-network/java-stellar-sdk#842 on master (2026-11-16), unreleased",
+      "severity": "low",
+      "status": "fixed-upstream",
+      "issue": "lightsail-network/java-stellar-sdk#833",
+      "disclosure": "already-public",
+      "cap_ids": [],
+      "fixtures": [],
+      "checks": [
+        "cases-java:trailing:all"
+      ],
+      "reproduced": true,
+      "summary": "fromXdrBase64 and fromXdrByteArray do not check that the input was fully consumed, so a value followed by extra bytes decodes as if they were not there. stellar-core and the other SDKs refuse it.",
+      "evidence": "kit/runners/java/Run.java cases: every one of the 4,872 generated trailing-bytes cases, across all 476 types the SDK exposes, decodes; JavaScript, Go, Rust and both Python packages refuse all of them."
+    },
+    {
+      "id": "ISTRAVEX-F-0026",
+      "title": "Python stellar-sdk treats any non-zero optional flag as present",
+      "component": "StellarCN/py-stellar-base",
+      "affected": "stellar-sdk 17.0.1 (latest) and earlier",
+      "fixed_in": "stellar-xdr 0.2.x, the package replacing stellar_sdk.xdr; unreleased in stellar-sdk",
+      "severity": "low",
+      "status": "fixed-upstream",
+      "issue": "StellarCN/py-stellar-base#1263",
+      "disclosure": "already-public",
+      "cap_ids": [],
+      "fixtures": [],
+      "checks": [
+        "cases-python:bad_first_word:all"
+      ],
+      "reproduced": true,
+      "summary": "XDR optional flags must be 0 or 1. stellar_sdk.xdr reads any non-zero word as present, so a value whose optional flag is 0x7FFFFFFF decodes; stellar-core refuses it. The replacement package, stellar-xdr, refuses it too.",
+      "evidence": "kit/runners/python/cases.py: 58 generated cases in 7 types whose first word is an optional flag (Operation, SetOptionsOp, PreconditionsV2 and others) decode in stellar-sdk 17.0.1; stellar-xdr 0.2.1 and every other SDK refuse them."
     }
   ]
 }

@@ -713,7 +713,7 @@ fn main() {
         return goldens(Path::new(&args[2]), Path::new(&args[3]));
     }
     if args.get(1).map(String::as_str) == Some("cases-generate") {
-        let per = args.get(3).and_then(|s| s.parse().ok()).unwrap_or(12);
+        let per = args.get(3).and_then(|s| s.parse().ok()).unwrap_or(32);
         return cases::generate(&args[2], per, args.get(4).map(String::as_str).unwrap_or("istravex-cases-v1"));
     }
     if args.get(1).map(String::as_str) == Some("cases-check") {

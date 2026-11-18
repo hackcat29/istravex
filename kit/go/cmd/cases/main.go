@@ -18,6 +18,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/hackcat29/istravex/kit/go/internal/xdrtypes"
 	"github.com/stellar/go-stellar-sdk/xdr"
 )
 
@@ -36,7 +37,7 @@ type failure struct {
 type marshaler interface{ MarshalBinary() ([]byte, error) }
 
 func outcome(t, k, b64 string) (result string) {
-	mk, ok := types[strings.ToLower(t)]
+	mk, ok := xdrtypes.ByName[strings.ToLower(t)]
 	if !ok {
 		return "unsupported"
 	}

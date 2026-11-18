@@ -1,10 +1,11 @@
 // Code generated from go-stellar-sdk/xdr (every type with DecodeFrom). DO NOT EDIT.
 
-package main
+package xdrtypes
 
 import "github.com/stellar/go-stellar-sdk/xdr"
 
-var types = map[string]func() any{
+// ByName maps a lower-case XDR type name to a constructor for it.
+var ByName = map[string]func() any{
 	"accountentry":                                  func() any { return new(xdr.AccountEntry) },
 	"accountentryext":                               func() any { return new(xdr.AccountEntryExt) },
 	"accountentryextensionv1":                       func() any { return new(xdr.AccountEntryExtensionV1) },

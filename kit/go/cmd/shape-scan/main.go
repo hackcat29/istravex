@@ -193,7 +193,19 @@ func main() {
 	workers := flag.Int("workers", 48, "concurrent downloads")
 	printUniverse := flag.Bool("universe", false, "print every cell a reader can meet and exit")
 	corpusDir := flag.String("corpus", "", "print the cells each fixture in this corpus exercises and exit")
+	casesFile := flag.String("cases", "", "print the cells the valid generated cases in this file exercise and exit")
 	flag.Parse()
+
+	if *casesFile != "" {
+		counts, n, err := casesCells(*casesFile)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		all, reachable := universe()
+		_ = json.NewEncoder(os.Stdout).Encode(map[string]any{"valid_cases": n, "cells": counts, "universe": len(all), "reachable": len(reachable)})
+		return
+	}
 
 	if *corpusDir != "" {
 		fc, err := corpusCells(*corpusDir)

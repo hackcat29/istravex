@@ -8,6 +8,7 @@
 //                                                (for a generated copy: ISTRAVEX_CORPUS=<dir>)
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gunzipSync } from 'node:zlib';
 import { checkSightings } from './sightings/check.mjs';
 import { CORPUS, RESULTS, ROOT, readCorpus } from './lib/fixture.mjs';
 import { checkFields } from './guide/fields.mjs';
@@ -168,6 +169,31 @@ for (const sdk of ['go', 'rust', 'javascript', 'python', 'java']) {
       const text = readFileSync(join(ROOT, f), 'utf8');
       if (claim.test(text)) failures.push(`${f} claims the guide was reviewed, but kit/guide/review.json says ${review.status}`);
     }
+  }
+}
+
+// Generated cases: every SDK's results are present for the current cases file,
+// and every failing (kind) is a finding's, as `cases-<sdk>:<kind>:all` or
+// `cases-<sdk>:<kind>:<type>`.
+{
+  const total = gunzipSync(readFileSync(join(CORPUS, 'generated', 'cases.jsonl.gz'))).toString().trim().split('\n').length;
+  for (const sdk of ['rust', 'javascript', 'go', 'python', 'python-xdr', 'java', 'php', 'stellar-core']) {
+    const file = `cases-${sdk}.json`;
+    if (!existsSync(join(RESULTS, file))) {
+      if (!runnersOnly) failures.push(`${file} missing`);
+      continue;
+    }
+    const r = read(file);
+    if (r.cases !== total) failures.push(`${file}: ran ${r.cases} cases, the cases file has ${total} (re-run it)`);
+    for (const [kind, types] of Object.entries(r.failing_types ?? {})) {
+      for (const [type, n] of Object.entries(types)) {
+        if (!explained.has(`cases-${sdk}:${kind}:all`) && !explained.has(`cases-${sdk}:${kind}:${type}`)) failures.push(`cases ${sdk}: ${n} ${kind} case(s) of ${type} fail and no finding explains it`);
+      }
+    }
+  }
+  for (const key of explained.keys()) {
+    const m = key.match(/^cases-([a-z-]+):([a-z_]+):/);
+    if (m && existsSync(join(RESULTS, `cases-${m[1]}.json`)) && !read(`cases-${m[1]}.json`).failing_types?.[m[2]]) failures.push(`finding ${explained.get(key).id} claims ${key}, which passes`);
   }
 }
 

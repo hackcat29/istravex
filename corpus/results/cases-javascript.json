@@ -2,29 +2,29 @@
  "sdk": "javascript",
  "package": "@stellar/stellar-sdk",
  "version": "17.4.0",
- "cases": 18264,
- "supported": 17208,
- "passed": 17208,
+ "cases": 45144,
+ "supported": 42328,
+ "passed": 42328,
  "kinds": {
   "valid": {
-   "cases": 4884,
-   "supported": 4596,
-   "passed": 4596
+   "cases": 12134,
+   "supported": 11366,
+   "passed": 11366
   },
   "trailing": {
-   "cases": 4884,
-   "supported": 4596,
-   "passed": 4596
+   "cases": 12134,
+   "supported": 11366,
+   "passed": 11366
   },
   "truncated": {
-   "cases": 4884,
-   "supported": 4596,
-   "passed": 4596
+   "cases": 12134,
+   "supported": 11366,
+   "passed": 11366
   },
   "bad_first_word": {
-   "cases": 3612,
-   "supported": 3420,
-   "passed": 3420
+   "cases": 8742,
+   "supported": 8230,
+   "passed": 8230
   }
  },
  "failing_types": {},

@@ -2,29 +2,29 @@
  "sdk": "python-xdr",
  "package": "stellar-xdr",
  "version": "0.2.1",
- "cases": 18264,
- "supported": 18024,
- "passed": 18024,
+ "cases": 45144,
+ "supported": 44504,
+ "passed": 44504,
  "kinds": {
   "valid": {
-   "cases": 4884,
-   "supported": 4812,
-   "passed": 4812
+   "cases": 12134,
+   "supported": 11942,
+   "passed": 11942
   },
   "trailing": {
-   "cases": 4884,
-   "supported": 4812,
-   "passed": 4812
+   "cases": 12134,
+   "supported": 11942,
+   "passed": 11942
   },
   "truncated": {
-   "cases": 4884,
-   "supported": 4812,
-   "passed": 4812
+   "cases": 12134,
+   "supported": 11942,
+   "passed": 11942
   },
   "bad_first_word": {
-   "cases": 3612,
-   "supported": 3588,
-   "passed": 3588
+   "cases": 8742,
+   "supported": 8678,
+   "passed": 8678
   }
  },
  "failing_types": {},

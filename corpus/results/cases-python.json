@@ -2,40 +2,40 @@
  "sdk": "python",
  "package": "stellar-sdk",
  "version": "17.0.1",
- "cases": 18264,
- "supported": 18216,
- "passed": 18158,
+ "cases": 45144,
+ "supported": 45016,
+ "passed": 44859,
  "kinds": {
   "valid": {
-   "cases": 4884,
-   "supported": 4872,
-   "passed": 4872
+   "cases": 12134,
+   "supported": 12102,
+   "passed": 12102
   },
   "trailing": {
-   "cases": 4884,
-   "supported": 4872,
-   "passed": 4872
+   "cases": 12134,
+   "supported": 12102,
+   "passed": 12102
   },
   "truncated": {
-   "cases": 4884,
-   "supported": 4872,
-   "passed": 4872
+   "cases": 12134,
+   "supported": 12102,
+   "passed": 12102
   },
   "bad_first_word": {
-   "cases": 3612,
-   "supported": 3600,
-   "passed": 3542
+   "cases": 8742,
+   "supported": 8710,
+   "passed": 8553
   }
  },
  "failing_types": {
   "bad_first_word": {
-   "LedgerEntryExtensionV1": 11,
-   "Operation": 6,
-   "ParallelTxsComponent": 8,
-   "PreconditionsV2": 6,
-   "SetOptionsOp": 8,
-   "SponsorshipDescriptor": 11,
-   "TxSetComponentTxsMaybeDiscountedFee": 8
+   "LedgerEntryExtensionV1": 31,
+   "Operation": 17,
+   "ParallelTxsComponent": 26,
+   "PreconditionsV2": 15,
+   "SetOptionsOp": 17,
+   "SponsorshipDescriptor": 31,
+   "TxSetComponentTxsMaybeDiscountedFee": 20
   }
  },
  "unsupported_types": [
@@ -98,6 +98,106 @@
    "b64": "f////wAAAADFHJbJGrTXexn6Q8UQZYsJ5ZlZa1qB0gKGcXAEO2TQbw=="
   },
   {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACATzh0DIk3ZshEnasj1UQpEGq8FoK0ignUyRzTJFaLFA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACJWY0pzZVIH+iR6iQcS+i8dRbgG8EX0L6NDIrwIwRX2g=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAcrzTFSGP/4DEBeKgzXWkToSskiSNqr8C4WKDg/xsKrw=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACOt3Cmysyoi28zmTFVpFPgDMJBWrHn/VojoHJvkLLOaw=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABRV8F2nAp1RiU70zIYh2gK/3ajPcMOeB5nEmCavdCAIQ=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAC6UrJOwYSXg25ps7NbFiOjvSagVnkBAtI71TfuTsC/9w=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAA2UljPR9qcmun3DUIvr6kGeYs3YeUIPEdEQe3i9UAs+g=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACyVMUXN+gtA+H+HazoUQ/SjKwCmnxmmmhW06pVQzzqqg=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADBYKmca+B56Ks1EzS3B+3v+BYZIwKfz9xCfzJ0n7OoQA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABDPtOo8gFBllE8xZLZaJRBc1kT2fUKocodUDX3Ygs64Q=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACcKLOEikPgtXy6BzUoV9Iz7cSNmN0sl2x4lRMGb+9Fjg=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAACV7vrTN5XzlfMWr0jPRdMaTkQ7I8phL4E4xuGhUUnrA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADwWt/ANIw1tJZHkEfa3AlWEcHQnAV/J+vOWK3FbfSyJQ=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAD2aazhb1eRNFSUPy1iQGot9QOIT+Ge/f2fplKqK1RlVQ=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAB5qn5+n8tNN6PYAWkZT/BhLjZyFUE04XecY5zpn0Nu/w=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAUQd1NyLZCetfYLvMto0k0bOSxL49ndZVqMtqeGJshUA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADIw/If1DGCDQQ57wt8Dz79/lUI+iicAj+qR0oIeMn6hA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAA1nX6t7VPyo4iamzl7Qhr7yM1BqYnyy3t1MQ9E48EfNA=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAppCiFyG/CDfYz2QjEzq/b9jJO2jMLxPJG1kZD0dP52A=="
+  },
+  {
+   "type": "SponsorshipDescriptor",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAD8jZIWmb48FNpps92KMbD3ygoO9nQLt4JW8H8UogdFpw=="
+  },
+  {
    "type": "LedgerEntryExtensionV1",
    "kind": "bad_first_word",
    "b64": "f////wAAAAAQHFHFlNHt1bp5YqSjNfL5cXk2fW2kHjQPtZjnz/vcrAAAAAA="
@@ -153,6 +253,106 @@
    "b64": "f////wAAAADPN3dQ3mPC6svzV7e5egOpCzuTYgfEgzh0nfmJH3sdFAAAAAA="
   },
   {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAALM5OTX1RkVDIU8A+yrNSStaU4ye4XgUF/b5WHNfBuKQAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACbdNE92rwePmaNYcVcFXwviBM1FmPLh/9KlMyh+hF3UAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABdwC3hTOypqWSLU10b0I62CGrRChCDDDHlVzWqhhqdcAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAMtBTQH8b4ePEnXm/mq4RepqcbbAY9pfqR4OLAfhJ+oQAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADyt5WyDu6IAwHTgXgAOsYIaRUf516gYnimVsKoKlnPFgAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABGYjdM4wNQUTkT7rHz7QunQJTXzGuhvtazbJcZ2oeoCgAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABIohVbKl3GoP0eKQ/tp1eUH4SN1pYJgT2k0EcJV7r9jwAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACrI5jq+l8N7rt64Xllak/te9qWs45VDiGjmZq644gulwAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABnrJAIu/opnfvIdqjjQ83+O6aJ2RR0iEabqgP0xIq7KAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACWTJw72C6vJWKuKM+eg2Hgoi8CVuDv0Qd2Wdm2MYi+PAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABXTf66kl6lrrD07etLFz7BjaqO9LEetGTB7EMDFHT0HAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABJa9saqqa6Qe9Qn2IzA+fAoSLhmIjCZuQPeRCstqZGqwAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACs1ehvPBmKnCcwspRQW9+kUIR5pILJdcHSgmOs6SLzFAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAC2E7g/p0vo7D+26jOW9bQmeOZpoEPprwQ60osGvfBYKgAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAsb4USUPZbhLgUvZlR13RPATwUA87ixVJMPixqBd0ZbwAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACXQGUI9DfdP70leNjIcaim3t3lk0Rjuk5xDKmBIgzKxgAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAVoPSX4THDE8yUnT6Y2mGHHY877GSgL/aN2S2M3Zq6dAAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADE1qktfnWEdIvKX1Lo2K8sloGCEbJq9TSMop6D4b23ugAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACmfee+80/R0hw17NopZb2SYMyu4vdoAKm5Gr17qIEjlwAAAAA="
+  },
+  {
+   "type": "LedgerEntryExtensionV1",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACHkSoYEdAvUNmYwToC2IgHXFi6TP0Tl0mD9cY4f57EqwAAAAA="
+  },
+  {
    "type": "ParallelTxsComponent",
    "kind": "bad_first_word",
    "b64": "f////5OpnOly1TtoAAAAAgAAAAEAAAACAAAAADD+EPheMoxxANb/zGoRlpTel7YqDGLcvoPv76wheygZoEO7AHqO8ngJwMOWAAAAAAAAAATkZLA1fZktNqep"
@@ -191,6 +391,96 @@
    "type": "ParallelTxsComponent",
    "kind": "bad_first_word",
    "b64": "f////5/uajJl8pAHAAAABAAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////9t/7m7DF4gzAAAAAgAAAAAAAAADAAAAAAAAAAEAAAAFAAAAADExMUbAYMCP+HKQq+EjqkCWIUJRkECrh5Z3zy7fCa7IKA8f9uT2CXwAAAACAAABAPDp"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////+VjKKYDZR5KAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////z1YXQeikVhyAAAAAgAAAAAAAAACAAAAAQAAAAUAAAAA89eISIEblNquUgR2X0HDlF4KevH1ZTSxrI74po7hgjFtxHyks1x/nQAAAAIAAAEAGHkT9sRq"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////+raK8pXsJXmAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////1kjgHGVcLX7AAAABAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////2AtF927OUOHAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////zeKjGBDP5bMAAAAAgAAAAAAAAAA"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////youqX5DGZmNAAAABQAAAAQAAAABAAAAAKqBs5n8pmTAD9lhDVYttgduw18iP6iFsSWPo2aPzBb0P2UDFmGBBSa0qALEAAAAAAAAAAEAAAADB7+nAAAA"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////8pUFtacHbUBAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////0JEh400BdHsAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////2hXOCSfF3D+AAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////xLnGJv8WoFhAAAAAgAAAAIAAAAAAAAAAQAAAAUAAAAAbr+CmFU41uUuWZXFMew5u+tnhoKeDkTKJwHtuZGZw+ShPmkSuh4x6AAAAAIAAAAA4Am0DdvY"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////19Kge7LAQG7AAAAAgAAAAAAAAAA"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////5qxJX20sfpfAAAAAQAAAAEAAAAA"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////yBsYOTvtS9HAAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////+boGVxmpVjkAAAAAgAAAAMAAAAAAAAAAAAAAAAAAAAA"
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f////3LO7/Opdrq0AAAAAA=="
+  },
+  {
+   "type": "ParallelTxsComponent",
+   "kind": "bad_first_word",
+   "b64": "f/////f01jTzvialAAAAAQAAAAEAAAAGAAAABQAAAACjtmZMOPNnqd808edJ666blTOXsfbi/LCuIGNcKpIBnMd9t6SpapqVAAAAAgAAAQDLOkJcjOYZCjb+"
   },
   {
    "type": "TxSetComponentTxsMaybeDiscountedFee",
@@ -233,6 +523,66 @@
    "b64": "f/////oPIX60H9bdAAAAAA=="
   },
   {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////4ZcHcGYFPzFAAAAAQAAAAIAAAAAK+BR3gIgdHTTofHICueMniE4q7V1jf4guuaR7fWo/zjpWg7WOZCxVAZyJNQAAAACAAAAAAAAAAAAAAAAwmi/Syt5"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////zVzOwUmW11LAAAAAQAAAAIAAAEAmdoiqQZiPlZJPwrZAAgZvkfiYa1peu28d1WpbOlb48wK5Eo4QkSh2j1y8y0Siar3Sqr3cAAAAAAAAAAEOPdBlpdN"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////wOzTe4wP2qOAAAAAQAAAAIAAAAAcC74VvBWPx2g0oix5d7qPQgvGWGAz3tJ+XxdDkSqkjxNaFQlJqdafKr9O+8AAAACAAAAAAAAAAFHe9kV+7GgkwAA"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////8G8MC3gHg+fAAAAAA=="
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////8PVdR3oM8XQAAAAAwAAAAIAAAAAbdNTP3avdG4VEVNMB6r+h8IxGfWSL+tDmrmeBZwcMSAfPCkAu+4M2tknsakAAAABdrrgqK0r3Nh52V6ek4RZDwAA"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////2CuzEdWntOEAAAAAgAAAAC8eslVld62bzdk+wwWGZV4lTL6ZEioFjSfUeN0Oa5aJ34mwMyZg0cp0eHP9QAAAAAAAAADmRU4HkaGVgnldfj8OozwISfA"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////5eFA6Wd4kNzAAAAAQAAAAIAAAAAkpyUBrfYaeTZmyQOeDgBex7lkzKnELM7Y7V1KNDVc4dVjIt0ALVOJcdmDcQAAAAAAAAABKFHOnVFKPhuFTEqrgDI"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////5Cs7sKfyhRLAAAAAQAAAAA8GrfdnqJ2ncBmyI7Vdl2QNqnIHNVxWgZeHZMP62e/EydTopNIO91XwnVrnQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAVoZ"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////+npBLWz1ZY7AAAAAQAAAAIAAAAAm9uqc6bTCGGoghzl5Hz89uNHhdzyqosP/ELE9DaLLKEZHZBt+bR4alGJkz4AAAAAAAAABIprU7UPsbEJOvc0Dl5b"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////5NrI7akOT2wAAAAAwAAAABbJxvtO4A9Fk2hhSotZjWhyemExrQG4c9W7CoG543nyBFZVaSsf6KwmCCgdQAAAAFLJOymbziItn1ADq2FQmE1AAAAAtQY"
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f////0GAjOdYxJf1AAAAAA=="
+  },
+  {
+   "type": "TxSetComponentTxsMaybeDiscountedFee",
+   "kind": "bad_first_word",
+   "b64": "f/////R6qWNCY4nhAAAAAQAAAAIAAAEAawFVgDbt8YJkqcKw8qZdO7zeyD36E58nAhL22dzGyYZ+qzFYfxcxb8XvNzZ46wgFRalI2QAAAAIAAAAAAAAAAAAA"
+  },
+  {
    "type": "SetOptionsOp",
    "kind": "bad_first_word",
    "b64": "f////wAAAADV3zdyLUTyFyPrfZYH8JClMK/V3ppji47EVv34ynyPOwAAAAAAAAABtYlXegAAAAFsGqdAAAAAAAAAAAAAAAABfyGf7QAAAAEAAAABSQAAAAAA"
@@ -273,6 +623,51 @@
    "b64": "f////wAAAAAQRr9zwOHtqA1IyvXJ8fQ+jJAbR2psuf02O6oXhTc+JAAAAAEqtc7nAAAAAAAAAAE1fD5GAAAAAcRU1jQAAAABOywymQAAAAAAAAABAAAAAAAA"
   },
   {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAeDCG54OrntyM2w7tydkBuxH8iwA5tMb3MoChqDopy4wAAAAAAAAAAAAAAAAAAAAFSIn4YAAAAAZPPrJcAAAAAAAAAAQAAAAAAAAABAAAAANig"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAASkh3v/k4G8YymvSX6jiUIf7dR0QlbfuwW8TdXTKHuDgAAAAGxrj3jAAAAAbiqnrcAAAAAAAAAAAAAAAFFSvPgAAAAATrWr+AAAAABAAAAAAAA"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACvyn1l7oHqjKaLtcZvSzu9jRvMK/JAHUJB+3Tt5Cw4UAAAAAAAAAAByXun8AAAAAAAAAABUVlWmQAAAAAAAAAAAAAAAQAAAALJFgAAAAAAAQAA"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAC5iaDeYfR0JpLjx2FYnFqqBFVipJgJ/F9QMgW/Bwsw/gAAAAHTdLcOAAAAAY4nMbkAAAAB4Ba+RQAAAAGdWP61AAAAASxLgTcAAAABOTt41gAA"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACgeD72VPND91Zapli8OyaQZxgm+SODUqzbehADnkDiPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAABcuEs6hAgcFwiM"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAACNsfd8v86NQN8iY2b08gwZ/03VmM1mNPatpLlnGITAcAAAAAGOLShAAAAAAAAAAAEnH+PwAAAAAeaRTJwAAAAAAAAAAAAAAAEAAAACmxoAAAAA"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAABGOjB++7cpAZ/ufVE4eK0XXoxpgGTcfv1hVLH9VdO7HgAAAAAAAAAAAAAAAAAAAAFeLRAqAAAAAR/GgoQAAAABnFS9AgAAAAEAAAAAAAAAAA=="
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADf9rSqWvh/w4evdY8Zq40aU2bjeLn+eOBOZS2qjO7juAAAAAELJ6nrAAAAAWw3cSsAAAABmx/mugAAAAHVt4TNAAAAAAAAAAAAAAABAAAAAUMA"
+  },
+  {
+   "type": "SetOptionsOp",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADogEeiM+KuSqWtvtSAVjltVPShdVO2zqDBmMn6Be/G/AAAAAAAAAAB18dBmwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAFGKqjRRYMdGcrh"
+  },
+  {
    "type": "Operation",
    "kind": "bad_first_word",
    "b64": "f////wAAAAA6b10s3HcwNASSFCMkdlciuj/6swubxoLOg/M/9bH07gAAAA8AAAAA1scQbn+6fDtxe1HYs+36ct7P2o7ZKUgnWpbc0o3UzIg="
@@ -303,6 +698,61 @@
    "b64": "f////wAAAQDCYnZw//64jVEwsMzhaV1OVEyn5jWJM1zo2UCdLPfQPklvrBaWP1HeAAAAGgAAAAA="
   },
   {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAHB2J14UjAhZvR16uSZe7On+hrzu+3Ec13/TZCqpvYwAAAAAAAAAAAo0acHM97ZRo3MJf7csKIoS+TkZNJElgeFxyoyIm6JffcRLt5Wi8nrg=="
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAD5t4eU031N+ZKdT3pa5JCZx5u7zm03gTPYTthP3W/unAAAABIAAAABAAAAAAOhb6BlYPOBU0T1R1XsvRezHTUioh14cQLa1pG4IRhoAAAAA8cX"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADWboCFnaONZabTB8D0c3v8FmyzWZNQsAK+GEBpyXTj9gAAAAQAAAABHeCuUQAAAADebATHk8S7a2klTGhp3/Ums1J18TAM7lIrysFzdwd2HQAA"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAQAhgn8z93P9x6QP3owWeDlP7VU4OOn5J7WXuDgJsJROAgc7mVPDjLQmAAAABwAAAACYb5Kib+315zHpBjiUoHPT8laotzQT+mhzMGywiyIHkQAA"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAADpl/KzFzLu8LwiMjM7W4WEAGOanscJC7yiRvZDgiVcLwAAAA8AAAAAt6q3/mdKFYz/tu7usjBj0pljvTk86xQk1csTNKltjvg="
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAQBiqXCleuw4fXwjNuyBrKVY9p+mLFTCUT1N7X2K3fadp8Wy+mDByaqaAAAABQAAAAEAAAAAjoryH1V98/FrlFbqgNHgqdc8Gi6aHr5Dg2TG7CO1"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAQDxs2qoBC/5eZiirAgC2uoRRwUdaRzcMEsNDmbnDr9T508EBPP9iZG9AAAAEwAAAALBnvay33K5rlO9Zc0AAAAAg4h3ScXjfd57ILEPZFnHfFxq"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAQDOMzC8MOMnUk+cCXy0vCcl/0BzWgyotnELfDufXEodpfPy7xsgSc3+AAAADwAAAADIC7WDOziyfcPEsRyiJwSmDXN23V71GYcZSdv5ABFVPw=="
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAl8VFvQW/aEHbnot9nu8srO/BKPnmGfnUtw/+OHDjCvAAAABoAAAAA"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAQBI80XHA0ZHk/Sk5G/Rl9WrBILAnoQDOnHCONjvnDi5xSby+PzDZ+ThAAAAF8mwN+bo2vuPsLt/q3j7t40Vkv72lvgsUq/XO9nL1ztKX0q8gF3W"
+  },
+  {
+   "type": "Operation",
+   "kind": "bad_first_word",
+   "b64": "f////wAAAAAjew/4JxBT1+OD7luhcFIeza1kwgSa08DPXNmTxLCbxAAAAAAAAAAAngX8SZJwxsQ6Dgpkx5JhvOVRmmu/cUHFoiTsoG+Kv2phhbDaQHh8DQ=="
+  },
+  {
    "type": "PreconditionsV2",
    "kind": "bad_first_word",
    "b64": "f////zy2hgVSUI8kTBUcJgsUQiEAAAAAAAAAAEzrNGSK+6QG6SH4ngAAAAA="
@@ -331,6 +781,51 @@
    "type": "PreconditionsV2",
    "kind": "bad_first_word",
    "b64": "f////ztA3cMi8QVSQbROvmrpT8sAAAAAAAAAAHFbbqawhCOUO4wXaQAAAAIAAAACU+yMBSy73Z1ikVozP9QkCSewDqg4ObH0kK5LttlB8SwAAAAA7rASBWVt"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////9OKdNPLXyu4IE5gKrmRpcAAAAAAAAAAAXVg4D4whD5HPu2o1+AOeDeoyZ2oAAAAAQAAAAOrH2g3YZ+T0mYYh5yry7WjM/4Bo/miZlx1dJseKBB0uwAA"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////1MKodxDc3VYXXUciRAmnBUAAAAAAAAAAGvgA2Oqs1iJiFDFZQAAAAIAAAACGvBBaY4g0ZSigW5fYNfV4oKUg2i/6zM5BCRIsONrUDwAAAABL+lSnmwE"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////2eIEK5Do9iAB9YBvNAandkAAAAAAAAAAYANUqx5e1Yay5ngnoUkOCxWQxgCAAAAAQAAAADkK2k62LkU5mybUGSsfixy9RjQAMnvRWjQo2rRqMpOtw=="
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////yQZiW/UBHWokmKJVx8TEasAAAABrAtJCqludgsAAAAB0JFQveg8iMZyaszeihehgplZukoAAAACAAAAAvJn1jSHQlWa0H98xBh+7fUZt11fACUbFM/q"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////xyklOjSN6gF4Q2Myt4jkNoAAAABytVx8jDg+PIAAAAA/gu2t2hg2tTeHdqXAAAAAQAAAAO6T0289WZXeUZGCatVf70CTGzlAQHx4q7HcelLnDEqDAAA"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////6p9fbe+nCBfImKAbaXIlPwAAAABUd7Q/KG+nuMAAAAAaFb/4vnYrFdSS+oOAAAAAgAAAAP5TuVAi8uJ8OZFQ6Osm1DwZH/MaOHR9/sLz0VjSKqtIgAA"
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////5qPjeVDPPm5f6y1PUeiBgUAAAAAAAAAAGiqaxiM14NN4Mhy5AAAAAA="
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f/////eoxgSAaECgSH0Gm+GhrRgAAAABH2FOHGHp2eEAAAAApLJTNexvqrNorB/wAAAAAA=="
+  },
+  {
+   "type": "PreconditionsV2",
+   "kind": "bad_first_word",
+   "b64": "f////4QmQS6DpZUxeXH2clTeTqMAAAABGSa3a18V7EQAAAABmDBUq8hzdQtIUxuVvlC6Vt38NsAAAAAA"
   }
  ]
 }

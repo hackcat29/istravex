@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"compress/gzip"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -10,6 +12,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/hackcat29/istravex/kit/go/internal/xdrtypes"
 	"github.com/stellar/go-stellar-sdk/xdr"
 )
 
@@ -90,4 +93,50 @@ func corpusCells(dir string) ([]fixtureCells, error) {
 		out = append(out, fixtureCells{Fixture: m.ID, CapIDs: m.CapIDs, Cells: cells})
 	}
 	return out, nil
+}
+
+// casesCells decodes every valid generated case and lists the cells they
+// exercise together, with how many cases reach each.
+func casesCells(path string) (map[string]int, int, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer f.Close()
+	gz, err := gzip.NewReader(f)
+	if err != nil {
+		return nil, 0, err
+	}
+	counts := map[string]int{}
+	n := 0
+	sc := bufio.NewScanner(gz)
+	sc.Buffer(make([]byte, 1<<20), 1<<26)
+	for sc.Scan() {
+		var c struct{ Type, Kind, B64 string }
+		if err := json.Unmarshal(sc.Bytes(), &c); err != nil {
+			return nil, 0, err
+		}
+		if c.Kind != "valid" {
+			continue
+		}
+		mk, ok := xdrtypes.ByName[strings.ToLower(c.Type)]
+		if !ok {
+			continue
+		}
+		raw, err := base64.StdEncoding.DecodeString(c.B64)
+		if err != nil {
+			return nil, 0, err
+		}
+		v := mk()
+		if err := xdr.SafeUnmarshal(raw, v); err != nil {
+			continue
+		}
+		n++
+		seen := map[string]bool{}
+		walk(reflect.ValueOf(v).Elem(), nil, func(cell string) { seen[cell] = true })
+		for cell := range seen {
+			counts[cell]++
+		}
+	}
+	return counts, n, sc.Err()
 }

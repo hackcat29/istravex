@@ -141,6 +141,7 @@ pub fn check(path: &str) {
     let cases = read_cases(path);
     let mut by_kind: BTreeMap<String, (usize, usize)> = BTreeMap::new();
     let mut failures: Vec<Value> = Vec::new();
+    let mut failing: BTreeMap<String, BTreeMap<String, usize>> = BTreeMap::new();
     for c in &cases {
         let kind = c["kind"].as_str().unwrap().to_string();
         let ty = c["type"].as_str().unwrap();
@@ -159,14 +160,18 @@ pub fn check(path: &str) {
         e.0 += 1;
         if ok {
             e.1 += 1;
-        } else if failures.len() < 200 {
-            failures.push(json!({ "type": ty, "kind": kind, "b64": b64.chars().take(120).collect::<String>() }));
+        } else {
+            *failing.entry(kind.clone()).or_default().entry(ty.to_string()).or_default() += 1;
+            if failures.len() < 200 {
+                failures.push(json!({ "type": ty, "kind": kind, "b64": b64.chars().take(120).collect::<String>() }));
+            }
         }
     }
     let kinds: BTreeMap<_, _> = by_kind.iter().map(|(k, (n, p))| (k.clone(), json!({ "cases": n, "passed": p }))).collect();
     println!(
         "{}",
         json!({ "sdk": "rust", "package": "stellar-xdr", "version": "30.0.0", "cases": cases.len(), "supported": cases.len(),
-                "passed": by_kind.values().map(|x| x.1).sum::<usize>(), "kinds": kinds, "failures": failures })
+                "passed": by_kind.values().map(|x| x.1).sum::<usize>(), "kinds": kinds, "failing_types": failing,
+                "unsupported_types": Vec::<String>::new(), "failures": failures })
     );
 }
