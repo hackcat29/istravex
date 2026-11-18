@@ -28,6 +28,12 @@ jobs:
         with:
           workspaces: kit/runners/rust
       - run: npm ci
+      # Maven Central rate-limits CI runners; the pinned jars (sha256-checked
+      # on every run anyway) are cached so most runs don't download them.
+      - uses: actions/cache@v6
+        with:
+          path: .cache/java
+          key: java-jars-${{ hashFiles('kit/runners/java/jars.json') }}
       - name: Provenance (schema, sha256, canonical ledgers)
         run: npm run corpus:verify
       - name: Unit tests (mock RPC, bounded memory, data lake, linter)
