@@ -1,33 +1,40 @@
 //! RFP sightings stellar/rs-stellar-xdr#581 and #598, before and after.
 //!
-//! 581: decoding a VecM reserved capacity from the untrusted length prefix.
-//!      A 12-byte ScVal claiming 2^32 - 1 vec elements made the decoder try to
-//!      allocate hundreds of gigabytes before reading one element. Run as
-//!      `check 581`; the workflow records an abort (allocation failure) as the
-//!      bug and a clean error as the fix.
-//! 598: serde deserialize didn't enforce a VecM's maximum length: a 33-byte
-//!      symbol (ScSymbol is StringM<32>) was accepted from JSON. Run as
-//!      `check 598`.
+//! 581: decoding a VecM built its Vec by pushing, so Vec's doubling growth
+//!      reserved more capacity than the length the decoder already knew. A
+//!      5-element vec ends with capacity 8; the fix reserves exactly 5. Run as
+//!      `check 581`.
+//! 598: serde deserialize didn't enforce a VecM's maximum length: 21
+//!      signatures deserialize into VecM<DecoratedSignature, 20> (a
+//!      transaction's signatures) from JSON. Run as `check 598`.
 
-use stellar_xdr::{Limits, ReadXdr, ScSymbol, ScVal};
+use stellar_xdr::{DecoratedSignature, Limits, ReadXdr, ScVal, VecM};
 
 fn main() {
     let which = std::env::args().nth(1).unwrap_or_default();
     let version = env!("XDR_VERSION");
     match which.as_str() {
         "581" => {
-            // SCV_VEC, vec present, length 0xFFFFFFFF, and no elements.
-            let bytes = [0, 0, 0, 0x10, 0, 0, 0, 1, 0xff, 0xff, 0xff, 0xff];
-            let outcome = match ScVal::from_xdr(bytes, Limits::none()) {
-                Ok(_) => "accepted".to_string(),
+            // SCV_VEC, present, 5 elements, each SCV_U32.
+            let mut bytes = vec![0, 0, 0, 0x10, 0, 0, 0, 1, 0, 0, 0, 5];
+            for n in 0..5u8 {
+                bytes.extend([0, 0, 0, 3, 0, 0, 0, n]);
+            }
+            let outcome = match ScVal::from_xdr(&bytes, Limits::none()) {
+                Ok(ScVal::Vec(Some(v))) => {
+                    let inner: Vec<ScVal> = v.0.into();
+                    format!("len {} capacity {}", inner.len(), inner.capacity())
+                }
+                Ok(other) => format!("unexpected value {other:?}"),
                 Err(e) => format!("error: {e}"),
             };
-            println!("{{\"sighting\":\"stellar/rs-stellar-xdr#581\",\"stellar_xdr\":\"{version}\",\"outcome\":\"{}\"}}", outcome.replace('"', "'"));
+            println!("{{\"sighting\":\"stellar/rs-stellar-xdr#581\",\"stellar_xdr\":\"{version}\",\"outcome\":\"{outcome}\"}}");
         }
         "598" => {
-            let json = format!("\"{}\"", "a".repeat(33));
-            let outcome = match serde_json::from_str::<ScSymbol>(&json) {
-                Ok(s) => format!("accepted: {} bytes", s.0.len()),
+            let one = r#"{"hint":"00000000","signature":""}"#;
+            let json = format!("[{}]", vec![one; 21].join(","));
+            let outcome = match serde_json::from_str::<VecM<DecoratedSignature, 20>>(&json) {
+                Ok(v) => format!("accepted: {} signatures", v.len()),
                 Err(e) => format!("error: {e}"),
             };
             println!("{{\"sighting\":\"stellar/rs-stellar-xdr#598\",\"stellar_xdr\":\"{version}\",\"outcome\":\"{}\"}}", outcome.replace('"', "'"));

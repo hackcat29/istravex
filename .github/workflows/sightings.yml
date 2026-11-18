@@ -60,31 +60,6 @@ jobs:
           name: js-xdr-165
           path: ${{ runner.temp }}/js-xdr-165-*.json
 
-  rs-stellar-xdr-604:
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        version: ['28.0.0', '30.0.0']
-    steps:
-      - uses: dtolnay/rust-toolchain@stable
-      - name: The stellar-xdr CLI as released (the build make xdr-json uses)
-        run: cargo install -q stellar-xdr --version =${{ matrix.version }} --features cli --locked --root "$RUNNER_TEMP/xdr"
-      - name: Does the ScAddressType schema have every arm the crate's XDR defines?
-        run: |
-          src=$(ls -d ~/.cargo/registry/src/*/stellar-xdr-${{ matrix.version }})
-          # The crate defines the arm (behind cap_0084_muxed_contract in 28.0.0).
-          defined=$(grep -rl 'MuxedContract = 5' "$src/src" | wc -l)
-          "$RUNNER_TEMP/xdr/bin/stellar-xdr" types schema --type ScAddressType > schema.json
-          in_schema=$(grep -c -i 'muxed_contract' schema.json || true)
-          jq -n --arg v "${{ matrix.version }}" --argjson defined "$defined" --argjson in_schema "$in_schema" \
-            '{sighting: "stellar/rs-stellar-xdr#604", stellar_xdr: $v, type: "ScAddressType", arm: "SC_ADDRESS_TYPE_MUXED_CONTRACT",
-              defined_in_xdr: ($defined > 0), in_schema: ($in_schema > 0)}' > "$RUNNER_TEMP/rs-stellar-xdr-604-${{ matrix.version }}.json"
-          cat "$RUNNER_TEMP/rs-stellar-xdr-604-${{ matrix.version }}.json"
-      - uses: actions/upload-artifact@v7
-        with:
-          name: rs-stellar-xdr-604-${{ matrix.version }}
-          path: ${{ runner.temp }}/rs-stellar-xdr-604-${{ matrix.version }}.json
-
   rs-stellar-xdr-581-598:
     runs-on: ubuntu-24.04
     strategy:
@@ -110,7 +85,7 @@ jobs:
           path: ${{ runner.temp }}/rs-stellar-xdr-5*.json
 
   merge:
-    needs: [soroban-sdk-2099, js-xdr-165, rs-stellar-xdr-604, rs-stellar-xdr-581-598]
+    needs: [soroban-sdk-2099, js-xdr-165, rs-stellar-xdr-581-598]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v7
@@ -123,8 +98,6 @@ jobs:
             '{sighting: "stellar/rs-soroban-sdk#2099", before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-soroban-sdk-2099.json
           jq -n --slurpfile b out/js-xdr-165-before.json --slurpfile a out/js-xdr-165-after.json \
             '{sighting: "stellar/js-xdr#165", before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-js-xdr-165.json
-          jq -n --slurpfile b out/rs-stellar-xdr-604-28.0.0.json --slurpfile a out/rs-stellar-xdr-604-30.0.0.json \
-            '{sighting: "stellar/rs-stellar-xdr#604", before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-rs-stellar-xdr-604.json
           for n in 581 598; do
             jq -n --slurpfile b out/rs-stellar-xdr-$n-before.json --slurpfile a out/rs-stellar-xdr-$n-after.json --arg n "$n" \
               '{sighting: ("stellar/rs-stellar-xdr#" + $n), before: $b[0], after: $a[0], run: (env.GITHUB_SERVER_URL + "/" + env.GITHUB_REPOSITORY + "/actions/runs/" + env.GITHUB_RUN_ID)}' > sightings-rs-stellar-xdr-$n.json

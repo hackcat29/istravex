@@ -56,7 +56,9 @@
       "kind": "epic",
       "status": "exercised",
       "evidence": "pilot-stellar-etl",
-      "fixtures": ["cap85-contract-executable-external-ref-pubnet-0001"],
+      "fixtures": [
+        "cap85-contract-executable-external-ref-pubnet-0001"
+      ],
       "detail": "The epic's XDR changes: stellar-etl v2.8.34 exports the CAP-0085 externally managed contract executable (a mainnet transaction) with no transform error and correct rows. CAP-0083's STELLAR_VALUE_EMPTY_TX_SET has not appeared on either network."
     },
     {
@@ -114,9 +116,8 @@
       "issue": "stellar/rs-stellar-xdr#604",
       "title": "xdr-json schemas omit types behind feature flags",
       "kind": "bug",
-      "status": "reproduced",
-      "evidence": "workflow",
-      "results": "sightings-rs-stellar-xdr-604.json"
+      "status": "not-covered",
+      "detail": "A schema-generation defect in the repository's published xdr-json files, not in decoding. Checked and not reproducible from the releases: at 28.0.0 the one gated arm (SC_ADDRESS_TYPE_MUXED_CONTRACT) already appears in the schema, and the millisecond close-time arms the issue names did not exist yet; protocol 30 removed the gates, which closed the issue."
     },
     {
       "issue": "stellar/js-stellar-sdk#1789",
@@ -150,7 +151,9 @@
       "status": "exercised",
       "evidence": "findings",
       "finding": "ISTRAVEX-F-0008",
-      "fixtures": ["base-memo-non-utf8-local-0001"],
+      "fixtures": [
+        "base-memo-non-utf8-local-0001"
+      ],
       "detail": "Closed upstream by documenting that .value decodes leniently; the byte-keeping paths were always right. Every pinned release keeps a real non-UTF-8 memo's bytes; there is no before/after to show."
     }
   ]
