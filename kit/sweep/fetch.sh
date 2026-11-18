@@ -1,6 +1,7 @@
 #!/bin/sh
 # Fetch ledgers from SDF's public data lake and decompress them to raw
 # LedgerCloseMetaBatch XDR, for the SDK sweeps (.github/workflows/sweep.yml).
+# A ledger the lake does not hold (yet) is skipped.
 #   kit/sweep/fetch.sh <pubnet|testnet> <first> <last> <step> <out dir>
 set -eu
 net=$1; first=$2; last=$3; step=$4; out=$5
@@ -10,10 +11,14 @@ case $net in
   *) echo "network must be pubnet or testnet" >&2; exit 2 ;;
 esac
 mkdir -p "$out"
-seq "$first" "$step" "$last" | xargs -P 32 -I{} sh -c '
-  s={}; start=$(( s / 64000 * 64000 ))
-  rev() { printf "%08X" $(( 4294967295 - $1 )); }
-  url="'"$lake"'/$(rev $start)--$start-$(( start + 63999 ))/$(rev $s)--$s.xdr.zst"
-  curl -fsS --retry 5 "$url" | zstd -q -d -o "'"$out"'/$s.xdr"
+export lake out
+seq -f %.0f "$first" "$step" "$last" | xargs -P 32 -n 1 sh -c '
+  s=$0; start=$(( s / 64000 * 64000 ))
+  key=$(printf "%08X--%d-%d/%08X--%d.xdr.zst" $(( 4294967295 - start )) $start $(( start + 63999 )) $(( 4294967295 - s )) $s)
+  if curl -fsS --retry 5 -o "$out/$s.xdr.zst" "$lake/$key" 2>/dev/null; then
+    zstd -q -d --rm "$out/$s.xdr.zst" -o "$out/$s.xdr"
+  else
+    rm -f "$out/$s.xdr.zst"
+  fi
 '
-ls "$out" | wc -l
+echo "$(ls "$out" | grep -c '\.xdr$') ledgers in $out"

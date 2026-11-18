@@ -12,7 +12,7 @@ on:
         description: Every Nth mainnet ledger from 59,300,000 to 65,500,000
         default: '6200'
       testnet_step:
-        description: Every Nth testnet ledger from 5,540,313 (protocol 30) to 5,790,000
+        description: Every Nth testnet ledger from 5,540,313 (protocol 30) to 5,780,000
         default: '1000'
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
       - name: Fetch the ledgers
         run: |
           kit/sweep/fetch.sh pubnet 59300000 65500000 ${{ inputs.pubnet_step || '6200' }} "$RUNNER_TEMP/pubnet"
-          kit/sweep/fetch.sh testnet 5540313 5790000 ${{ inputs.testnet_step || '1000' }} "$RUNNER_TEMP/testnet"
+          kit/sweep/fetch.sh testnet 5540313 5780000 ${{ inputs.testnet_step || '1000' }} "$RUNNER_TEMP/testnet"
       - if: matrix.sdk == 'go'
         uses: actions/setup-go@v7
         with:
