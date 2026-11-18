@@ -9,7 +9,7 @@
 //!      symbol (ScSymbol is StringM<32>) was accepted from JSON. Run as
 //!      `check 598`.
 
-use stellar_xdr::curr::{Limits, ReadXdr, ScSymbol, ScVal};
+use stellar_xdr::{Limits, ReadXdr, ScSymbol, ScVal};
 
 fn main() {
     let which = std::env::args().nth(1).unwrap_or_default();
