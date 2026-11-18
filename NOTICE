@@ -1,0 +1,19 @@
+Istravex
+Copyright 2026 Tomiwa Adeyemi and the Istravex contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It contains data from other projects, each under its own terms:
+
+- corpus/ledgers/pubnet: LedgerCloseMeta objects copied byte for byte from
+  SDF's public Stellar data lake (AWS Open Data,
+  s3://aws-public-blockchain/v1.1/stellar/ledgers/pubnet). Stellar ledger
+  data is public network data.
+- corpus/ledgers/testnet: LedgerCloseMeta served by Stellar RPC
+  (https://soroban-testnet.stellar.org).
+- corpus/ledgers/local: produced by stellar-core 30.0.0 (Apache-2.0,
+  https://github.com/stellar/stellar-core) running the scenarios in
+  kit/capture.
+- stellar-core's --check-lcm golden files are downloaded at test time from
+  https://github.com/stellar/stellar-core (Apache-2.0) and are not
+  redistributed here.

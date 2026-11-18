@@ -1,0 +1,93 @@
+name: Shape scan
+
+# Record which XDR cells (union arms and flag bits) real ledgers exercise,
+# straight from SDF's public data lake (kit/go/cmd/shape-scan). The merged
+# output is an artifact; kit/capture/shapes.mjs picks fixtures from it by set
+# cover, and kit/audit/cells.mjs reports cell coverage against it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: pubnet or testnet
+        required: true
+        default: pubnet
+      from_ledger:
+        description: First ledger
+        required: true
+      to_ledger:
+        description: Last ledger (blank = the latest closed)
+        required: false
+      step:
+        description: Scan every Nth ledger
+        required: true
+        default: '500'
+      extra:
+        description: Extra ledgers to scan, comma-separated (e.g. protocol upgrades)
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  range:
+    runs-on: ubuntu-24.04
+    outputs:
+      to: ${{ steps.r.outputs.to }}
+    steps:
+      - id: r
+        run: |
+          to="${{ inputs.to_ledger }}"
+          if [ -z "$to" ]; then
+            h=https://horizon.stellar.org; [ "${{ inputs.network }}" = testnet ] && h=https://horizon-testnet.stellar.org
+            to=$(curl -fsS "$h/" | jq -r .history_latest_ledger)
+          fi
+          echo "to=$to" >> "$GITHUB_OUTPUT"
+
+  scan:
+    needs: range
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kit/go/go.mod
+          cache-dependency-path: kit/go/go.sum
+      - name: Scan this shard
+        working-directory: kit/go
+        run: |
+          step=${{ inputs.step }}
+          first=$(( ${{ inputs.from_ledger }} + ${{ matrix.shard }} * step ))
+          go run ./cmd/shape-scan -network ${{ inputs.network }} -from "$first" -to ${{ needs.range.outputs.to }} -step $(( step * 16 )) -workers 64 > "$RUNNER_TEMP/shapes-${{ matrix.shard }}.jsonl"
+          if [ ${{ matrix.shard }} = 0 ] && [ -n "${{ inputs.extra }}" ]; then
+            go run ./cmd/shape-scan -network ${{ inputs.network }} -ledgers "${{ inputs.extra }}" -keep 1000 -workers 16 >> "$RUNNER_TEMP/shapes-${{ matrix.shard }}.jsonl"
+          fi
+          wc -l "$RUNNER_TEMP/shapes-${{ matrix.shard }}.jsonl"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: shapes-${{ matrix.shard }}
+          path: ${{ runner.temp }}/shapes-${{ matrix.shard }}.jsonl
+
+  merge:
+    needs: scan
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: shapes-*
+          merge-multiple: true
+          path: shards
+      - name: Merge
+        run: |
+          cat shards/*.jsonl | gzip -9 > shapes-${{ inputs.network }}.jsonl.gz
+          echo "### Shape scan (${{ inputs.network }})" >> "$GITHUB_STEP_SUMMARY"
+          zcat shapes-${{ inputs.network }}.jsonl.gz | jq -rs '[.[] | select(.kind=="summary")] | "ledgers: \(map(.ledgers)|add), transactions: \(map(.transactions)|add), cells seen: \(map(.cell_counts|keys[])|unique|length) of \(.[0].universe_size)"' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: shapes-${{ inputs.network }}
+          path: shapes-${{ inputs.network }}.jsonl.gz
