@@ -1,0 +1,34 @@
+name: More SDK runners
+
+# Conformance runners for SDKs whose toolchains the main CI job doesn't set
+# up. Each writes corpus/results/<sdk>.json, uploaded as an artifact; the
+# committed copies are checked by kit/check-results.mjs in the main CI job.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['kit/runners/php/**', 'corpus/fixtures/**', '.github/workflows/sdk-runners.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  php:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: bcmath, gmp, mbstring, sodium
+          tools: composer
+      - name: soneso/stellar-php-sdk (pinned in kit/runners/php/composer.json)
+        working-directory: kit/runners/php
+        run: composer install --no-interaction --no-progress
+      - name: Run the corpus
+        run: php kit/runners/php/run.php corpus
+      - uses: actions/upload-artifact@v7
+        with:
+          name: php
+          path: corpus/results/php.json

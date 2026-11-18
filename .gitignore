@@ -12,3 +12,6 @@ docs/src/_props
 # Sighting reproductions build here (in CI)
 kit/sightings/**/target
 kit/sightings/**/Cargo.lock
+
+# PHP runner dependencies (composer install in kit/runners/php)
+kit/runners/php/vendor

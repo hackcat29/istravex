@@ -1,0 +1,11 @@
+{
+  "name": "istravex/php-runner",
+  "description": "Istravex conformance runner for soneso/stellar-php-sdk",
+  "type": "project",
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">=8.1",
+    "soneso/stellar-php-sdk": "1.18.0"
+  },
+  "config": { "sort-packages": true }
+}
