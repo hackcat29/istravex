@@ -7,13 +7,13 @@ description: "What the network validates, what it passes through, and nine rules
 
 :::warning Draft, not reviewed
 
-This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.
+This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish. Review requested in https://github.com/stellar/stellar-docs/issues/3166.
 
 :::
 
 :::warning
 
-**Draft, not yet reviewed.** The RFP gates publication on review by a stellar-core or platform engineer, and that review hasn't happened. It has been requested publicly; [what a reviewer is asked to check](https://github.com/hackcat29/istravex/blob/main/kit/guide/REVIEW.md) lists the statements that rest on corpus evidence and the ones that rest on a source citation alone. The field table is checked against the corpus on every CI run either way.
+**Draft, not yet reviewed.** The RFP gates publication on review by a stellar-core or platform engineer, and that review hasn't happened. It has been requested publicly in [stellar/stellar-docs#3166](https://github.com/stellar/stellar-docs/issues/3166); [what a reviewer is asked to check](https://github.com/hackcat29/istravex/blob/main/kit/guide/REVIEW.md) lists the statements that rest on corpus evidence and the ones that rest on a source citation alone. The field table is checked against the corpus on every CI run either way.
 
 :::
 

@@ -2,7 +2,7 @@
 
 The SCF RFP this guide was written for asks for a guide "ready to publish on developers.stellar.org" and gates publication on review by a stellar-core or platform engineer. That review has not happened yet. This file says what a reviewer is asked to check, so the review can be quick and specific.
 
-**Status:** requested on 18 November 2026 (`kit/guide/review.json`). Until a review is recorded there, the developers.stellar.org export (`node kit/guide/export.mjs`) opens every page with a "Draft, not reviewed" warning, and CI fails if any page claims a review.
+**Status:** requested on 18 November 2026 in [stellar/stellar-docs#3166](https://github.com/stellar/stellar-docs/issues/3166) (`kit/guide/review.json`). Until a review is recorded there, the developers.stellar.org export (`node kit/guide/export.mjs`) opens every page with a "Draft, not reviewed" warning, and CI fails if any page claims a review.
 
 ## What to read
 

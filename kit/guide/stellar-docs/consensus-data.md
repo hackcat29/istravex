@@ -7,7 +7,7 @@ description: "Some of what's in transaction metadata was never agreed by the net
 
 :::warning Draft, not reviewed
 
-This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish.
+This page has not yet been reviewed by a stellar-core or platform engineer and is not ready to publish. Review requested in https://github.com/stellar/stellar-docs/issues/3166.
 
 :::
 
