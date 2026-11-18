@@ -49,6 +49,6 @@ A dash means the decoder exposes no type for that kind. A count is out of the ca
 - **F-0025**, java-stellar-sdk: trailing bytes are ignored on every type. Fixed upstream in #842, not yet released.
 - **F-0026**, Python `stellar-sdk`: any non-zero optional flag counts as present. Fixed in the replacement `stellar-xdr` package, which passes everything.
 - **F-0027**, stellar-php-sdk: trailing bytes are ignored on every type.
-- **F-0028**, stellar-php-sdk: seven standalone classes don't match the XDR.
+- **F-0028**, stellar-php-sdk: three standalone classes don't match the XDR, and the overlay messages built on them fail too. The `DataValue` failures are by design: the class wraps the optional `DataValue*`.
 
 CI reruns the cases for Rust, Go, JavaScript, both Python packages and Java on every push and fails if any result changes. PHP and the stellar-core oracle run in the [SDK runners workflow](/operations/ci) whenever the cases or those runners change.

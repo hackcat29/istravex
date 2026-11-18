@@ -22,7 +22,7 @@ description: Releases of the kit, corpus and API.
   - wallet-backend: 123/123, over RPC and the data lake; stellar-etl v2.8.35 (its newest release, found by the new weekly monitor): 119/123, the misses still its open #454 and #460
 
   **Findings**
-  - Nine new defects: F-0023 (java-stellar-sdk) and F-0024 (stellar-php-sdk) compute the wrong hash for transactions whose `PRECOND_V2` fields are all defaults; F-0021, PHP muxed IDs above 2⁶³ come back negative; F-0022, PHP decodes past XDR maximums; F-0027, PHP ignores trailing bytes; F-0028, seven PHP standalone XDR classes don't match the XDR; filed upstream as java-stellar-sdk#844 and stellar-php-sdk#220 to #224. The generated cases also reproduce java-stellar-sdk#833 (F-0025) and py-stellar-base#1263 (F-0026). F-0020: js-stellar-sdk before 17.3.0 can't decode protocol 30 XDR
+  - Nine new defects: F-0023 (java-stellar-sdk) and F-0024 (stellar-php-sdk) compute the wrong hash for transactions whose `PRECOND_V2` fields are all defaults; F-0021, PHP muxed IDs above 2⁶³ come back negative; F-0022, PHP decodes past XDR maximums; F-0027, PHP ignores trailing bytes; F-0028, three PHP standalone XDR classes don't match the XDR; filed upstream as java-stellar-sdk#844 and stellar-php-sdk#220 to #224. The generated cases also reproduce java-stellar-sdk#833 (F-0025) and py-stellar-base#1263 (F-0026). F-0020: js-stellar-sdk before 17.3.0 can't decode protocol 30 XDR
   - [RFP sightings](/corpus/sightings): 13 of 18 reproduced before and after their fixes, 3 exercised, 2 out of reach with the reason; new reproductions for rs-stellar-xdr #581 and #598, rs-soroban-sdk #2099 and js-xdr #165
   - Apache-2.0 `LICENSE` and `NOTICE` files
 

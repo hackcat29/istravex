@@ -5855,7 +5855,7 @@
                     },
                     {
                       "id": "ISTRAVEX-F-0028",
-                      "title": "stellar-php-sdk's standalone classes for seven XDR types don't match the XDR",
+                      "title": "stellar-php-sdk's standalone classes for three XDR types (and the overlay messages using them) don't match the XDR",
                       "component": "Soneso/stellar-php-sdk",
                       "affected": "1.18.0 (latest) and earlier",
                       "fixed_in": null,
@@ -5875,8 +5875,8 @@
                         "cases-php:valid:AuthenticatedMessageV0"
                       ],
                       "reproduced": true,
-                      "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (…",
-                      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31,…"
+                      "summary": "XdrSponsorshipDescriptor reads a bare AccountID (it is AccountID*); XdrTxAdvertVector and XdrTxDemandVector read each Hash as a length-prefixed string instea…",
+                      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in seven types (SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, …"
                     }
                   ]
                 }

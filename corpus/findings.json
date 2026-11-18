@@ -612,7 +612,7 @@
     },
     {
       "id": "ISTRAVEX-F-0028",
-      "title": "stellar-php-sdk's standalone classes for seven XDR types don't match the XDR",
+      "title": "stellar-php-sdk's standalone classes for three XDR types (and the overlay messages using them) don't match the XDR",
       "component": "Soneso/stellar-php-sdk",
       "affected": "1.18.0 (latest) and earlier",
       "fixed_in": null,
@@ -632,8 +632,8 @@
         "cases-php:valid:AuthenticatedMessageV0"
       ],
       "reproduced": true,
-      "summary": "XdrDataValue reads a presence flag before the opaque (the optional belongs to ManageDataOp, not DataValue); XdrSponsorshipDescriptor reads a bare AccountID (it is AccountID*); XdrTxAdvertVector and XdrTxDemandVector read each Hash as a length-prefixed string instead of 32 fixed bytes, which breaks FloodAdvert, FloodDemand and the overlay messages that carry them. The SDK's ledger decoders don't use these classes (ManageDataOp and LedgerEntryExtensionV2 decode their fields inline), so no ledger data is affected; code that uses the classes directly is.",
-      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in these seven types (DataValue 31, SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, FloodAdvert 31, FloodDemand 31, AuthenticatedMessageV0 1); every other SDK and stellar-core round-trip them."
+      "summary": "XdrSponsorshipDescriptor reads a bare AccountID (it is AccountID*); XdrTxAdvertVector and XdrTxDemandVector read each Hash as a length-prefixed string instead of 32 fixed bytes, which breaks FloodAdvert, FloodDemand and the overlay messages that carry them. XdrDataValue carries a presence flag by design: the maintainer confirmed it wraps ManageDataOp's optional DataValue*, not the bare DataValue, so its DataValue cases fail by design; its own encoder writing an empty value or \"0\" as absent is a bug they will fix. The SDK's ledger decoders don't use these classes, so no ledger data is affected.",
+      "evidence": "kit/runners/php/cases.php: 188 of the 10,033 valid generated cases fail, all in seven types (SponsorshipDescriptor 32, TxAdvertVector 31, TxDemandVector 31, FloodAdvert 31, FloodDemand 31, AuthenticatedMessageV0 1, and DataValue 31, the last by design); every other SDK and stellar-core round-trip them. Confirmed by the maintainer in Soneso/stellar-php-sdk#224 (2026-11-18), who will fix the three types and the DataValue encoder and document the wrapper."
     }
   ]
 }

@@ -75,11 +75,11 @@ The kit's value is the bugs it finds that nobody had reported. Nine so far:
 | F-0021 | stellar-php-sdk 1.18.0 | medium | Muxed account IDs above 2⁶³ come back negative: a real mainnet destination, 18067157809773112502, reads as -379586263936439114. Filed: stellar-php-sdk#220. |
 | F-0022 | stellar-php-sdk 1.18.0 | low | The decoder accepts 101 operations and a 29-byte memo, past their XDR maximums. Filed: stellar-php-sdk#221. |
 | F-0027 | stellar-php-sdk 1.18.0 | low | Trailing bytes after a complete value are ignored: 9,845 generated cases across 406 types decode, which stellar-core and the other SDKs refuse. Java fixed the same defect in #842. Filed: stellar-php-sdk#223. |
-| F-0028 | stellar-php-sdk 1.18.0 | info | Seven standalone XDR classes (`DataValue`, `SponsorshipDescriptor`, the overlay hash vectors) don't match the XDR; the ledger decoders don't use them. Filed: stellar-php-sdk#224. |
+| F-0028 | stellar-php-sdk 1.18.0 | info | Three standalone XDR classes (`SponsorshipDescriptor` and the overlay hash vectors) don't match the XDR, and `DataValue`'s encoder drops an empty value; the ledger decoders don't use them. Confirmed by the maintainer. Filed: stellar-php-sdk#224. |
 | F-0012 | js-stellar-sdk | low | `TransactionBuilder` refuses a muxed source or memo on every Soroban transaction. Filed: js-stellar-sdk#1906. |
 | F-0010, F-0011 | stellar-core | low | Operation-meta change order differs between identical runs; settings-upgrade salts make standalone networks unreproducible. Filed: stellar-core#5507, #5508. |
 
-All nine are filed upstream, each with its reproduction in the corpus; the kit shows each fix landing on the next run.
+All nine are filed upstream, each with its reproduction in the corpus. The stellar-php-sdk maintainer confirmed all five PHP reports within an hour of filing and is fixing them (#220–#224); the kit shows each fix landing on the next run.
 
 ### Mainnet
 
