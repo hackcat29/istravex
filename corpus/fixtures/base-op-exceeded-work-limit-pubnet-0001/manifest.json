@@ -1,0 +1,64 @@
+{
+  "id": "base-op-exceeded-work-limit-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: OperationResult:OP_EXCEEDED_WORK_LIMIT",
+  "sha256": "853330529a398a77392b71fc572ffdb872087a9cd715c792b4d85c90f2b14384",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 60972800,
+    "tx_hash": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+    "closed_at": "2026-01-28T08:17:34Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+    "successful": false,
+    "source_account": "GC4SOXFMKYEOXOMAY3V6TVBZYOIIAMJ3Z3KMKG47MTLXE36FHQ4UXK5L",
+    "fee_charged": "100",
+    "max_fee": "30987644",
+    "operation_count": 1,
+    "operation_types": "path_payment_strict_receive",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "OperationResult:OP_EXCEEDED_WORK_LIMIT"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "853330529a398a77392b71fc572ffdb872087a9cd715c792b4d85c90f2b14384",
+      "bytes": 460
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "25cf05b2f4a13e7adf379a62bd6e8682ea81be2800588d1412ab8d64e8876baa",
+      "bytes": 24
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "1badf375f87e14872ab77c6395c35b73f7fd2da51c5f1e82e230b21cd6a7eafd",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "8bb9dca2860beef57629036f299bc7cc6fd4d71b2105287b65f38f54f8709621",
+      "bytes": 300
+    }
+  ]
+}

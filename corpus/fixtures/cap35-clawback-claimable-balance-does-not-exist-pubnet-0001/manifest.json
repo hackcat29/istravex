@@ -1,0 +1,66 @@
+{
+  "id": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ClawbackClaimableBalanceResult:CLAWBACK_CLAIMABLE_BALANCE_DOES_NOT_EXIST",
+  "sha256": "6a676c1d8c0775db6781a1b0907ee7af9b8c8715cbd85a75ae282c98b9181643",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59266800,
+    "tx_hash": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+    "closed_at": "2025-10-07T03:11:33Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+    "successful": false,
+    "source_account": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+    "fee_charged": "9000",
+    "max_fee": "45000450",
+    "operation_count": 90,
+    "operation_types": "clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags",
+    "memo_type": "text",
+    "signature_count": 2
+  },
+  "covers": [
+    "ClawbackClaimableBalanceResult:CLAWBACK_CLAIMABLE_BALANCE_DOES_NOT_EXIST"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "6a676c1d8c0775db6781a1b0907ee7af9b8c8715cbd85a75ae282c98b9181643",
+      "bytes": 13484
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "49f1d1a3d9c4c9c732a7258ca24a826cae5c51c72eeff7d12cce19900d062f1b",
+      "bytes": 1748
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "6b22ea9a4b264d61e7445393f1f6b2184ac9b3045b7ccd7d309c48dd0b2ac03e",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "b6c59cbd21213f11975370fed6115295a5f80275e2ac135d1bb91fcd3d540faa",
+      "bytes": 300
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035",
+    "CAP-0023"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AccountEntry.flags:AUTH_CLAWBACK_ENABLED_FLAG, AccountEntry.flags:AUTH_REQUIRED_FLAG, AccountEntry.flags:AUTH_REVOCABLE_FLAG, Asset:ASSET_TYPE_CREDIT_ALPHANUM12, …",
+  "sha256": "21bd1a655f902e8ac27aef69d3b59b0ee9ecc868598964b7c58eb4cf09ecd783",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59236800,
+    "tx_hash": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+    "closed_at": "2025-10-05T03:40:32Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+    "successful": true,
+    "source_account": "GBCXAGJROPR453I3FSLWKYK7UJ27PRBCI6MOIQMNSR4QWAL7HK4RALDO",
+    "fee_charged": "9000",
+    "max_fee": "45000450",
+    "operation_count": 90,
+    "operation_types": "set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,clawback_claimable_balance,create_claimable_balance,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,clawback,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags,set_trust_line_flags",
+    "memo_type": "text",
+    "signature_count": 2
+  },
+  "covers": [
+    "AccountEntry.flags:AUTH_CLAWBACK_ENABLED_FLAG",
+    "AccountEntry.flags:AUTH_REQUIRED_FLAG",
+    "AccountEntry.flags:AUTH_REVOCABLE_FLAG",
+    "Asset:ASSET_TYPE_CREDIT_ALPHANUM12",
+    "ClaimPredicate:CLAIM_PREDICATE_BEFORE_ABSOLUTE_TIME",
+    "ClaimPredicate:CLAIM_PREDICATE_NOT",
+    "ClaimableBalanceEntry.flags:CLAIMABLE_BALANCE_CLAWBACK_ENABLED_FLAG",
+    "ClaimableBalanceEntryExt:v1",
+    "ClaimableBalanceEntryExtensionV1Ext:v0",
+    "ClawbackClaimableBalanceResult:CLAWBACK_CLAIMABLE_BALANCE_SUCCESS",
+    "ClawbackResult:CLAWBACK_SUCCESS",
+    "LedgerEntryChange:LEDGER_ENTRY_REMOVED",
+    "LedgerKey:CLAIMABLE_BALANCE",
+    "OperationBody:CLAWBACK",
+    "OperationBody:CLAWBACK_CLAIMABLE_BALANCE",
+    "OperationBody:SET_TRUST_LINE_FLAGS",
+    "OperationResultTr:CLAWBACK",
+    "OperationResultTr:CLAWBACK_CLAIMABLE_BALANCE",
+    "OperationResultTr:SET_TRUST_LINE_FLAGS",
+    "SetTrustLineFlagsResult:SET_TRUST_LINE_FLAGS_SUCCESS"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "21bd1a655f902e8ac27aef69d3b59b0ee9ecc868598964b7c58eb4cf09ecd783",
+      "bytes": 12832
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "54fe7d0228ed8683d0fe73322228d3bb0afb343c3a119dedb5390832c997bf72",
+      "bytes": 1316
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "9c2be58e990cd95ed240e44a0b281aaf0066b758ff41bddf4dacb86829b4182b",
+      "bytes": 52388
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "ac882d3e4902efe5a0087367c2a32db4a03affad4ad414d81ebcf34c25a96279",
+      "bytes": 300
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0024"
+  ],
+  "protocol_version": 24,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: OperationResult:OP_TOO_MANY_SUBENTRIES, PathPaymentStrictSendResult:PATH_PAYMENT_STRICT_SEND_SRC_NO_TRUST, PathPaymentStrictSendResult:PATH_PAYMENT_STRICT_SEND_TOO_FEW_OFFERS",
+  "sha256": "d5dfadb3b0fc0f80cf87ab9bfe50b84e87f396b7cad14ba7be4652cc3c668d11",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 60098800,
+    "tx_hash": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+    "closed_at": "2025-12-01T08:03:56Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+    "successful": false,
+    "source_account": "GA6H6OAKSM54QHLRLFKZXMUQI7GC5F2HRZY25MIALFO6HWKYLBOFMMLB",
+    "fee_charged": "4000",
+    "max_fee": "4000000",
+    "operation_count": 40,
+    "operation_types": "change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,payment,change_trust",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "OperationResult:OP_TOO_MANY_SUBENTRIES",
+    "PathPaymentStrictSendResult:PATH_PAYMENT_STRICT_SEND_SRC_NO_TRUST",
+    "PathPaymentStrictSendResult:PATH_PAYMENT_STRICT_SEND_TOO_FEW_OFFERS"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "d5dfadb3b0fc0f80cf87ab9bfe50b84e87f396b7cad14ba7be4652cc3c668d11",
+      "bytes": 4124
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "5ecfb119952d0c5503c174971e1fe7c8788d728ba950ce988da408887b9f1dea",
+      "bytes": 444
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "c135505c9a5c4e911e84aaa71e383fb6d4339f9447cc855387659782e6085afa",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "6d68097737b25168a9ae328138ef55cfbda21cc57db1dd11cd844342167ba3a1",
+      "bytes": 396
+    }
+  ]
+}

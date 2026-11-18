@@ -1,0 +1,64 @@
+{
+  "id": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 27,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: PathPaymentStrictReceiveResult:PATH_PAYMENT_STRICT_RECEIVE_OFFER_CROSS_SELF",
+  "sha256": "8b3b32cb75aac134e8f0f1dc03be19faf0fa6a9a400a00d448c7ecf713556cc8",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 63619200,
+    "tx_hash": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+    "closed_at": "2026-07-24T02:01:10Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+    "successful": false,
+    "source_account": "GDKET3IZMV2ZAM4CIWSWWFOTLWDSHIR7NJBHZOWXGZA7C35D4W7BLK7W",
+    "fee_charged": "100",
+    "max_fee": "10000",
+    "operation_count": 1,
+    "operation_types": "path_payment_strict_receive",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "PathPaymentStrictReceiveResult:PATH_PAYMENT_STRICT_RECEIVE_OFFER_CROSS_SELF"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "8b3b32cb75aac134e8f0f1dc03be19faf0fa6a9a400a00d448c7ecf713556cc8",
+      "bytes": 312
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "8e82f2dabce5c579301e68df263d3a53534647bddf3d9547f22fb8e4299962db",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "8c3d5415622070102a19cb0283d78e89fcb89d38da9a5c991c8b98b865ab3859",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "71351135a05c786da4dab61ef19709f0c38ddac05d3d5ad6b8138adf1e254bcb",
+      "bytes": 396
+    }
+  ]
+}

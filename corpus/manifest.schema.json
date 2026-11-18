@@ -188,10 +188,11 @@
           "kind",
           "network_endpoint",
           "ledger",
-          "tx_hash",
           "closed_at"
-        ]
-      }
+        ],
+        "description": ""
+      },
+      "description": " Captured fixtures name the transaction (tx_hash); a whole-ledger fixture (pattern ledger) has none."
     },
     "synthetic": {
       "type": "boolean"
@@ -250,6 +251,14 @@
         "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+#[0-9]+$"
       },
       "description": "Upstream issues or PRs this fixture reproduces, as owner/repo#number."
+    },
+    "covers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9.]+:[A-Za-z0-9_]+$"
+      },
+      "description": "The XDR cells (union arms, or interpreted flag bits) this fixture was chosen to cover, as kit/go/cmd/shape-scan names them. Set by kit/capture/shapes.mjs."
     }
   },
   "$defs": {
@@ -264,7 +273,8 @@
         "TransactionMeta",
         "LedgerEntryData",
         "LedgerEntryChanges",
-        "ScVal"
+        "ScVal",
+        "LedgerCloseMeta"
       ]
     }
   },

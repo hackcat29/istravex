@@ -90,8 +90,8 @@
                   "$ref": "#/components/schemas/Stats"
                 },
                 "example": {
-                  "fixtures": 20,
-                  "caps": 6,
+                  "fixtures": 118,
+                  "caps": 39,
                   "networks": [
                     "local",
                     "pubnet",
@@ -99,12 +99,12 @@
                     "testnet"
                   ],
                   "sdk_checks": {
-                    "passed": 278,
-                    "total": 280
+                    "passed": 1748,
+                    "total": 1750
                   },
                   "provenance_checks": {
-                    "passed": 205,
-                    "total": 205
+                    "passed": 1549,
+                    "total": 1549
                   },
                   "golden_frames": {
                     "exact": 15306,
@@ -117,7 +117,7 @@
                   "cap_coverage": {
                     "live": 70,
                     "xdr_changing": 40,
-                    "xdr_covered": 5
+                    "xdr_covered": 33
                   }
                 }
               }
@@ -196,6 +196,272 @@
                 "example": {
                   "fixtures": [
                     {
+                      "id": "base-account-merge-has-sub-entries-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59233200,
+                      "tx_hash": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "f2b6fead3172576a79bbb1481abfa38663fb5ce21531ecbe825c54afa71b2c64",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-account-merge-no-account-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 60946000,
+                      "tx_hash": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4305236865e2f940cbb6beee8b1de47afe02d95bc8ad9cbe7b11c0b3b512b002",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-allow-trust-no-trust-line-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 26,
+                      "ledger": 63173600,
+                      "tx_hash": "41a30723b2859c93d576058ef2149207b0d51471cb69985202ba891e5d0afc6c",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "45b4a82219738feae5d1f85dd519e76567b414685b77423a913807e26d7e8e9b",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-change-trust-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59380800,
+                      "tx_hash": "9ac42d70f7df36c8c281047a354d7bc010efff712a5e043813a45bb4aaecec0f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b3b1996bb737b6a3dd592e0f6062f3682ca76f6111b6eaf8eadb76c7544593e0",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-create-account-already-exist-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59254800,
+                      "tx_hash": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7be9d10b6ff33787ebb4fabba6da1d296839a1650aa3b86fe1e03fdd97c014f2",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-create-account-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59232800,
+                      "tx_hash": "e23b5892415c9e65fe9c559304360b63306ba080b4da0a3ff6ffab6fc6988693",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "43694b9fdd9b04b6f4a7e4c82f396848c22396f86a2fcff6b6c117c1ec06d4ff",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-create-account-underfunded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59230800,
+                      "tx_hash": "94f55cde90088f3b79ad657de4f28498625470663b7d7425c732d81b66728177",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "d6e7e289435de7df5938098f1f9e1ae204276accf1ba594374a72a2ca2001445",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-data-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 26,
+                      "ledger": 62644400,
+                      "tx_hash": "1b1d857f8f8343a316859fb3cc071f7dc6a404e969b67b4dc6340bdea9cdcaf0",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "8b2d60236015efd8f6ef661203f6060ca5323bfe6c511c0b724a312c778f55b7",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-offer-success-result-offer-manage-offer-u-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59236800,
+                      "tx_hash": "34202444fe30dae04da8f0df220f34a2edd7e28f252079f53feeb7eefab6d702",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "11322267be21dcbc4c962eaf2fe6588cc4ce9a9d7e2da1ccda3cdca91da0865a",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59338000,
+                      "tx_hash": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "6bd8543bed7f5e6ea1ed3753bc54367fad349e4d1115faf572d860a02f731e69",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-sell-offer-cross-self-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540313,
+                      "tx_hash": "a7d083ee4ae6acdbbb9cc13f944ac46e2b30e9f5243d8bf809740a9212f6b865",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "a43ec10de66d925422a39e315c877fbf9ccf02e21bf156a4cf1cc37715b47d38",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-sell-offer-line-full-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540313,
+                      "tx_hash": "33388e46862cfa054c15926ed2a4c9fe55d797d78e00ea782a0c4683768e409a",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "3977344813ef71630d5dc7585229ab17c47e2cc61e1ea1c498bd4e477217213c",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-sell-offer-sell-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59230800,
+                      "tx_hash": "3eef767b7d18e6e3fa056906ddb0af06d17c1757b65cada63909106234a47f43",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "acc421eedb3749539f92855a906ddf0887fa0ded27da56f761930ade78bcb332",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-manage-sell-offer-sell-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59230000,
+                      "tx_hash": "27143745a0c34b95e860efa4d5d76108b28444f7075e03fa2d903f979241f998",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "5eeb9ba8583793d56cba339b16c4cf3e6129f88f64418e6a8306e2e67c83fb3a",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
                       "id": "base-max-amount-local-0001",
                       "pattern": "max-amount",
                       "cap_ids": [],
@@ -248,6 +514,44 @@
                       ]
                     },
                     {
+                      "id": "base-memo-hash-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540313,
+                      "tx_hash": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "82921d0bb45fee9cc2f2019f62b96f2f62dd3e2d4a616d9dde136ecc65c1f551",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-memo-id-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540313,
+                      "tx_hash": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "2ec389e34a765a9b3abd3e082ee7be4dfc811d0abbd89b2968a3af0162276bf2",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
                       "id": "base-memo-non-utf8-local-0001",
                       "pattern": "memo-non-utf8",
                       "cap_ids": [],
@@ -262,6 +566,82 @@
                       "files": [
                         "envelope",
                         "result"
+                      ]
+                    },
+                    {
+                      "id": "base-memo-return-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59380800,
+                      "tx_hash": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "c049bf1db417931d3481af93762bfa91a2c14f9098740face8a4e345dbb5beb8",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-op-bad-auth-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 59863200,
+                      "tx_hash": "cfb0946060390e632f6a6c8085d90ea62dd49265131d0276b7d86d5ade10423f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "be589e38d6f4b9e7e41a32ab3619fac9a3abb00f022ea44cd4688cebf54df80f",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-op-exceeded-work-limit-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 60972800,
+                      "tx_hash": "7cde62e535f4465d6e0ff7449bf635e7ab88f6211692ee1d5206a7ccbc16bfe4",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "853330529a398a77392b71fc572ffdb872087a9cd715c792b4d85c90f2b14384",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-operation-body-create-passive-sell-offer-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59431600,
+                      "tx_hash": "e1d81123a3b8348b535cddb03115bdb41db688ce4bca0f8088710704601ea253",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "3eddd96263c2d07a9cf8a2d16eb2a113c23f5bf56ee64ad4e37f353ea6a7bccf",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
                       ]
                     },
                     {
@@ -282,6 +662,179 @@
                       ]
                     },
                     {
+                      "id": "base-path-payment-strict-receive-line-full-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60082000,
+                      "tx_hash": "e78b91c817c97655da4ddd494ffde663e0377cdd862e3f12699c72edc686f9be",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b2860fb0b0d29642bd16d1eb1ca108db801d07ae1a7aa11d1cc8d63558ec7feb",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60098000,
+                      "tx_hash": "acebe106aa6df4268b702e0a7a323d8e84d5c65a5433fda6c6d7662b07315a72",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "fdb8a5911387f49fd59cc79b1873fb5d08a4b7144b2fbe83eab7b7429ef15994",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 62268400,
+                      "tx_hash": "1bd3132e13dd4e151d74553454efc9074d8eda8fc3e7b66f6c9cd30b254bb9ae",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "5c1f484b12a6ead34cf7c1a7de72952a837b824e80a25e5939e33301a9bfdbeb",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 27,
+                      "ledger": 63619200,
+                      "tx_hash": "2839970f65055e31c9675d8ba7dc0677706a05fe634e0ba027070cc4e6eea257",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "8b3b32cb75aac134e8f0f1dc03be19faf0fa6a9a400a00d448c7ecf713556cc8",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-over-sendmax-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59232400,
+                      "tx_hash": "2dd8aac56fe7d23e0d7c8221f64aa75216c93670165415248cff8e6ab30feeda",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "d847627fea71df8bac7d95b0a19015ec957b4aabe76d26d1c07a5001084443c9",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59250000,
+                      "tx_hash": "3e397684193370c23b550be6e99b42d567366bbdc81481807fc9dca0c3b2fa4d",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "a3e929685166def7124fa33bbe115145ddf73792e59491a07c64d9e7f7bfeb35",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-path-payment-strict-receive-underfunded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59254800,
+                      "tx_hash": "51fed1a0c4d3c09de16788f0a4f8edf7e830b9c5af24b07a3b176bf6987e2062",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "76d9912f7ae102f65567bc8c71319c88e870fa7b7c45b601131e06e8944779c2",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "base-set-options-too-many-signers-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [],
+                      "network": "testnet",
+                      "protocol_version": 25,
+                      "ledger": 1670002,
+                      "tx_hash": "1451e4883964999b2376393901c1676a9ba0dad9808a7069731b6c3330d5b779",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7c12599045ad837c922335e924ef41f9a8609221f730b7545b9652b72e0f132f",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap1-bump-sequence-success-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0001"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59437600,
+                      "tx_hash": "919853d5bc8d16c463e3bfdf3878619f86eae2e0eea4aa35812882886e05f001",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b2202b0a528eee6f3412fd0ea9ed03aae1fcdf642d75ca219a843cf32e3e2bc3",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
                       "id": "cap15-fee-bump-pubnet-0001",
                       "pattern": "fee-bump",
                       "cap_ids": [
@@ -298,6 +851,384 @@
                       "files": [
                         "envelope",
                         "result",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0018"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59489200,
+                      "tx_hash": "74391bd9cab01ce28dc8a90135cb0f90ef62d8a9dde5c91a92186cb9efc44006",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "20924a9041062d82a5b7633107d1538d5cf0d3c0bc3da443db9a6d037450a5ce",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59266800,
+                      "tx_hash": "a9915b9ccd32f943d6a34055375d16cffdcf5feff9361356909f5d7fb7d9ee69",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "fd061e456be1cfa6a395233247fc672552ef575ebd3e7ce8a0065735c8e4cea4",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-claimable-balance-does-not-exist-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59245200,
+                      "tx_hash": "ce4ff57f1a3e4b7a7ea1ab69b24ee0ea1b7d540a475316f7b932136728e62826",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "3bc8eb808dd8340e5e048b1accc30d2941332b297901ca45e76a1f768012802c",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-claimable-balance-line-full-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60586800,
+                      "tx_hash": "967b3ed76f0c30a6c5ffc9b00bc4772fe03c087eb9582d83bb17fa722f4a74be",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4a6d0b7f78afe3cc9b89035637187ce316af34b4ac17ba3d88a49ea5efdf7f7b",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-claimable-balance-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 59582400,
+                      "tx_hash": "15b424614f868796b8aeda4cd9e7a79a57f4f85427ec5b6478354e709fe46eb6",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "78152fae34bf75905f0edc7f0417a1f94e102304c16f2ed65c250bab667ad77d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-predicate-and-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61396800,
+                      "tx_hash": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "07102dc04eea060d4d25e508e6180a25677a5b66c0045cb8586f3ad45cdc30da",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-claim-predicate-or-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 25,
+                      "ledger": 465202,
+                      "tx_hash": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "23ceea2421b14dc53c923d414825c275a53836b9291f2802c122faf777ecb2b0",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-create-claimable-balance-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59263600,
+                      "tx_hash": "4fdf966ec8d1f5074796c3db6831f173535bddacf414a4be0024ede6d0b64015",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "0eafb1a4e116c8ea8f4ad0a4d0476ded3c123b9f40c9fd395d1305ba8ff8906d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-create-claimable-balance-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60570400,
+                      "tx_hash": "d431c2fcae84821389073ca2a1ad4a8aaaf90f0ee32418e4d0c354416e635c56",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "fcd7b623a9147b413e649c6b694ee7c973b3895cb9a21e1900529738527f0d37",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap23-create-claimable-balance-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 26,
+                      "ledger": 62799200,
+                      "tx_hash": "4481ca9184b82a0188cd383eaad6ab3c11824f90aa56f2b85f2719629206747e",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "9fce5ca41cfe1667b0552763c41fe4a1fa5931a691ac24bbeb5b3bf1a7eea3d1",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-line-full-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59272800,
+                      "tx_hash": "83111aeb86f17e509ea32fe4e77d111be1fc57a10bb8b96e0367de5d64d34edd",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "05c45ac17a2ea6f882ea1356e7854bc0fc7545a0b45be883971f6173b57359bc",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-no-destination-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 29,
+                      "ledger": 65092800,
+                      "tx_hash": "c6b9adb30162cce2e6537e70f7f754e16721d7b489836b1eb5dfa4e73ab2a768",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "880ef8afa44302d350e9f9d1adc824a1f4240da572de6ca59e9b5de53909c072",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59295600,
+                      "tx_hash": "add222a4254603f510014730585ed0072d620d95b4bdb36b7ec071eafcd5d341",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "23196ff268159758d4cf948aa625580e5edc5477d80d1645cfdab1b62d913ed8",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61624800,
+                      "tx_hash": "f4ac45e39aa30dc36ae5799b62d1fc2953a6380952b9905b4ee8dba5c4995beb",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "f851741404ce012a8ea69f8651f0925b878343b328205731553d4c65ed7c5429",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-offer-cross-self-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 62164800,
+                      "tx_hash": "e9c201b3d945ae78d04f40a135f1b6ad9af31334379dcf98e87ac2cca9a55742",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "9016e625f11d0a11dfaa0a59204c8fca10d01b4fd114096b60f7d15510d70691",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60098800,
+                      "tx_hash": "d6940c74bc9dd85d83225b750b5cd0834c7e29905700808071ed4457813371e6",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "d5dfadb3b0fc0f80cf87ab9bfe50b84e87f396b7cad14ba7be4652cc3c668d11",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-src-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61510000,
+                      "tx_hash": "4982311eae7bcc3fac3a44ee0ab6aa4d7b5754e298af9fea47f89bc609cc958c",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "60644b8fbca2fc6b487f18d6ce722c8b12c8ee7ce4b61097bcb6d74e9a221c45",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap24-path-payment-strict-send-under-destmin-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0024"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59280000,
+                      "tx_hash": "49735c45de273dd838d43d73edae88a299962eb6075edd1370aebb535eff2b05",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "ae99dd48f44f1e18163d3c4310cfce2981fd08b670c5dcd778c599d4b82573d2",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
                         "fee_meta"
                       ]
                     },
@@ -359,6 +1290,409 @@
                       ]
                     },
                     {
+                      "id": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0003"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59238800,
+                      "tx_hash": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "9f896bce2fe311c19b834abee1186f101a39862fde645582268c383d55fbef67",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap33-account-merge-is-sponsor-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0033"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 26,
+                      "ledger": 63234400,
+                      "tx_hash": "f1dfb31225e6e568cf7dbdd2a97cfb9c4fe732c766172af03e7330412a035701",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4aff9279aca615e6a1207925d6ea33bde25fc41488a8118f49638d953fcae348",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0033"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 24,
+                      "ledger": 34402,
+                      "tx_hash": "4e5ba8ae2f84e327c8ab593f9769e2216796223907f90b0ff5963f99b83ec487",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "84100f73e7dc9519c7841104bc16b4478f4354fe8d85dcb43bed9e820d347df6",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap33-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0033"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61708800,
+                      "tx_hash": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "07f9c6e78ffcde0e39bbee349e22cf0210b9698f30e31ac34dd4e0b8942926fe",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap33-not-sponsor-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0033"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 27,
+                      "ledger": 64158000,
+                      "tx_hash": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "1339778d06bae2a1542686581aaa7c884b134b3b6a49056e3960b19f768b2749",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035",
+                        "CAP-0023"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59236800,
+                      "tx_hash": "e0a53e555ed38f1958973e38f08c5d1733a8deed187e77fe3d67984c4f2ba2c2",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "21bd1a655f902e8ac27aef69d3b59b0ee9ecc868598964b7c58eb4cf09ecd783",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59266800,
+                      "tx_hash": "d9f0b11b5aecbcbc68e797bcc31186dcb371b29c800aa10e4be6089134ab82ab",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "6a676c1d8c0775db6781a1b0907ee7af9b8c8715cbd85a75ae282c98b9181643",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59266800,
+                      "tx_hash": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "a66f1b221fcb9876666186f92b80d9333425cb578cbd5188a6cbebf9cee70120",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-clawback-underfunded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 59618800,
+                      "tx_hash": "6ffc5e22e108b09e423700975f4c28e35a4d1d45755e96c52ea76724a5cd5f33",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7b4e50cadec9b6d6a991ec5d7e112b2639a2b408e9aae8ec4b37a0de1e0dd9e4",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-set-options-auth-revocable-required-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 27,
+                      "ledger": 4295602,
+                      "tx_hash": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7059c129b9c793a367fcb686a304566abc526862babf084498aa554210d61154",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-set-trust-line-flags-cant-revoke-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 27,
+                      "ledger": 64367200,
+                      "tx_hash": "00f79dc913ff1a5f6dfb075355cea7a57851be9490882c702b19ef8b7143c32e",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7b31f92562f919ed354f1a9d6f8ba3ece38867a536dccf037efa0173ffb1ff74",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-set-trust-line-flags-invalid-state-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 29,
+                      "ledger": 5044402,
+                      "tx_hash": "f35797442dfed6d5b08d1fe9d60100e66edc8d5fc43952b3f6ce8c7797da2185",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "d3a8ebb246d75161bb687e5c9e00127ac5b95c4bea14c986475a0fc819018cfa",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap35-set-trust-line-flags-no-trust-line-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0035"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59236800,
+                      "tx_hash": "6afeff714bf10b5aab5ee8f62fa3acc66ae140377a1d9c2e7714ccb847d7ce4c",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "ed906c8fb183c9cf92091a29f755461cd3b1cd79ecacf1c25fe4fc90fd38a36b",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038",
+                        "CAP-0024",
+                        "CAP-0023",
+                        "CAP-0015"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60385200,
+                      "tx_hash": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "fb253aa86afcfcacbf643972d7b4bf75d29c153c6dcd5df6c6b7645efb74d31c",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-change-trust-cannot-delete-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60507200,
+                      "tx_hash": "56870aab6a08efd1cfb75a02f977dcb7dd48b8fa9cd1448c9fe625d89aff48a9",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "2adff5ca2066292d94ff6b58753047e20ee339c1e7f672911642cb9fbace661d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-deposit-bad-price-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60003600,
+                      "tx_hash": "d0cd2820badd6329610564e9a8be46924b6fed61b05b249065944a6d5132b7fd",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "9e6bfbf5191e0619b24640530489f85e882105bbf820037c56879d508d2705d1",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-deposit-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 60899200,
+                      "tx_hash": "0387850e97ef5d732cb791f9a963c2cc4a22315298506f93adc195b7e77bc9c6",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "d3b085f52b956c78c02da16c38e5d4127afd3b25172750a414e76a762e596f6b",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-deposit-underfunded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 59589200,
+                      "tx_hash": "329e7a49c4f66b385e382a314631a03cba7e831efbb774c2b8020f400a3871c1",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "5b6dbc938ea4baf2e01d32161b616f52c43044b65834052ace096ad49d9dd40d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-ledger-key-liquidity-pool-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 27,
+                      "ledger": 4330002,
+                      "tx_hash": "4bcdf40820b5a9ed618aa3bc51aaa294a7df66942637bd2bd8b9a042e98c0905",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "3f753054ec67d1686448a991525296de349ffd5006194505ec1f752c25365630",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
                       "id": "cap38-pool-issuer-order-local-0001",
                       "pattern": "pool-issuer-order",
                       "cap_ids": [
@@ -376,6 +1710,69 @@
                         "envelope",
                         "ledger_entry",
                         "meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-withdraw-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 29,
+                      "ledger": 64838800,
+                      "tx_hash": "66f25624ded73475cebb2a534796c91d1073b0b2f475ea14e159c0e5b33e3edb",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "72d90520f461f169fcaddf8fb42820c7b3d078de2cff54b80ade82c6d1d88e5e",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-withdraw-under-minimum-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59332800,
+                      "tx_hash": "236a2dda3e46130b391c03c3532a6ed788b139fafe682771d4165c50ecb75a29",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "a4c6e1b47fad7af267e4547549a3ac64b499c661eebc76820cba3377223aea23",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap38-withdraw-underfunded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 59842400,
+                      "tx_hash": "fe00495ddfbcebdb7ea272f8d572cf49a7834e19bafd977677d43e2b4c1a2c80",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b4a5606874470397534f7b641d34aca5c7866586f36f556be5abd38e98989916",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
                       ]
                     },
                     {
@@ -414,6 +1811,132 @@
                       "files": [
                         "ledger_entry",
                         "envelope"
+                      ]
+                    },
+                    {
+                      "id": "cap46-contract-executable-stellar-asset-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-06",
+                        "CAP-0046-02"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 26,
+                      "ledger": 62793200,
+                      "tx_hash": "3e52fff07b0fa0dd3475d0549c1e0f1702afdd90269a31c36a94602332ef3a89",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "0daf641bc8c27033902c276e46a04fc227b4875f7e2afc4eb921ab77c5f6256f",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-extend-footprint-ttl-success-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-12"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59426800,
+                      "tx_hash": "28c1a344896cafd713ca9eb2821d928dc500f946df81affec1f947c017eb9630",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "f87346c8ad959f42a6b9f9d8e3058ccfee5eb8875b311a50af4b8e80f3609c7c",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-host-function-upload-contract-wasm-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-02"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61319200,
+                      "tx_hash": "1d1a48f1dbe7a21aa2b6504cc694b7adfcab946747d5f1082293f3f6fc8dfdeb",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b57953d6878c2d52c1e066441a9bb470c1921c96afdb3946a0bb012c220a027d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-invoke-host-function-entry-archived-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-12",
+                        "CAP-0046-01"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 62164800,
+                      "tx_hash": "ab3bf2fc306cc22223fbb1ad0e4d5887c48e072f5282b757ef5e5430a96d2a4f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "6794d35121fdd9c188df1ce8c1ab13ac306d6e0961da68ec1248b5da4a2f9173",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60066800,
+                      "tx_hash": "246a9113cef5a5a2bd6528bed2c5ec22a6d419dc37356d7f7d30717e13647cf6",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "9bff83a20ca70999c3f5f9c816fec70fe735dda7a2276cb1af49ed94cb528546",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-ledger-upgrade-config-testnet-0001",
+                      "pattern": "ledger",
+                      "cap_ids": [
+                        "CAP-0046-09",
+                        "CAP-0046-07"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 25,
+                      "ledger": 365131,
+                      "tx_hash": null,
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "LedgerCloseMeta",
+                      "sha256": "69977774246e04ce201f99b9e3667ab1eb2aae5eff0eff66686804693db20efe",
+                      "files": [
+                        "ledger"
                       ]
                     },
                     {
@@ -475,6 +1998,69 @@
                       ]
                     },
                     {
+                      "id": "cap46-sc-error-crypto-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-01"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 26,
+                      "ledger": 3142002,
+                      "tx_hash": "3a5f50390009c49e547d7ee7ef8d87d1b8706d7a7f6fe996c56bfe6b8cabd115",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "71b6bfc9a4f43ee26d83742d47fa03af10184e424def18c0f400fc936727f889",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-sc-error-wasm-vm-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-01"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59247200,
+                      "tx_hash": "22a036623a81b9c948757a1d9fe0528e0461db352a288196314d989d6688f6d9",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "b67f14e0ac9b3b23c40c80b62c00792a4eebd5c9585a990e0f4681bb676af781",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap46-sc-val-i256-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0046-01"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 28,
+                      "ledger": 64594000,
+                      "tx_hash": "9e8ff97545de42f2a57fbbf3b386ff8189a9d41e5163501c5835443e18a575e4",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "0cb27b5d730629945cb25740e0d21a2b56b35346d803bfeec88b7ef039dd627d",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
                       "id": "cap46-scmap-host-order-local-0001",
                       "pattern": "scmap-host-order",
                       "cap_ids": [
@@ -512,6 +2098,357 @@
                         "vec_count_max",
                         "map_count_max",
                         "vec_depth_2000"
+                      ]
+                    },
+                    {
+                      "id": "cap58-host-function-create-contract-v2-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0058"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60183200,
+                      "tx_hash": "52ec92051ec7ae9efef2c2148c1729e49fdd0167dcb6f9c8f0303f4a57efae30",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "7093844a5f1c5fd48fddaae3a8b2d62c519428791185378c54cd5f6a01771961",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0058",
+                        "CAP-0046-11",
+                        "CAP-0046-02",
+                        "CAP-0046-01",
+                        "CAP-0046"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5768002,
+                      "tx_hash": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "40945fd127ea0098b7e4fd12d21d63a0e78889bcdb47785b6ac85e1300d76f28",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-buy-no-trust-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59302000,
+                      "tx_hash": "668a4430eea7f06a1da48c218583528b5dde2e76231f8539d9ae9f603271e30a",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4fa479aba474ac7fe298f663826ae4f01fc583959601662c402caf865df037d3",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-buy-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59250000,
+                      "tx_hash": "8604b7269ef5539d34e9f8086dd589b06e51c55fa50b5978b6ed0033be7bbdd4",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "85dc6a53b207314041437b101f0278c0d82fdc3554cc628142dfa8f4d7bbe9fc",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-cross-self-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60013600,
+                      "tx_hash": "afa249f25b67527b9172e33e53f1c2bd1f72d5014db2c48cdacafaba295e3ad8",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "02048e59b45e4f923ab4240b90bbfa0f3293839553bf61a7abeb1ce9221b1927",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-line-full-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 25,
+                      "ledger": 61973600,
+                      "tx_hash": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "5444f2a04e3e79c619dcfb42470c28cf690508397f64c413dede3539907d7ec0",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-low-reserve-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59234400,
+                      "tx_hash": "01a7e0a3f9b72cf4cc2fe077bb9973173002c7cf5c725fc116b00e21632bac8a",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "ac42478350c6b864b9da1810cbf956dd1f72659f55a4e307a9c63564b11c2b80",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-not-found-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59334000,
+                      "tx_hash": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "0ce760df762150b14c198ff26ebf79a626c7267e6f6a2c229b45efbf907d7ee9",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-sell-no-trust-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 25,
+                      "ledger": 988002,
+                      "tx_hash": "23eb9d920c9e3615166f7d9a2d25d886d9ca7f23fa2a28ca5887ceaf48727c0f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "e3682a9bd8605783a860fe45233bb3cfd81955e4b09b1376d3d312e4aca87b8f",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap6-manage-buy-offer-sell-not-authorized-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0006"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 23,
+                      "ledger": 59310800,
+                      "tx_hash": "a74a3010db0d309e86f5ecabeb6d57024ce3fe52bc6d8dace01200f77e8547f5",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "ba40f699931ffeb5ce95c7d922742e0ba9242580c9b848c7a64d6dd4402fcbb1",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap66-ledger-entry-change-restored-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0066",
+                        "CAP-0054",
+                        "CAP-0046-12",
+                        "CAP-0046-02"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 29,
+                      "ledger": 5330402,
+                      "tx_hash": "01fa6716e48157a80917af905a97085d5d6561ea1bee01ad144c51c28587d91f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4d94d8b1202784197f3d98a26a3e64fe070093a6c522437f8dce204b7d264e05",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap66-soroban-transaction-data-ext-v1-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0066",
+                        "CAP-0046-01",
+                        "CAP-0046"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 24,
+                      "ledger": 60269200,
+                      "tx_hash": "d09d7862692b548758ffb74b482fca758a49a5ac8841b84937ea97392cdfe8dc",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "3918c0e01db847118fcb8dd6a02c4c635e50fac9529359e8751a584c29deda6e",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap67-sc-address-claimable-balance-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0067",
+                        "CAP-0033",
+                        "CAP-0023",
+                        "CAP-0021"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 27,
+                      "ledger": 3946802,
+                      "tx_hash": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "18d0dc4b93126b1ab8908f8eb50547cfa1d139fe22e3a8caacec6ae78e00bf5e",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap67-sc-address-liquidity-pool-pubnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0067",
+                        "CAP-0038"
+                      ],
+                      "network": "pubnet",
+                      "protocol_version": 27,
+                      "ledger": 64160000,
+                      "tx_hash": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "8163d9c2f4a4a0e2e462a7cd25bc039bef51cd1ed43c2ceefa0be9aacbf533a3",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap71-soroban-credentials-address-v2-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0071",
+                        "CAP-0067"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 29,
+                      "ledger": 4982002,
+                      "tx_hash": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "4f441bafed97514d54edba914d9a1d80a5bc32e5540d54ea5152270452739e30",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap71-soroban-credentials-address-with-delegates-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0071",
+                        "CAP-0046-01"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 29,
+                      "ledger": 4949202,
+                      "tx_hash": "091238f1757d3a3e145d0cb96afe83813f5b8ee8343957de319adbb3baefd53b",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "402b9103cf877e8dc9cdba65df51a8073acf502c1ed97d88e8f18b4dfc7f7989",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
                       ]
                     },
                     {
@@ -569,6 +2506,93 @@
                       "files": [
                         "meta",
                         "envelope"
+                      ]
+                    },
+                    {
+                      "id": "cap77-config-setting-entry-freeze-bypass-txs-testnet-0001",
+                      "pattern": "ledger",
+                      "cap_ids": [
+                        "CAP-0077"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 26,
+                      "ledger": 2070825,
+                      "tx_hash": null,
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "LedgerCloseMeta",
+                      "sha256": "ff920a643d13f413527724b59ca7233c7960f64d8a05efb7cb738deb4c08c1bb",
+                      "files": [
+                        "ledger"
+                      ]
+                    },
+                    {
+                      "id": "cap85-contract-executable-external-ref-testnet-0001",
+                      "pattern": "tx",
+                      "cap_ids": [
+                        "CAP-0085",
+                        "CAP-0046-12",
+                        "CAP-0046-01"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5787202,
+                      "tx_hash": "ed774dd0a0b46859972a0ab0e4179e9d79864f8ac8f7f9ba942af7a807434f4f",
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "TransactionEnvelope",
+                      "sha256": "c8a49008ab727c85e58d943feba53f37a79f5227afa94376c0a639135335c731",
+                      "files": [
+                        "envelope",
+                        "result",
+                        "meta",
+                        "fee_meta"
+                      ]
+                    },
+                    {
+                      "id": "cap87-contract-cost-type-ml-dsa44-decode-signature-testnet-0001",
+                      "pattern": "ledger",
+                      "cap_ids": [
+                        "CAP-0087",
+                        "CAP-0080",
+                        "CAP-0074",
+                        "CAP-0063",
+                        "CAP-0062",
+                        "CAP-0059",
+                        "CAP-0054",
+                        "CAP-0051",
+                        "CAP-0046-10",
+                        "CAP-0046-09",
+                        "CAP-0042"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540313,
+                      "tx_hash": null,
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "LedgerCloseMeta",
+                      "sha256": "0f2ed6010b72cc9bf9d26a5d3df522f741c580f7bc3bb6ff0913c58c1089b8e3",
+                      "files": [
+                        "ledger"
+                      ]
+                    },
+                    {
+                      "id": "cap88-stellar-value-ext-signed-ms-testnet-0001",
+                      "pattern": "ledger",
+                      "cap_ids": [
+                        "CAP-0088"
+                      ],
+                      "network": "testnet",
+                      "protocol_version": 30,
+                      "ledger": 5540402,
+                      "tx_hash": null,
+                      "kind": "captured",
+                      "synthetic": false,
+                      "xdr_type": "LedgerCloseMeta",
+                      "sha256": "2a2a619df74923faa9bdb17fd9e675598a71c9435ed62fcfad4cc18683fe3fcf",
+                      "files": [
+                        "ledger"
                       ]
                     }
                   ]
@@ -1287,6 +3311,666 @@
                     },
                     {
                       "network": "pubnet",
+                      "ledger": 59230000,
+                      "path": "ledgers/pubnet/59230000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC7838CF--59230000.xdr.zst",
+                      "sha256": "149f071bc23f2220242b750ca41daa2ebab33b0ed64534e1c97ef88c6311c907",
+                      "bytes": 1701072,
+                      "compressed_bytes": 182470
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59230800,
+                      "path": "ledgers/pubnet/59230800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC7835AF--59230800.xdr.zst",
+                      "sha256": "012fae31fa06a4a8be139f370c136b4f45b7dbedb0bd5fab9b8accbff0e9406d",
+                      "bytes": 1746260,
+                      "compressed_bytes": 173786
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59232400,
+                      "path": "ledgers/pubnet/59232400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC782F6F--59232400.xdr.zst",
+                      "sha256": "7060e3aaf278b1e15660ed049e2e76fcde31efcaeeaf400afec0955064814ad2",
+                      "bytes": 1811224,
+                      "compressed_bytes": 180377
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59232800,
+                      "path": "ledgers/pubnet/59232800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC782DDF--59232800.xdr.zst",
+                      "sha256": "9941d6c87718dc790a4a42549a88d4395572cda7f4d9116e3b444eb0f52838b3",
+                      "bytes": 1666676,
+                      "compressed_bytes": 182971
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59233200,
+                      "path": "ledgers/pubnet/59233200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC782C4F--59233200.xdr.zst",
+                      "sha256": "736fe5d3e4aa801e8d25ffeca7e188ca89f582d1ad35d2a25c560cb2cc8732e1",
+                      "bytes": 1436212,
+                      "compressed_bytes": 141286
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59234400,
+                      "path": "ledgers/pubnet/59234400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC78279F--59234400.xdr.zst",
+                      "sha256": "6500795a641f122a152cbd4e47df2010daa73a1b9ae882fda085957afab91109",
+                      "bytes": 1368576,
+                      "compressed_bytes": 160662
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59236800,
+                      "path": "ledgers/pubnet/59236800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC781E3F--59236800.xdr.zst",
+                      "sha256": "8ca5ed87ef05e538c86707fd7fb3ec10096d281bc72ae8b0bfd08304632e5653",
+                      "bytes": 1357188,
+                      "compressed_bytes": 146128
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59238800,
+                      "path": "ledgers/pubnet/59238800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC78166F--59238800.xdr.zst",
+                      "sha256": "0b286567fea2b6772cb5d011cd3a11a31496ce98c0a9dccf62abbf6b409481b1",
+                      "bytes": 1639192,
+                      "compressed_bytes": 165775
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59245200,
+                      "path": "ledgers/pubnet/59245200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77FD6F--59245200.xdr.zst",
+                      "sha256": "0d9bc4472a63bbcf6b4c3ea1616fc342a3912d8ea842f0e4e590a87bf800f41e",
+                      "bytes": 1455456,
+                      "compressed_bytes": 161378
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59247200,
+                      "path": "ledgers/pubnet/59247200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77F59F--59247200.xdr.zst",
+                      "sha256": "7667c9e70393f30aa001f24700ec24cad8d665e26d9f9e945e8166efd3945f32",
+                      "bytes": 1800996,
+                      "compressed_bytes": 198147
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59250000,
+                      "path": "ledgers/pubnet/59250000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77EAAF--59250000.xdr.zst",
+                      "sha256": "021db662093f289b63dad1f42131f2f250580f6f38622748acd8fc7f242a3c76",
+                      "bytes": 1275012,
+                      "compressed_bytes": 145084
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59254800,
+                      "path": "ledgers/pubnet/59254800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77D7EF--59254800.xdr.zst",
+                      "sha256": "f7441b030cec5fd3bdb662bd0975ff36cd46116c1f272b0e565dcbba7459e62d",
+                      "bytes": 1278864,
+                      "compressed_bytes": 117872
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59263600,
+                      "path": "ledgers/pubnet/59263600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC78ADFF--59200000-59263999/FC77B58F--59263600.xdr.zst",
+                      "sha256": "cbdd14b6f77c2428b16a861ef7f0997eddcc6f28c68e2a55621c0f9dea7a8be0",
+                      "bytes": 1958332,
+                      "compressed_bytes": 238420
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59266800,
+                      "path": "ledgers/pubnet/59266800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC77A90F--59266800.xdr.zst",
+                      "sha256": "21ff92fa5d229a1867cd58adb9f376f1dd95c1d16d136cb68d9529014e9b3153",
+                      "bytes": 1556848,
+                      "compressed_bytes": 147353
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59272800,
+                      "path": "ledgers/pubnet/59272800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC77919F--59272800.xdr.zst",
+                      "sha256": "2ad221b95ad6e1e8f7af5244567df2c8ee4be0f574d36a03738264a2b9a85486",
+                      "bytes": 708392,
+                      "compressed_bytes": 86268
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59280000,
+                      "path": "ledgers/pubnet/59280000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC77757F--59280000.xdr.zst",
+                      "sha256": "7f203d03f1da0b3bd65f0b2619484f87ea3552c49843e04c9614411c2d621729",
+                      "bytes": 1420572,
+                      "compressed_bytes": 159607
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59295600,
+                      "path": "ledgers/pubnet/59295600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC77388F--59295600.xdr.zst",
+                      "sha256": "38309ed89d3170650ab9c3b808bdcd927ff6befc95b59a49d82418cecf1176c0",
+                      "bytes": 1283956,
+                      "compressed_bytes": 130222
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59302000,
+                      "path": "ledgers/pubnet/59302000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC771F8F--59302000.xdr.zst",
+                      "sha256": "e90bd05fee3c8ef720ee506074e266914a20f05e8d8beb26b500dfd0ce3eaa81",
+                      "bytes": 1846232,
+                      "compressed_bytes": 188350
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59310800,
+                      "path": "ledgers/pubnet/59310800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC77B3FF--59264000-59327999/FC76FD2F--59310800.xdr.zst",
+                      "sha256": "aac04bb5b63db0d4ee61050a87dec24508c972f2844830f4e7e2493fefa49974",
+                      "bytes": 1183532,
+                      "compressed_bytes": 119072
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59332800,
+                      "path": "ledgers/pubnet/59332800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC76B9FF--59328000-59391999/FC76A73F--59332800.xdr.zst",
+                      "sha256": "39f7c88a21f80b60690a4239a0fa04de8ca76922c06ef629a62a4faf8181805b",
+                      "bytes": 1712780,
+                      "compressed_bytes": 192673
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59334000,
+                      "path": "ledgers/pubnet/59334000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC76B9FF--59328000-59391999/FC76A28F--59334000.xdr.zst",
+                      "sha256": "c01d55f6acd748e53ed2e5f819a576866a770763c86be3ea245f1a25bb8eab94",
+                      "bytes": 1863116,
+                      "compressed_bytes": 201284
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59338000,
+                      "path": "ledgers/pubnet/59338000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC76B9FF--59328000-59391999/FC7692EF--59338000.xdr.zst",
+                      "sha256": "924c50389edcf66c31784bb3d10a3c32a3954cebf8d20bb3145c6ebabc668809",
+                      "bytes": 1016148,
+                      "compressed_bytes": 148961
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59380800,
+                      "path": "ledgers/pubnet/59380800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC76B9FF--59328000-59391999/FC75EBBF--59380800.xdr.zst",
+                      "sha256": "83df6e558645a3d06380ce4668e2e3c60010a1c93b2ce073c5d864ce49d5d430",
+                      "bytes": 1822412,
+                      "compressed_bytes": 215541
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59426800,
+                      "path": "ledgers/pubnet/59426800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC75BFFF--59392000-59455999/FC75380F--59426800.xdr.zst",
+                      "sha256": "ca6d058eef0650787666b149a72360467ed3128f98b52818a5503372cd4f21f5",
+                      "bytes": 1286104,
+                      "compressed_bytes": 126282
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59431600,
+                      "path": "ledgers/pubnet/59431600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC75BFFF--59392000-59455999/FC75254F--59431600.xdr.zst",
+                      "sha256": "c3101778120bd13f0cf511c30e01d61febcbaa925ab9d5e5335aec08b530db83",
+                      "bytes": 1698928,
+                      "compressed_bytes": 192423
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59437600,
+                      "path": "ledgers/pubnet/59437600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC75BFFF--59392000-59455999/FC750DDF--59437600.xdr.zst",
+                      "sha256": "a0b0c2451a2198899f6ddcb4deecc7171eabdc1b4a564ae28a587a20c04548c7",
+                      "bytes": 1331052,
+                      "compressed_bytes": 162996
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59489200,
+                      "path": "ledgers/pubnet/59489200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC74C5FF--59456000-59519999/FC74444F--59489200.xdr.zst",
+                      "sha256": "d4e4918bae4d9d08f2d3ba349532584dbb6459418116f8568e185b513b1f63d9",
+                      "bytes": 1204304,
+                      "compressed_bytes": 133104
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59582400,
+                      "path": "ledgers/pubnet/59582400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC73CBFF--59520000-59583999/FC72D83F--59582400.xdr.zst",
+                      "sha256": "cb773547e26dd0b2367638e358ad10b1c125fde81d1ea00a09b1b224ac830daa",
+                      "bytes": 1350736,
+                      "compressed_bytes": 149557
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59589200,
+                      "path": "ledgers/pubnet/59589200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC72D1FF--59584000-59647999/FC72BDAF--59589200.xdr.zst",
+                      "sha256": "1ec1780069830f943205ffab61f47f6067fc1e4b66864f967a91875bc56edc40",
+                      "bytes": 981636,
+                      "compressed_bytes": 135138
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59618800,
+                      "path": "ledgers/pubnet/59618800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC72D1FF--59584000-59647999/FC724A0F--59618800.xdr.zst",
+                      "sha256": "baccb216ded7f464b8727ee21eae8c4d7bfdb91abe1f5545ccf41dd69b997031",
+                      "bytes": 1300180,
+                      "compressed_bytes": 132574
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59842400,
+                      "path": "ledgers/pubnet/59842400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6EE9FF--59840000-59903999/FC6EE09F--59842400.xdr.zst",
+                      "sha256": "b0ee0412c03f9074c9bdf1e68961b5d541d566774f437f9eb37bfd0d2f1dbfd1",
+                      "bytes": 1562572,
+                      "compressed_bytes": 157120
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 59863200,
+                      "path": "ledgers/pubnet/59863200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6EE9FF--59840000-59903999/FC6E8F5F--59863200.xdr.zst",
+                      "sha256": "4c093875c69eef2e45138b84ee1d086eabfea8c16d4eb1efc916ad1626c989a0",
+                      "bytes": 1756132,
+                      "compressed_bytes": 156785
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60003600,
+                      "path": "ledgers/pubnet/60003600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6CF5FF--59968000-60031999/FC6C6AEF--60003600.xdr.zst",
+                      "sha256": "26366ac3f7ca10ed289ecb732fb4d92d3e481c361d263e1fd4df4946b51f548c",
+                      "bytes": 910600,
+                      "compressed_bytes": 106110
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60013600,
+                      "path": "ledgers/pubnet/60013600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6CF5FF--59968000-60031999/FC6C43DF--60013600.xdr.zst",
+                      "sha256": "21fe5428aef3453dd790f11fee08e40bb3041892715edbc5f333a01e961ffece",
+                      "bytes": 868184,
+                      "compressed_bytes": 136521
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60066800,
+                      "path": "ledgers/pubnet/60066800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6BFBFF--60032000-60095999/FC6B740F--60066800.xdr.zst",
+                      "sha256": "6163a79d2c6bcd7804bb46fe7fe95e84eb0c6531bc26ad00be58591321e4b0a8",
+                      "bytes": 1210456,
+                      "compressed_bytes": 122672
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60082000,
+                      "path": "ledgers/pubnet/60082000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6BFBFF--60032000-60095999/FC6B38AF--60082000.xdr.zst",
+                      "sha256": "8fa017e997756b062147f57bb495ee4c5aa9b6b09ecfe7ba3c017e654ecf47a7",
+                      "bytes": 1781364,
+                      "compressed_bytes": 229588
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60098000,
+                      "path": "ledgers/pubnet/60098000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6B01FF--60096000-60159999/FC6AFA2F--60098000.xdr.zst",
+                      "sha256": "fec16c751d32e563e6be940fa76940c3a5bbaaa57d42056bac2ab608daf0dd95",
+                      "bytes": 1349264,
+                      "compressed_bytes": 128129
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60098800,
+                      "path": "ledgers/pubnet/60098800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6B01FF--60096000-60159999/FC6AF70F--60098800.xdr.zst",
+                      "sha256": "8ef58d1ead4bdc0dabf57c069218bc903fd58cb75742e4903a21fb0c59fea172",
+                      "bytes": 1359808,
+                      "compressed_bytes": 137226
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60183200,
+                      "path": "ledgers/pubnet/60183200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6A07FF--60160000-60223999/FC69AD5F--60183200.xdr.zst",
+                      "sha256": "84f5ecb6669cfd378d6d17033e162bc7cc6e250f4cf35a677abb9f8d8ceaf7f5",
+                      "bytes": 599016,
+                      "compressed_bytes": 82224
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60269200,
+                      "path": "ledgers/pubnet/60269200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC690DFF--60224000-60287999/FC685D6F--60269200.xdr.zst",
+                      "sha256": "e5d2ded4832f4d34e4b51de519ccba362d5e0ff023b83eef963b8f3e7a92a354",
+                      "bytes": 1706544,
+                      "compressed_bytes": 204764
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60385200,
+                      "path": "ledgers/pubnet/60385200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6719FF--60352000-60415999/FC66984F--60385200.xdr.zst",
+                      "sha256": "6ca33e28731dd0729a1ce70769d368451ce5633f74fdaf75c0b3fb5536d85ced",
+                      "bytes": 1101508,
+                      "compressed_bytes": 110062
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60507200,
+                      "path": "ledgers/pubnet/60507200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC6525FF--60480000-60543999/FC64BBBF--60507200.xdr.zst",
+                      "sha256": "bb9e1b7b424981a32ac84da6326fc782961bad9708f4d99be4e753493eb8b8a6",
+                      "bytes": 880440,
+                      "compressed_bytes": 125913
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60570400,
+                      "path": "ledgers/pubnet/60570400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC642BFF--60544000-60607999/FC63C4DF--60570400.xdr.zst",
+                      "sha256": "fbf986e4802264410a4fecb7a07c5f16b9a55f1f76d875a655798b485d92b268",
+                      "bytes": 1454976,
+                      "compressed_bytes": 155017
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60586800,
+                      "path": "ledgers/pubnet/60586800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC642BFF--60544000-60607999/FC6384CF--60586800.xdr.zst",
+                      "sha256": "ff548e6fbf67a68f6208605652b54bbed1f95ad49f7e7b7d9fb5495d359e5882",
+                      "bytes": 1443576,
+                      "compressed_bytes": 164762
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60899200,
+                      "path": "ledgers/pubnet/60899200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5F49FF--60864000-60927999/FC5EC07F--60899200.xdr.zst",
+                      "sha256": "7e81c45b0250bb69aed929129e9669f1eff779ac29443c4f95a54e3c7cfb3cfe",
+                      "bytes": 1268532,
+                      "compressed_bytes": 136180
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60946000,
+                      "path": "ledgers/pubnet/60946000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5E4FFF--60928000-60991999/FC5E09AF--60946000.xdr.zst",
+                      "sha256": "a7af7ce2acc3f171707d81ae0225a62ea96bf0c601e7e945ecf7d13a9224a4da",
+                      "bytes": 2124084,
+                      "compressed_bytes": 287455
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 60972800,
+                      "path": "ledgers/pubnet/60972800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5E4FFF--60928000-60991999/FC5DA0FF--60972800.xdr.zst",
+                      "sha256": "6191c8307c0fe48c1c3d245c98b0e82bdb6bd61becd5262129deb2e4fa39d342",
+                      "bytes": 1378488,
+                      "compressed_bytes": 148954
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61319200,
+                      "path": "ledgers/pubnet/61319200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5873FF--61312000-61375999/FC5857DF--61319200.xdr.zst",
+                      "sha256": "71389e2e4af39a789660ed4c31908cb32eb1e1a14adbeef9a5851caad6e8b0cd",
+                      "bytes": 2021592,
+                      "compressed_bytes": 204387
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61396800,
+                      "path": "ledgers/pubnet/61396800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5779FF--61376000-61439999/FC5728BF--61396800.xdr.zst",
+                      "sha256": "863d17df4f61862b87caf0dc85b3e780d7dfeac861ceaa0e5672ce50e237348b",
+                      "bytes": 1996516,
+                      "compressed_bytes": 171726
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61510000,
+                      "path": "ledgers/pubnet/61510000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5585FF--61504000-61567999/FC556E8F--61510000.xdr.zst",
+                      "sha256": "8b93a9e6225982b7d4e7630f19e1d18db5bdaad99047a9a97b7e8eb330205b82",
+                      "bytes": 638996,
+                      "compressed_bytes": 88369
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61624800,
+                      "path": "ledgers/pubnet/61624800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC548BFF--61568000-61631999/FC53AE1F--61624800.xdr.zst",
+                      "sha256": "fefae0db27c88581b509d2d81b3b2fdb9018aea2aefc2dc94bdc49b4b693dda4",
+                      "bytes": 1838060,
+                      "compressed_bytes": 161856
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61708800,
+                      "path": "ledgers/pubnet/61708800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC5297FF--61696000-61759999/FC5265FF--61708800.xdr.zst",
+                      "sha256": "2da2905ac4b2d6d87a1bcb0c5f0e6c3c2c9d6d5d04e35a6fe62824057dadcd0f",
+                      "bytes": 1005432,
+                      "compressed_bytes": 144232
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 61973600,
+                      "path": "ledgers/pubnet/61973600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC4EAFFF--61952000-62015999/FC4E5B9F--61973600.xdr.zst",
+                      "sha256": "c11f2b8524df1cc156f438e919ac4b2ed4623857b8460c21af8a681c08d26390",
+                      "bytes": 620420,
+                      "compressed_bytes": 87760
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 62164800,
+                      "path": "ledgers/pubnet/62164800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC4BC1FF--62144000-62207999/FC4B70BF--62164800.xdr.zst",
+                      "sha256": "e7363e63bda24681a0751f04bcd9c8c4548d4fe55a2dfdbab0e1a4dab8e293c0",
+                      "bytes": 1408680,
+                      "compressed_bytes": 171534
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 62268400,
+                      "path": "ledgers/pubnet/62268400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC4AC7FF--62208000-62271999/FC49DC0F--62268400.xdr.zst",
+                      "sha256": "696c85e2a5bf0cfa7865fdb16b87e082ac59833250b2916ac0118dea75b1cec6",
+                      "bytes": 2430988,
+                      "compressed_bytes": 230039
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 62644400,
+                      "path": "ledgers/pubnet/62644400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC44EBFF--62592000-62655999/FC441F4F--62644400.xdr.zst",
+                      "sha256": "ef605c5c48f965ad548367c48a237fd9453c00b948f5a4d8cad1b1a1053733f7",
+                      "bytes": 2031592,
+                      "compressed_bytes": 201023
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 62793200,
+                      "path": "ledgers/pubnet/62793200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC41FDFF--62784000-62847999/FC41DA0F--62793200.xdr.zst",
+                      "sha256": "0564df86a15b110734afb910836cbf6c65463a4e7486d2b43880aad86f6e9d04",
+                      "bytes": 3036400,
+                      "compressed_bytes": 298520
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 62799200,
+                      "path": "ledgers/pubnet/62799200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC41FDFF--62784000-62847999/FC41C29F--62799200.xdr.zst",
+                      "sha256": "c96c6548adf21a4ddbeace65258fb52440d9ca07a6b897850b7941ad99d33a36",
+                      "bytes": 2471808,
+                      "compressed_bytes": 299088
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 63173600,
+                      "path": "ledgers/pubnet/63173600.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC3C21FF--63168000-63231999/FC3C0C1F--63173600.xdr.zst",
+                      "sha256": "d8eee802b229bac73bb5ac18dc1bfe6524824f48373af6036ae6554ffe870c86",
+                      "bytes": 1261344,
+                      "compressed_bytes": 169172
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 63234400,
+                      "path": "ledgers/pubnet/63234400.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC3B27FF--63232000-63295999/FC3B1E9F--63234400.xdr.zst",
+                      "sha256": "434ff8c10d6444f6aca14a593b09af9fa7e9096199b278fef8bebc6005390190",
+                      "bytes": 2038104,
+                      "compressed_bytes": 169533
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 63619200,
+                      "path": "ledgers/pubnet/63619200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC354BFF--63616000-63679999/FC353F7F--63619200.xdr.zst",
+                      "sha256": "c8cf756842c11349e82bc22e656078b1366a9f52f84eb3aef56cf137f3cc2158",
+                      "bytes": 2392872,
+                      "compressed_bytes": 206947
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 64158000,
+                      "path": "ledgers/pubnet/64158000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC2D7BFF--64128000-64191999/FC2D06CF--64158000.xdr.zst",
+                      "sha256": "e94c34516cf1e792b7e9cbd9ebd2cd69b1d75562d4c21f32c379154bd431b205",
+                      "bytes": 2151076,
+                      "compressed_bytes": 180357
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 64160000,
+                      "path": "ledgers/pubnet/64160000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC2D7BFF--64128000-64191999/FC2CFEFF--64160000.xdr.zst",
+                      "sha256": "4e7d552bdff0405b31de8346914422ba7c7e8fbe69cb6587517aa8835e198468",
+                      "bytes": 1281024,
+                      "compressed_bytes": 174558
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 64367200,
+                      "path": "ledgers/pubnet/64367200.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC2A8DFF--64320000-64383999/FC29D59F--64367200.xdr.zst",
+                      "sha256": "7728a37bd217d799391daf1636d71eaac6bd7be9c5f2fcce5a65342df55925b3",
+                      "bytes": 2117800,
+                      "compressed_bytes": 182550
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 64594000,
+                      "path": "ledgers/pubnet/64594000.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC26A5FF--64576000-64639999/FC265FAF--64594000.xdr.zst",
+                      "sha256": "6017b0f0c5effcc070c9eeae03de1908b689acefb8ccf53b4ee5664bbb0198d8",
+                      "bytes": 1812108,
+                      "compressed_bytes": 181433
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 64838800,
+                      "path": "ledgers/pubnet/64838800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC22BDFF--64832000-64895999/FC22A36F--64838800.xdr.zst",
+                      "sha256": "cb820e86543f3fd63ebedbeaadf8a632ab0c5347f041708fe1db5d1456b916dd",
+                      "bytes": 1612180,
+                      "compressed_bytes": 183669
+                    },
+                    {
+                      "network": "pubnet",
                       "ledger": 65083645,
                       "path": "ledgers/pubnet/65083645.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
@@ -1304,6 +3988,16 @@
                       "sha256": "0cae371363b8891f33efb40833a4bd2dd0b90e7e1885313c98bf810ee23484f6",
                       "bytes": 2051808,
                       "compressed_bytes": 225217
+                    },
+                    {
+                      "network": "pubnet",
+                      "ledger": 65092800,
+                      "path": "ledgers/pubnet/65092800.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet/FC1ED5FF--65088000-65151999/FC1EC33F--65092800.xdr.zst",
+                      "sha256": "f2e0d5f2b1a53a9d0b82d64086be5f2bb01cb1d6135121be6be1dbb7bc9b50b6",
+                      "bytes": 1136456,
+                      "compressed_bytes": 135167
                     },
                     {
                       "network": "pubnet",
@@ -1357,6 +4051,176 @@
                     },
                     {
                       "network": "testnet",
+                      "ledger": 2,
+                      "path": "ledgers/testnet/2.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFFFFFFF--0-63999/FFFFFFFD--2.xdr.zst",
+                      "sha256": "10c00cffa2230d53f7ffe131e781279b781c57a5fff729aa5fb1f2d195463cc2",
+                      "bytes": 528,
+                      "compressed_bytes": 342
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 34402,
+                      "path": "ledgers/testnet/34402.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFFFFFFF--0-63999/FFFF799D--34402.xdr.zst",
+                      "sha256": "75b1766838c014a606b9361abe403542fda704d1c543941dd3a4ddd9b44a122a",
+                      "bytes": 12216,
+                      "compressed_bytes": 3474
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 365131,
+                      "path": "ledgers/testnet/365131.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFFB1DFF--320000-383999/FFFA6DB4--365131.xdr.zst",
+                      "sha256": "0ed068bc6895d5cbe601c135a0dc4e3689fc43f5b869d2384e86223a02f343ef",
+                      "bytes": 20108,
+                      "compressed_bytes": 4479
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 465202,
+                      "path": "ledgers/testnet/465202.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFF929FF--448000-511999/FFF8E6CD--465202.xdr.zst",
+                      "sha256": "8bfc755126ca39a924b8e322a3957086bb9e08917b91562259c4d1ce0f3d0416",
+                      "bytes": 12144,
+                      "compressed_bytes": 3196
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 988002,
+                      "path": "ledgers/testnet/988002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFF159FF--960000-1023999/FFF0EC9D--988002.xdr.zst",
+                      "sha256": "ab86224c0b48a2f28ae5500d2965e67bbabfbaa9e854380c92f59566dd46dc8a",
+                      "bytes": 12664,
+                      "compressed_bytes": 3434
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 1670002,
+                      "path": "ledgers/testnet/1670002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFE69BFF--1664000-1727999/FFE6848D--1670002.xdr.zst",
+                      "sha256": "49e1e2be4f87a84e6217d4e9db8b57cfdcf13120c2b53c5ecccf564ba68efa75",
+                      "bytes": 19440,
+                      "compressed_bytes": 5627
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 2070825,
+                      "path": "ledgers/testnet/2070825.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFE0BFFF--2048000-2111999/FFE066D6--2070825.xdr.zst",
+                      "sha256": "7e1d0c239871f082472cc8e4584959d5a987f879de0712d582bbb74750706b2d",
+                      "bytes": 76740,
+                      "compressed_bytes": 12696
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 3142002,
+                      "path": "ledgers/testnet/3142002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFD025FF--3136000-3199999/FFD00E8D--3142002.xdr.zst",
+                      "sha256": "d850f68a0e7890f311ffce29f9c06b50e908092bf3a48cc310dc283af7b6a98f",
+                      "bytes": 49904,
+                      "compressed_bytes": 9203
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 3946802,
+                      "path": "ledgers/testnet/3946802.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFC46DFF--3904000-3967999/FFC3C6CD--3946802.xdr.zst",
+                      "sha256": "3a357a5dc12e2e2c0d43dbd06d5408645ca41516f2750cc6305b552b4503c746",
+                      "bytes": 103000,
+                      "compressed_bytes": 15334
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 4295602,
+                      "path": "ledgers/testnet/4295602.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBE91FF--4288000-4351999/FFBE744D--4295602.xdr.zst",
+                      "sha256": "8cbb52098f6db9dc4055f1530dd55fcc29f428221a89c2956317dd6d99cbe431",
+                      "bytes": 199564,
+                      "compressed_bytes": 18971
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 4330002,
+                      "path": "ledgers/testnet/4330002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFBE91FF--4288000-4351999/FFBDEDED--4330002.xdr.zst",
+                      "sha256": "2e17d5c35a08678c1977c4c285c467e5c20c02378f45a885b48e125cc0c969f1",
+                      "bytes": 63380,
+                      "compressed_bytes": 10817
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 4949202,
+                      "path": "ledgers/testnet/4949202.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFB4CDFF--4928000-4991999/FFB47B2D--4949202.xdr.zst",
+                      "sha256": "c509ab2d48a1ba5873239b7f7680d56af078b9b77360ca8787f11a11c54af961",
+                      "bytes": 144128,
+                      "compressed_bytes": 18668
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 4982002,
+                      "path": "ledgers/testnet/4982002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFB4CDFF--4928000-4991999/FFB3FB0D--4982002.xdr.zst",
+                      "sha256": "55df1cc6bdd2be5c834b6c76a127e9c5222344be35710efb703724de395bd5e6",
+                      "bytes": 80084,
+                      "compressed_bytes": 11770
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5044402,
+                      "path": "ledgers/testnet/5044402.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFB3D3FF--4992000-5055999/FFB3074D--5044402.xdr.zst",
+                      "sha256": "3b61001f07de0d76fd7d6544a87272253084b8ad26dd898935882cc0946b230e",
+                      "bytes": 655920,
+                      "compressed_bytes": 38187
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5330402,
+                      "path": "ledgers/testnet/5330402.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAEF1FF--5312000-5375999/FFAEAA1D--5330402.xdr.zst",
+                      "sha256": "7b7838797048bd2babfe2dda446aa230f3b8e4f6c1c60c10b694ebfda9af524a",
+                      "bytes": 149540,
+                      "compressed_bytes": 39857
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5540313,
+                      "path": "ledgers/testnet/5540313.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAC03FF--5504000-5567999/FFAB7626--5540313.xdr.zst",
+                      "sha256": "6cfd958e8d5b0d5fc10728e0f423d5a88f9fedd8485c5ca3338edcdd92b5e9aa",
+                      "bytes": 345356,
+                      "compressed_bytes": 23152
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5540402,
+                      "path": "ledgers/testnet/5540402.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFAC03FF--5504000-5567999/FFAB75CD--5540402.xdr.zst",
+                      "sha256": "20b03fd5322515601d8f2e1bdaa8c4c462588efadc62434b5ce0b72858f64288",
+                      "bytes": 68140,
+                      "compressed_bytes": 9267
+                    },
+                    {
+                      "network": "testnet",
                       "ledger": 5727196,
                       "path": "ledgers/testnet/5727196.xdr.zst",
                       "xdr_type": "LedgerCloseMetaBatch",
@@ -1374,6 +4238,26 @@
                       "sha256": "92242430d394e6f4b96fb26ddbee7228972fed07a62f5a9c7660ba9cc87ccd89",
                       "bytes": 158128,
                       "compressed_bytes": 21449
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5768002,
+                      "path": "ledgers/testnet/5768002.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFA81BFF--5760000-5823999/FFA7FCBD--5768002.xdr.zst",
+                      "sha256": "ac83eba41f7e419398c7514e84e3cbfc9f638b157479391fc302052eeee6dc03",
+                      "bytes": 118144,
+                      "compressed_bytes": 12455
+                    },
+                    {
+                      "network": "testnet",
+                      "ledger": 5787202,
+                      "path": "ledgers/testnet/5787202.xdr.zst",
+                      "xdr_type": "LedgerCloseMetaBatch",
+                      "source": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18/FFA81BFF--5760000-5823999/FFA7B1BD--5787202.xdr.zst",
+                      "sha256": "91f106831577d7160726dee4830e126eec72a94448cbd4bcded877f55c8d2b37",
+                      "bytes": 190048,
+                      "compressed_bytes": 20340
                     }
                   ]
                 }
@@ -2203,6 +5087,29 @@
                       "reproduced": true,
                       "summary": "The same bug as js-stellar-sdk#1766: Asset.compareTo orders same-code assets by their issuers' strkey text, so Transaction.fromEnvelopeXdr throws \"Assets are…",
                       "evidence": "kit/runners/java/Run.java on 6.0.0: decode_pool_share_op, asset_compare and pool_id fail on the generated pool-share fixture, which stellar-core accepted."
+                    },
+                    {
+                      "id": "ISTRAVEX-F-0020",
+                      "title": "js-stellar-sdk before 17.3.0 cannot decode a protocol 30 ledger header",
+                      "component": "stellar/js-stellar-sdk",
+                      "affected": "17.2.1 and earlier",
+                      "fixed_in": "@stellar/stellar-sdk 17.3.0 (protocol 30 XDR)",
+                      "severity": "medium",
+                      "status": "by-design",
+                      "issue": null,
+                      "disclosure": "not-disclosed",
+                      "cap_ids": [
+                        "CAP-0088"
+                      ],
+                      "fixtures": [
+                        "cap88-stellar-value-ext-signed-ms-testnet-0001"
+                      ],
+                      "checks": [
+                        "javascript-matrix:cap88-stellar-value-ext-signed-ms-testnet-0001:decode"
+                      ],
+                      "reproduced": true,
+                      "summary": "Protocol 30 ledgers carry StellarValueExt arm STELLAR_VALUE_SIGNED_MS (CAP-0088, millisecond close times). js-stellar-sdk 17.2.0 and 17.2.1 reject the whole …",
+                      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail decode on testnet ledger 5,540,402; 17.3.0 and 17.4.0 decode and re-encode it byte for byte."
                     }
                   ]
                 }
@@ -2304,9 +5211,9 @@
                     "status": "healthy",
                     "latestLedger": 65474309,
                     "latestLedgerCloseTime": "1794657587",
-                    "oldestLedger": 65083645,
-                    "oldestLedgerCloseTime": "1792704008",
-                    "ledgerRetentionWindow": 390665
+                    "oldestLedger": 59230000,
+                    "oldestLedgerCloseTime": "1759597102",
+                    "ledgerRetentionWindow": 6244310
                   }
                 }
               }

@@ -6,6 +6,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -16,6 +17,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/stellar/go-stellar-sdk/amount"
 	"github.com/stellar/go-stellar-sdk/network"
@@ -76,6 +78,8 @@ func newValue(t string) (any, error) {
 		return &xdr.LedgerEntryChanges{}, nil
 	case "ScVal":
 		return &xdr.ScVal{}, nil
+	case "LedgerCloseMeta":
+		return &xdr.LedgerCloseMeta{}, nil
 	}
 	return nil, fmt.Errorf("unknown xdr type %s", t)
 }
@@ -313,6 +317,10 @@ func nativeChecks(m manifest, dec map[string]any) ([]row, error) {
 				return ok(env.Operations()[0].Body.Type.String())
 			}},
 		}, nil
+	case "tx":
+		return txProfile(m, dec), nil
+	case "ledger":
+		return ledgerProfile(m, dec), nil
 	}
 	return nil, fmt.Errorf("no native check for pattern %q", m.Pattern)
 }
@@ -438,5 +446,87 @@ func main() {
 	}, "", "  ")
 	if err := os.WriteFile(filepath.Join(corpus, "results", "go.json"), append(out, '\n'), 0o644); err != nil {
 		panic(err)
+	}
+}
+
+// Generic profiles for fixtures chosen by set cover (kit/capture/shapes.mjs).
+// Expected values come from Horizon; the SDK reads them from raw XDR.
+
+// snake turns a Go enum name's tail into Horizon's spelling: PathPaymentStrictSend → path_payment_strict_send.
+func snake(s string) string {
+	var b strings.Builder
+	for i, r := range s {
+		if i > 0 && r >= 'A' && r <= 'Z' {
+			b.WriteByte('_')
+		}
+		b.WriteRune(r)
+	}
+	return strings.ToLower(b.String())
+}
+
+func txProfile(m manifest, dec map[string]any) []row {
+	e := m.ExpectedDecoded
+	env := dec["envelope"].(*xdr.TransactionEnvelope)
+	res := dec["result"].(*xdr.TransactionResult)
+	isBump := env.Type == xdr.EnvelopeTypeEnvelopeTypeTxFeeBump
+	rows := []row{
+		{"tx_hash", str(e["tx_hash"]), func() (string, error) {
+			h, err := network.HashTransactionInEnvelope(*env, passphraseOf(m))
+			return hex.EncodeToString(h[:]), err
+		}},
+		{"successful", str(e["successful"]), func() (string, error) { return ok(strconv.FormatBool(res.Successful())) }},
+		{"source_account", str(e["source_account"]), func() (string, error) { a := env.SourceAccount().ToAccountId(); return ok(a.Address()) }},
+		{"fee_charged", str(e["fee_charged"]), func() (string, error) { return ok(strconv.FormatInt(int64(res.FeeCharged), 10)) }},
+		{"max_fee", str(e["max_fee"]), func() (string, error) {
+			if isBump {
+				return ok(strconv.FormatInt(env.FeeBumpFee(), 10))
+			}
+			return ok(strconv.FormatUint(uint64(env.Fee()), 10))
+		}},
+		{"operation_count", str(e["operation_count"]), func() (string, error) { return ok(strconv.Itoa(len(env.Operations()))) }},
+		{"operation_types", str(e["operation_types"]), func() (string, error) {
+			names := []string{}
+			for _, op := range env.Operations() {
+				names = append(names, snake(strings.TrimPrefix(op.Body.Type.String(), "OperationType")))
+			}
+			return ok(strings.Join(names, ","))
+		}},
+		{"memo_type", str(e["memo_type"]), func() (string, error) { return ok(strings.ToLower(strings.TrimPrefix(env.Memo().Type.String(), "MemoTypeMemo"))) }},
+		// Horizon counts the outer envelope's signatures; Signatures() returns the
+		// inner transaction's for a fee-bump, so take the fee-bump's own.
+		{"signature_count", str(e["signature_count"]), func() (string, error) {
+			if isBump {
+				return ok(strconv.Itoa(len(env.FeeBumpSignatures())))
+			}
+			return ok(strconv.Itoa(len(env.Signatures())))
+		}},
+	}
+	if _, has := e["fee_account"]; has {
+		rows = append(rows, row{"fee_account", str(e["fee_account"]), func() (string, error) { a := env.FeeBumpAccount().ToAccountId(); return ok(a.Address()) }})
+	}
+	return rows
+}
+
+func ledgerProfile(m manifest, dec map[string]any) []row {
+	e := m.ExpectedDecoded
+	lcm := dec["ledger"].(*xdr.LedgerCloseMeta)
+	h := func() xdr.LedgerHeader { return lcm.LedgerHeaderHistoryEntry().Header }
+	u := func(n uint32) (string, error) { return ok(strconv.FormatUint(uint64(n), 10)) }
+	return []row{
+		{"ledger_hash", str(e["ledger_hash"]), func() (string, error) {
+			b, err := h().MarshalBinary()
+			sum := sha256.Sum256(b)
+			return hex.EncodeToString(sum[:]), err
+		}},
+		{"prev_hash", str(e["prev_hash"]), func() (string, error) { p := h().PreviousLedgerHash; return ok(hex.EncodeToString(p[:])) }},
+		{"sequence", str(e["sequence"]), func() (string, error) { return u(uint32(h().LedgerSeq)) }},
+		{"protocol_version", str(e["protocol_version"]), func() (string, error) { return u(uint32(h().LedgerVersion)) }},
+		{"base_fee", str(e["base_fee"]), func() (string, error) { return u(uint32(h().BaseFee)) }},
+		{"base_reserve", str(e["base_reserve"]), func() (string, error) { return u(uint32(h().BaseReserve)) }},
+		{"max_tx_set_size", str(e["max_tx_set_size"]), func() (string, error) { return u(uint32(h().MaxTxSetSize)) }},
+		{"transaction_count", str(e["transaction_count"]), func() (string, error) { return ok(strconv.Itoa(lcm.CountTransactions())) }},
+		{"closed_at", str(e["closed_at"]), func() (string, error) {
+			return ok(time.Unix(int64(h().ScpValue.CloseTime), 0).UTC().Format(time.RFC3339))
+		}},
 	}
 }

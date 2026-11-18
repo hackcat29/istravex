@@ -1,0 +1,73 @@
+{
+  "id": "cap67-sc-address-liquidity-pool-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0067",
+    "CAP-0038"
+  ],
+  "protocol_version": 27,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: LiquidityPoolDepositResult:LIQUIDITY_POOL_DEPOSIT_SUCCESS, LiquidityPoolWithdrawResult:LIQUIDITY_POOL_WITHDRAW_SUCCESS, OperationBody:LIQUIDITY_POOL_DEPOSIT, OperationBody:LIQUIDITY_POOL_WITHDRAW, …",
+  "sha256": "8163d9c2f4a4a0e2e462a7cd25bc039bef51cd1ed43c2ceefa0be9aacbf533a3",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 64160000,
+    "tx_hash": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+    "closed_at": "2026-08-28T07:08:53Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "9ec1f62499439504bdca53f4db1119fa0558170680da06782d52733370fcbdae",
+    "successful": true,
+    "source_account": "GADUP4XUZ5PUVDRX6DXZRTSVIIZW3CXOQPVGARBKBUVMPZNKG7DE4W4M",
+    "fee_charged": "200",
+    "max_fee": "200",
+    "operation_count": 2,
+    "operation_types": "liquidity_pool_withdraw,liquidity_pool_deposit",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "LiquidityPoolDepositResult:LIQUIDITY_POOL_DEPOSIT_SUCCESS",
+    "LiquidityPoolWithdrawResult:LIQUIDITY_POOL_WITHDRAW_SUCCESS",
+    "OperationBody:LIQUIDITY_POOL_DEPOSIT",
+    "OperationBody:LIQUIDITY_POOL_WITHDRAW",
+    "OperationResultTr:LIQUIDITY_POOL_DEPOSIT",
+    "OperationResultTr:LIQUIDITY_POOL_WITHDRAW",
+    "ScAddress:SC_ADDRESS_TYPE_LIQUIDITY_POOL"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "8163d9c2f4a4a0e2e462a7cd25bc039bef51cd1ed43c2ceefa0be9aacbf533a3",
+      "bytes": 296
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "d3d9ffbc42edb3352215e3c1845cd2da864ec22de83fcf10d1e6d46f968dcca0",
+      "bytes": 44
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "7a6e7240edd00cb54508da34be35c68f96c913da24c980d7d5e3d9407444d3ca",
+      "bytes": 3908
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "428790b974a9682189996dff8be5b4aa7c806a32a006e34585bddbfd8ea1551d",
+      "bytes": 404
+    }
+  ]
+}

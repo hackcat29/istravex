@@ -1,0 +1,65 @@
+{
+  "id": "base-memo-id-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: Memo:MEMO_ID, PaymentResult:PAYMENT_UNDERFUNDED",
+  "sha256": "2ec389e34a765a9b3abd3e082ee7be4dfc811d0abbd89b2968a3af0162276bf2",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5540313,
+    "tx_hash": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+    "closed_at": "2026-11-03T17:00:05Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "c38a44834b6dd6b820aa9b787acbdf5d35a5b45efd09e0cc9cb6c12479bea5f1",
+    "successful": false,
+    "source_account": "GA45X2ZEFGTCKMORBEGG3G4RC7AFQB4PGQ5UBH73IQF4MAPHBUQ6BBGO",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "payment",
+    "memo_type": "id",
+    "signature_count": 1
+  },
+  "covers": [
+    "Memo:MEMO_ID",
+    "PaymentResult:PAYMENT_UNDERFUNDED"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "2ec389e34a765a9b3abd3e082ee7be4dfc811d0abbd89b2968a3af0162276bf2",
+      "bytes": 264
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "cedef9cff216e44ff8a8a4bc5f7eadeae546663de964a5760fb0d4c6d83503a1",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "e1cbb1139ef4f3c728aa29461f5b385d6d6d8d99964a2690a5926f1a760ad40d",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "96c53158b9bab39185578b7f7b551911db90c5292fd2dda51f6b2850b7c4da03",
+      "bytes": 300
+    }
+  ]
+}

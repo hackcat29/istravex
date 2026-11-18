@@ -434,6 +434,29 @@
       "reproduced": true,
       "summary": "The same bug as js-stellar-sdk#1766: Asset.compareTo orders same-code assets by their issuers' strkey text, so Transaction.fromEnvelopeXdr throws \"Assets are not in lexicographic order\" on a valid pool-share changeTrust, and the pool ID can't be computed. Fixed on master by #832, which compares the decoded key bytes, but not in any release.",
       "evidence": "kit/runners/java/Run.java on 6.0.0: decode_pool_share_op, asset_compare and pool_id fail on the generated pool-share fixture, which stellar-core accepted."
+    },
+    {
+      "id": "ISTRAVEX-F-0020",
+      "title": "js-stellar-sdk before 17.3.0 cannot decode a protocol 30 ledger header",
+      "component": "stellar/js-stellar-sdk",
+      "affected": "17.2.1 and earlier",
+      "fixed_in": "@stellar/stellar-sdk 17.3.0 (protocol 30 XDR)",
+      "severity": "medium",
+      "status": "by-design",
+      "issue": null,
+      "disclosure": "not-disclosed",
+      "cap_ids": [
+        "CAP-0088"
+      ],
+      "fixtures": [
+        "cap88-stellar-value-ext-signed-ms-testnet-0001"
+      ],
+      "checks": [
+        "javascript-matrix:cap88-stellar-value-ext-signed-ms-testnet-0001:decode"
+      ],
+      "reproduced": true,
+      "summary": "Protocol 30 ledgers carry StellarValueExt arm STELLAR_VALUE_SIGNED_MS (CAP-0088, millisecond close times). js-stellar-sdk 17.2.0 and 17.2.1 reject the whole LedgerCloseMeta with \"scpValue.ext.v: unknown enum value 3\". It is an SDK that predates the protocol, not a bug, but an indexer pinned to it stops at the first protocol 30 ledger: testnet has been on protocol 30 since ledger 5,540,313.",
+      "evidence": "kit/runners/js/matrix.mjs: 17.2.0 and 17.2.1 fail decode on testnet ledger 5,540,402; 17.3.0 and 17.4.0 decode and re-encode it byte for byte."
     }
   ]
 }

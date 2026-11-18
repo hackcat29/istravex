@@ -1,0 +1,44 @@
+{
+  "id": "cap88-stellar-value-ext-signed-ms-testnet-0001",
+  "pattern": "ledger",
+  "cap_ids": [
+    "CAP-0088"
+  ],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "LedgerCloseMeta",
+  "xdr_path": "cells: StellarValueExt:STELLAR_VALUE_SIGNED_MS",
+  "sha256": "2a2a619df74923faa9bdb17fd9e675598a71c9435ed62fcfad4cc18683fe3fcf",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5540402,
+    "closed_at": "2026-11-03T17:07:30Z",
+    "description": "A whole ledger chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "ledger",
+    "ledger_hash": "b6d62592f63f0bd75ad4e2410057ead57ee8f5b673b4e6f629a07f717e467abb",
+    "prev_hash": "46ec844d9149ceba02b5b0520929dc2916f1b138d994330a00bb447a16098556",
+    "sequence": 5540402,
+    "protocol_version": 30,
+    "base_fee": "100",
+    "base_reserve": "5000000",
+    "max_tx_set_size": 200,
+    "transaction_count": 11,
+    "closed_at": "2026-11-03T17:07:30Z"
+  },
+  "covers": [
+    "StellarValueExt:STELLAR_VALUE_SIGNED_MS"
+  ],
+  "files": [
+    {
+      "name": "ledger",
+      "xdr_type": "LedgerCloseMeta",
+      "path": "ledger.xdr.b64",
+      "sha256": "2a2a619df74923faa9bdb17fd9e675598a71c9435ed62fcfad4cc18683fe3fcf",
+      "bytes": 68128
+    }
+  ]
+}

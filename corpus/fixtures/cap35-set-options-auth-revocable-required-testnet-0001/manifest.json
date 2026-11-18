@@ -1,0 +1,66 @@
+{
+  "id": "cap35-set-options-auth-revocable-required-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035"
+  ],
+  "protocol_version": 27,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: SetOptionsResult:SET_OPTIONS_AUTH_REVOCABLE_REQUIRED",
+  "sha256": "7059c129b9c793a367fcb686a304566abc526862babf084498aa554210d61154",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 4295602,
+    "tx_hash": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+    "closed_at": "2026-08-23T16:01:35Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "72c0f19a2d3d1d81472ac5841f2a3e579374094e07742609b81da6e1d8def2f6",
+    "successful": false,
+    "source_account": "GDA6LC3PTTLFGAODZOT5RAL3ZC6BPDIPO2MRQYSZXT3SSI6FQY5NZ6UZ",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "set_options",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "SetOptionsResult:SET_OPTIONS_AUTH_REVOCABLE_REQUIRED"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "7059c129b9c793a367fcb686a304566abc526862babf084498aa554210d61154",
+      "bytes": 208
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "6efa3e195aff0d7f1573bb7d2da08e62f5560b23b1e5675ed9301bb310d2546d",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "d19e83ffdfda1472c5ce1aacb3908428f1f643d956c188b2b1390f40803dd9a4",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "f4a1bafb65e1c86942c95d95b575ab14b1bd42f342d57ee5fa11f9c17dae5f38",
+      "bytes": 300
+    }
+  ]
+}

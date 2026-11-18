@@ -71,40 +71,97 @@ func discName(sw reflect.Value) (string, bool) {
 	return "", false
 }
 
-// universe lists every cell of every union, by probing each union's arms.
-func universe() []string {
-	set := map[string]bool{}
+type validEnum interface{ ValidEnum(int32) bool }
+
+// armsOf lists the cells of one union type, probing every value its
+// discriminant can take (an enum's ValidEnum, or small ints for "int v").
+func armsOf(t reflect.Type) []string {
+	u := reflect.Zero(t).Interface().(union)
+	f, ok := t.FieldByName(u.SwitchFieldName())
+	if !ok {
+		return nil
+	}
+	var out []string
+	probe := func(sw int32) {
+		if _, ok := u.ArmForSwitch(sw); !ok {
+			return
+		}
+		d := reflect.New(f.Type).Elem()
+		switch d.Kind() {
+		case reflect.Int32, reflect.Int, reflect.Int64:
+			d.SetInt(int64(sw))
+		case reflect.Uint32, reflect.Uint, reflect.Uint64:
+			if sw < 0 {
+				return
+			}
+			d.SetUint(uint64(sw))
+		}
+		if n, ok := discName(d); ok {
+			out = append(out, t.Name()+":"+n)
+		}
+	}
+	if ve, ok := reflect.Zero(f.Type).Interface().(validEnum); ok {
+		for sw := int32(-4096); sw <= 4096; sw++ {
+			if ve.ValidEnum(sw) {
+				probe(sw)
+			}
+		}
+	} else {
+		for sw := int32(-16); sw <= 16; sw++ {
+			probe(sw)
+		}
+	}
+	return out
+}
+
+// universe lists every cell of every union in the XDR. reachable lists the
+// ones a ledger reader can meet: unions reachable from LedgerCloseMeta by
+// following struct fields, pointers, slices and union arms (so peer messages,
+// buckets and contract specs are out).
+func universe() (all, reachable []string) {
+	allSet, reach := map[string]bool{}, map[string]bool{}
 	for _, z := range unions {
-		t := reflect.TypeOf(z)
-		u := z.(union)
-		f, ok := t.FieldByName(u.SwitchFieldName())
-		if !ok {
-			continue
+		for _, c := range armsOf(reflect.TypeOf(z)) {
+			allSet[c] = true
 		}
-		for sw := int32(-128); sw <= 128; sw++ {
-			if _, ok := u.ArmForSwitch(sw); !ok {
-				continue
+	}
+	seen := map[reflect.Type]bool{}
+	var visit func(t reflect.Type)
+	visit = func(t reflect.Type) {
+		for t.Kind() == reflect.Ptr || t.Kind() == reflect.Slice || t.Kind() == reflect.Array {
+			t = t.Elem()
+		}
+		if t.Kind() != reflect.Struct || seen[t] {
+			return
+		}
+		seen[t] = true
+		if t.Implements(unionIface) {
+			for _, c := range armsOf(t) {
+				reach[c] = true
 			}
-			d := reflect.New(f.Type).Elem()
-			switch d.Kind() {
-			case reflect.Int32, reflect.Int, reflect.Int64:
-				d.SetInt(int64(sw))
-			case reflect.Uint32, reflect.Uint, reflect.Uint64:
-				if sw < 0 {
-					continue
-				}
-				d.SetUint(uint64(sw))
-			}
-			if n, ok := discName(d); ok {
-				set[t.Name()+":"+n] = true
+		}
+		for i := 0; i < t.NumField(); i++ {
+			if t.Field(i).IsExported() {
+				visit(t.Field(i).Type)
 			}
 		}
 	}
+	visit(reflect.TypeOf(xdr.LedgerCloseMeta{}))
 	for _, c := range flagCells {
-		set[c] = true
+		allSet[c], reach[c] = true, true
 	}
-	out := make([]string, 0, len(set))
-	for c := range set {
+	for i := int32(0); i < 4096; i++ {
+		if n := xdr.ContractCostType(i).String(); n != "" {
+			c := "ContractCostType:" + strings.TrimPrefix(n, "ContractCostType") // XDR spells these in CamelCase
+			allSet[c], reach[c] = true, true
+		}
+	}
+	return sorted(allSet), sorted(reach)
+}
+
+func sorted(m map[string]bool) []string {
+	out := make([]string, 0, len(m))
+	for c := range m {
 		out = append(out, c)
 	}
 	sort.Strings(out)
@@ -137,6 +194,19 @@ func flags(v reflect.Value, record func(string)) {
 		for i, n := range names {
 			if uint32(x.Flags)&(1<<i) != 0 {
 				record("TrustLineEntry.flags:" + n)
+			}
+		}
+	case xdr.ConfigSettingEntry:
+		// Contract cost types are positions in the cost-parameter arrays; a
+		// protocol that adds host functions appends their cost types.
+		for _, params := range []*xdr.ContractCostParams{x.ContractCostParamsCpuInsns, x.ContractCostParamsMemBytes} {
+			if params == nil {
+				continue
+			}
+			for i := range *params {
+				if n := xdr.ContractCostType(i).String(); n != "" {
+					record("ContractCostType:" + strings.TrimPrefix(n, "ContractCostType"))
+				}
 			}
 		}
 	case xdr.ClaimableBalanceEntry:

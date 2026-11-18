@@ -1,0 +1,68 @@
+{
+  "id": "cap23-claim-predicate-and-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0023"
+  ],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ClaimPredicate:CLAIM_PREDICATE_AND, ClaimPredicate:CLAIM_PREDICATE_BEFORE_RELATIVE_TIME, CreateClaimableBalanceResult:CREATE_CLAIMABLE_BALANCE_UNDERFUNDED",
+  "sha256": "07102dc04eea060d4d25e508e6180a25677a5b66c0045cb8586f3ad45cdc30da",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 61396800,
+    "tx_hash": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+    "closed_at": "2026-02-25T19:09:40Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "71328a971e5b86f6c0cb50cbee525757718b824b145655dce0a1a7376c19622d",
+    "successful": false,
+    "source_account": "GDO46CZDTXWQVZPREP25HR547K3OSKPAKKMVY2HGNRDK77GYZ4GILDOM",
+    "fee_charged": "6700",
+    "max_fee": "7370",
+    "operation_count": 67,
+    "operation_types": "create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance,create_claimable_balance",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ClaimPredicate:CLAIM_PREDICATE_AND",
+    "ClaimPredicate:CLAIM_PREDICATE_BEFORE_RELATIVE_TIME",
+    "CreateClaimableBalanceResult:CREATE_CLAIMABLE_BALANCE_UNDERFUNDED"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "07102dc04eea060d4d25e508e6180a25677a5b66c0045cb8586f3ad45cdc30da",
+      "bytes": 13292
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "7e114203998b29289ed33a9dda1c8b02b38f7ec195ba1540cde25365f31316f2",
+      "bytes": 968
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "6f5f180b1a0db61bd8b080f1be4bb3c412d09b2dabb2cbf61593e4d3cb9a2343",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "eb12f9a6acde4eb7c7d46efdefbef70758c855f5299f66c4604efa62ce77044b",
+      "bytes": 300
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "cap67-sc-address-claimable-balance-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0067",
+    "CAP-0033",
+    "CAP-0023",
+    "CAP-0021"
+  ],
+  "protocol_version": 27,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AccountEntryExtensionV2Ext:v0, BeginSponsoringFutureReservesResult:BEGIN_SPONSORING_FUTURE_RESERVES_SUCCESS, ChangeTrustResult:CHANGE_TRUST_SUCCESS, ClaimPredicate:CLAIM_PREDICATE_UNCONDITIONAL, …",
+  "sha256": "18d0dc4b93126b1ab8908f8eb50547cfa1d139fe22e3a8caacec6ae78e00bf5e",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 3946802,
+    "tx_hash": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+    "closed_at": "2026-08-03T10:44:18Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "bb48fce00b85560b122bfdaaa32b54391634fc39c65d91792ce3596a022692c0",
+    "successful": true,
+    "source_account": "GB5JHH4UZG6APVQSUMFMFDLVKRSFTO5S4S72BMTUF5SI572GUWCLUZVY",
+    "fee_charged": "1500",
+    "max_fee": "1500",
+    "operation_count": 15,
+    "operation_types": "begin_sponsoring_future_reserves,create_account,manage_data,change_trust,payment,create_claimable_balance,manage_sell_offer,set_options,set_options,end_sponsoring_future_reserves,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship",
+    "memo_type": "none",
+    "signature_count": 2
+  },
+  "covers": [
+    "AccountEntryExtensionV2Ext:v0",
+    "BeginSponsoringFutureReservesResult:BEGIN_SPONSORING_FUTURE_RESERVES_SUCCESS",
+    "ChangeTrustResult:CHANGE_TRUST_SUCCESS",
+    "ClaimPredicate:CLAIM_PREDICATE_UNCONDITIONAL",
+    "ClaimableBalanceEntryExt:v0",
+    "ClaimableBalanceId:CLAIMABLE_BALANCE_ID_TYPE_V0",
+    "Claimant:CLAIMANT_TYPE_V0",
+    "CreateAccountResult:CREATE_ACCOUNT_SUCCESS",
+    "CreateClaimableBalanceResult:CREATE_CLAIMABLE_BALANCE_SUCCESS",
+    "DataEntryExt:v0",
+    "EndSponsoringFutureReservesResult:END_SPONSORING_FUTURE_RESERVES_SUCCESS",
+    "LedgerEntryData:CLAIMABLE_BALANCE",
+    "LedgerEntryData:DATA",
+    "LedgerEntryData:OFFER",
+    "LedgerEntryExt:v1",
+    "LedgerEntryExtensionV1Ext:v0",
+    "LedgerKey:DATA",
+    "ManageDataResult:MANAGE_DATA_SUCCESS",
+    "ManageOfferSuccessResultOffer:MANAGE_OFFER_CREATED",
+    "ManageSellOfferResult:MANAGE_SELL_OFFER_SUCCESS",
+    "OfferEntryExt:v0",
+    "OperationBody:BEGIN_SPONSORING_FUTURE_RESERVES",
+    "OperationBody:CREATE_ACCOUNT",
+    "OperationBody:CREATE_CLAIMABLE_BALANCE",
+    "OperationBody:END_SPONSORING_FUTURE_RESERVES",
+    "OperationBody:MANAGE_DATA",
+    "OperationBody:MANAGE_SELL_OFFER",
+    "OperationBody:REVOKE_SPONSORSHIP",
+    "OperationResultTr:BEGIN_SPONSORING_FUTURE_RESERVES",
+    "OperationResultTr:CHANGE_TRUST",
+    "OperationResultTr:CREATE_ACCOUNT",
+    "OperationResultTr:CREATE_CLAIMABLE_BALANCE",
+    "OperationResultTr:END_SPONSORING_FUTURE_RESERVES",
+    "OperationResultTr:MANAGE_DATA",
+    "OperationResultTr:MANAGE_SELL_OFFER",
+    "OperationResultTr:REVOKE_SPONSORSHIP",
+    "OperationResultTr:SET_OPTIONS",
+    "Preconditions:PRECOND_NONE",
+    "RevokeSponsorshipOp:REVOKE_SPONSORSHIP_LEDGER_ENTRY",
+    "RevokeSponsorshipOp:REVOKE_SPONSORSHIP_SIGNER",
+    "RevokeSponsorshipResult:REVOKE_SPONSORSHIP_SUCCESS",
+    "ScAddress:SC_ADDRESS_TYPE_CLAIMABLE_BALANCE",
+    "SetOptionsResult:SET_OPTIONS_SUCCESS",
+    "SignerKey:SIGNER_KEY_TYPE_HASH_X"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "18d0dc4b93126b1ab8908f8eb50547cfa1d139fe22e3a8caacec6ae78e00bf5e",
+      "bytes": 1640
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "41ddc7d830c6aaa72d03ff521d3eb71001ded61e2ad32bd6fffca2d5a2598767",
+      "bytes": 360
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "54ae4748a597587104ad9b97744fc48eb6d365fdfe02ca2a0b5c5d8184d5fe83",
+      "bytes": 12744
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "ef250d5cf62a2b02ba3843f06337ac378d194277cd458463fed45de6989f307f",
+      "bytes": 348
+    }
+  ]
+}

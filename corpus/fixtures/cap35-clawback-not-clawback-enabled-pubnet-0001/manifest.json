@@ -1,0 +1,71 @@
+{
+  "id": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0035"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AllowTrustResult:ALLOW_TRUST_SUCCESS, AssetCode:ASSET_TYPE_CREDIT_ALPHANUM12, AssetCode:ASSET_TYPE_CREDIT_ALPHANUM4, ClawbackResult:CLAWBACK_NOT_CLAWBACK_ENABLED, …",
+  "sha256": "a66f1b221fcb9876666186f92b80d9333425cb578cbd5188a6cbebf9cee70120",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59266800,
+    "tx_hash": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+    "closed_at": "2025-10-07T03:11:33Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "316ee1f071990cc9ef90c3d3d4f232f28a213c46b1743eb134de350e26540877",
+    "successful": false,
+    "source_account": "GAGV3TJZARJMUMCYCOMYH3LBMYL3XSWED6LVQK2UAPYX37TBERGKRHOD",
+    "fee_charged": "1100",
+    "max_fee": "363000",
+    "operation_count": 11,
+    "operation_types": "set_options,allow_trust,clawback,allow_trust,allow_trust,clawback,allow_trust,allow_trust,clawback,allow_trust,set_options",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "AllowTrustResult:ALLOW_TRUST_SUCCESS",
+    "AssetCode:ASSET_TYPE_CREDIT_ALPHANUM12",
+    "AssetCode:ASSET_TYPE_CREDIT_ALPHANUM4",
+    "ClawbackResult:CLAWBACK_NOT_CLAWBACK_ENABLED",
+    "OperationBody:ALLOW_TRUST",
+    "OperationResultTr:ALLOW_TRUST"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "a66f1b221fcb9876666186f92b80d9333425cb578cbd5188a6cbebf9cee70120",
+      "bytes": 888
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "e6766e4548c9d5ebb02fc4dda1b21733543bbce08da5e79d8fa7d51930edd572",
+      "bytes": 152
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "f6afead04e67c2c3998c14067b0694195ffd169f19659f445db016b209ac0242",
+      "bytes": 492
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "f7e68fe519e637a0e5420cd394b75f08b427c16d0eecd2158482ba3454e1fd60",
+      "bytes": 332
+    }
+  ]
+}

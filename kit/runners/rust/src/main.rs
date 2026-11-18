@@ -10,8 +10,9 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, fs, path::Path};
 use stellar_xdr::{
-    ChangeTrustAsset, FeeBumpTransactionInnerTx, Hash, LedgerEntryChanges, LedgerEntryData, Limits, LiquidityPoolParameters,
-    OperationBody, ReadXdr, ScMap, ScVal, TransactionEnvelope, TransactionMeta, TransactionResult, TransactionSignaturePayload,
+    ChangeTrustAsset, FeeBumpTransactionInnerTx, Hash, LedgerCloseMeta, LedgerEntryChanges, LedgerEntryData, Limits,
+    LiquidityPoolParameters, Memo, MuxedAccount, Operation, OperationBody, Preconditions, ReadXdr, ScMap, ScVal, Transaction,
+    TransactionEnvelope, TransactionExt, TransactionMeta, TransactionResult, TransactionResultResult, TransactionSignaturePayload,
     TransactionSignaturePayloadTaggedTransaction, WriteXdr,
 };
 
@@ -77,6 +78,7 @@ enum Decoded {
     Data(LedgerEntryData),
     Changes(LedgerEntryChanges),
     Val(ScVal),
+    Lcm(LedgerCloseMeta),
 }
 
 impl Decoded {
@@ -90,6 +92,7 @@ impl Decoded {
             "LedgerEntryData" => Self::Data(LedgerEntryData::from_xdr_base64(b64, l).map_err(e)?),
             "LedgerEntryChanges" => Self::Changes(LedgerEntryChanges::from_xdr_base64(b64, l).map_err(e)?),
             "ScVal" => Self::Val(ScVal::from_xdr_base64(b64, l).map_err(e)?),
+            "LedgerCloseMeta" => Self::Lcm(LedgerCloseMeta::from_xdr_base64(b64, l).map_err(e)?),
             other => return Err(format!("unknown xdr type {other}")),
         })
     }
@@ -102,6 +105,7 @@ impl Decoded {
             Self::Data(v) => v.to_xdr_base64(l),
             Self::Changes(v) => v.to_xdr_base64(l),
             Self::Val(v) => v.to_xdr_base64(l),
+            Self::Lcm(v) => v.to_xdr_base64(l),
         }
         .map_err(|e| e.to_string())
     }
@@ -113,6 +117,7 @@ impl Decoded {
             Self::Data(v) => serde_json::to_value(v),
             Self::Changes(v) => serde_json::to_value(v),
             Self::Val(v) => serde_json::to_value(v),
+            Self::Lcm(v) => serde_json::to_value(v),
         }
         .unwrap_or(Value::Null)
     }
@@ -419,9 +424,161 @@ fn native<'a>(m: &'a Manifest, dec: &'a BTreeMap<String, Decoded>) -> Result<Vec
                 ),
             ]
         }
+        "tx" => tx_profile(m, dec)?,
+        "ledger" => ledger_profile(m, dec)?,
         other => return Err(format!("no native check for pattern {other}")),
     };
     Ok(checks)
+}
+
+// Generic profiles for fixtures chosen by set cover (kit/capture/shapes.mjs).
+// Expected values come from Horizon; the crate reads them from typed XDR.
+
+fn snake(name: &str) -> String {
+    let mut out = String::new();
+    for (i, c) in name.chars().enumerate() {
+        if i > 0 && c.is_ascii_uppercase() {
+            out.push('_');
+        }
+        out.push(c.to_ascii_lowercase());
+    }
+    out
+}
+
+fn g_address(m: &MuxedAccount) -> String {
+    let key = match m {
+        MuxedAccount::Ed25519(k) => k.0,
+        MuxedAccount::MuxedEd25519(mx) => mx.ed25519.0,
+    };
+    format!("{}", stellar_strkey::ed25519::PublicKey(key))
+}
+
+/// (inner transaction as a v1 Transaction, outer signature count, outer fee, fee source).
+fn envelope_parts(env: &TransactionEnvelope) -> (Transaction, usize, i64, Option<MuxedAccount>) {
+    match env {
+        TransactionEnvelope::TxV0(v0) => {
+            let t = &v0.tx;
+            let tx = Transaction {
+                source_account: MuxedAccount::Ed25519(t.source_account_ed25519.clone()),
+                fee: t.fee,
+                seq_num: t.seq_num.clone(),
+                cond: match &t.time_bounds {
+                    Some(tb) => Preconditions::Time(tb.clone()),
+                    None => Preconditions::None,
+                },
+                memo: t.memo.clone(),
+                operations: t.operations.clone(),
+                ext: TransactionExt::V0,
+            };
+            (tx, v0.signatures.len(), t.fee as i64, None)
+        }
+        TransactionEnvelope::Tx(v1) => (v1.tx.clone(), v1.signatures.len(), v1.tx.fee as i64, None),
+        TransactionEnvelope::TxFeeBump(fb) => {
+            let FeeBumpTransactionInnerTx::Tx(inner) = &fb.tx.inner_tx;
+            (inner.tx.clone(), fb.signatures.len(), fb.tx.fee, Some(fb.tx.fee_source.clone()))
+        }
+    }
+}
+
+fn envelope_hash(env: &TransactionEnvelope, pp: &str) -> String {
+    match env {
+        TransactionEnvelope::TxFeeBump(fb) => tx_hash(TransactionSignaturePayloadTaggedTransaction::TxFeeBump(fb.tx.clone()), pp),
+        other => tx_hash(TransactionSignaturePayloadTaggedTransaction::Tx(envelope_parts(other).0), pp),
+    }
+}
+
+fn tx_profile<'a>(m: &'a Manifest, dec: &'a BTreeMap<String, Decoded>) -> Result<Vec<Check<'a>>, String> {
+    let e = &m.expected_decoded;
+    let env = match dec.get("envelope") {
+        Some(Decoded::Env(v)) => v,
+        _ => return Err("missing envelope".into()),
+    };
+    let res = match dec.get("result") {
+        Some(Decoded::Result(v)) => v,
+        _ => return Err("missing result".into()),
+    };
+    let pp = m.passphrase();
+    let ops = move || -> Vec<Operation> { envelope_parts(env).0.operations.to_vec() };
+    let mut checks: Vec<Check<'a>> = vec![
+        ("tx_hash", s(&e["tx_hash"]), Box::new(move || Ok(envelope_hash(env, &pp)))),
+        (
+            "successful",
+            s(&e["successful"]),
+            Box::new(move || Ok(matches!(res.result, TransactionResultResult::TxSuccess(_) | TransactionResultResult::TxFeeBumpInnerSuccess(_)).to_string())),
+        ),
+        ("source_account", s(&e["source_account"]), Box::new(move || Ok(g_address(&envelope_parts(env).0.source_account)))),
+        ("fee_charged", s(&e["fee_charged"]), Box::new(move || Ok(res.fee_charged.to_string()))),
+        ("max_fee", s(&e["max_fee"]), Box::new(move || Ok(envelope_parts(env).2.to_string()))),
+        ("operation_count", s(&e["operation_count"]), Box::new(move || Ok(ops().len().to_string()))),
+        (
+            "operation_types",
+            s(&e["operation_types"]),
+            Box::new(move || Ok(ops().iter().map(|o| snake(o.body.name())).collect::<Vec<_>>().join(","))),
+        ),
+        (
+            "memo_type",
+            s(&e["memo_type"]),
+            Box::new(move || {
+                Ok(match envelope_parts(env).0.memo {
+                    Memo::None => "none",
+                    Memo::Text(_) => "text",
+                    Memo::Id(_) => "id",
+                    Memo::Hash(_) => "hash",
+                    Memo::Return(_) => "return",
+                }
+                .to_string())
+            }),
+        ),
+        ("signature_count", s(&e["signature_count"]), Box::new(move || Ok(envelope_parts(env).1.to_string()))),
+    ];
+    if e.get("fee_account").is_some() {
+        checks.push((
+            "fee_account",
+            s(&e["fee_account"]),
+            Box::new(move || envelope_parts(env).3.map(|f| g_address(&f)).ok_or("not a fee-bump".to_string())),
+        ));
+    }
+    Ok(checks)
+}
+
+/// Unix seconds → RFC 3339 UTC (days-from-civil, no date crate).
+fn rfc3339(secs: u64) -> String {
+    let days = (secs / 86_400) as i64;
+    let rem = secs % 86_400;
+    let z = days + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z - era * 146_097;
+    let yoe = (doe - doe / 1_460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = doy - (153 * mp + 2) / 5 + 1;
+    let mo = if mp < 10 { mp + 3 } else { mp - 9 };
+    let y = yoe + era * 400 + if mo <= 2 { 1 } else { 0 };
+    format!("{y:04}-{mo:02}-{d:02}T{:02}:{:02}:{:02}Z", rem / 3600, rem % 3600 / 60, rem % 60)
+}
+
+fn ledger_profile<'a>(m: &'a Manifest, dec: &'a BTreeMap<String, Decoded>) -> Result<Vec<Check<'a>>, String> {
+    let e = &m.expected_decoded;
+    let lcm = match dec.get("ledger") {
+        Some(Decoded::Lcm(v)) => v,
+        _ => return Err("missing ledger".into()),
+    };
+    let (header, txs) = match lcm {
+        LedgerCloseMeta::V0(v) => (&v.ledger_header.header, v.tx_processing.len()),
+        LedgerCloseMeta::V1(v) => (&v.ledger_header.header, v.tx_processing.len()),
+        LedgerCloseMeta::V2(v) => (&v.ledger_header.header, v.tx_processing.len()),
+    };
+    Ok(vec![
+        ("ledger_hash", s(&e["ledger_hash"]), Box::new(move || Ok(hex::encode(Sha256::digest(header.to_xdr(Limits::none()).map_err(|e| e.to_string())?))))),
+        ("prev_hash", s(&e["prev_hash"]), Box::new(move || Ok(hex::encode(header.previous_ledger_hash.0)))),
+        ("sequence", s(&e["sequence"]), Box::new(move || Ok(header.ledger_seq.to_string()))),
+        ("protocol_version", s(&e["protocol_version"]), Box::new(move || Ok(header.ledger_version.to_string()))),
+        ("base_fee", s(&e["base_fee"]), Box::new(move || Ok(header.base_fee.to_string()))),
+        ("base_reserve", s(&e["base_reserve"]), Box::new(move || Ok(header.base_reserve.to_string()))),
+        ("max_tx_set_size", s(&e["max_tx_set_size"]), Box::new(move || Ok(header.max_tx_set_size.to_string()))),
+        ("transaction_count", s(&e["transaction_count"]), Box::new(move || Ok(txs.to_string()))),
+        ("closed_at", s(&e["closed_at"]), Box::new(move || Ok(rfc3339(header.scp_value.close_time.0)))),
+    ])
 }
 
 /// `goldens <test-lcm-current dir> <corpus dir>`: decode and byte-exact

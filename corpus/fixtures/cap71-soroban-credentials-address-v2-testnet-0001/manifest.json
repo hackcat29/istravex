@@ -1,0 +1,68 @@
+{
+  "id": "cap71-soroban-credentials-address-v2-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0071",
+    "CAP-0067"
+  ],
+  "protocol_version": 29,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ScAddress:SC_ADDRESS_TYPE_MUXED_ACCOUNT, SorobanCredentials:SOROBAN_CREDENTIALS_ADDRESS_V2",
+  "sha256": "4f441bafed97514d54edba914d9a1d80a5bc32e5540d54ea5152270452739e30",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 4982002,
+    "tx_hash": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+    "closed_at": "2026-10-02T09:33:17Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "124b5db768ce5ff25ee18fa1d0af09d8e4e2a805fcdfdb8ec22b9ccae5467c90",
+    "successful": true,
+    "source_account": "GBXNPGZCVFEWOQQREWY2QT2WEGX3CXF3A72KTXHJ2RQUYNXYPYGEO3OH",
+    "fee_charged": "23378",
+    "max_fee": "34515",
+    "operation_count": 1,
+    "operation_types": "invoke_host_function",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ScAddress:SC_ADDRESS_TYPE_MUXED_ACCOUNT",
+    "SorobanCredentials:SOROBAN_CREDENTIALS_ADDRESS_V2"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "4f441bafed97514d54edba914d9a1d80a5bc32e5540d54ea5152270452739e30",
+      "bytes": 1092
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "0c6ea50182f8d3069c63cdf7416625d24b809e1238c91dea6b2044d9267dbe75",
+      "bytes": 64
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "bba753947822b715b5aa3310b6eb09266f3f70664bec686533561fec59a47295",
+      "bytes": 3696
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "cd02670c84f0a3c1cb6d164878f0bc15cc84f7755514c28d4131b234465ecc15",
+      "bytes": 300
+    }
+  ]
+}

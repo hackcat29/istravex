@@ -1,0 +1,78 @@
+{
+  "id": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0058",
+    "CAP-0046-11",
+    "CAP-0046-02",
+    "CAP-0046-01",
+    "CAP-0046"
+  ],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ContractIdPreimage:CONTRACT_ID_PREIMAGE_FROM_ADDRESS, InvokeHostFunctionResult:INVOKE_HOST_FUNCTION_TRAPPED, ScError:SCE_AUTH, ScError:SCE_CONTEXT, …",
+  "sha256": "40945fd127ea0098b7e4fd12d21d63a0e78889bcdb47785b6ac85e1300d76f28",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5768002,
+    "tx_hash": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+    "closed_at": "2026-11-16T21:14:16Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "800adbcbe9ec527c5f07341ef9f265b19d9dfe160ed55da7596cf2cc06a25493",
+    "successful": false,
+    "source_account": "GAMPNRI75JKEVO2CY3LOMV3Z2OUKCMR3OJ7FPKWIIV6ZNRWBGKIU3DZO",
+    "fee_charged": "8050",
+    "max_fee": "168425",
+    "operation_count": 1,
+    "operation_types": "invoke_host_function",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ContractIdPreimage:CONTRACT_ID_PREIMAGE_FROM_ADDRESS",
+    "InvokeHostFunctionResult:INVOKE_HOST_FUNCTION_TRAPPED",
+    "ScError:SCE_AUTH",
+    "ScError:SCE_CONTEXT",
+    "ScError:SCE_STORAGE",
+    "ScVal:SCV_ERROR",
+    "ScVal:SCV_LEDGER_KEY_NONCE",
+    "SorobanAuthorizedFunction:SOROBAN_AUTHORIZED_FUNCTION_TYPE_CREATE_CONTRACT_V2_HOST_FN",
+    "SorobanCredentials:SOROBAN_CREDENTIALS_ADDRESS"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "40945fd127ea0098b7e4fd12d21d63a0e78889bcdb47785b6ac85e1300d76f28",
+      "bytes": 1604
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "5a90bb1941ef05bc3b24f0b54cdc8bec312079710d2ca3c580fdbe23f2d9880f",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "01a0fdef0daadd2808df43e17baf2b647d98e75ba717905ebccbd9f335e770bd",
+      "bytes": 3812
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "cc27a4ecaacc2b7838984692694e442b884fd3c6f88ce983724d0e396ac5849f",
+      "bytes": 300
+    }
+  ]
+}

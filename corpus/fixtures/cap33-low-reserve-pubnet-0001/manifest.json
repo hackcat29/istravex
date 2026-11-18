@@ -1,0 +1,66 @@
+{
+  "id": "cap33-low-reserve-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0033"
+  ],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: RevokeSponsorshipResult:REVOKE_SPONSORSHIP_LOW_RESERVE",
+  "sha256": "07f9c6e78ffcde0e39bbee349e22cf0210b9698f30e31ac34dd4e0b8942926fe",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 61708800,
+    "tx_hash": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+    "closed_at": "2026-03-18T13:38:13Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "50fcc9eba95a8a351540b46c10f267efee3f2e1940b03c448649ba116ca54724",
+    "successful": false,
+    "source_account": "GCKLGWHEYT2V63HC2VDJRDWEY3G54YSHHPOA6Q3HAPQUGA5OZDWZL7KW",
+    "fee_charged": "10000",
+    "max_fee": "100000",
+    "operation_count": 100,
+    "operation_types": "revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship,revoke_sponsorship",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "RevokeSponsorshipResult:REVOKE_SPONSORSHIP_LOW_RESERVE"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "07f9c6e78ffcde0e39bbee349e22cf0210b9698f30e31ac34dd4e0b8942926fe",
+      "bytes": 7692
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "e773a338157df83440019ff6e803bc6d200bc168c9c4c73d0bac8cc6ff706e36",
+      "bytes": 1220
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "2bd10d45f9565c489198edc1f626b63b6f2cbaa553567143ed31f928bdf89ae2",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "de9f60266b4f66e969c81770e31b8ebb3b2da95d7a5cf1ad24c1e785e7242161",
+      "bytes": 300
+    }
+  ]
+}

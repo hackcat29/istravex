@@ -1,0 +1,64 @@
+{
+  "id": "base-create-account-already-exist-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: CreateAccountResult:CREATE_ACCOUNT_ALREADY_EXIST",
+  "sha256": "7be9d10b6ff33787ebb4fabba6da1d296839a1650aa3b86fe1e03fdd97c014f2",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59254800,
+    "tx_hash": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+    "closed_at": "2025-10-06T08:10:15Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "2d9154638ae0ec505c94fce1244e873c7e114472cdda71bfd70dcea3e5060f07",
+    "successful": false,
+    "source_account": "GBSIY3UZFIYKVHCW2HFVNWJE4JOV4FE2UU7RDEKZAFJMPTBC72WJG7G3",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "create_account",
+    "memo_type": "text",
+    "signature_count": 1
+  },
+  "covers": [
+    "CreateAccountResult:CREATE_ACCOUNT_ALREADY_EXIST"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "7be9d10b6ff33787ebb4fabba6da1d296839a1650aa3b86fe1e03fdd97c014f2",
+      "bytes": 260
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "5c4c8bfc09d5bc963cd882c9871f0236be705a2621002f8ca0226effe04112d4",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "11075da40dde4c57ebc2bd45c9a214407a7e6a4a018f158271d7354d91603e23",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "0a8c622884eea2bd98f0863571e8fbfa586831b22f623bd178bf41f01aa66295",
+      "bytes": 300
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "cap6-manage-buy-offer-not-found-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0006"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ManageBuyOfferResult:MANAGE_BUY_OFFER_NOT_FOUND, ManageBuyOfferResult:MANAGE_BUY_OFFER_SUCCESS, ManageBuyOfferResult:MANAGE_BUY_OFFER_UNDERFUNDED, ManageOfferSuccessResultOffer:MANAGE_OFFER_DELETED, …",
+  "sha256": "0ce760df762150b14c198ff26ebf79a626c7267e6f6a2c229b45efbf907d7ee9",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59334000,
+    "tx_hash": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+    "closed_at": "2025-10-11T15:10:20Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "9b4736fdd066957e45a9384137d77607ab0d66fe625c70b1fedca28a0a20c90f",
+    "successful": false,
+    "source_account": "GBD5U2WBPQIC6BVLLSXR5Q4MTOSYNPKCTVJBP4CXW2JR3DU4CH6Q2REX",
+    "fee_charged": "1200",
+    "max_fee": "600240",
+    "operation_count": 12,
+    "operation_types": "manage_buy_offer,manage_buy_offer,manage_buy_offer,manage_buy_offer,manage_sell_offer,manage_sell_offer,manage_buy_offer,manage_buy_offer,manage_buy_offer,manage_buy_offer,manage_sell_offer,manage_sell_offer",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ManageBuyOfferResult:MANAGE_BUY_OFFER_NOT_FOUND",
+    "ManageBuyOfferResult:MANAGE_BUY_OFFER_SUCCESS",
+    "ManageBuyOfferResult:MANAGE_BUY_OFFER_UNDERFUNDED",
+    "ManageOfferSuccessResultOffer:MANAGE_OFFER_DELETED",
+    "OperationBody:MANAGE_BUY_OFFER",
+    "OperationResultTr:MANAGE_BUY_OFFER"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "0ce760df762150b14c198ff26ebf79a626c7267e6f6a2c229b45efbf907d7ee9",
+      "bytes": 1120
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "dbb74959e007a082029e5d785cfffa97df0ba3edef5557681ff3f312132fd824",
+      "bytes": 824
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "614503e389c94660875dccf8de0d2a19ba0bd924a10d797de647104789ac56d8",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "cc8a84b234e692f74202cbf7f8381984bdbb87beba41654a370a080234ac720a",
+      "bytes": 300
+    }
+  ]
+}

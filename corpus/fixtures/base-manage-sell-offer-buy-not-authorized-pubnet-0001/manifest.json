@@ -1,0 +1,64 @@
+{
+  "id": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ManageSellOfferResult:MANAGE_SELL_OFFER_BUY_NOT_AUTHORIZED",
+  "sha256": "6bd8543bed7f5e6ea1ed3753bc54367fad349e4d1115faf572d860a02f731e69",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59338000,
+    "tx_hash": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+    "closed_at": "2025-10-11T21:33:06Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "16748b3e8f78056ac5ec86fac2835aa348db1cebb237c1bb1f9671006a1bd813",
+    "successful": false,
+    "source_account": "GCITC4ANMD325YBFFYB6XH5ODIDFIA4HDPZZHCHQ622XOGJWBJDBSTE2",
+    "fee_charged": "100",
+    "max_fee": "100000",
+    "operation_count": 1,
+    "operation_types": "manage_sell_offer",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ManageSellOfferResult:MANAGE_SELL_OFFER_BUY_NOT_AUTHORIZED"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "6bd8543bed7f5e6ea1ed3753bc54367fad349e4d1115faf572d860a02f731e69",
+      "bytes": 260
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "4314d95ed0d87ae85823ec856ca2bcfc5e2ad8b11d4b503dde591a4938c45a59",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "05bc54de1450a5d0856ad6a0e29851896a99cc2c68a144a07cc22d48889ed1ea",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "390748ec1e60c77c6dd1f47391f48ec4072815501541505f91a350691f9fb3c3",
+      "bytes": 396
+    }
+  ]
+}

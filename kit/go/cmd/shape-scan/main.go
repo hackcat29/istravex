@@ -192,10 +192,24 @@ func main() {
 	keep := flag.Int("keep", 3, "print a tx or ledger while it adds a cell seen fewer than this many times")
 	workers := flag.Int("workers", 48, "concurrent downloads")
 	printUniverse := flag.Bool("universe", false, "print every cell a reader can meet and exit")
+	corpusDir := flag.String("corpus", "", "print the cells each fixture in this corpus exercises and exit")
 	flag.Parse()
 
+	if *corpusDir != "" {
+		fc, err := corpusCells(*corpusDir)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		enc := json.NewEncoder(os.Stdout)
+		enc.SetIndent("", "  ")
+		_ = enc.Encode(fc)
+		return
+	}
+
 	if *printUniverse {
-		_ = json.NewEncoder(os.Stdout).Encode(universe())
+		all, reachable := universe()
+		_ = json.NewEncoder(os.Stdout).Encode(map[string]any{"all": all, "reachable": reachable})
 		return
 	}
 	seqs := parseLedgers(*list)
@@ -269,10 +283,10 @@ func main() {
 	}
 	close(work)
 	wg.Wait()
-	u := universe()
+	_, reachable := universe()
 	_ = out.Encode(map[string]any{"kind": "summary", "network": *netName, "ledgers": ledgersDone, "failed": failed,
-		"transactions": txs, "cell_counts": counts, "universe_size": len(u)})
-	fmt.Fprintf(os.Stderr, "scanned %d ledgers (%d failed), %d transactions, %d of %d cells seen\n", ledgersDone, failed, txs, len(counts), len(u))
+		"transactions": txs, "cell_counts": counts, "universe_size": len(reachable)})
+	fmt.Fprintf(os.Stderr, "scanned %d ledgers (%d failed), %d transactions, %d of %d reachable cells seen\n", ledgersDone, failed, txs, len(counts), len(reachable))
 	if failed > ledgersDone/50 {
 		os.Exit(1)
 	}

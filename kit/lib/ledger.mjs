@@ -73,4 +73,30 @@ export function storeLedger(network, seq, raw, source, zst = zstdCompressSync(ra
   return entry;
 }
 
+// SDF's public data lake. Testnet's prefix changes when testnet is reset.
+const LAKES = {
+  pubnet: 'https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/pubnet',
+  testnet: 'https://aws-public-blockchain.s3.us-east-2.amazonaws.com/v1.1/stellar/ledgers/testnet/2025-12-18',
+};
+
+export function lakeUrl(network, seq) {
+  const start = Math.floor(seq / 64000) * 64000;
+  const rev = (n) => (0xffffffff - n).toString(16).toUpperCase().padStart(8, '0');
+  return `${LAKES[network]}/${rev(start)}--${start}-${start + 63999}/${rev(seq)}--${seq}.xdr.zst`;
+}
+
+/** One ledger from the data lake: the stored object byte for byte, and its LedgerCloseMetaBatch. */
+export async function fetchLakeLedger(network, seq) {
+  const url = lakeUrl(network, seq);
+  for (let attempt = 0; ; attempt++) {
+    const r = await fetch(url);
+    if (r.ok) {
+      const zst = Buffer.from(await r.arrayBuffer());
+      return { zst, raw: zstdDecompressSync(zst), source: url };
+    }
+    if (attempt === 4) throw new Error(`data lake ${r.status} for ${network}/${seq}`);
+    await new Promise((res) => setTimeout(res, 1000 * (attempt + 1)));
+  }
+}
+
 export const ledgerStored = (network, seq) => existsSync(join(CORPUS, 'ledgers', network, `${seq}.xdr.zst`));

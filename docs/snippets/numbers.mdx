@@ -2,14 +2,14 @@
 
 | What | Result |
 |---|---|
-| Fixtures | **20** across 6 CAPs and 14 patterns: 6 from mainnet, 2 synthetic (local, pubnet, synthetic, testnet) |
-| Provenance | **205/205** checks, byte-identical to canonical ledgers |
-| SDK conformance | **278/280** checks across JavaScript, Go, Rust, Python and Java; every failure is a known upstream bug |
+| Fixtures | **118** across 39 CAPs and 16 patterns: 82 from mainnet, 2 synthetic (pubnet, testnet, local, synthetic) |
+| Provenance | **1549/1549** checks, byte-identical to canonical ledgers |
+| SDK conformance | **1748/1750** checks across JavaScript, Go, Rust, Python and Java; every failure is a known upstream bug |
 | stellar-core goldens | **15,306/15,306** LedgerCloseMeta frames round-trip in every SDK |
 | Replay | naive indexer wrong on **9/9**; reference indexer right on **9/9** |
 | wallet-backend pilot | **11/11** fixtures indexed correctly, over RPC and the data lake |
 | stellar-etl pilot | **7/11** correct; the rest reproduce its open issues #454 and #460 |
 | Upstream sightings | **4/4** reproduced: wrong before the fix, right after |
 | JavaScript releases | **4** run; every failure maps to a finding |
-| Findings | **19**, 14 reproduced by the kit |
-| CAP coverage | 5 of 40 XDR-changing CAPs (70 live) |
+| Findings | **20**, 15 reproduced by the kit |
+| CAP coverage | 33 of 40 XDR-changing CAPs (70 live) |

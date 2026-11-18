@@ -1,0 +1,45 @@
+{
+  "id": "cap77-config-setting-entry-freeze-bypass-txs-testnet-0001",
+  "pattern": "ledger",
+  "cap_ids": [
+    "CAP-0077"
+  ],
+  "protocol_version": 26,
+  "network": "testnet",
+  "xdr_type": "LedgerCloseMeta",
+  "xdr_path": "cells: ConfigSettingEntry:CONFIG_SETTING_FREEZE_BYPASS_TXS, ConfigSettingEntry:CONFIG_SETTING_FROZEN_LEDGER_KEYS",
+  "sha256": "ff920a643d13f413527724b59ca7233c7960f64d8a05efb7cb738deb4c08c1bb",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 2070825,
+    "closed_at": "2026-04-16T17:00:09Z",
+    "description": "A whole ledger chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "ledger",
+    "ledger_hash": "a2831bf25c1602c0c94458c26f5b0b759beeaaf05e5f31d1617c72177684e408",
+    "prev_hash": "1bf5e6b78dc5410543db1b6557f5c0fdbab4d499b5d7eb63a409538c250a778f",
+    "sequence": 2070825,
+    "protocol_version": 26,
+    "base_fee": "100",
+    "base_reserve": "5000000",
+    "max_tx_set_size": 200,
+    "transaction_count": 18,
+    "closed_at": "2026-04-16T17:00:09Z"
+  },
+  "covers": [
+    "ConfigSettingEntry:CONFIG_SETTING_FREEZE_BYPASS_TXS",
+    "ConfigSettingEntry:CONFIG_SETTING_FROZEN_LEDGER_KEYS"
+  ],
+  "files": [
+    {
+      "name": "ledger",
+      "xdr_type": "LedgerCloseMeta",
+      "path": "ledger.xdr.b64",
+      "sha256": "ff920a643d13f413527724b59ca7233c7960f64d8a05efb7cb738deb4c08c1bb",
+      "bytes": 76728
+    }
+  ]
+}

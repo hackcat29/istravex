@@ -1,0 +1,65 @@
+{
+  "id": "base-memo-hash-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 30,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: Memo:MEMO_HASH, PaymentResult:PAYMENT_NO_DESTINATION",
+  "sha256": "82921d0bb45fee9cc2f2019f62b96f2f62dd3e2d4a616d9dde136ecc65c1f551",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 5540313,
+    "tx_hash": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+    "closed_at": "2026-11-03T17:00:05Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "0d952eb6a7747c281ad27a50d492bc954f9eb2d082c803f46f19746bd0576325",
+    "successful": false,
+    "source_account": "GAB62KEKMKHDOMF3256P4CS7FCWRDUPT7M2CLD4JGKFWCA2H3DW3NRRB",
+    "fee_charged": "100",
+    "max_fee": "100000",
+    "operation_count": 1,
+    "operation_types": "payment",
+    "memo_type": "hash",
+    "signature_count": 1
+  },
+  "covers": [
+    "Memo:MEMO_HASH",
+    "PaymentResult:PAYMENT_NO_DESTINATION"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "82921d0bb45fee9cc2f2019f62b96f2f62dd3e2d4a616d9dde136ecc65c1f551",
+      "bytes": 324
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "56faaaee74ae6bfff520452f1a841a725ea4090ea024a516e4c162e8034cfdee",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "b89c8ff76233f0457e8bde1c8aa4f5a457dd8a88c3cc89eff40c94913987cefd",
+      "bytes": 460
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "bbc6cb89b6da29f175fd584d23dfbe90d072cde1bf6f31958d041b2587552221",
+      "bytes": 300
+    }
+  ]
+}

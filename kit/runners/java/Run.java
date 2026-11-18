@@ -265,9 +265,84 @@ public class Run {
             new Check("source_muxed_id", str(e, "source_muxed_id"), () -> src.call().getMuxedId().toString()),
             new Check("operation", str(e, "operation"), () -> env.getV1().getTx().getOperations()[0].getBody().getExtendFootprintTTLOp() != null ? "extendFootprintTtl" : "other"));
       }
+      case "tx":
+        return txProfile(e, tx, env, (org.stellar.sdk.xdr.TransactionResult) dec.get("result"));
+      case "ledger":
+        return ledgerProfile(e, (org.stellar.sdk.xdr.LedgerCloseMeta) dec.get("ledger"));
       default:
         throw new IllegalArgumentException("no native check for pattern " + p);
     }
+  }
+
+  // Generic profiles for fixtures chosen by set cover (kit/capture/shapes.mjs).
+  // Expected values come from Horizon; the SDK reads them from raw XDR.
+
+  static String gAccount(String address) {
+    return address.startsWith("M") ? new MuxedAccount(address).getAccountId() : address;
+  }
+
+  /** The transaction that carries the operations. */
+  static org.stellar.sdk.xdr.Operation[] ops(TransactionEnvelope env) {
+    return switch (env.getDiscriminant()) {
+      case ENVELOPE_TYPE_TX_FEE_BUMP -> env.getFeeBump().getTx().getInnerTx().getV1().getTx().getOperations();
+      case ENVELOPE_TYPE_TX_V0 -> env.getV0().getTx().getOperations();
+      default -> env.getV1().getTx().getOperations();
+    };
+  }
+
+  static org.stellar.sdk.xdr.Memo memo(TransactionEnvelope env) {
+    return switch (env.getDiscriminant()) {
+      case ENVELOPE_TYPE_TX_FEE_BUMP -> env.getFeeBump().getTx().getInnerTx().getV1().getTx().getMemo();
+      case ENVELOPE_TYPE_TX_V0 -> env.getV0().getTx().getMemo();
+      default -> env.getV1().getTx().getMemo();
+    };
+  }
+
+  static List<Check> txProfile(JsonObject e, Callable<AbstractTransaction> tx, TransactionEnvelope env, org.stellar.sdk.xdr.TransactionResult res) {
+    List<Check> out = new ArrayList<>(List.of(
+        new Check("tx_hash", str(e, "tx_hash"), () -> tx.call().hashHex()),
+        new Check("successful", str(e, "successful"), () -> String.valueOf(
+            res.getResult().getDiscriminant().name().equals("txSUCCESS") || res.getResult().getDiscriminant().name().equals("txFEE_BUMP_INNER_SUCCESS"))),
+        new Check("source_account", str(e, "source_account"), () -> gAccount(inner(tx.call()).getSourceAccount())),
+        new Check("fee_charged", str(e, "fee_charged"), () -> res.getFeeCharged().getInt64().toString()),
+        new Check("max_fee", str(e, "max_fee"), () -> switch (env.getDiscriminant()) {
+          case ENVELOPE_TYPE_TX_FEE_BUMP -> env.getFeeBump().getTx().getFee().getInt64().toString();
+          case ENVELOPE_TYPE_TX_V0 -> env.getV0().getTx().getFee().getUint32().getNumber().toString();
+          default -> env.getV1().getTx().getFee().getUint32().getNumber().toString();
+        }),
+        new Check("operation_count", str(e, "operation_count"), () -> String.valueOf(ops(env).length)),
+        new Check("operation_types", str(e, "operation_types"), () -> java.util.Arrays.stream(ops(env)).map(o -> o.getBody().getDiscriminant().name().toLowerCase()).collect(Collectors.joining(","))),
+        new Check("memo_type", str(e, "memo_type"), () -> memo(env).getDiscriminant().name().toLowerCase().replaceFirst("^memo_", "")),
+        new Check("signature_count", str(e, "signature_count"), () -> String.valueOf(switch (env.getDiscriminant()) {
+          case ENVELOPE_TYPE_TX_FEE_BUMP -> env.getFeeBump().getSignatures().length;
+          case ENVELOPE_TYPE_TX_V0 -> env.getV0().getSignatures().length;
+          default -> env.getV1().getSignatures().length;
+        }))));
+    if (e.has("fee_account")) out.add(new Check("fee_account", str(e, "fee_account"), () -> gAccount(((FeeBumpTransaction) tx.call()).getFeeSource())));
+    return out;
+  }
+
+  static List<Check> ledgerProfile(JsonObject e, org.stellar.sdk.xdr.LedgerCloseMeta lcm) {
+    Callable<org.stellar.sdk.xdr.LedgerHeader> h = () -> switch (lcm.getDiscriminant()) {
+      case 0 -> lcm.getV0().getLedgerHeader().getHeader();
+      case 1 -> lcm.getV1().getLedgerHeader().getHeader();
+      default -> lcm.getV2().getLedgerHeader().getHeader();
+    };
+    Callable<Integer> txs = () -> switch (lcm.getDiscriminant()) {
+      case 0 -> lcm.getV0().getTxProcessing().length;
+      case 1 -> lcm.getV1().getTxProcessing().length;
+      default -> lcm.getV2().getTxProcessing().length;
+    };
+    return List.of(
+        new Check("ledger_hash", str(e, "ledger_hash"), () -> hex(java.security.MessageDigest.getInstance("SHA-256").digest(h.call().toXdrByteArray()))),
+        new Check("prev_hash", str(e, "prev_hash"), () -> hex(h.call().getPreviousLedgerHash().getHash())),
+        new Check("sequence", str(e, "sequence"), () -> h.call().getLedgerSeq().getUint32().getNumber().toString()),
+        new Check("protocol_version", str(e, "protocol_version"), () -> h.call().getLedgerVersion().getUint32().getNumber().toString()),
+        new Check("base_fee", str(e, "base_fee"), () -> h.call().getBaseFee().getUint32().getNumber().toString()),
+        new Check("base_reserve", str(e, "base_reserve"), () -> h.call().getBaseReserve().getUint32().getNumber().toString()),
+        new Check("max_tx_set_size", str(e, "max_tx_set_size"), () -> h.call().getMaxTxSetSize().getUint32().getNumber().toString()),
+        new Check("transaction_count", str(e, "transaction_count"), () -> String.valueOf(txs.call())),
+        new Check("closed_at", str(e, "closed_at"), () -> java.time.Instant.ofEpochSecond(h.call().getScpValue().getCloseTime().getTimePoint().getUint64().getNumber().longValue()).toString()));
   }
 
   interface Thrower<T> {

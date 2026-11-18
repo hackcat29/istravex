@@ -1,0 +1,64 @@
+{
+  "id": "base-memo-return-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: Memo:MEMO_RETURN",
+  "sha256": "c049bf1db417931d3481af93762bfa91a2c14f9098740face8a4e345dbb5beb8",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59380800,
+    "tx_hash": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+    "closed_at": "2025-10-14T17:33:10Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "78e01658994ab6041035ac1fcb35d06bd4328471910646391e27433af508726d",
+    "successful": true,
+    "source_account": "GB6OUOYOLIAL6KOCOCDLAICDHBH6W4YHB76WNN4OTBLOQZX6F7RP3QHG",
+    "fee_charged": "100",
+    "max_fee": "5000000",
+    "operation_count": 1,
+    "operation_types": "payment",
+    "memo_type": "return",
+    "signature_count": 2
+  },
+  "covers": [
+    "Memo:MEMO_RETURN"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "c049bf1db417931d3481af93762bfa91a2c14f9098740face8a4e345dbb5beb8",
+      "bytes": 404
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "af84e88b1979ab15bfcdbfde2fcd6c9d3a070d86f80cf0ee7fbe11107f998e06",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "4252b8a776f07ca6f07043d6dd5f6e2f8ea4c69e8ae0aaf67abe699a6325e4a0",
+      "bytes": 1408
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "306eb90738e9eb50a3a4a6c1572dfd16332e4903a2196a43c8d0186db4dacf42",
+      "bytes": 300
+    }
+  ]
+}

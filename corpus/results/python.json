@@ -5,6 +5,146 @@
   "runtime": "python 3.13.18",
   "results": [
     {
+      "fixture": "base-account-merge-has-sub-entries-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-account-merge-no-account-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-allow-trust-no-trust-line-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-change-trust-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-create-account-already-exist-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-create-account-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-create-account-underfunded-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-data-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-offer-success-result-offer-manage-offer-u-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-sell-offer-buy-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-sell-offer-cross-self-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-sell-offer-line-full-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-sell-offer-sell-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-manage-sell-offer-sell-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-max-amount-local-0001",
       "checks": {
         "decode": "pass",
@@ -35,7 +175,67 @@
       "detail": []
     },
     {
+      "fixture": "base-memo-hash-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-id-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "base-memo-non-utf8-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-memo-return-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-op-bad-auth-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-op-exceeded-work-limit-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-operation-body-create-passive-sell-offer-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -55,7 +255,277 @@
       "detail": []
     },
     {
+      "fixture": "base-path-payment-strict-receive-line-full-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-offer-cross-self-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-over-sendmax-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-too-few-offers-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-path-payment-strict-receive-underfunded-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "base-set-options-too-many-signers-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap1-bump-sequence-success-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap15-fee-bump-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap18-trust-line-entry-flags-authorized-to-maintain-li-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-claimable-balance-cannot-claim-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-claimable-balance-does-not-exist-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-claimable-balance-line-full-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-claimable-balance-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-predicate-and-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-claim-predicate-or-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-create-claimable-balance-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-create-claimable-balance-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap23-create-claimable-balance-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-line-full-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-no-destination-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-offer-cross-self-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-src-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-src-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap24-path-payment-strict-send-under-destmin-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -95,7 +565,227 @@
       "detail": []
     },
     {
+      "fixture": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-account-merge-is-sponsor-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-end-sponsoring-future-reserves-not-sponsored-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap33-not-sponsor-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-account-entry-flags-auth-clawback-enabled-flag-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-clawback-claimable-balance-does-not-exist-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-clawback-not-clawback-enabled-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-clawback-underfunded-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-set-options-auth-revocable-required-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-set-trust-line-flags-cant-revoke-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-set-trust-line-flags-invalid-state-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap35-set-trust-line-flags-no-trust-line-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-change-trust-cannot-delete-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-deposit-bad-price-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-deposit-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-deposit-underfunded-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-ledger-key-liquidity-pool-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap38-pool-issuer-order-local-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-withdraw-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-withdraw-under-minimum-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap38-withdraw-underfunded-pubnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -116,6 +806,66 @@
     },
     {
       "fixture": "cap40-signed-payload-signer-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-contract-executable-stellar-asset-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-extend-footprint-ttl-success-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-host-function-upload-contract-wasm-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-invoke-host-function-entry-archived-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-invoke-host-function-resource-limit-exceeded-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-ledger-upgrade-config-testnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",
@@ -155,6 +905,36 @@
       "detail": []
     },
     {
+      "fixture": "cap46-sc-error-crypto-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-sc-error-wasm-vm-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap46-sc-val-i256-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
       "fixture": "cap46-scmap-host-order-local-0001",
       "checks": {
         "decode": "pass",
@@ -174,6 +954,166 @@
         "decode": "pass",
         "reencode": "n/a",
         "native": "n/a"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap58-host-function-create-contract-v2-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap58-soroban-authorized-function-create-contract-v2-h-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-buy-no-trust-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-buy-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-cross-self-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-line-full-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-low-reserve-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-not-found-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-sell-no-trust-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap6-manage-buy-offer-sell-not-authorized-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap66-ledger-entry-change-restored-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap66-soroban-transaction-data-ext-v1-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap67-sc-address-claimable-balance-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap67-sc-address-liquidity-pool-pubnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap71-soroban-credentials-address-v2-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap71-soroban-credentials-address-with-delegates-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
       },
       "failed": [],
       "detail": []
@@ -200,6 +1140,46 @@
     },
     {
       "fixture": "cap73-sac-trust-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap77-config-setting-entry-freeze-bypass-txs-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap85-contract-executable-external-ref-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap87-contract-cost-type-ml-dsa44-decode-signature-testnet-0001",
+      "checks": {
+        "decode": "pass",
+        "reencode": "pass",
+        "native": "pass"
+      },
+      "failed": [],
+      "detail": []
+    },
+    {
+      "fixture": "cap88-stellar-value-ext-signed-ms-testnet-0001",
       "checks": {
         "decode": "pass",
         "reencode": "pass",

@@ -43,6 +43,7 @@ export function writeFixture(m) {
     ...(m.expected_decoded && { expected_decoded: m.expected_decoded }),
     ...(m.expected_indexed && { expected_indexed: m.expected_indexed }),
     ...(m.sightings && { sightings: m.sightings }),
+    ...(m.covers && { covers: m.covers }),
     files,
   };
   writeFileSync(join(dir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');

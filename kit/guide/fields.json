@@ -9,7 +9,8 @@
       "passes": "Nothing: but which signer signed is only a weight, not an identity the ledger records.",
       "rule": null,
       "patterns": [
-        "max-length-vectors"
+        "max-length-vectors",
+        "tx"
       ],
       "keys": [
         "expected_decoded.signature_count",
@@ -41,7 +42,8 @@
       "lint": "IX003",
       "patterns": [
         "fee-bump",
-        "muxed-payment"
+        "muxed-payment",
+        "tx"
       ],
       "keys": [
         "expected_decoded.max_fee",
@@ -51,7 +53,9 @@
         "expected_decoded.fee_bumped",
         "expected_decoded.tx_hash",
         "expected_indexed.fee_charged",
-        "expected_indexed.fee_paid_by"
+        "expected_indexed.fee_paid_by",
+        "expected_decoded.fee_charged",
+        "expected_decoded.fee_account"
       ]
     },
     {
@@ -96,7 +100,8 @@
       "rule": "untrusted-strings",
       "lint": "IX001",
       "patterns": [
-        "memo-non-utf8"
+        "memo-non-utf8",
+        "tx"
       ],
       "keys": [
         "expected_decoded.memo_type",
@@ -110,7 +115,7 @@
       "xdr": "MuxedAccount.med25519.id",
       "validated": "no",
       "checks": "Nothing about the ID: the account behind it is checked as if unmuxed.",
-      "passes": "Any uint64, up to 2^64 − 1, never interpreted. The M… form is not an account: participants and balances belong to the G… account.",
+      "passes": "Any uint64, up to 2^64 \u2212 1, never interpreted. The M\u2026 form is not an account: participants and balances belong to the G\u2026 account.",
       "rule": "muxed-accounts",
       "lint": "IX001, IX003",
       "patterns": [
@@ -175,7 +180,7 @@
       "xdr": "SignerKey (ed25519SignedPayload), AccountEntry.signers",
       "validated": "partly",
       "checks": "The key type, and a payload of 1 to 64 bytes.",
-      "passes": "The payload's content. A signed-payload signer is a P… strkey of up to 101 bytes, not a 32-byte account key.",
+      "passes": "The payload's content. A signed-payload signer is a P\u2026 strkey of up to 101 bytes, not a 32-byte account key.",
       "rule": "signed-payload-signers",
       "patterns": [
         "signed-payload-signer"
@@ -259,13 +264,40 @@
       "patterns": [
         "muxed-payment",
         "muxed-max-id",
-        "muxed-soroban-source"
+        "muxed-soroban-source",
+        "tx"
       ],
       "keys": [
         "expected_decoded.op_index",
         "expected_decoded.operation",
         "expected_decoded.asset",
-        "expected_decoded.amount"
+        "expected_decoded.amount",
+        "expected_decoded.operation_types",
+        "expected_decoded.successful",
+        "expected_decoded.profile"
+      ]
+    },
+    {
+      "field": "Ledger headers",
+      "xdr": "LedgerCloseMeta.ledgerHeader; LedgerHeader (ledgerSeq, previousLedgerHash, ledgerVersion, baseFee, baseReserve, maxTxSetSize, scpValue.closeTime)",
+      "validated": "yes",
+      "checks": "Consensus agrees on the header; its hash chains to the previous ledger's. The values change only by network upgrades, recorded in upgradesProcessing.",
+      "passes": "Nothing a reader must re-validate, but the header's encoding changes with the protocol (StellarValueExt gained STELLAR_VALUE_SIGNED_MS in protocol 30), so a decoder pinned to an older XDR stops at the upgrade.",
+      "rule": null,
+      "patterns": [
+        "ledger"
+      ],
+      "keys": [
+        "expected_decoded.profile",
+        "expected_decoded.ledger_hash",
+        "expected_decoded.prev_hash",
+        "expected_decoded.sequence",
+        "expected_decoded.protocol_version",
+        "expected_decoded.base_fee",
+        "expected_decoded.base_reserve",
+        "expected_decoded.max_tx_set_size",
+        "expected_decoded.transaction_count",
+        "expected_decoded.closed_at"
       ]
     }
   ]

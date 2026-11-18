@@ -1,0 +1,64 @@
+{
+  "id": "base-account-merge-has-sub-entries-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AccountMergeResult:ACCOUNT_MERGE_HAS_SUB_ENTRIES",
+  "sha256": "f2b6fead3172576a79bbb1481abfa38663fb5ce21531ecbe825c54afa71b2c64",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59233200,
+    "tx_hash": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+    "closed_at": "2025-10-04T22:01:10Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "128e5bea50e1919c12f6a07eae09134183c14db0cd7ccb8a14320182fbbde062",
+    "successful": false,
+    "source_account": "GDWAH55SWP7YHBZLEQCUKFIU6SAPLN7MJI6JCU5VRFUE6EJWM6FGV2EU",
+    "fee_charged": "5500",
+    "max_fee": "55000000",
+    "operation_count": 55,
+    "operation_types": "begin_sponsoring_future_reserves,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,change_trust,change_trust,payment,change_trust,change_trust,payment,change_trust,end_sponsoring_future_reserves,account_merge",
+    "memo_type": "text",
+    "signature_count": 5
+  },
+  "covers": [
+    "AccountMergeResult:ACCOUNT_MERGE_HAS_SUB_ENTRIES"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "f2b6fead3172576a79bbb1481abfa38663fb5ce21531ecbe825c54afa71b2c64",
+      "bytes": 6400
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "0c126d335363915716e4c3f2fae8691cbf4f817ce557ebadc38b8e7ad3478b21",
+      "bytes": 680
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "6c8535b9c81c6fbe2bfc52cc01f1efb9c1a334ff0e34d5afc0bd0d0d0bab27bf",
+      "bytes": 964
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "4b943186a671bc27e0a423605a3e3e7667b767f308b0744e607ee7ca4e61e542",
+      "bytes": 804
+    }
+  ]
+}

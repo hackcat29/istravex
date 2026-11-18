@@ -8,6 +8,7 @@
 //   node kit/runners/js/run.mjs --sdk-dir <dir>      an SDK installed under <dir>/node_modules (no file written)
 //
 // kit/runners/js/matrix.mjs runs it across several SDK versions.
+import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join, resolve } from 'node:path';
@@ -255,6 +256,51 @@ export function conformance(sdk, version) {
     },
   };
 
+  // Generic profiles for fixtures chosen by set cover (kit/capture/shapes.mjs).
+  // Expected values come from Horizon; the SDK reads them from raw XDR.
+  const snake = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+  const baseAccount = (a) => (a.startsWith('M') ? MuxedAccount.fromAddress(a, '0').baseAccount().accountId() : a);
+  /** The transaction that carries the operations, and the envelope that carries the signatures. */
+  const parts = (env) => {
+    if (env.type === 'envelopeTypeTxFeeBump') return { tx: env.feeBump.tx.innerTx.v1.tx, outer: env.feeBump };
+    return env.type === 'envelopeTypeTxV0' ? { tx: env.v0.tx, outer: env.v0 } : { tx: env.v1.tx, outer: env.v1 };
+  };
+  const isoSeconds = (n) => new Date(Number(n) * 1000).toISOString().replace('.000Z', 'Z');
+  native.tx = ({ manifest: m, blobs, decoded }) => {
+    const e = m.expected_decoded;
+    const tx = () => TransactionBuilder.fromXDR(blobs.envelope, pp(m));
+    const inner = () => tx().innerTransaction ?? tx();
+    const p = () => parts(decoded.envelope);
+    return [
+      ['tx_hash', e.tx_hash, () => hex(tx().hash())],
+      ['successful', String(e.successful), () => String(['txSuccess', 'txFeeBumpInnerSuccess'].includes(decoded.result.result.type))],
+      ['source_account', e.source_account, () => baseAccount(inner().source)],
+      ['fee_account', e.fee_account, () => baseAccount(tx().feeSource)],
+      ['fee_charged', e.fee_charged, () => String(decoded.result.feeCharged)],
+      ['max_fee', e.max_fee, () => String(tx().fee)],
+      ['operation_count', String(e.operation_count), () => String(p().tx.operations.length)],
+      ['operation_types', e.operation_types, () => p().tx.operations.map((o) => snake(o.body.type)).join(',')],
+      ['memo_type', e.memo_type, () => snake(p().tx.memo.type).replace(/^memo_/, '')],
+      ['signature_count', String(e.signature_count), () => String(p().outer.signatures.length)],
+    ];
+  };
+  native.ledger = ({ manifest: m, decoded }) => {
+    const e = m.expected_decoded;
+    const body = () => decoded.ledger.v2 ?? decoded.ledger.v1 ?? decoded.ledger.v0;
+    const header = () => body().ledgerHeader.header;
+    return [
+      ['ledger_hash', e.ledger_hash, () => createHash('sha256').update(header().toXDR()).digest('hex')],
+      ['prev_hash', e.prev_hash, () => hex(header().previousLedgerHash.value ?? header().previousLedgerHash)],
+      ['sequence', String(e.sequence), () => String(header().ledgerSeq)],
+      ['protocol_version', String(e.protocol_version), () => String(header().ledgerVersion)],
+      ['base_fee', e.base_fee, () => String(header().baseFee)],
+      ['base_reserve', e.base_reserve, () => String(header().baseReserve)],
+      ['max_tx_set_size', String(e.max_tx_set_size), () => String(header().maxTxSetSize)],
+      ['transaction_count', String(e.transaction_count), () => String(body().txProcessing.length)],
+      ['closed_at', e.closed_at, () => isoSeconds(header().scpValue.closeTime)],
+    ];
+  };
+
   /** Trustlines created anywhere in a TransactionMeta (XDR-JSON form, v2–v4). */
   function trustlinesCreated(metaJson) {
     const body = metaJson.v4 ?? metaJson.v3 ?? metaJson.v2;
@@ -308,6 +354,9 @@ export function conformance(sdk, version) {
     } catch (err) {
       detail.push(String(err.message ?? err));
     }
+    // A fixture that doesn't decode or re-encode fails by name, so the matrix gate sees it.
+    if (checks.decode === 'fail') failed.unshift('decode');
+    else if (checks.reencode === 'fail') failed.unshift('reencode');
     return { fixture: manifest.id, checks, failed, detail };
   });
 

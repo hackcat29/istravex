@@ -1,0 +1,68 @@
+{
+  "id": "cap3-account-entry-extension-v1-ext-v0-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0003"
+  ],
+  "protocol_version": 23,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AccountEntry.flags:AUTH_IMMUTABLE_FLAG, AccountEntryExtensionV1Ext:v0, SignerKey:SIGNER_KEY_TYPE_PRE_AUTH_TX",
+  "sha256": "9f896bce2fe311c19b834abee1186f101a39862fde645582268c383d55fbef67",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 59238800,
+    "tx_hash": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+    "closed_at": "2025-10-05T06:49:48Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "bd450f9ea8be7e028d1de95b47c7f44bc01a7be5eed153ca31470adb22426804",
+    "successful": true,
+    "source_account": "GDCRIW7ZQGKELH3EOITIISLGZFWFLPBR6CYXUGZ7RCQ2AVK6OBECZZKT",
+    "fee_charged": "10000",
+    "max_fee": "10000",
+    "operation_count": 100,
+    "operation_types": "payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment,payment",
+    "memo_type": "text",
+    "signature_count": 1
+  },
+  "covers": [
+    "AccountEntry.flags:AUTH_IMMUTABLE_FLAG",
+    "AccountEntryExtensionV1Ext:v0",
+    "SignerKey:SIGNER_KEY_TYPE_PRE_AUTH_TX"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "9f896bce2fe311c19b834abee1186f101a39862fde645582268c383d55fbef67",
+      "bytes": 5788
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "942e7f910882e8669275966a0426dfdb2423f9588ca7433b84428b3ab0d25fad",
+      "bytes": 1220
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "82842370fcfd0a2d50e1f191fb49a60298705103e65bd61775ca2607e553dac3",
+      "bytes": 90020
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "8418bb6f4bd0554a49d540bf01b7fa82892f989ed06222c5f9801e74fa84a33e",
+      "bytes": 300
+    }
+  ]
+}

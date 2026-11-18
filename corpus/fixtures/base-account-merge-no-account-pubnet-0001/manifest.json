@@ -1,0 +1,64 @@
+{
+  "id": "base-account-merge-no-account-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: AccountMergeResult:ACCOUNT_MERGE_NO_ACCOUNT",
+  "sha256": "4305236865e2f940cbb6beee8b1de47afe02d95bc8ad9cbe7b11c0b3b512b002",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 60946000,
+    "tx_hash": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+    "closed_at": "2026-01-26T12:13:04Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "21050b8ed782e494bad9b842b73f8f94079ee778ebcb7329af8ea3e83b107a78",
+    "successful": false,
+    "source_account": "GBZX4MK5JKL7YBZXNXL6MGHYSKK3RVJLIFUJQ4D5JPBKPKIYOLMKTKHB",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "account_merge",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "AccountMergeResult:ACCOUNT_MERGE_NO_ACCOUNT"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "4305236865e2f940cbb6beee8b1de47afe02d95bc8ad9cbe7b11c0b3b512b002",
+      "bytes": 188
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "c8d2b5949feb616a4caf8cdcdda690aa26a23f8a955fc26abd2e4617b233ccda",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "20dc53fcf171b06c04529d880513e9d41374e74f7300e7acc3426aaede6ee841",
+      "bytes": 548
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "47a705e415ec9c0100fc0d69fff6d641c6e93379cddad3ef6f1e599494d4cd4a",
+      "bytes": 388
+    }
+  ]
+}

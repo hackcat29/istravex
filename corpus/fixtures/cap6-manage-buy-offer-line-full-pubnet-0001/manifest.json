@@ -1,0 +1,66 @@
+{
+  "id": "cap6-manage-buy-offer-line-full-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0006"
+  ],
+  "protocol_version": 25,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ManageBuyOfferResult:MANAGE_BUY_OFFER_LINE_FULL",
+  "sha256": "5444f2a04e3e79c619dcfb42470c28cf690508397f64c413dede3539907d7ec0",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 61973600,
+    "tx_hash": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+    "closed_at": "2026-04-05T02:42:49Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "50f6767e0ece0d3aa08ca08f44a4ca99db74e0449f240ad177a6a1698df375ca",
+    "successful": false,
+    "source_account": "GAIUAK73BDPIDEGERGVV6Y33CSGIM6XN6SCWWO2CYMQWEJMK7R7LQOT3",
+    "fee_charged": "100",
+    "max_fee": "10000",
+    "operation_count": 1,
+    "operation_types": "manage_buy_offer",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ManageBuyOfferResult:MANAGE_BUY_OFFER_LINE_FULL"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "5444f2a04e3e79c619dcfb42470c28cf690508397f64c413dede3539907d7ec0",
+      "bytes": 296
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "d17d454ebb4b9273c2cc06c1ceda0e1600688b30caf728fd560273c6fc565f3b",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "68623a6e6e413a7cac7c71249f00f365dfd7c811465696bfd46781360eae82d8",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "da11b15a0ce235536258bc6ea71af1b0ac6b71e345851d0dd962c4fc72b447e3",
+      "bytes": 396
+    }
+  ]
+}

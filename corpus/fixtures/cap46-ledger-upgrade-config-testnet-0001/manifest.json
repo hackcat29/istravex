@@ -1,0 +1,46 @@
+{
+  "id": "cap46-ledger-upgrade-config-testnet-0001",
+  "pattern": "ledger",
+  "cap_ids": [
+    "CAP-0046-09",
+    "CAP-0046-07"
+  ],
+  "protocol_version": 25,
+  "network": "testnet",
+  "xdr_type": "LedgerCloseMeta",
+  "xdr_path": "cells: ConfigSettingEntry:CONFIG_SETTING_CONTRACT_COMPUTE_V0, LedgerUpgrade:LEDGER_UPGRADE_CONFIG",
+  "sha256": "69977774246e04ce201f99b9e3667ab1eb2aae5eff0eff66686804693db20efe",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 365131,
+    "closed_at": "2026-01-07T21:00:09Z",
+    "description": "A whole ledger chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "ledger",
+    "ledger_hash": "55a640c7487b8e0a1d1afdb3c7e1339396dcb32856f1c98a8d3e6e0cc4ae9536",
+    "prev_hash": "fe9c9ff41eb558d53ea34fa698eaa820e50f9210d606fd48b152b4515be52f35",
+    "sequence": 365131,
+    "protocol_version": 25,
+    "base_fee": "100",
+    "base_reserve": "5000000",
+    "max_tx_set_size": 200,
+    "transaction_count": 6,
+    "closed_at": "2026-01-07T21:00:09Z"
+  },
+  "covers": [
+    "ConfigSettingEntry:CONFIG_SETTING_CONTRACT_COMPUTE_V0",
+    "LedgerUpgrade:LEDGER_UPGRADE_CONFIG"
+  ],
+  "files": [
+    {
+      "name": "ledger",
+      "xdr_type": "LedgerCloseMeta",
+      "path": "ledger.xdr.b64",
+      "sha256": "69977774246e04ce201f99b9e3667ab1eb2aae5eff0eff66686804693db20efe",
+      "bytes": 20096
+    }
+  ]
+}

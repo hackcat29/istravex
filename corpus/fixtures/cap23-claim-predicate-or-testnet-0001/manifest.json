@@ -1,0 +1,66 @@
+{
+  "id": "cap23-claim-predicate-or-testnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0023"
+  ],
+  "protocol_version": 25,
+  "network": "testnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ClaimPredicate:CLAIM_PREDICATE_OR",
+  "sha256": "23ceea2421b14dc53c923d414825c275a53836b9291f2802c122faf777ecb2b0",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon-testnet.stellar.org",
+    "ledger": 465202,
+    "tx_hash": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+    "closed_at": "2026-01-13T16:08:52Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "c4d67e639a13720056f7594d7ab7e03b380b187ff922728d9f51e1826e7fbdaa",
+    "successful": true,
+    "source_account": "GCTRL5U7Y6H7MLKDMN2QZBGHFSCKFNCOVY3ZJFDOWUSUL5D32FMUU75G",
+    "fee_charged": "100",
+    "max_fee": "100",
+    "operation_count": 1,
+    "operation_types": "claim_claimable_balance",
+    "memo_type": "text",
+    "signature_count": 1
+  },
+  "covers": [
+    "ClaimPredicate:CLAIM_PREDICATE_OR"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "23ceea2421b14dc53c923d414825c275a53836b9291f2802c122faf777ecb2b0",
+      "bytes": 216
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "6417cef5a349ee9439b216d0cbb4d6baff5202219163db58cca745120e02475a",
+      "bytes": 32
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "879366a763f01f60689cb493dc64d65ae5a5c3799ee06c9c98226aab098c1cab",
+      "bytes": 1588
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "8332ddda64f4e012b6e54c1dcbb3155ef787be9991d4b75903048c941ad318e1",
+      "bytes": 196
+    }
+  ]
+}

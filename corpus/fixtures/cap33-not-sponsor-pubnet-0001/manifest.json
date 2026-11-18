@@ -1,0 +1,66 @@
+{
+  "id": "cap33-not-sponsor-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0033"
+  ],
+  "protocol_version": 27,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: RevokeSponsorshipResult:REVOKE_SPONSORSHIP_NOT_SPONSOR",
+  "sha256": "1339778d06bae2a1542686581aaa7c884b134b3b6a49056e3960b19f768b2749",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 64158000,
+    "tx_hash": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+    "closed_at": "2026-08-28T04:00:06Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "53496f748a2ed6222c7ae0ed500991204068cda93bc43127ce0b8f64830123de",
+    "successful": false,
+    "source_account": "GBEWMSMBDKLPP77HINZLZFGGIN6TEX7NTMASYLMA554J2ALR5YKV75B2",
+    "fee_charged": "200",
+    "max_fee": "200000",
+    "operation_count": 2,
+    "operation_types": "revoke_sponsorship,revoke_sponsorship",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "RevokeSponsorshipResult:REVOKE_SPONSORSHIP_NOT_SPONSOR"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "1339778d06bae2a1542686581aaa7c884b134b3b6a49056e3960b19f768b2749",
+      "bytes": 364
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "280e9090aab66a2799805b2eacfd18181db4a56a369eee066e158254413cf8ac",
+      "bytes": 44
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "d4e3a777ed3afeb142a71bd111c3407b5fb9f4c938c55e7415611257964d3233",
+      "bytes": 556
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "270de5772d8fe5f65cc7aab6dfb03d6e79874cc539799878cd6399a751603abc",
+      "bytes": 396
+    }
+  ]
+}

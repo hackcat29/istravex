@@ -258,6 +258,35 @@ func verify(corpus string, schema *jsonschema.Schema, dir string, ledgers map[st
 	if m.Source.Generator != nil && m.Source.Generator.NetworkPassphrase != "" {
 		pp = m.Source.Generator.NetworkPassphrase
 	}
+	// A whole-ledger fixture: its LedgerCloseMeta must be the canonical ledger's.
+	if m.Source.TxHash == "" {
+		li, ok := ledgers[fmt.Sprintf("%s/%d", m.Network, m.Source.Ledger)]
+		if !ok {
+			add("canonical ledger present", fmt.Errorf("no corpus/ledgers entry for %s/%d", m.Network, m.Source.Ledger))
+			return rep
+		}
+		rep.Ledger = li.Source
+		lcm, err := readLedger(corpus, li)
+		if !add(fmt.Sprintf("canonical ledger sha256 (%d)", m.Source.Ledger), err) {
+			return rep
+		}
+		var perr error
+		if v := lcm.ProtocolVersion(); v != m.ProtocolVersion {
+			perr = fmt.Errorf("header says protocol %d, manifest %d", v, m.ProtocolVersion)
+		}
+		add(fmt.Sprintf("protocol_version matches ledger header (%d)", m.Source.Ledger), perr)
+		want, err := lcm.MarshalBinary()
+		for _, f := range m.Files {
+			ferr := err
+			if f.XdrType != "LedgerCloseMeta" {
+				ferr = fmt.Errorf("a whole-ledger fixture holds only LedgerCloseMeta, not %s", f.XdrType)
+			} else if ferr == nil && !bytes.Equal(want, blobs[f.Name]) {
+				ferr = fmt.Errorf("bytes differ from ledger (%d vs %d B)", len(blobs[f.Name]), len(want))
+			}
+			add("matches ledger: "+f.Name, ferr)
+		}
+		return rep
+	}
 	// The primary transaction, then any related ones, each from its ledger.
 	refs := append([]txRef{{Ledger: m.Source.Ledger, TxHash: m.Source.TxHash}}, m.Source.Related...)
 	txOf := map[string]ingest.LedgerTransaction{}

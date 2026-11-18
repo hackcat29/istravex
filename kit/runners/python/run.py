@@ -191,7 +191,66 @@ def checks_for(m, blobs, dec):
             ("source_muxed_id", e.get("source_muxed_id"), lambda: str(src().account_muxed_id)),
             ("operation", e.get("operation"), lambda: "extendFootprintTtl" if dec["envelope"].v1.tx.operations[0].body.extend_footprint_ttl_op else "other"),
         ]
+    if p == "tx":
+        return tx_profile(m, blobs, dec, pp)
+    if p == "ledger":
+        return ledger_profile(m, dec)
     raise ValueError(f"no native check for pattern {p}")
+
+
+# Generic profiles for fixtures chosen by set cover (kit/capture/shapes.mjs).
+# Expected values come from Horizon; the SDK reads them from raw XDR.
+
+
+def env_parts(env):
+    """(transaction that carries the operations, envelope that carries the signatures, its fee)."""
+    t = env.type.name
+    if t == "ENVELOPE_TYPE_TX_FEE_BUMP":
+        return env.fee_bump.tx.inner_tx.v1.tx, env.fee_bump, env.fee_bump.tx.fee.int64
+    if t == "ENVELOPE_TYPE_TX_V0":
+        return env.v0.tx, env.v0, env.v0.tx.fee.uint32
+    return env.v1.tx, env.v1, env.v1.tx.fee.uint32
+
+
+def tx_profile(m, blobs, dec, pp):
+    e = m.get("expected_decoded") or {}
+    env = dec["envelope"]
+    sdk_env = lambda: TransactionBuilder.from_xdr(blobs["envelope"], pp)
+    inner_tx = lambda: sdk_env().transaction.inner_transaction_envelope.transaction if hasattr(sdk_env().transaction, "inner_transaction_envelope") else sdk_env().transaction
+    return [
+        ("tx_hash", e.get("tx_hash"), lambda: sdk_env().hash_hex()),
+        ("successful", str(e.get("successful")).lower(), lambda: str(dec["result"].result.code.name in ("txSUCCESS", "txFEE_BUMP_INNER_SUCCESS")).lower()),
+        ("source_account", e.get("source_account"), lambda: inner_tx().source.account_id),
+        ("fee_account", e.get("fee_account"), lambda: sdk_env().transaction.fee_source.account_id),
+        ("fee_charged", e.get("fee_charged"), lambda: str(dec["result"].fee_charged.int64)),
+        ("max_fee", e.get("max_fee"), lambda: str(env_parts(env)[2])),
+        ("operation_count", e.get("operation_count"), lambda: str(len(env_parts(env)[0].operations))),
+        ("operation_types", e.get("operation_types"), lambda: ",".join(o.body.type.name.lower() for o in env_parts(env)[0].operations)),
+        ("memo_type", e.get("memo_type"), lambda: env_parts(env)[0].memo.type.name.lower().removeprefix("memo_")),
+        ("signature_count", e.get("signature_count"), lambda: str(len(env_parts(env)[1].signatures))),
+    ]
+
+
+def ledger_profile(m, dec):
+    import hashlib
+    from datetime import datetime, timezone
+
+    e = m.get("expected_decoded") or {}
+    lcm = dec["ledger"]
+    body = lambda: lcm.v2 or lcm.v1 or lcm.v0
+    h = lambda: body().ledger_header.header
+    closed = lambda: datetime.fromtimestamp(h().scp_value.close_time.time_point.uint64, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return [
+        ("ledger_hash", e.get("ledger_hash"), lambda: hashlib.sha256(h().to_xdr_bytes()).hexdigest()),
+        ("prev_hash", e.get("prev_hash"), lambda: h().previous_ledger_hash.hash.hex()),
+        ("sequence", e.get("sequence"), lambda: str(h().ledger_seq.uint32)),
+        ("protocol_version", e.get("protocol_version"), lambda: str(h().ledger_version.uint32)),
+        ("base_fee", e.get("base_fee"), lambda: str(h().base_fee.uint32)),
+        ("base_reserve", e.get("base_reserve"), lambda: str(h().base_reserve.uint32)),
+        ("max_tx_set_size", e.get("max_tx_set_size"), lambda: str(h().max_tx_set_size.uint32)),
+        ("transaction_count", e.get("transaction_count"), lambda: str(len(body().tx_processing))),
+        ("closed_at", e.get("closed_at"), lambda: closed()),
+    ]
 
 
 def run(m, blobs):

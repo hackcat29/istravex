@@ -1,0 +1,84 @@
+{
+  "id": "cap38-change-trust-asset-credit-alphanum12-pubnet-0001",
+  "pattern": "tx",
+  "cap_ids": [
+    "CAP-0038",
+    "CAP-0024",
+    "CAP-0023",
+    "CAP-0015"
+  ],
+  "protocol_version": 24,
+  "network": "pubnet",
+  "xdr_type": "TransactionEnvelope",
+  "xdr_path": "cells: ChangeTrustAsset:ASSET_TYPE_CREDIT_ALPHANUM12, ChangeTrustResult:CHANGE_TRUST_INVALID_LIMIT, ChangeTrustResult:CHANGE_TRUST_NO_ISSUER, ClaimAtom:CLAIM_ATOM_TYPE_LIQUIDITY_POOL, …",
+  "sha256": "fb253aa86afcfcacbf643972d7b4bf75d29c153c6dcd5df6c6b7645efb74d31c",
+  "source": {
+    "kind": "captured",
+    "network_endpoint": "https://horizon.stellar.org",
+    "ledger": 60385200,
+    "tx_hash": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+    "closed_at": "2025-12-20T10:41:00Z",
+    "description": "Chosen by set cover over shape-scan output (kit/capture/shapes.mjs); bytes from the canonical ledger, expected values from Horizon."
+  },
+  "synthetic": false,
+  "expected_decoded": {
+    "profile": "tx",
+    "tx_hash": "eefb5a79ad79b6cf789bd5916cc3db570341a3050aeac3ddf99e5ace8eb58d5e",
+    "successful": false,
+    "source_account": "GAWTUSOTUZFXDYMVDJAUB2LZ4BQDCJNOOCHCLX5XWWCJDHAGOJ2G5N2T",
+    "fee_account": "GCMPFUGGGUEPSWP5ZI6NE7HOPVM2RYQHPM3KLDDP4RRBUI7BRL4IS77O",
+    "fee_charged": "2900",
+    "max_fee": "2900000",
+    "operation_count": 28,
+    "operation_types": "change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,path_payment_strict_send,change_trust,change_trust,claim_claimable_balance,payment,change_trust,change_trust,claim_claimable_balance,payment,change_trust",
+    "memo_type": "none",
+    "signature_count": 1
+  },
+  "covers": [
+    "ChangeTrustAsset:ASSET_TYPE_CREDIT_ALPHANUM12",
+    "ChangeTrustResult:CHANGE_TRUST_INVALID_LIMIT",
+    "ChangeTrustResult:CHANGE_TRUST_NO_ISSUER",
+    "ClaimAtom:CLAIM_ATOM_TYPE_LIQUIDITY_POOL",
+    "ClaimAtom:CLAIM_ATOM_TYPE_ORDER_BOOK",
+    "ClaimClaimableBalanceResult:CLAIM_CLAIMABLE_BALANCE_NO_TRUST",
+    "ClaimClaimableBalanceResult:CLAIM_CLAIMABLE_BALANCE_SUCCESS",
+    "InnerTransactionResultResult:TX_FAILED",
+    "OperationBody:CLAIM_CLAIMABLE_BALANCE",
+    "OperationBody:PATH_PAYMENT_STRICT_SEND",
+    "OperationResultTr:CLAIM_CLAIMABLE_BALANCE",
+    "OperationResultTr:PATH_PAYMENT_STRICT_SEND",
+    "PathPaymentStrictSendResult:PATH_PAYMENT_STRICT_SEND_SUCCESS",
+    "PaymentResult:PAYMENT_SRC_NO_TRUST",
+    "TransactionResultResult:TX_FEE_BUMP_INNER_FAILED"
+  ],
+  "files": [
+    {
+      "name": "envelope",
+      "xdr_type": "TransactionEnvelope",
+      "path": "envelope.xdr.b64",
+      "sha256": "fb253aa86afcfcacbf643972d7b4bf75d29c153c6dcd5df6c6b7645efb74d31c",
+      "bytes": 3196
+    },
+    {
+      "name": "result",
+      "xdr_type": "TransactionResult",
+      "path": "result.xdr.b64",
+      "sha256": "7636628fc539ca2337eebc46ace0f5cd2cb2d3d8dc0a355237b7a10c17d7845c",
+      "bytes": 1940
+    },
+    {
+      "name": "meta",
+      "xdr_type": "TransactionMeta",
+      "path": "meta.xdr.b64",
+      "sha256": "a36f6fa6ccd86f195d71250a10af52e92a4f6389769d83a46a8af2fdbd6e834c",
+      "bytes": 748
+    },
+    {
+      "name": "fee_meta",
+      "xdr_type": "LedgerEntryChanges",
+      "path": "fee_meta.xdr.b64",
+      "sha256": "43fe8231359a63713be7eb401f0c5a349aaac109615afef188515817e998c2de",
+      "bytes": 196
+    }
+  ]
+}
