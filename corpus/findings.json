@@ -466,9 +466,9 @@
       "title": "stellar-php-sdk returns muxed account IDs above 2^63 as negative numbers",
       "component": "Soneso/stellar-php-sdk",
       "affected": "1.18.0 (latest) and earlier",
-      "fixed_in": null,
+      "fixed_in": "Soneso/stellar-php-sdk#226 on main (merged 2026-11-18): MuxedAccount::getIdAsString() returns the unsigned id; unreleased",
       "severity": "medium",
-      "status": "open-upstream",
+      "status": "fixed-upstream",
       "issue": "Soneso/stellar-php-sdk#220",
       "disclosure": "public-issue",
       "cap_ids": [
@@ -482,7 +482,7 @@
       ],
       "reproduced": true,
       "summary": "A muxed account ID is an unsigned 64-bit integer. MuxedAccount stores it in a PHP int, which is signed, so getId() returns IDs from 2^63 up as negative numbers: 18067157809773112502, the destination of a real mainnet payment, comes back as -379586263936439114. The bytes round-trip, so the M-address is right, but code that reads the ID (an exchange matching a deposit to a customer) gets the wrong one.",
-      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439114, expected 18067157809773112502. The other SDKs return the ID exactly."
+      "evidence": "kit/runners/php/run.php on mainnet ledger 65,083,663 (cap27-muxed-payment-pubnet-0002): MuxedAccount::fromMed25519AccountId(...)->getId() is -379586263936439114, expected 18067157809773112502. The other SDKs return the ID exactly. On main at dfd1d9d the kit reads 18067157809773112502 through getIdAsString() and the check passes (corpus/results/php-main.json); getId() keeps its two's complement form by design."
     },
     {
       "id": "ISTRAVEX-F-0022",
@@ -535,9 +535,9 @@
       "title": "stellar-php-sdk computes the wrong hash for transactions whose PRECOND_V2 fields are all defaults",
       "component": "Soneso/stellar-php-sdk",
       "affected": "1.18.0 (latest) and earlier",
-      "fixed_in": null,
+      "fixed_in": "Soneso/stellar-php-sdk#225 on main (merged 2026-11-18): the decoded PRECOND_V2 arm is kept; unreleased",
       "severity": "medium",
-      "status": "open-upstream",
+      "status": "fixed-upstream",
       "issue": "Soneso/stellar-php-sdk#222",
       "disclosure": "public-issue",
       "cap_ids": [
@@ -551,7 +551,7 @@
       ],
       "reproduced": true,
       "summary": "The same defect as F-0023, in the PHP SDK: a transaction with PRECOND_V2 whose fields are all defaults is rebuilt with PRECOND_TIME, so AbstractTransaction::hash() returns 035f2643… for mainnet transaction 68f96059…. A PHP wallet that decodes such an envelope and signs it signs a different transaction. The XDR classes round-trip the bytes; the high-level Transaction does not.",
-      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023)."
+      "evidence": "kit/runners/php/run.php on cap21-precond-v2-defaults-pubnet-0001 (mainnet ledger 59,247,200): tx_hash expected 68f9605938736ef04b390e10807c82105d62ff750d4a6107c259470ab6276ce3, got 035f26438364f74e3c5c8b79ea271c69680faf153e7936c126ad265923e282a0, the same wrong hash as java-stellar-sdk (F-0023). On main at dfd1d9d the kit gets the network hash 68f96059… and the check passes (corpus/results/php-main.json). The fix also covers a minimum sequence age from 2^63 up, which the encoder dropped."
     },
     {
       "id": "ISTRAVEX-F-0025",

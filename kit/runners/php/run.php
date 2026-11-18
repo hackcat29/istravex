@@ -93,11 +93,19 @@ function ledgerProfile(array $m, array $dec): array {
 
 // Muxed accounts in the hand-written fixtures: IDs are unsigned 64-bit, and
 // the corpus has real ones above 2^63.
+// The muxed id as an unsigned decimal string. getIdAsString() (added after
+// 1.18.0, Soneso/stellar-php-sdk#226) is the SDK's own accessor for the full
+// range; before it, getId() is the only one, and it returns ids from 2^63 up
+// as negative two's complement integers (F-0021).
+function muxedId($m): string {
+    return method_exists($m, 'getIdAsString') ? (string) $m->getIdAsString() : (string) $m->getId();
+}
+
 function muxedChecks(array $m, array $dec): array {
     $e = $m['expected_decoded'] ?? [];
     $rows = [];
     if (isset($e['destination_muxed'], $e['muxed_id'])) {
-        $rows[] = ['muxed_id', $e['muxed_id'], fn() => (string) Soneso\StellarSDK\MuxedAccount::fromMed25519AccountId($e['destination_muxed'])->getId()];
+        $rows[] = ['muxed_id', $e['muxed_id'], fn() => muxedId(Soneso\StellarSDK\MuxedAccount::fromMed25519AccountId($e['destination_muxed']))];
         $rows[] = ['destination_account', $e['destination_account'], fn() => Soneso\StellarSDK\MuxedAccount::fromMed25519AccountId($e['destination_muxed'])->getEd25519AccountId()];
         // The SDK's own M-address for the decoded payment destination.
         $rows[] = ['destination_muxed', $e['destination_muxed'], function () use ($dec, $e) {
@@ -107,7 +115,7 @@ function muxedChecks(array $m, array $dec): array {
         }];
     }
     if (isset($e['source_muxed'], $e['source_muxed_id'])) {
-        $rows[] = ['source_muxed_id', $e['source_muxed_id'], fn() => (string) Soneso\StellarSDK\MuxedAccount::fromMed25519AccountId($e['source_muxed'])->getId()];
+        $rows[] = ['source_muxed_id', $e['source_muxed_id'], fn() => muxedId(Soneso\StellarSDK\MuxedAccount::fromMed25519AccountId($e['source_muxed']))];
         $rows[] = ['source_muxed', $e['source_muxed'], function () use ($dec) {
             $tx = Soneso\StellarSDK\AbstractTransaction::fromEnvelopeBase64XdrString($dec['envelope']->toBase64Xdr());
             return $tx->getSourceAccount()->getAccountId();

@@ -71,15 +71,15 @@ The kit's value is the bugs it finds that nobody had reported. Nine so far:
 | Finding | Component | Severity | What |
 |---|---|---|---|
 | F-0023 | java-stellar-sdk 6.0.0 | medium | A transaction whose `PRECOND_V2` fields are all defaults is rebuilt as `PRECOND_TIME`, so its hash is wrong and signing it signs a different transaction. 58 of 307,577 mainnet transactions in the sweep; Go, JavaScript, Rust and Python hash all of them correctly. Filed: java-stellar-sdk#844. |
-| F-0024 | stellar-php-sdk 1.18.0 | medium | The same defect in PHP, with the same wrong hash. Filed: stellar-php-sdk#222. |
-| F-0021 | stellar-php-sdk 1.18.0 | medium | Muxed account IDs above 2⁶³ come back negative: a real mainnet destination, 18067157809773112502, reads as -379586263936439114. Filed: stellar-php-sdk#220. |
+| F-0024 | stellar-php-sdk 1.18.0 | medium | The same defect in PHP, with the same wrong hash. Filed as stellar-php-sdk#222; fixed on main the same day (#225), verified by the kit. |
+| F-0021 | stellar-php-sdk 1.18.0 | medium | Muxed account IDs above 2⁶³ come back negative: a real mainnet destination, 18067157809773112502, reads as -379586263936439114. Filed as stellar-php-sdk#220; fixed on main the same day (#226), verified by the kit. |
 | F-0022 | stellar-php-sdk 1.18.0 | low | The decoder accepts 101 operations and a 29-byte memo, past their XDR maximums. Filed: stellar-php-sdk#221. |
 | F-0027 | stellar-php-sdk 1.18.0 | low | Trailing bytes after a complete value are ignored: 9,845 generated cases across 406 types decode, which stellar-core and the other SDKs refuse. Java fixed the same defect in #842. Filed: stellar-php-sdk#223. |
 | F-0028 | stellar-php-sdk 1.18.0 | info | Three standalone XDR classes (`SponsorshipDescriptor` and the overlay hash vectors) don't match the XDR, and `DataValue`'s encoder drops an empty value; the ledger decoders don't use them. Confirmed by the maintainer. Filed: stellar-php-sdk#224. |
 | F-0012 | js-stellar-sdk | low | `TransactionBuilder` refuses a muxed source or memo on every Soroban transaction. Filed: js-stellar-sdk#1906. |
 | F-0010, F-0011 | stellar-core | low | Operation-meta change order differs between identical runs; settings-upgrade salts make standalone networks unreproducible. Filed: stellar-core#5507, #5508. |
 
-All nine are filed upstream, each with its reproduction in the corpus. The stellar-php-sdk maintainer confirmed all five PHP reports within an hour of filing and is fixing them (#220–#224); the kit shows each fix landing on the next run.
+All nine are filed upstream, each with its reproduction in the corpus. The stellar-php-sdk maintainer confirmed all five PHP reports within an hour of filing and merged fixes for two of them the same day (#225, #226), which the kit verified on their main branch; the kit shows each fix landing on the next run.
 
 ### Mainnet
 
@@ -104,7 +104,7 @@ The corpus is mainnet-first and measured against real traffic. `kit/go/cmd/shape
 
 ### Team
 
-Istravex is built by **Istravex Labs**, a software, mobile and blockchain development studio with two core engineers and contract staff. Its checkout product, [Payrouta](https://payrouta.com), has processed over $1M in volume across several chains, Stellar included. The studio's members also built Kiwi Protocol, which won Sui Overflow 2024, Algorand's Change the Game hackathon (2024) and a BNB Chain hackathon, graduated from the Algorand Incubator, and received Solana and Wormhole grants in 2025. Moltworld, also built by the studio's members, won Algorand's x402 hackathon (2026), and the team won the Wormhole x Encode hackathon (2024).
+Istravex is built by **Istravex Labs**, a software, mobile and blockchain development studio with two core engineers and contract staff. Its checkout product, [Payrouta](https://payrouta.com), has processed over $1M in volume across several chains, Stellar included. The studio's members also built Kiwi Protocol, which won Sui Overflow 2024, Algorand's Change the Game hackathon (2024) and a BNB Chain hackathon, graduated from the Algorand Incubator, and received Solana and Wormhole grants in 2025. Moltworld, also built by the studio's members, won Algorand's x402 hackathon (2026), and the team won the Wormhole x Encode hackathon (2024). The studio also builds [Axonio](https://axonio.xyz), an open-source memory layer for AI agents and robots.
 
 **Tomiwa Adeyemi, core maintainer** ([GitHub](https://github.com/hackcat29), [X](https://x.com/hackcat_29), [LinkedIn](https://www.linkedin.com/in/tomiwa-adeyemi)). Eight years in the blockchain industry, previously at Scroll Foundation and HUMAN Protocol. Winner of multiple hackathons, and a member of Stellar Nigeria. Founder of [Payrouta](https://payrouta.com), a universal checkout widget: a merchant, app, agent or store adds one checkout button, and its customers pay from whatever wallet, blockchain (Stellar included) or token they hold. Payrouta depends on reading Stellar payments correctly, which is the problem Istravex tests for. Tomiwa built the kit (the corpus and generator, the scanner, the SDK runners and sweep, the replay harness and pilots, the linter, the findings and the guide) and owns fixture review, triage and releases.
 
