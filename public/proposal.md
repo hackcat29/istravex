@@ -180,7 +180,7 @@ Each tranche follows the previous payment within 90 days. Payments follow SCF's 
 | 9 | IX004–IX006 in Go and TypeScript | Each flags its seeded violation and a real upstream bug | $3,600 (80 h) |
 | 10 | Automatic capture of new cells | A new cell in the weekly scan opens a pull request with a verified fixture | $2,700 (60 h) |
 | 11 | Guide v2: the engineer review and a pull request to developers.stellar.org | The review recorded in `kit/guide/review.json` with its link; the stellar-docs pull request open | $3,600 (80 h) |
-| 12 | Threat model and monitoring plan, updated for the new components | `THREAT-MODEL.md` revised; each new monitor running | $900 (20 h) |
+| 12 | STRIDE threat model and monitoring plan, updated for the new components, with observability metrics and alert triggers (Istravex deploys no contracts, so monitoring covers its data sources and services) | `THREAT-MODEL.md` revised; each new monitor running | $900 (20 h) |
 | 13 | v1.4 released; infrastructure, months 3–4 | Signed release with SHA256SUMS and provenance | $600 |
 
 **Tranche 3 (month 6): $17,350 of work**
@@ -190,7 +190,7 @@ Each tranche follows the previous payment within 90 days. Payments follow SCF's 
 | 14 | Two community-indexer pilots, chosen with SCF reviewers | Both scored in CI; every failure a finding filed upstream | $4,500 (100 h) |
 | 15 | CAP-0070 and CAP-0083 covered | Fixtures in the corpus; CAP coverage 47 of 47 | $1,350 (30 h) |
 | 16 | The next protocol upgrade end to end | Re-pinned, rescanned, regenerated, rerun and released within two weeks of the mainnet vote (or on its release candidate, if the vote is later) | $5,400 (120 h) |
-| 17 | v2.0.0 and twelve months of maintenance | v2.0.0 released; every open finding followed up; quarterly reports to month 12 and a twelve-month report | $5,400 (120 h) |
+| 17 | Mainnet launch: v2.0.0 production release, and twelve months of maintenance | v2.0.0 released, running in CI against mainnet ledgers and in the SDK and indexer repositories that accepted the job; every open finding followed up; quarterly reports to month 12 and a twelve-month report | $5,400 (120 h) |
 | | Infrastructure, months 5–12 | | $700 |
 
 ### Community
