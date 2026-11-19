@@ -15,3 +15,10 @@ kit/sightings/**/Cargo.lock
 
 # PHP runner dependencies (composer install in kit/runners/php)
 kit/runners/php/vendor
+
+# recordings and media exports never belong in the repo
+*.webm
+*.mp4
+*.mov
+*.m4a
+*.wav
