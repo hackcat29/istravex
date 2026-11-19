@@ -52,4 +52,4 @@ id, cap_ids, protocol_version, network, xdr_type, xdr_path, sha256, source, synt
 
 ## Commitments (proposed)
 
-Apache 2.0; named maintainer for 6 months after launch, through the first protocol upgrade after delivery; no usage telemetry.
+Apache 2.0; maintained by Istravex Labs for 12 months from the award, through the first protocol upgrade after delivery; no usage telemetry.

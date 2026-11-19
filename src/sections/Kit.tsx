@@ -24,7 +24,7 @@ export function Kit() {
           <Card part={linter} className="md:col-span-2" delay={0.06}>
             <LintVisual />
           </Card>
-          <Card part={pilot} className="md:col-span-2" delay={0.12}>
+          <Card part={pilot} className="md:col-span-2" delay={0.12} tall>
             <PilotVisual />
           </Card>
         </div>
@@ -37,11 +37,13 @@ function Card({
   part,
   className = '',
   delay,
+  tall = false,
   children,
 }: {
   part: (typeof kit.parts)[number];
   className?: string;
   delay: number;
+  tall?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -50,7 +52,7 @@ function Card({
         id={`kit-${part.id}`}
         className="card group flex h-full flex-col overflow-hidden transition-colors duration-500 hover:border-line-2"
       >
-        <div className="relative min-h-[330px] flex-1 border-b border-line bg-ink sm:min-h-[300px]">{children}</div>
+        <div className={`relative flex-1 border-b border-line bg-ink ${tall ? 'min-h-[372px] sm:min-h-[356px]' : 'min-h-[330px] sm:min-h-[300px]'}`}>{children}</div>
         <div className="flex gap-5 p-6 sm:p-7">
           <span className="font-mono text-[13px] text-dim">{part.n}</span>
           <div>
@@ -201,7 +203,7 @@ function ReplayVisual() {
 /* ── 03 Runner: real SDK × check results; hover/tap any cell ─────────── */
 const checkKeys = ['decode', 'reencode', 'native'] as const;
 const checkLabel = { decode: 'decode', reencode: 're-encode', native: 'native' };
-const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Rust', python: 'Py', java: 'Java' };
+const sdkLabel: Record<string, string> = { javascript: 'JS', go: 'Go', rust: 'Rust', python: 'Py', 'python-xdr': 'PyX', java: 'Java', php: 'PHP' };
 const pkgShort = (p: string) => p.split('/').pop()!;
 const cells = checkKeys.flatMap((c) =>
   corpus.sdks.map((s) => {
@@ -229,7 +231,7 @@ function RunnerVisual() {
 
   return (
     <div ref={ref} className="absolute inset-0 flex flex-col justify-between p-6 sm:p-7">
-      <div className="grid gap-1.5 font-mono text-[11px]" style={{ gridTemplateColumns: `64px repeat(${corpus.sdks.length}, minmax(0, 1fr))` }}>
+      <div className="grid gap-1.5 font-mono text-[11px]" style={{ gridTemplateColumns: `58px repeat(${corpus.sdks.length}, minmax(0, 1fr))` }}>
         <span />
         {corpus.sdks.map((s) => (
           <span key={s.sdk} className="pb-1 text-center text-mute">{sdkLabel[s.sdk]}</span>
@@ -251,9 +253,9 @@ function RunnerVisual() {
                   onFocus={() => setFocus(i)}
                   onBlur={() => setFocus(null)}
                   onClick={() => setFocus(i)}
-                  className={`grid aspect-[1.6] place-items-center rounded-md border text-[11px] transition-all duration-300 ${focus === i ? 'border-fg bg-fg text-ink' : done ? (ok ? 'border-lime bg-lime text-ink' : 'border-coral bg-coral text-ink') : 'border-line bg-ink-2 text-transparent'}`}
+                  className={`grid aspect-[1.35] place-items-center rounded-md border text-[10.5px] tabular-nums transition-all duration-300 ${focus === i ? 'border-fg bg-fg text-ink' : done ? (ok ? 'border-lime bg-lime text-ink' : 'border-coral bg-coral text-ink') : 'border-line bg-ink-2 text-transparent'}`}
                 >
-                  {x.pass}/{x.total}
+                  {x.total ? x.pass : '–'}
                 </button>
               );
             })}
@@ -263,7 +265,7 @@ function RunnerVisual() {
       <p className="mt-5 h-5 truncate font-mono text-[12px] text-mute">
         {cell && (
           <>
-            <span className="text-fg">{pkgShort(cell.sdk.package)}</span> {cell.sdk.version} · {checkLabel[cell.check]}
+            <span className="text-fg">{pkgShort(cell.sdk.package)}</span> {cell.sdk.version} · {checkLabel[cell.check]} · <span className={cell.pass === cell.total ? 'text-lime' : 'text-coral'}>{cell.pass}/{cell.total}</span>
           </>
         )}
       </p>
@@ -335,8 +337,15 @@ function LintVisual() {
   );
 }
 
-/* ── 05 Pilot: wallet-backend's verdict per fixture; pick one to see checks ── */
+/* ── 05 Pilots: three SDF indexers' scores; wallet-backend per pattern ── */
 const pilotResults = corpus.pilot.results;
+const handWritten = pilotResults.filter((x) => x.pattern !== 'tx');
+const setCover = pilotResults.filter((x) => x.pattern === 'tx');
+const pilotScores = [
+  ['wallet-backend', corpus.stats.pilot_correct, corpus.stats.pilot_fixtures],
+  ['Horizon', corpus.stats.horizon_correct, corpus.stats.horizon_fixtures],
+  ['stellar-etl', corpus.stats.etl_correct, corpus.stats.etl_fixtures],
+] as const;
 const patternName: Record<string, string> = {
   'fee-bump': 'Fee-bump',
   'muxed-payment': 'Muxed ID',
@@ -344,22 +353,33 @@ const patternName: Record<string, string> = {
   'muxed-soroban-source': 'Muxed src',
   'signed-payload-signer': 'Signer',
   'sac-trust': 'SAC trust',
+  'max-amount': 'Max amount',
 };
 const netTag: Record<string, string> = { pubnet: 'main', testnet: 'test', local: 'core' };
 
 function PilotVisual() {
   const [pick, setPick] = useState(0);
-  const r = pilotResults[pick];
+  const r = handWritten[pick];
+  const setCoverOk = setCover.filter((x) => x.verdict === 'correct').length;
   return (
-    <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
+    <div className="absolute inset-0 flex flex-col justify-between gap-3 p-5 sm:p-6">
+      <div className="grid grid-cols-3 gap-1.5 font-mono text-[10.5px]">
+        {pilotScores.map(([name, ok, n]) => (
+          <div key={name} className="rounded-lg border border-line px-2 py-1.5">
+            <div className="truncate text-mute">{name}</div>
+            <div className={`tabular-nums ${ok === n ? 'text-lime' : 'text-amber'}`}>{ok}/{n}</div>
+          </div>
+        ))}
+      </div>
       <div className="grid grid-cols-2 gap-1.5">
-        {pilotResults.map((x, i) => (
+        {handWritten.map((x, i) => (
           <button
             key={x.fixture}
             type="button"
             onClick={() => setPick(i)}
+            onMouseEnter={() => setPick(i)}
             aria-pressed={pick === i}
-            className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left font-mono text-[11px] transition-colors ${pick === i ? 'border-fg text-fg' : 'border-line text-mute hover:text-fg'}`}
+            className={`flex items-center gap-2 rounded-md border px-2 py-1.5 text-left font-mono text-[10.5px] transition-colors ${pick === i ? 'border-fg text-fg' : 'border-line text-mute hover:text-fg'}`}
           >
             <VerdictMark v={x.verdict as Verdict} />
             <span className="truncate">
@@ -367,20 +387,24 @@ function PilotVisual() {
             </span>
           </button>
         ))}
+        <div className="flex items-center gap-2 rounded-md border border-line px-2 py-1.5 font-mono text-[10.5px] text-mute">
+          <VerdictMark v={setCoverOk === setCover.length ? 'correct' : 'incorrect'} />
+          <span className="truncate">+{setCover.length} tx <span className="text-dim">{setCoverOk === setCover.length ? 'all' : setCoverOk}</span></span>
+        </div>
       </div>
-      <dl className="mt-3 space-y-1.5 font-mono text-[11px]">
-        {r.checks.slice(0, 3).map((c) => (
-          <div key={c.field} className="flex justify-between gap-3 border-b border-line pb-1.5">
-            <dt className="shrink-0 text-dim">{c.field}</dt>
-            <dd className={`truncate ${c.ok ? 'text-fg' : 'text-coral'}`} title={c.observed}>
-              {c.observed.length > 20 ? `${c.observed.slice(0, 8)}…${c.observed.slice(-6)}` : c.observed}
-            </dd>
-          </div>
-        ))}
-      </dl>
-      <a href={`${corpus.pilot.repo}/tree/${corpus.pilot.ref}`} target="_blank" rel="noreferrer" className="mt-2 block truncate font-mono text-[11px] text-mute hover:text-fg">
-        wallet-backend@{pilotRef} ↗
-      </a>
+      <div className="font-mono text-[10.5px]">
+        <p className="truncate text-mute" title={r.checks.map((c) => c.field).join(', ')}>
+          {r.checks.map((c, i) => (
+            <span key={c.field}>
+              {i ? <span className="text-dim"> · </span> : null}
+              <span className={c.ok ? 'text-fg' : 'text-coral'}>{c.ok ? '✓' : '✗'} {c.field}</span>
+            </span>
+          ))}
+        </p>
+        <a href={`${corpus.pilot.repo}/tree/${corpus.pilot.ref}`} target="_blank" rel="noreferrer" className="mt-1.5 block truncate text-dim hover:text-fg">
+          wallet-backend@{pilotRef} ↗
+        </a>
+      </div>
     </div>
   );
 }

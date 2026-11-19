@@ -55,12 +55,14 @@ You can be useful with Istravex in three ways, depending on how much you want to
       <Step title="Confirm it's green">
         ```bash
         node kit/check-results.mjs
-        # all green: 137 fixtures; 24 findings, 19 reproduced; RFP sightings 13/18 reproduced
+        # all green: 137 fixtures; 28 findings, 23 reproduced; RFP sightings 13/18 reproduced
         ```
       </Step>
-      <Step title="Optional: the upstream pilot and the audit">
+      <Step title="Optional: the upstream pilots and the audit">
         ```bash
         npm run pilot:wallet-backend   # runs wallet-backend's ingestion over the corpus
+        npm run pilot:stellar-etl      # stellar-etl's own transforms over the corpus
+        npm run pilot:horizon          # Horizon's own reingest into PostgreSQL (needs createdb/psql)
         npm run corpus:audit           # re-audits CAP coverage from stellar-protocol
         ```
       </Step>

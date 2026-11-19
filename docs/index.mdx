@@ -18,10 +18,16 @@ Istravex exists to catch that class of bug before it ships. It's a shared, versi
     Real fixtures, each tied to the CAP that introduced the pattern and verified byte-for-byte against the ledger that closed it.
   </Card>
   <Card title="SDK runners" icon="code" href="/tools/sdk-runners">
-    The same checks in JavaScript, Go and Rust: decode, byte-exact re-encode, and the high-level conversions where precision leaks.
+    Seven SDKs (JavaScript, Go, Rust, both Python packages, Java, PHP): decode, byte-exact re-encode, and the high-level conversions where precision leaks; plus a sweep of 310,837 real transaction hashes against stellar-core.
+  </Card>
+  <Card title="Generated cases" icon="flask-vial" href="/tools/generated-cases">
+    45,144 valid and malformed values of every XDR type, through every SDK, judged by the reference decoder and stellar-core.
   </Card>
   <Card title="Mock RPC and replay" icon="rotate" href="/tools/mock-rpc">
     Serve the corpus over Stellar RPC's `getLedgers` and replay it through any indexer, offline, with verdicts per record.
+  </Card>
+  <Card title="Upstream pilots" icon="server" href="/pilots/horizon">
+    Three of SDF's indexers run over the corpus in CI: wallet-backend and Horizon index every fixture correctly; stellar-etl's misses are its open issues.
   </Card>
   <Card title="istravex-lint" icon="magnifying-glass-chart" href="/tools/lint">
     Three Go analyzers for the ingestion mistakes that keep recurring: unvalidated memo text, unbounded recursion, fees read from the envelope.

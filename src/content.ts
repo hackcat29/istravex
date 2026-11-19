@@ -57,7 +57,7 @@ export const heroStats = [
   { value: String(st.fixtures), label: 'Fixtures' },
   { value: `${st.sdk_checks_passed}/${st.sdk_checks}`, label: 'SDK checks' },
   { value: `${st.provenance_passed}/${st.provenance_checks}`, label: 'Ledger-verified' },
-  { value: `${st.pilot_correct}/${st.pilot_fixtures}`, label: 'wallet-backend pilot' },
+  { value: `${st.pilot_correct}/${st.pilot_fixtures}`, label: 'wallet-backend · Horizon' },
 ];
 export const protocolRange = protocols.join('–');
 
@@ -193,21 +193,21 @@ export const kit = {
       docs: `${DOCS_URL}/tools/sdk-runners`,
       n: '03',
       title: 'Cross-SDK runner',
-      body: `${st.sdk_count} pinned SDKs (JavaScript, Go, Rust, both Python packages, Java, PHP) decode, re-encode byte-for-byte, and exercise native conversions where precision leaks. The red cells are real bugs, reported upstream. ${st.js_releases} JavaScript releases show each fix landing.`,
+      body: `${st.sdk_count} pinned SDKs (JavaScript, Go, Rust, both Python packages, Java, PHP) decode, re-encode byte-for-byte, and exercise native conversions where precision leaks. The red cells are real bugs, filed upstream. 45,144 generated values of every XDR type, and 310,837 real transaction hashes checked against stellar-core.`,
     },
     {
       id: 'linter',
       docs: `${DOCS_URL}/tools/lint`,
       n: '04',
       title: 'Go linter & guide',
-      body: 'Three go/analysis rules: clean on wallet-backend main, firing on the code its upstream fixes removed. And a hardening guide, a draft awaiting review by a stellar-core engineer.',
+      body: 'Three go/analysis rules: one triaged finding on wallet-backend main, and firing on the code its upstream fixes removed. And a hardening guide, a draft awaiting review by a stellar-core engineer.',
     },
     {
       id: 'pilot',
-      docs: `${DOCS_URL}/pilots/wallet-backend`,
+      docs: `${DOCS_URL}/pilots/horizon`,
       n: '05',
-      title: 'Upstream pilot',
-      body: `wallet-backend's own ingestion, fed by the mock RPC and the data lake: ${st.pilot_correct} of ${st.pilot_fixtures} fixtures correct, and its upstream bugs reproduce before their fixes. stellar-etl: ${st.etl_correct} of ${st.etl_fixtures}, the rest its open issues. ${st.rfp_sightings_reproduced} of the RFP's ${st.rfp_sightings} sightings reproduced in CI.`,
+      title: 'Upstream pilots',
+      body: `Three of SDF's indexers, run on the corpus in CI. wallet-backend: ${st.pilot_correct} of ${st.pilot_fixtures}, over the mock RPC and the data lake. Horizon, through its own reingest: ${st.horizon_correct} of ${st.horizon_fixtures}. stellar-etl: ${st.etl_correct} of ${st.etl_fixtures}, the rest its open issues. ${st.rfp_sightings_reproduced} of the RFP's ${st.rfp_sightings} sightings reproduced in CI.`,
     },
   ],
 };
@@ -311,7 +311,7 @@ export const milestones = {
     {
       n: '03',
       title: 'Upstream pilot and release',
-      deliver: ['wallet-backend findings', 'Hardening guide', 'Tagged release', 'CI templates'],
+      deliver: ['wallet-backend, Horizon and stellar-etl pilots', 'Findings filed upstream', 'Hardening guide', 'Signed release', 'CI templates'],
       accept: 'Findings and upstream links are public, the guide is up for engineering review, and a tagged release ships.',
     },
   ],
@@ -321,7 +321,7 @@ export const openSource = {
   title: ['Open by default.', 'Maintained after launch.'],
   stats: [
     { value: 'Apache 2.0', label: 'License' },
-    { value: '6 mo', label: 'Named maintainer' },
+    { value: '12 mo', label: 'Maintenance' },
     { value: '1', label: 'Protocol upgrade covered' },
     { value: '0', label: 'Telemetry' },
   ],
